@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.chats.ChatDetailActivity">
+
+    <com.benyq.guochat.ui.base.widget.HeaderView
+        android:id="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:toolbar_menu="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerView"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/llBottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvChatRecord"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:overScrollMode="never"
+                android:clickable="true"/>
+
+            <View style="@style/thin_horizontal_divider" />
+
+            <LinearLayout
+                android:id="@+id/rootBottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/darkgrey"
+                android:minHeight="50dp"
+                android:orientation="horizontal"
+                android:padding="6dp">
+
+                <ImageView
+                    android:id="@+id/ivTextVoice"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="4dp"
+                    android:src="@drawable/ic_keyboard" />
+
+                <EditText
+                    android:id="@+id/etContent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_bg_text"
+                    android:maxHeight="100dp"
+                    android:minHeight="35dp"
+                    android:padding="5dp"
+                    android:textColor="@color/color_2a2a2a"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvPressVoice"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_bg_voice"
+                    android:gravity="center"
+                    android:text="@string/press_voice"
+                    android:textColor="@color/color_2a2a2a"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    app:elevation="0dp" />
+
+                <ImageView
+                    android:id="@+id/ivMoreFunction"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:src="@drawable/ic_add" />
+
+                <TextView
+                    android:id="@+id/tvSend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/selector_bg_common_button"
+                    android:gravity="center"
+                    android:paddingStart="15dp"
+                    android:paddingTop="3dp"
+                    android:paddingEnd="15dp"
+                    android:paddingBottom="3dp"
+                    android:text="@string/send_text"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/flBottom"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:background="@color/darkgrey"
+            android:layout_gravity="bottom"
+            app:justifyContent="space_around"
+            app:flexWrap="wrap">
+
+            <LinearLayout
+                android:id="@+id/llAlbum"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/shape_bg_round_white"
+                    android:clickable="false"
+                    android:src="@drawable/ic_album" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="12sp"
+                    android:text="@string/album"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llCapture"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/shape_bg_round_white"
+                    android:clickable="false"
+                    android:src="@drawable/ic_capture" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="12sp"
+                    android:text="@string/capture"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llContracts"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/shape_bg_round_white"
+                    android:clickable="false"
+                    android:src="@drawable/ic_me_black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="12sp"
+                    android:text="@string/calling_card"/>
+
+            </LinearLayout>
+
+
+        </com.google.android.flexbox.FlexboxLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

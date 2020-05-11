@@ -1,0 +1,160 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:3761682073406266020",
+      "lastPropertyId": "7:474174900181079823",
+      "name": "ChatFromToEntity",
+      "properties": [
+        {
+          "id": "1:8564031493807571883",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8796233487791659860",
+          "name": "fromUid",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "3:5393090258409836023",
+          "name": "toUid",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "6:2295964146903114170",
+          "name": "updateTime",
+          "type": 6,
+          "flags": 4
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:422681950011326132",
+      "lastPropertyId": "10:5814763182086609045",
+      "name": "ChatRecordEntity",
+      "properties": [
+        {
+          "id": "1:9011436136377837056",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1691899013938673330",
+          "name": "content",
+          "type": 9
+        },
+        {
+          "id": "3:3549504285493434980",
+          "name": "sendTime",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "4:8070193354266660368",
+          "name": "imgUrl",
+          "type": 9
+        },
+        {
+          "id": "5:6859875667865907805",
+          "name": "voiceRecordPath",
+          "type": 9
+        },
+        {
+          "id": "6:6757579869920208355",
+          "name": "voiceRecordDuration",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "7:3409548671572292966",
+          "name": "chatType",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "8:8140395471564128313",
+          "name": "fromUid",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "9:20803878390603936",
+          "name": "toUid",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "10:5814763182086609045",
+          "name": "fromToId",
+          "type": 6,
+          "flags": 4
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:8333801691090877818",
+      "lastPropertyId": "7:7087391823995654833",
+      "name": "ContractEntity",
+      "properties": [
+        {
+          "id": "1:6275160135967840569",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:489443761357250842",
+          "name": "contractId",
+          "type": 9
+        },
+        {
+          "id": "4:1369554671944148372",
+          "name": "nick",
+          "type": 9
+        },
+        {
+          "id": "5:8884976929164506294",
+          "name": "avatarUrl",
+          "type": 9
+        },
+        {
+          "id": "6:7449843382199573072",
+          "name": "contractName",
+          "type": 9
+        },
+        {
+          "id": "7:7087391823995654833",
+          "name": "chatType",
+          "type": 5,
+          "flags": 4
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "3:8333801691090877818",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [
+    9047765502390331812,
+    3175469923004249716,
+    565786741873542690,
+    474174900181079823
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}

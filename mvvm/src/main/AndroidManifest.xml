@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.benyq.mvvm" >
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <application>
+        <provider
+            android:name=".ApplicationContextProvider"
+            android:authorities="${applicationId}.kt-armor-init-provider"
+            android:exported="false"/>
+    </application>
+
+</manifest>

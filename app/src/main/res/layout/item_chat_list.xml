@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/ivAvatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        tools:background="@color/black" />
+
+    <LinearLayout
+        android:id="@+id/llContractNameAndTime"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="horizontal"
+        android:layout_toEndOf="@id/ivAvatar"
+        android:layout_alignTop="@id/ivAvatar">
+
+        <TextView
+            android:id="@+id/tvContractName"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:ellipsize="end"
+            tools:text="苏打先生"
+            android:textSize="14sp"
+            android:textColor="@color/color_2a2a2a"/>
+
+        <TextView
+            android:id="@+id/tvLatestTime"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="end|center_vertical"
+            tools:text="2月7日"
+            android:textSize="12sp"
+            android:textColor="@color/gray"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llConversionAndNotify"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="horizontal"
+        android:layout_toEndOf="@id/ivAvatar"
+        android:layout_below="@id/llContractNameAndTime">
+
+        <TextView
+            android:id="@+id/tvLatestConversion"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:lines="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            tools:text="2月7日"
+            android:textSize="12sp"
+            android:textColor="@color/gray"/>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/ivNotificationOff"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="end|center_vertical"
+                android:src="@drawable/ic_notifications_off"/>
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+    <View
+        style="@style/thin_horizontal_divider"
+        android:layout_marginStart="70dp"
+        android:layout_below="@id/llConversionAndNotify"
+        android:layout_marginTop="10dp"/>
+
+</RelativeLayout>

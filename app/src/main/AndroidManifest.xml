@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.benyq.guochat">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application
+        android:name=".app.App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".ui.chats.video.PictureVideoActivity"></activity>
+        <activity android:name=".ui.contracts.CallingCardActivity" />
+        <activity android:name=".ui.contracts.AddContractActivity" />
+        <activity android:name=".ui.login.RegisterActivity" />
+        <activity android:name=".ui.login.LoginActivity" />
+        <activity android:name=".ui.function.MusicPlayingActivity" />
+        <activity android:name=".ui.common.NotificationHandleActivity" />
+        <activity android:name=".ui.common.WebViewActivity" />
+        <activity
+            android:name=".ui.chats.ChatDetailActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.SplashActivity"
+            android:theme="@style/LaunchTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".function.zxing.android.CaptureActivity" />
+
+        <service android:name=".function.music.PlayMusicService" />
+
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="360" /> <!-- 1600 -->
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="640" />
+
+        <receiver android:name=".function.music.PlayerReceiver">
+            <intent-filter>
+                <action android:name="com.benyq.guochat.ACTION.PLAY_TOGGLE" />
+                <action android:name="com.benyq.guochat.ACTION.PLAY_PLAY" />
+                <action android:name="com.benyq.guochat.ACTION.PLAY_PAUSE" />
+                <action android:name="com.benyq.guochat.ACTION.PLAY_LAST" />
+                <action android:name="com.benyq.guochat.ACTION.PLAY_NEXT" />
+                <action android:name="com.benyq.guochat.ACTION.STOP_SERVICE" />
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+                <action android:name="android.media.AUDIO_BECOMING_NOISY" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

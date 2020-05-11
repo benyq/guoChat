@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">mvvm</string>
+
+    <string name="setting">设置</string>
+    <string name="network_error">网络异常</string>
+    <string name="unkown_error">未知异常</string>
+</resources>

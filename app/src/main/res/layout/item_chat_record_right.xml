@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/ivAvatar">
+
+            <!-- 文本内容 -->
+            <TextView
+                android:id="@+id/tvContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/ic_message_right"
+                android:textSize="14sp"
+                android:textColor="@color/color_2a2a2a"
+                android:text="我是认真的我是认真的我是认真的我是认真的我是认真的我是认真的我是认真的我是认真的我是认真的我是认真的我是认真的"/>
+
+            <!-- 图片 -->
+            <ImageView
+                android:id="@+id/ivContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="15dp"/>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/llVoice"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:orientation="horizontal"
+                android:layout_gravity="end"
+                android:background="@drawable/ic_message_right"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tvVoiceDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_marginStart="5dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/color_2a2a2a"
+                    tools:text="50&#8221;"/>
+
+
+                <ProgressBar
+                    android:id="@+id/pbVoice"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:indeterminateDrawable="@drawable/anim_voice_play"/>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvUpdateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:textSize="12sp"
+        android:textColor="@color/gray"
+        tools:text="20:08"/>
+
+</LinearLayout>

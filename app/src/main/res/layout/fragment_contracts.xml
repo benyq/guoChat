@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.benyq.guochat.ui.common.widget.IconFormLine
+        android:id="@+id/iconAddContract"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:form_icon="@drawable/ic_add_contract"
+        app:form_icon_bg="@drawable/shape_bg_round_green"
+        app:form_title="@string/add_contract"
+        app:line_show_arrow="false" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvContracts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"/>
+
+</LinearLayout>

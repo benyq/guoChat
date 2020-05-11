@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <dimen name="fixed_label_active">12sp</dimen>
+    <dimen name="fixed_label_inactive">12sp</dimen>
+    <dimen name="fixed_width_padding">2dp</dimen>
+
+    <dimen name="fixed_icon_grid">20dp</dimen>
+    <dimen name="bottom_navigation_height">50dp</dimen>
+    <item name="fixed_label_active_to_inactive_ratio" format="float" type="dimen">1</item>
+</resources>

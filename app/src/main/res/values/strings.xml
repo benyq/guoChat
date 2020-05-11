@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">guoChat</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="add_group_chat">发起群聊</string>
+    <string name="scan">扫一扫</string>
+    <string name="add_contract">添加朋友</string>
+    <string name="press_voice">按住说话</string>
+    <string name="send_text">发送</string>
+    <string name="release_finger_send">松开手指即可发送语音</string>
+    <string name="move_up_cancel">手指向上滑取消</string>
+    <string name="album">相册</string>
+    <string name="flash_light">闪光灯</string>
+    <string name="calling_card">名片</string>
+    <string name="calling_card_qr">二维码名片</string>
+    <string name="capture">拍摄</string>
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="username_empty">用户名不能为空</string>
+    <string name="password_empty">密码不能为空</string>
+    <string name="search_phone_id">果聊号/手机号</string>
+    <string name="my_chat_id">我的果聊号:</string>
+    <string name="scan_qr_calling_card">扫描二维码名片</string>
+    <string name="picture_finish">完成</string>
+
+
+    <string name="msg_camera_framework_bug">Sorry, the Android camera encountered a problem. You may need to restart the device.</string>
+    <string name="button_ok">OK</string>
+    <string name="viewfinderview_status_text1">将二维码/条码放入取景框内</string>
+    <string name="viewfinderview_status_text2">即可自动扫描</string>
+
+</resources>
