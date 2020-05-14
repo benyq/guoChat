@@ -46,7 +46,7 @@ class ChatDetailActivity : LifecycleActivity(), View.OnClickListener {
     private val mVoiceRecordDialog by lazy {
         VoiceRecordDialog().apply {
             setConfirmAction {
-                val voiceBean = MediaRecordController.stopRecord()
+                val voiceBean = MediaRecordController.stopVideoRecord()
                 //发送
                 voiceBean?.run {
                     val chatBean = ChatRecordEntity(
@@ -60,7 +60,7 @@ class ChatDetailActivity : LifecycleActivity(), View.OnClickListener {
                 }
             }
             setCancelAction {
-                MediaRecordController.stopRecord(true)
+                MediaRecordController.stopVideoRecord(true)
             }
         }
     }
@@ -141,7 +141,7 @@ class ChatDetailActivity : LifecycleActivity(), View.OnClickListener {
             val data = mAdapter.data[position]
             if (data.chatType == ChatRecordEntity.TYPE_VOICE) {
                 mAdapter.setVoiceStop()
-                MediaRecordController.playRecord(this, data.voiceRecordPath, data.id)
+                MediaRecordController.playVideoRecord(this, data.voiceRecordPath, data.id)
                 mAdapter.setVoicePlay(data)
             }
         }
@@ -158,7 +158,7 @@ class ChatDetailActivity : LifecycleActivity(), View.OnClickListener {
                     val y = (location.top + location.bottom) / 2
                     mVoiceRecordDialog.setTouchY(y)
                     mVoiceRecordDialog.show(supportFragmentManager)
-                    MediaRecordController.startRecord()
+                    MediaRecordController.startVoiceRecord()
                 } else {
                     toast("没权限")
                 }

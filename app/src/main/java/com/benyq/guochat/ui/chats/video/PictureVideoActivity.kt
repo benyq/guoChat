@@ -54,6 +54,10 @@ class PictureVideoActivity : BaseActivity() {
                     })
                 }
                 StateEvent.STATE_VIDEO -> {
+                    val fragment = supportFragmentManager.findFragmentByTag("PictureVideoFragment")
+                    navigate(fragment, VideoConfirmFragment(), Bundle().apply {
+                        putString(IntentExtra.imgVideoPath, it.path)
+                    })
                 }
 
                 StateEvent.STATE_CLEAR_TOP -> {

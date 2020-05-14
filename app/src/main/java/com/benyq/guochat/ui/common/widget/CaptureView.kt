@@ -145,8 +145,8 @@ class CaptureView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : V
     private var mOnTouchTime = 0L
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        //一秒以内都算拍照，一秒之后算摄像
-        val onClickTime = 1000L
+        //500ms以内都算拍照，500ms之后算摄像
+        val onClickTime = 500L
         when(event?.action) {
             MotionEvent.ACTION_DOWN -> {
                 isCapture = true

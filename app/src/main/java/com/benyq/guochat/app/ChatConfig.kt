@@ -16,4 +16,6 @@ const val CHAT_TYPE_CONTRACT = 1
  */
 const val CHAT_TYPE_GROUP = 2
 
-const val IMG_PATH = "localImg"
+const val IMG_PATH = "img"
+
+const val VIDEO_PATH = "video"

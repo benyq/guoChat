@@ -16,6 +16,7 @@ import java.io.File
  * @time 2020/4/28
  * @e-mail 1520063035@qq.com
  * @note 录音管理,包括录音、播放
+ * 20200512 新增  这个类还要包括视频的录制
  */
 object MediaRecordController {
 
@@ -44,7 +45,7 @@ object MediaRecordController {
         }
     }
 
-    fun startRecord() {
+    fun startVoiceRecord() {
         mVoiceFilePath =
             getFileName()
         mRecord = MediaRecorder().apply {
@@ -71,7 +72,7 @@ object MediaRecordController {
     /**
      * isCancel true 放弃本次录音
      */
-    fun stopRecord(isCancel: Boolean = false): VoiceBean? {
+    fun stopVideoRecord(isCancel: Boolean = false): VoiceBean? {
         mRecord.stop()
         val duration: Long = System.currentTimeMillis() - startTime
         //小于 1秒 的 录音视为无效
@@ -90,7 +91,7 @@ object MediaRecordController {
     /**
      * @param recordId 数据库聊天记录Id
      */
-    fun playRecord(context: Context, voicePath: String, recordId: Long) {
+    fun playVideoRecord(context: Context, voicePath: String, recordId: Long) {
         mRecordId = recordId
         val amanager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         val maxVolume = amanager.getStreamMaxVolume(AudioManager.STREAM_ALARM)

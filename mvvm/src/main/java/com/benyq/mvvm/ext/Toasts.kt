@@ -22,11 +22,15 @@ object Toasts {
     }
 
     fun show(message: String) {
-        mToast?.apply { setText(message) }?.show()
+        runUnUiThread {
+            mToast?.apply { setText(message) }?.show()
+        }
     }
 
     fun show(@StringRes stringId: Int) {
-        mToast?.apply { setText(stringId) }?.show()
+        runUnUiThread {
+            mToast?.apply { setText(stringId) }?.show()
+        }
     }
 
 
