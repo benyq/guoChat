@@ -2,15 +2,11 @@ package com.benyq.guochat.ui.function
 
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.view.animation.LinearInterpolator
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
 import com.benyq.guochat.function.music.PlayerController
 import com.benyq.guochat.ui.base.BaseActivity
-import com.benyq.mvvm.ext.getColorRef
-import com.benyq.mvvm.ext.loge
 import kotlinx.android.synthetic.main.activity_music_playing.*
-import qiu.niorgai.StatusBarCompat
 
 /**
  * @author benyq
@@ -20,7 +16,12 @@ import qiu.niorgai.StatusBarCompat
  */
 class MusicPlayingActivity : BaseActivity() {
 
-    private val albumRotate: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.album_rotate)}
+    private val albumRotate: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            this,
+            R.anim.album_rotate
+        )
+    }
 
     override fun getLayoutId() = R.layout.activity_music_playing
 
@@ -29,7 +30,7 @@ class MusicPlayingActivity : BaseActivity() {
             if (it) {
                 ivPlayToggle.setImageResource(R.drawable.ic_remote_view_pause)
                 ivPlayingAlbum.clearAnimation()
-            }else {
+            } else {
                 ivPlayToggle.setImageResource(R.drawable.ic_remote_view_play)
                 ivPlayingAlbum.startAnimation(albumRotate)
             }

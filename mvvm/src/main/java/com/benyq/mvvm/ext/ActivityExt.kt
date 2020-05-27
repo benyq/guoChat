@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
+import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import java.io.Serializable

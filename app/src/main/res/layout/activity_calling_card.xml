@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/darkgrey"
+    android:orientation="vertical"
     tools:context=".ui.contracts.CallingCardActivity">
 
-    <com.benyq.guochat.ui.base.widget.HeaderView
+    <com.benyq.guochat.ui.common.widget.HeaderView
         android:id="@+id/headerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,6 +17,59 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_bg_round_white"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:padding="15dp">
+
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tvContractName"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivAvatar"
+            android:layout_marginStart="15dp"
+            android:gravity="start|center_vertical"
+            android:textColor="@color/color_2a2a2a"
+            android:textSize="16sp"
+            android:text="苏大先生"/>
+
+        <TextView
+            android:id="@+id/tvNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/calling_card_qr_note"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/ivCallingQr"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            app:layout_constraintTop_toBottomOf="@id/ivAvatar"
+            app:layout_constraintBottom_toTopOf="@id/tvNote"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>

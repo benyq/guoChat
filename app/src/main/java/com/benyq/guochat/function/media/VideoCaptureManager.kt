@@ -70,7 +70,7 @@ class VideoCaptureManager(private val context: Activity, private val mTextureVie
     private lateinit var mCameraCharacteristics: CameraCharacteristics
 
     private var mCameraSensorOrientation = 0                                            //摄像头方向
-    private var mCameraFacing = CameraCharacteristics.LENS_FACING_FRONT          //默认使用后置摄像头
+    private var mCameraFacing = CameraCharacteristics.LENS_FACING_BACK            //默认使用后置摄像头
     private val mDisplayRotation = context.windowManager.defaultDisplay.rotation  //手机方向
 
     private var canTakePic = true                                                       //是否可以拍照
@@ -87,9 +87,11 @@ class VideoCaptureManager(private val context: Activity, private val mTextureVie
     private var imgDir = context.getExternalFilesDir(IMG_PATH)!!.absolutePath
 
     private var onPictureCapturedAction : ((String)->Unit) ?= null
-    private var onVideoCapturedAction : ((String)->Unit) ?= null
+    private var onVideoCapturedAction : ((String, Int)->Unit) ?= null
 
     private var mediaRecorder: MediaRecorder? = null
+
+    private var videoRecordStartTime: Long = 0L
 
     init {
         handlerThread.start()
@@ -174,7 +176,7 @@ class VideoCaptureManager(private val context: Activity, private val mTextureVie
         onPictureCapturedAction = action
     }
 
-    fun setVideoCapturedAction(action: (String) -> Unit) {
+    fun setVideoCapturedAction(action: (String, Int) -> Unit) {
         onVideoCapturedAction = action
     }
 
@@ -381,13 +383,11 @@ class VideoCaptureManager(private val context: Activity, private val mTextureVie
                 else
                     notBigEnough.add(size)
             }
-            loge("可以的尺寸: ${size.width} * ${size.height}  -- ${targetWidth.toFloat()} * ${targetHeight.toFloat()}")
             loge("系统支持的尺寸: ${size.width} * ${size.height} ,  比例 ：${size.width.toFloat() / size.height}")
         }
 
         loge("最大尺寸 ：$maxWidth * $maxHeight, 比例 ：${targetWidth.toFloat() / targetHeight}")
         loge("目标尺寸 ：$targetWidth * $targetHeight, 比例 ：${targetWidth.toFloat() / targetHeight}")
-        loge("可以的尺寸 ${bigEnough.size} -- ${notBigEnough.size}")
         //选择bigEnough中最小的值  或 notBigEnough中最大的值
         return when {
             bigEnough.size > 0 -> Collections.min(bigEnough, CompareSizesByArea())
@@ -472,6 +472,7 @@ class VideoCaptureManager(private val context: Activity, private val mTextureVie
                         mCameraCaptureSession = session
                         updatePreview()
                         mediaRecorder?.start()
+                        videoRecordStartTime = System.currentTimeMillis()
                     }
 
                 }, mCameraHandler)
@@ -491,7 +492,9 @@ class VideoCaptureManager(private val context: Activity, private val mTextureVie
         mCameraCaptureSession?.abortCaptures()
         mCameraCaptureSession?.stopRepeating()
         Toasts.show("Video saved: $nextVideoAbsolutePath")
-        onVideoCapturedAction?.invoke(nextVideoAbsolutePath!!)
+        onVideoCapturedAction?.invoke(nextVideoAbsolutePath!!,
+            ((System.currentTimeMillis() - videoRecordStartTime) / 1000).toInt()
+        )
         nextVideoAbsolutePath = null
 
     }

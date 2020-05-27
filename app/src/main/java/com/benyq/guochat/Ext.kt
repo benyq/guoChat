@@ -1,14 +1,13 @@
 package com.benyq.guochat
 
-import android.app.Activity
 import android.content.Context
 import android.widget.EditText
-import androidx.fragment.app.Fragment
+import android.widget.ImageView
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import kotlinx.coroutines.*
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -76,8 +75,8 @@ fun EditText.textTrim(): String {
     return this.text.toString().trim()
 }
 
-inline fun <reified T> singleton(crossinline initializer: (Context)->T) : (Context)->T {
-    var instance : T? = null
+inline fun <reified T> singleton(crossinline initializer: (Context) -> T): (Context) -> T {
+    var instance: T? = null
     return { context ->
         instance ?: synchronized(T::class) {
             instance ?: initializer(context).also { instance = it }
@@ -98,4 +97,23 @@ class Singleton(context: Context) {
     fun test() = "foo"
 }
 
+//计算时间
+fun calculateTime(time: Int): String {
+    return if (time > 60) {
+        val second = time % 60
+        val minute = time / 60
+        (if (minute < 10) "0$minute" else "" + minute) + if (second < 10) ":0$second" else ":$second"
+    } else {
+        if (time < 10) {
+            "00:0$time"
+        } else {
+            "00:$time"
+        }
+    }
+}
 
+fun loadAvatar(iv: ImageView, url: String, round: Int = 10) {
+    Glide.with(iv.context).load(url)
+        .transform(RoundedCorners(dip2px(iv.context, round).toInt()))
+        .into(iv)
+}

@@ -4,7 +4,6 @@ import android.content.Context
 import com.benyq.guochat.app.CHAT_TYPE_CONTRACT
 import com.benyq.guochat.local.entity.*
 import com.benyq.guochat.model.bean.ChatListBean
-import com.benyq.mvvm.ext.loge
 import com.benyq.mvvm.ext.logi
 import io.objectbox.Box
 import io.objectbox.BoxStore
@@ -69,22 +68,22 @@ object ObjectBox {
         if (contractBox.query().build().count() <= 0) {
             contractBox.put(
                 ContractEntity(
-                    0, "2", "哪吒", "哪吒",
+                    0, "2", "klfjjasjasjda", "哪吒", 1, "哪吒",
                     "https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1305353222,2352820043&fm=26&gp=0.jpg",
                     CHAT_TYPE_CONTRACT
                 ),
                 ContractEntity(
-                    0, "2", "三公主", "三公主",
+                    0, "2", "klfjjasjasjda", "三公主", 0, "三公主",
                     "https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3170379310,1742401393&fm=111&gp=0.jpg",
-                   CHAT_TYPE_CONTRACT
+                    CHAT_TYPE_CONTRACT
                 ),
                 ContractEntity(
-                    0, "2", "招新", "招新",
+                    0, "2", "klfjjasjasjda", "招新", 2, "招新",
                     "https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1361981880,3052617388&fm=111&gp=0.jpg",
                     CHAT_TYPE_CONTRACT
                 ),
                 ContractEntity(
-                    0, "2", "凯南", "凯南",
+                    0, "2", "klfjjasjasjda", "凯南", 1, "凯南",
                     "https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4156830825,3265157570&fm=111&gp=0.jpg",
                     CHAT_TYPE_CONTRACT
                 )
@@ -185,7 +184,27 @@ object ObjectBox {
     }
 
     fun getAllContracts(): List<ContractEntity> {
-        val contractStore : Box<ContractEntity> = boxStore.boxFor()
+        val contractStore: Box<ContractEntity> = boxStore.boxFor()
         return contractStore.query().build().find()
+    }
+
+    /**
+     * @param fromUid 服务器中的uid
+     * @param toUid 本地数据库中的联系人uid
+     */
+    fun findFromToByIds(fromUid: String, toUid: Long): ChatListBean {
+        val contractBox: Box<ContractEntity> = boxStore.boxFor()
+        val contractEntity = contractBox.query().equal(ContractEntity_.id, toUid)
+            .equal(ContractEntity_.ownUserId, fromUid)
+            .build().findFirst()
+        return ChatListBean(
+            contractEntity?.avatarUrl ?: "",
+            contractEntity?.nick ?: "",
+            contractEntity?.chatType ?: CHAT_TYPE_CONTRACT,
+            0L,
+            "",
+            true,
+            toUid
+        )
     }
 }

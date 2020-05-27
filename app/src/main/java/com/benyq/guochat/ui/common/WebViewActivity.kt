@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_web_view.*
  * @note  访问网页Activity
  */
 class WebViewActivity : BaseActivity() {
+
     companion object {
         private const val WEB_URL = "webUrl"
         private const val WEB_TITLE = "webTitle"
@@ -73,7 +74,7 @@ class WebViewActivity : BaseActivity() {
                 super.onProgressChanged(view, newProgress)
                 if (newProgress == 100) {
                     progressBar.progress = 100
-//                    progressBar.visibility = View.GONE
+                    progressBar.visibility = View.GONE
                 } else {
                     if (progressBar.visibility == View.GONE) progressBar.visibility = View.VISIBLE
                     progressBar.progress = newProgress

@@ -1,14 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.me.MeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:padding="15dp">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvUserNick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:textColor="@color/color_2a2a2a"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/ivAvatar"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="苏打先生" />
+
+        <LinearLayout
+            android:id="@+id/llChatQr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="85dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivAvatar">
+
+            <TextView
+                android:id="@+id/tvChatNo"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@id/ivAvatar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="果聊号:yzj195232" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_qr_code"/>
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_arrow_right_grey"/>
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View style="@style/string_horizontal_divider"/>
+
+    <com.benyq.guochat.ui.common.widget.IconFormLine
+        android:id="@+id/ifPersonalInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:form_title="个人信息"
+        app:form_icon="@drawable/ic_personal_info"/>
+
+    <com.benyq.guochat.ui.common.widget.IconFormLine
+        android:id="@+id/ifSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:form_title="设置"
+        app:form_icon="@drawable/ic_settings"/>
+
+
+</LinearLayout>

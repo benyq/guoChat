@@ -27,33 +27,17 @@
           "flags": 4
         },
         {
-          "id": "4:3175469923004249716",
-          "name": "toAvatarUrl",
-          "type": 9
-        },
-        {
-          "id": "5:565786741873542690",
-          "name": "chatType",
-          "type": 5,
-          "flags": 4
-        },
-        {
           "id": "6:2295964146903114170",
           "name": "updateTime",
           "type": 6,
           "flags": 4
-        },
-        {
-          "id": "7:474174900181079823",
-          "name": "contractName",
-          "type": 9
         }
       ],
       "relations": []
     },
     {
       "id": "2:422681950011326132",
-      "lastPropertyId": "10:5814763182086609045",
+      "lastPropertyId": "12:9028677321070972131",
       "name": "ChatRecordEntity",
       "properties": [
         {
@@ -112,13 +96,24 @@
           "name": "fromToId",
           "type": 6,
           "flags": 4
+        },
+        {
+          "id": "11:3000044731674201430",
+          "name": "videoPath",
+          "type": 9
+        },
+        {
+          "id": "12:9028677321070972131",
+          "name": "videoDuration",
+          "type": 6,
+          "flags": 4
         }
       ],
       "relations": []
     },
     {
       "id": "3:8333801691090877818",
-      "lastPropertyId": "5:8884976929164506294",
+      "lastPropertyId": "8:6678703835186557313",
       "name": "ContractEntity",
       "properties": [
         {
@@ -133,11 +128,6 @@
           "type": 9
         },
         {
-          "id": "3:9047765502390331812",
-          "name": "name",
-          "type": 9
-        },
-        {
           "id": "4:1369554671944148372",
           "name": "nick",
           "type": 9
@@ -146,6 +136,23 @@
           "id": "5:8884976929164506294",
           "name": "avatarUrl",
           "type": 9
+        },
+        {
+          "id": "6:7449843382199573072",
+          "name": "contractName",
+          "type": 9
+        },
+        {
+          "id": "7:7087391823995654833",
+          "name": "chatType",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "8:6678703835186557313",
+          "name": "gender",
+          "type": 5,
+          "flags": 4
         }
       ],
       "relations": []
@@ -159,7 +166,12 @@
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    9047765502390331812,
+    3175469923004249716,
+    565786741873542690,
+    474174900181079823
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

@@ -26,6 +26,25 @@
     <string name="my_chat_id">我的果聊号:</string>
     <string name="scan_qr_calling_card">扫描二维码名片</string>
     <string name="picture_finish">完成</string>
+    <string name="avatar">头像</string>
+    <string name="personal_info">个人信息</string>
+    <string name="nick_name">昵称</string>
+    <string name="guo_chat_no">果聊号</string>
+    <string name="select_from_album">从手机相册选择</string>
+    <string name="save_to_phone">保存到手机</string>
+    <string name="cancel">取消</string>
+    <string name="settings">设置</string>
+    <string name="about_app">关于果聊</string>
+    <string name="message_settings">消息提醒</string>
+    <string name="logout">退出</string>
+    <string name="project_url">项目网址</string>
+    <string name="brief_introduction">简介</string>
+    <string name="brief_introduction_content">这是一个练手的仿微信UI的聊天APP，项目架构是MVVM+Kotlin。该项目会连天模块会实现文字、语音、图片以及小视频</string>
+    <string name="calling_card_qr_note">扫一扫上面的二维码图案，加我果聊</string>
+    <string name="contract_permission">朋友权限</string>
+    <string name="guo_chat_circle">果聊圈</string>
+    <string name="send_message">发送消息</string>
+    <string name="gender_column">性别: </string>
 
 
     <string name="msg_camera_framework_bug">Sorry, the Android camera encountered a problem. You may need to restart the device.</string>

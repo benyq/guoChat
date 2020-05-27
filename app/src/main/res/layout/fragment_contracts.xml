@@ -9,6 +9,7 @@
         android:id="@+id/iconAddContract"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:line_show_divide="false"
         app:form_icon="@drawable/ic_add_contract"
         app:form_icon_bg="@drawable/shape_bg_round_green"
         app:form_title="@string/add_contract"
@@ -18,6 +19,7 @@
         android:id="@+id/rvContracts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"/>
+        android:overScrollMode="never"
+        android:background="@color/darkgrey"/>
 
 </LinearLayout>

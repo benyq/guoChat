@@ -5,8 +5,13 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import androidx.annotation.DrawableRes
+import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
 import com.benyq.guochat.R
+import com.benyq.mvvm.ext.gone
+import com.benyq.mvvm.ext.loge
+import com.benyq.mvvm.ext.visible
 import kotlinx.android.synthetic.main.view_icon_form_line.view.*
 
 /**
@@ -18,6 +23,7 @@ import kotlinx.android.synthetic.main.view_icon_form_line.view.*
 class IconFormLine(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
     LinearLayout(context, attrs, defStyleAttr) {
 
+    private val imgResNone = 0
 
     private var title: String? = ""
     private var content: String? = ""
@@ -43,33 +49,31 @@ class IconFormLine(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
 
         val array = getContext().obtainStyledAttributes(
             attrs,
-            R.styleable.FormLine
+            R.styleable.IconFormLine
         )
-        title = array.getString(R.styleable.FormLine_form_title)
+        title = array.getString(R.styleable.IconFormLine_form_title)
 
-        content = array.getString(R.styleable.FormLine_form_content)
+        content = array.getString(R.styleable.IconFormLine_form_content)
 
-        showDivide = array.getBoolean(R.styleable.FormLine_line_show_divide, true)
-        showLineArrow = array.getBoolean(R.styleable.FormLine_line_show_arrow, true)
+        showDivide = array.getBoolean(R.styleable.IconFormLine_line_show_divide, true)
+        showLineArrow = array.getBoolean(R.styleable.IconFormLine_line_show_arrow, true)
 
-        hint = array.getString(R.styleable.FormLine_et_hint)
+        hint = array.getString(R.styleable.IconFormLine_et_hint)
 
         lineTitleColor = array.getColor(
-            R.styleable.FormLine_form_title_color,
+            R.styleable.IconFormLine_form_title_color,
             ContextCompat.getColor(context, R.color.color3C4044)
         )
 
-        formIconBg = array.getDrawable(
-            R.styleable.FormLine_form_icon_bg
-        )
+        formIconBg = array.getDrawable(R.styleable.IconFormLine_form_icon_bg)
 
         lineContentColor =
             array.getColor(
-                R.styleable.FormLine_form_content_color,
+                R.styleable.IconFormLine_form_content_color,
                 ContextCompat.getColor(context, R.color.color3C4044)
             )
 
-        imgRes = array.getResourceId(R.styleable.FormLine_form_icon, R.color.color3C4044)
+        imgRes = array.getResourceId(R.styleable.IconFormLine_form_icon, imgResNone)
 
         array.recycle()
         initView()
@@ -83,8 +87,12 @@ class IconFormLine(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
         ivLineArrow.visibility = if (showLineArrow) View.VISIBLE else View.GONE
         tvTitle.setTextColor(lineTitleColor)
         tvContent.setTextColor(lineContentColor)
-        ivImg.setImageResource(imgRes)
-        ivImg.background = formIconBg
+        if (imgRes != imgResNone) {
+            ivImg.background = formIconBg
+            ivImg.setImageResource(imgRes)
+        }else {
+            ivImg.gone()
+        }
     }
 
 

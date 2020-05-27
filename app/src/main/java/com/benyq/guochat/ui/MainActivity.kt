@@ -1,10 +1,8 @@
 package com.benyq.guochat.ui
 
 import android.Manifest
-import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -13,36 +11,32 @@ import androidx.fragment.app.FragmentTransaction
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
 import com.benyq.guochat.R
-import com.benyq.guochat.function.music.PlayMusicService
 import com.benyq.guochat.function.music.PlayerController
-import com.benyq.guochat.function.other.NotificationHelper
 import com.benyq.guochat.function.permissionX.PermissionX
 import com.benyq.guochat.function.zxing.android.CaptureActivity
 import com.benyq.guochat.local.ObjectBox
 import com.benyq.guochat.model.vm.MainViewModel
-import com.benyq.guochat.ui.base.BaseActivity
-import com.benyq.guochat.ui.chats.ChatAdapter
+import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.chats.ChatFragment
-import com.benyq.guochat.ui.chats.ChatRecordAdapter
 import com.benyq.guochat.ui.common.WebViewActivity
 import com.benyq.guochat.ui.contracts.AddContractActivity
 import com.benyq.guochat.ui.contracts.ContractsFragment
 import com.benyq.guochat.ui.discover.DiscoverFragment
 import com.benyq.guochat.ui.me.MeFragment
 import com.benyq.mvvm.annotation.BindViewModel
-import com.benyq.mvvm.ext.*
-import com.benyq.mvvm.mvvm.IMvmActivity
-import com.github.promeg.pinyinhelper.Pinyin
-import com.luck.picture.lib.immersive.ImmersiveManage
+import com.benyq.mvvm.ext.getScreenWidth
+import com.benyq.mvvm.ext.startActivity
+import com.benyq.mvvm.ext.toast
+import com.gyf.immersionbar.ktx.immersionBar
 import kotlinx.android.synthetic.main.activity_main.*
-import qiu.niorgai.StatusBarCompat
 
 
-class MainActivity : BaseActivity(), IMvmActivity {
+class MainActivity : LifecycleActivity() {
 
     @BindViewModel
     lateinit var mViewModel: MainViewModel
     private val titleArray = arrayOf("聊天", "联系人", "发现", "我")
+
     /**
      * 功能弹窗
      */
@@ -54,15 +48,23 @@ class MainActivity : BaseActivity(), IMvmActivity {
         super.onCreate(savedInstanceState)
         ObjectBox.testAddChatFromTo()
         PlayerController.setContext(this)
+        isSupportSwipeBack = false
+    }
+
+    override fun initImmersionBar() {
+        immersionBar {
+            statusBarColor(R.color.darkgrey)
+            statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+        }
     }
 
     override fun initView() {
 
         bottomNavigationBar
             .addItem(BottomNavigationItem(R.drawable.ic_chat, titleArray[0]))
-            .addItem(BottomNavigationItem(R.drawable.ic_contracts,  titleArray[1]))
-            .addItem(BottomNavigationItem(R.drawable.ic_discover,  titleArray[2]))
-            .addItem(BottomNavigationItem(R.drawable.ic_me,  titleArray[3]))
+            .addItem(BottomNavigationItem(R.drawable.ic_contracts, titleArray[1]))
+            .addItem(BottomNavigationItem(R.drawable.ic_discover, titleArray[2]))
+            .addItem(BottomNavigationItem(R.drawable.ic_me, titleArray[3]))
             .setActiveColor(R.color.colorPrimary)
             .setInActiveColor(R.color.black)
             .setBarBackgroundColor(R.color.darkgrey)
@@ -71,7 +73,8 @@ class MainActivity : BaseActivity(), IMvmActivity {
     }
 
     override fun initListener() {
-        bottomNavigationBar.setTabSelectedListener(object : BottomNavigationBar.OnTabSelectedListener{
+        bottomNavigationBar.setTabSelectedListener(object :
+            BottomNavigationBar.OnTabSelectedListener {
             override fun onTabReselected(position: Int) {
 
             }
@@ -91,6 +94,10 @@ class MainActivity : BaseActivity(), IMvmActivity {
             val widthX = getScreenWidth() - mMoreFunctionPop.contentView.measuredWidth - 10
             mMoreFunctionPop.showAsDropDown(toolbar, widthX, 10)
         }
+
+    }
+
+    override fun pendingTransition() {
 
     }
 
@@ -156,12 +163,16 @@ class MainActivity : BaseActivity(), IMvmActivity {
 
     var notifyId = 1
 
-    private fun createMorePopWindow() : PopupWindow{
+    private fun createMorePopWindow(): PopupWindow {
         val view = View.inflate(this, R.layout.popup_more_function, null).apply {
             findViewById<LinearLayout>(R.id.llAddGroupChat)?.setOnClickListener {
                 mMoreFunctionPop.dismiss()
 //                PlayerController.playAudio("http://img.owspace.com/F_vne408361_1512551681.4364588.mp3")
-                  WebViewActivity.gotoWeb(this@MainActivity, "https://www.jianshu.com/p/40fe79d65781", "简书")
+                WebViewActivity.gotoWeb(
+                    this@MainActivity,
+                    "https://www.jianshu.com/p/40fe79d65781",
+                    "简书"
+                )
 
             }
             findViewById<LinearLayout>(R.id.llAddContract)?.setOnClickListener {
@@ -170,10 +181,13 @@ class MainActivity : BaseActivity(), IMvmActivity {
             }
             findViewById<LinearLayout>(R.id.llScan)?.setOnClickListener {
                 mMoreFunctionPop.dismiss()
-                PermissionX.request(this@MainActivity, Manifest.permission.CAMERA) { allGranted, denyList ->
+                PermissionX.request(
+                    this@MainActivity,
+                    Manifest.permission.CAMERA
+                ) { allGranted, denyList ->
                     if (allGranted) {
                         startActivity<CaptureActivity>()
-                    }else {
+                    } else {
                         toast("权限拒绝")
                     }
                 }

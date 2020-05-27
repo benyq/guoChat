@@ -37,7 +37,7 @@
     },
     {
       "id": "2:422681950011326132",
-      "lastPropertyId": "10:5814763182086609045",
+      "lastPropertyId": "12:9028677321070972131",
       "name": "ChatRecordEntity",
       "properties": [
         {
@@ -96,13 +96,24 @@
           "name": "fromToId",
           "type": 6,
           "flags": 4
+        },
+        {
+          "id": "11:3000044731674201430",
+          "name": "videoPath",
+          "type": 9
+        },
+        {
+          "id": "12:9028677321070972131",
+          "name": "videoDuration",
+          "type": 6,
+          "flags": 4
         }
       ],
       "relations": []
     },
     {
       "id": "3:8333801691090877818",
-      "lastPropertyId": "7:7087391823995654833",
+      "lastPropertyId": "9:4039433026473455347",
       "name": "ContractEntity",
       "properties": [
         {
@@ -136,6 +147,17 @@
           "name": "chatType",
           "type": 5,
           "flags": 4
+        },
+        {
+          "id": "8:6678703835186557313",
+          "name": "gender",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "9:4039433026473455347",
+          "name": "ownUserId",
+          "type": 9
         }
       ],
       "relations": []

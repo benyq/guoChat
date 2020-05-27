@@ -11,5 +11,13 @@ object IntentExtra {
 
     const val imgPath = "imgPath"
 
-    const val imgVideoPath = "imgVideoPath"
+    const val videoPath = "videoPath"
+
+    const val videoDuration = "videoDuration"
+
+    const val videoImgPath = "videoImgPath"
+
+    const val stateEvent = "StateEvent"
+
+    const val contractData = "contractData"
 }

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.benyq.guochat.ui.base.widget.HeaderView
+    <com.benyq.guochat.ui.common.widget.HeaderView
         android:id="@+id/headerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

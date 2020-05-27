@@ -21,6 +21,7 @@ class DrawableBuilder(private val mContext: Context) {
     private val defaultLineColor: Int = Color.parseColor("#e9e9e9")
 
     private val defaultCornerRadius = 2
+    private var defaultCornerRadii = FloatArray(8){0f}
     //椭圆形圆角
     private val defaultRoundCornerRadius = 100
 
@@ -57,6 +58,7 @@ class DrawableBuilder(private val mContext: Context) {
         bg.shape = shape
         bg.setStroke(lineWidth, lineColor, dashWidth, dashGap)
         bg.cornerRadius = cornerRadius
+        bg.cornerRadii = defaultCornerRadii
         bg.setColor(bkColor)
         return bg
     }
@@ -106,6 +108,11 @@ class DrawableBuilder(private val mContext: Context) {
     fun lineColor(lineColor: String): DrawableBuilder {
         require(lineColor[0] == '#') { "color value must be start with # like #000000" }
         return lineColor(Color.parseColor(lineColor))
+    }
+
+    fun cornerRadii(radii: FloatArray) : DrawableBuilder{
+        defaultCornerRadii = radii
+        return this
     }
 
     /**

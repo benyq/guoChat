@@ -3,6 +3,7 @@ package com.benyq.guochat.function.music
 import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
+import com.benyq.guochat.calculateTime
 import com.benyq.mvvm.ext.Toasts
 import com.benyq.mvvm.ext.isConnected
 import com.benyq.mvvm.ext.loge
@@ -126,19 +127,6 @@ object PlayerController : IPlayController{
         }
     }
 
-    private fun calculateTime(time: Int) : String{
-        return if (time > 60) {
-            val second = time % 60
-            val minute = time / 60
-            (if (minute < 10) "0$minute" else "" + minute) + if (second < 10) ":0$second" else ":$second"
-        }else {
-            if (time < 10) {
-                "00:0$time"
-            }else {
-                "00:$time"
-            }
-        }
-    }
 
     fun playAudio(url: String?) {
         if (url.isNullOrEmpty()) {

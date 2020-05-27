@@ -19,3 +19,7 @@ const val CHAT_TYPE_GROUP = 2
 const val IMG_PATH = "img"
 
 const val VIDEO_PATH = "video"
+
+const val GENDER_FEMALE = 0
+const val GENDER_MALE = 1
+const val GENDER_UNKNOWN = 2

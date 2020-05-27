@@ -1,7 +1,5 @@
 package com.benyq.guochat.ui.login
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
 import com.benyq.guochat.model.vm.LoginViewModel
@@ -11,7 +9,6 @@ import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.mvvm.annotation.BindViewModel
 import com.benyq.mvvm.ext.Toasts
 import com.benyq.mvvm.ext.startActivity
-import com.benyq.mvvm.response.SharedType
 import kotlinx.android.synthetic.main.activity_login.*
 
 /**
@@ -28,7 +25,7 @@ class LoginActivity : LifecycleActivity() {
     override fun getLayoutId() = R.layout.activity_login
 
     override fun initView() {
-        super.initView()
+        isSupportSwipeBack = false
     }
 
     override fun initListener() {
@@ -55,9 +52,14 @@ class LoginActivity : LifecycleActivity() {
     override fun dataObserver() {
         with(mViewModel) {
             mLoginResult.observe(this@LoginActivity, Observer {
+//                startActivity<TestActivity>()
                 startActivity<MainActivity>()
                 finish()
             })
         }
+    }
+
+    override fun pendingTransition() {
+
     }
 }

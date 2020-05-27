@@ -1,13 +1,9 @@
 package com.benyq.guochat.ui.discover
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-
 import com.benyq.guochat.R
 import com.benyq.guochat.ui.base.LifecycleFragment
+import com.benyq.mvvm.ext.startActivity
+import kotlinx.android.synthetic.main.fragment_discover.*
 
 /**
  * @author benyq
@@ -19,4 +15,9 @@ class DiscoverFragment : LifecycleFragment() {
 
     override fun getLayoutId() = R.layout.fragment_discover
 
+    override fun initListener() {
+        ifFriendCircle.setOnClickListener {
+            startActivity<FriendCircleActivity>()
+        }
+    }
 }

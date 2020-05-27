@@ -6,10 +6,12 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import com.benyq.guochat.function.other.DateFormatUtil
 import com.benyq.guochat.R
+import com.benyq.guochat.calculateTime
 import com.benyq.guochat.dip2px
 import com.benyq.guochat.local.entity.ChatRecordEntity
 import com.benyq.mvvm.ext.getDrawableRef
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseDelegateMultiAdapter
@@ -53,6 +55,8 @@ class ChatRecordAdapter(private val uid: Int) :
             addItemType(0, R.layout.item_chat_record_right)
                 .addItemType(1, R.layout.item_chat_record_left)
         }
+
+        addChildClickViewIds(R.id.ivContent, R.id.flVideo)
     }
 
     override fun convert(helper: BaseViewHolder, item: ChatRecordEntity) {
@@ -96,15 +100,17 @@ class ChatRecordAdapter(private val uid: Int) :
                     helper.setGone(R.id.ivContent, false)
                         .setGone(R.id.tvContent, true)
                         .setGone(R.id.llVoice, true)
+                        .setGone(R.id.flVideo, true)
+
                     val ivContent = helper.getView<ImageView>(R.id.ivContent)
                     Glide.with(context).load(imgUrl)
-                        .override(dip2px(context, 300).toInt(), dip2px(context, 150).toInt())
                         .into(ivContent)
                 }
                 ChatRecordEntity.TYPE_VOICE -> {
                     helper.setGone(R.id.llVoice, false)
                         .setGone(R.id.ivContent, true)
                         .setGone(R.id.tvContent, true)
+                        .setGone(R.id.flVideo, true)
                         .setText(R.id.tvVoiceDuration, "${voiceRecordDuration / 1000}\" ")
                     val pb = helper.getView<ProgressBar>(R.id.pbVoice)
                     val drawable: Drawable? = if (item.id == mPlayingRecord?.id ?: 0) {
@@ -120,12 +126,25 @@ class ChatRecordAdapter(private val uid: Int) :
                     pb.indeterminateDrawable.setBounds(bounds) // set bounds to new drawable
 
                 }
+                ChatRecordEntity.TYPE_VIDEO -> {
+                    helper.setGone(R.id.flVideo, false)
+                        .setGone(R.id.tvContent, true)
+                        .setGone(R.id.ivContent, true)
+                        .setGone(R.id.llVoice, true)
+                        .setText(R.id.tvVideoDuration, calculateTime(videoDuration.toInt()))
+
+                    val ivVideo = helper.getView<ImageView>(R.id.ivVideo)
+                    Glide.with(context).load(videoPath)
+                        .into(ivVideo)
+
+                }
                 //ChatRecordBean.TYPE_TEXT
                 else -> {
                     helper.setGone(R.id.tvContent, false)
                         .setGone(R.id.ivContent, true)
                         .setGone(R.id.llVoice, true)
                         .setText(R.id.tvContent, content)
+                        .setGone(R.id.flVideo, true)
                 }
             }
 

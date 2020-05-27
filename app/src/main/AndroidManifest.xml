@@ -21,7 +21,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.chats.video.PictureVideoActivity"></activity>
+        <activity android:name=".ui.discover.FriendCircleActivity"></activity>
+        <activity android:name=".ui.contracts.ContractDetailActivity" />
+        <activity android:name=".ui.TestActivity" />
+        <activity android:name=".ui.settings.AboutAppActivity" />
+        <activity android:name=".ui.settings.SettingsActivity" />
+        <activity android:name=".ui.me.PersonalInfoEditActivity" />
+        <activity android:name=".ui.me.AvatarActivity" />
+        <activity android:name=".ui.me.PersonalInfoActivity" />
+        <activity
+            android:name=".ui.chats.ChatVideoActivity"
+            android:theme="@style/exitEntryAnim" />
+        <activity
+            android:name=".ui.chats.ChatImageActivity"
+            android:theme="@style/exitEntryAnim" />
+        <activity android:name=".ui.chats.video.PictureVideoActivity" />
         <activity android:name=".ui.contracts.CallingCardActivity" />
         <activity android:name=".ui.contracts.AddContractActivity" />
         <activity android:name=".ui.login.RegisterActivity" />

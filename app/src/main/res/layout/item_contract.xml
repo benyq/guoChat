@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/ivAvatar"
@@ -27,11 +28,5 @@
         app:layout_constraintStart_toEndOf="@id/ivAvatar"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="455555555555555" />
-
-    <View
-        style="@style/thin_horizontal_divider"
-        android:layout_marginStart="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/tvContractName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

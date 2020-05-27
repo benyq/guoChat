@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".ui.discover.DiscoverFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.benyq.guochat.ui.common.widget.IconFormLine
+        android:id="@+id/ifFriendCircle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        app:line_show_divide="false"
+        app:form_title="@string/guo_chat_circle"
+        app:form_icon="@drawable/ic_friend_circle"/>
 
-</FrameLayout>
+    <View style="@style/string_horizontal_divider"/>
+
+    <com.benyq.guochat.ui.common.widget.IconFormLine
+        android:id="@+id/ifScan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:line_show_divide="false"
+        app:form_title="@string/scan"
+        app:form_icon="@drawable/ic_discover_scan"/>
+
+</LinearLayout>

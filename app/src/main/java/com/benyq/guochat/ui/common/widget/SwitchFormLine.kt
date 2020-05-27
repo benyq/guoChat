@@ -35,15 +35,15 @@ class SwitchFormLine(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
 
         val array = getContext().obtainStyledAttributes(
             attrs,
-            R.styleable.FormLine
+            R.styleable.SwitchFormLine
         )
-        title = array.getString(R.styleable.FormLine_form_title)
-        isChecked = array.getBoolean(R.styleable.FormLine_checked, false)
+        title = array.getString(R.styleable.SwitchFormLine_sf_form_title)
+        isChecked = array.getBoolean(R.styleable.SwitchFormLine_checked, false)
 
-        showDivide = array.getBoolean(R.styleable.FormLine_line_show_divide, true)
+        showDivide = array.getBoolean(R.styleable.SwitchFormLine_sf_line_show_divide, true)
 
         lineTitleColor = array.getColor(
-            R.styleable.FormLine_form_title_color,
+            R.styleable.SwitchFormLine_sf_form_title_color,
             ContextCompat.getColor(context, R.color.color3C4044)
         )
 

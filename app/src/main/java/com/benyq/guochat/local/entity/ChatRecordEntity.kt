@@ -34,6 +34,14 @@ data class ChatRecordEntity(
      */
     var voiceRecordDuration: Long = 0L,
     /**
+     * 视频地址
+     */
+    var videoPath: String = "",
+    /**
+     * 视频时长
+     */
+    var videoDuration: Long = 0L,
+    /**
      * 类型
      */
     var chatType: Int = TYPE_TEXT,
@@ -54,6 +62,7 @@ data class ChatRecordEntity(
         const val TYPE_TEXT = 1
         const val TYPE_IMG = 2
         const val TYPE_VOICE = 3
+        const val TYPE_VIDEO = 4
     }
 
 

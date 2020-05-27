@@ -56,7 +56,8 @@ class PictureVideoActivity : BaseActivity() {
                 StateEvent.STATE_VIDEO -> {
                     val fragment = supportFragmentManager.findFragmentByTag("PictureVideoFragment")
                     navigate(fragment, VideoConfirmFragment(), Bundle().apply {
-                        putString(IntentExtra.imgVideoPath, it.path)
+                        putString(IntentExtra.videoPath, it.path)
+                        putInt(IntentExtra.videoDuration, it.videoDuration)
                     })
                 }
 
@@ -73,7 +74,8 @@ class PictureVideoActivity : BaseActivity() {
                 }
 
                 StateEvent.STATE_FINISH_VIDEO -> {
-
+                    supportFragmentManager.popBackStack()
+                    popBack(it.path!!, StateEvent.STATE_FINISH_VIDEO, it.videoDuration)
                 }
             }
         })
@@ -82,7 +84,7 @@ class PictureVideoActivity : BaseActivity() {
     private fun navigate(last: Fragment?, dest: Fragment, bundle: Bundle) {
         dest.arguments = bundle
         supportFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.alpha_bottom_in, R.anim.alpha_bottom_out)
+            .setCustomAnimations(R.anim.alpha_in, R.anim.alpha_out)
             .add(R.id.flContainer, dest, dest.javaClass.simpleName)
             .apply {
                 if (last != null) {
@@ -93,9 +95,11 @@ class PictureVideoActivity : BaseActivity() {
             .commit()
     }
 
-    private fun popBack(path: String) {
+    private fun popBack(path: String, state: Int = StateEvent.STATE_FINISH_IMG, duration : Int = 0) {
         setResult(Activity.RESULT_OK, Intent().apply {
-            putExtra(IntentExtra.imgVideoPath, path)
+            putExtra(IntentExtra.videoImgPath, path)
+            putExtra(IntentExtra.stateEvent, state)
+            putExtra(IntentExtra.videoDuration, duration)
         })
         finish()
     }

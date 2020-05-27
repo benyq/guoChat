@@ -20,6 +20,7 @@ class VideoConfirmFragment : BaseFragment(){
     private lateinit var videoVideoViewModel: PictureVideoViewModel
 
     private lateinit var videoPath: String
+    private var videoDuration: Int = 0
 
     override fun getLayoutId() = R.layout.fragment_video_confirm
 
@@ -27,7 +28,8 @@ class VideoConfirmFragment : BaseFragment(){
         videoVideoViewModel = ViewModelProvider(activity!!).get(PictureVideoViewModel::class.java)
 
         val defaultVideoPath = ""
-        videoPath = arguments?.getString(IntentExtra.imgVideoPath, defaultVideoPath) ?: defaultVideoPath
+        videoPath = arguments?.getString(IntentExtra.videoPath, defaultVideoPath) ?: defaultVideoPath
+        videoDuration = arguments?.getInt(IntentExtra.videoDuration, 0) ?: 0
 
         videoView.setVideoPath(videoPath)
         videoView.setOnCompletionListener {
@@ -49,7 +51,7 @@ class VideoConfirmFragment : BaseFragment(){
         }
 
         btnFinished.setOnClickListener {
-            videoVideoViewModel.finishVideo(videoPath)
+            videoVideoViewModel.finishVideo(videoPath, videoDuration)
         }
 
     }

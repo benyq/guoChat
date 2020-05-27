@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".ui.me.PersonalInfoEditActivity">
+
+    <com.benyq.guochat.ui.common.widget.HeaderView
+        android:id="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:toolbar_menu_btn_show="true"
+        app:toolbar_menu_text="保存"/>
+
+    <EditText
+        android:id="@+id/etContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="15dp"/>
+
+    <TextView
+        android:id="@+id/tvNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        tools:text="好名字可以让你的朋友更好的记住你"/>
+
+</LinearLayout>

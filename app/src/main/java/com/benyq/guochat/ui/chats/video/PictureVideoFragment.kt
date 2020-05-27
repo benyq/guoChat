@@ -29,8 +29,8 @@ class PictureVideoFragment : BaseFragment() {
             setPictureCapturedAction { imgPath ->
                 pictureVideoViewModel.showPictureConfirm(imgPath)
             }
-            setVideoCapturedAction { videoPath ->
-                pictureVideoViewModel.showVideoConfirm(videoPath)
+            setVideoCapturedAction { videoPath, duration ->
+                pictureVideoViewModel.showVideoConfirm(videoPath, videoDuration = duration)
             }
         }
         lifecycle.addObserver(mVideoCaptureManager)

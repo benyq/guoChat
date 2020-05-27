@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/darkgrey"
+    tools:context=".ui.contracts.ContractDetailActivity">
+
+    <com.benyq.guochat.ui.common.widget.HeaderView
+        android:id="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:toolbar_menu="true"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
+
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvNickName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_2a2a2a"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="苏打先生"
+            android:layout_marginStart="15dp"
+            app:layout_constraintStart_toEndOf="@id/ivAvatar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvChatNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_2a2a2a"
+            android:textSize="14sp"
+            tools:text="4541ds545"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@id/tvNickName"
+            app:layout_constraintTop_toBottomOf="@id/tvNickName" />
+
+        <TextView
+            android:id="@+id/tvGender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="14sp"
+            android:textColor="@color/color_2a2a2a"
+            android:text="@string/gender_column"
+            app:layout_constraintStart_toStartOf="@id/tvNickName"
+            app:layout_constraintTop_toBottomOf="@id/tvChatNo" />
+
+        <ImageView
+            android:id="@+id/ivGender"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_gender_unknown"
+            app:layout_constraintStart_toEndOf="@id/tvGender"
+            app:layout_constraintTop_toBottomOf="@id/tvChatNo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View style="@style/thin_horizontal_divider" />
+
+    <com.benyq.guochat.ui.common.widget.IconFormLine
+        android:id="@+id/ifContractPermission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:form_title="@string/contract_permission"/>
+
+    <com.benyq.guochat.ui.common.widget.IconFormLine
+        android:id="@+id/ifGuoChatCircle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:form_title="@string/guo_chat_circle"
+        app:line_show_divide="false"/>
+
+    <View style="@style/string_horizontal_divider" />
+
+    <LinearLayout
+        android:id="@+id/llSendMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:gravity="center"
+        android:padding="15dp">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_message"/>
+
+        <TextView
+            android:id="@+id/tvSendMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/send_message"
+            android:textColor="@color/color_2a2a2a"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

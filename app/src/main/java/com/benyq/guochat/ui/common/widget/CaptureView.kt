@@ -26,7 +26,7 @@ class CaptureView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : V
     /**
      * 最大摄像时间 / 秒
      */
-    private val maxCaptureTime = 60F
+    private val maxCaptureTime = 30F
 
     /**
      * 正常时内部元半径

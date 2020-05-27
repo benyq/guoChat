@@ -75,11 +75,10 @@ dependencies {
     implementation 'com.google.android:flexbox:2.0.1'
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.3'
 
-    //https://github.com/niorgai/StatusBarCompat 状态栏颜色
-    implementation('com.github.niorgai:StatusBarCompat:2.3.3', {
-        exclude group: 'androidx.appcompat:appcompat'
-        exclude group: 'com.google.android.material:material'
-    })
+    //https://github.com/gyf-dev/ImmersionBar
+    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
+    implementation 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
+
     //https://github.com/airbnb/lottie-android
     implementation 'com.airbnb.android:lottie:3.0.0'
 

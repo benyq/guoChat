@@ -37,11 +37,12 @@
             <!-- 图片 -->
             <ImageView
                 android:id="@+id/ivContent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="200dp"
                 android:layout_gravity="end"
                 android:layout_marginEnd="15dp"/>
 
+            <!--语音-->
             <LinearLayout
                 android:visibility="gone"
                 android:id="@+id/llVoice"
@@ -75,6 +76,38 @@
                     android:indeterminateDrawable="@drawable/anim_voice_play"/>
 
             </LinearLayout>
+
+            <!--短视频-->
+            <FrameLayout
+                android:visibility="gone"
+                android:id="@+id/flVideo"
+                android:layout_width="100dp"
+                android:layout_height="200dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="15dp">
+
+                <ImageView
+                    android:id="@+id/ivVideo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:id="@+id/tvVideoDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_margin="10dp"
+                    android:textSize="12sp"
+                    tools:text="00:07"
+                    android:textColor="@color/white"/>
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_video_play"/>
+
+            </FrameLayout>
 
         </FrameLayout>
 

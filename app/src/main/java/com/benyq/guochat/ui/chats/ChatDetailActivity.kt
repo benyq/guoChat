@@ -17,6 +17,7 @@ import com.benyq.guochat.function.permissionX.PermissionX
 import com.benyq.guochat.local.entity.ChatRecordEntity
 import com.benyq.guochat.model.bean.ChatListBean
 import com.benyq.guochat.model.vm.ChatDetailViewModel
+import com.benyq.guochat.model.vm.StateEvent
 import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.chats.video.PictureVideoActivity
 import com.benyq.mvvm.SmartJump
@@ -67,9 +68,20 @@ class ChatDetailActivity : LifecycleActivity(), View.OnClickListener {
 
     private var mInputType by Delegates.observable(TYPE_TEXT, { prop, old, new ->
         if (new == TYPE_VOICE) {
-            ivTextVoice.setImageResource(R.drawable.ic_voice)
-            etContent.gone()
-            tvPressVoice.visible()
+            PermissionX.request(
+                this,
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) { granted, permissions ->
+                if (granted) {
+                    ivTextVoice.setImageResource(R.drawable.ic_voice)
+                    etContent.gone()
+                    tvPressVoice.visible()
+                } else {
+                    toast("没权限")
+                }
+            }
+
         } else if (new == TYPE_TEXT) {
             ivTextVoice.setImageResource(R.drawable.ic_keyboard)
             etContent.visible()
@@ -85,6 +97,7 @@ class ChatDetailActivity : LifecycleActivity(), View.OnClickListener {
     override fun getLayoutId() = R.layout.activity_chat_detail
 
     override fun initView() {
+        isSupportSwipeBack = true
         mChatListBean = intent.getParcelableExtra(IntentExtra.fromToId)!!
         rootLayout.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
             if (oldBottom != -1 && oldBottom > bottom) {
@@ -145,27 +158,28 @@ class ChatDetailActivity : LifecycleActivity(), View.OnClickListener {
                 mAdapter.setVoicePlay(data)
             }
         }
-
-        tvPressVoice.setOnLongClickListener {
-            PermissionX.request(
-                this,
-                Manifest.permission.RECORD_AUDIO,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) { granted, permissions ->
-                if (granted) {
-                    val location = Rect()
-                    it.getGlobalVisibleRect(location)
-                    val y = (location.top + location.bottom) / 2
-                    mVoiceRecordDialog.setTouchY(y)
-                    mVoiceRecordDialog.show(supportFragmentManager)
-                    MediaRecordController.startVoiceRecord()
-                } else {
-                    toast("没权限")
+        mAdapter.setOnItemChildClickListener { adapter, view, position ->
+            val chatRecord = mAdapter.data[position]
+            when(view.id) {
+                R.id.ivContent -> {
+                    startActivity<ChatImageActivity>(IntentExtra.imgPath to chatRecord.imgUrl)
+                    overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out)
+                }
+                R.id.flVideo -> {
+                    startActivity<ChatVideoActivity>(IntentExtra.videoPath to chatRecord.videoPath)
+                    overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out)
                 }
             }
+        }
+        tvPressVoice.setOnLongClickListener {
+            val location = Rect()
+            it.getGlobalVisibleRect(location)
+            val y = (location.top + location.bottom) / 2
+            mVoiceRecordDialog.setTouchY(y)
+            mVoiceRecordDialog.show(supportFragmentManager)
+            MediaRecordController.startVoiceRecord()
             true
         }
-
     }
 
     override fun initData() {
@@ -250,17 +264,11 @@ class ChatDetailActivity : LifecycleActivity(), View.OnClickListener {
                     })
             }
             R.id.llCapture -> {
-                SmartJump.from(this).startForResult(PictureVideoActivity::class.java) { resultCode, data ->
-                    hideFunctionMenu()
-                    if (resultCode == Activity.RESULT_OK && data != null) {
-                        addChatData(
-                            ChatRecordEntity(
-                                fromUid = 2,
-                                toUid = 1,
-                                chatType = ChatRecordEntity.TYPE_IMG,
-                                imgUrl = data.getStringExtra(IntentExtra.imgVideoPath)!!
-                            )
-                        )
+                PermissionX.request(this, Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO) { grated, denyList ->
+                    if (grated) {
+                        gotoCameraCapture()
+                    }else {
+                        Toasts.show("请授予相应权限")
                     }
                 }
             }
@@ -309,5 +317,34 @@ class ChatDetailActivity : LifecycleActivity(), View.OnClickListener {
             mLayoutManager.scrollToPositionWithOffset(mAdapter.data.size - 1, 0)
         }, 200)
         mViewModel.sendChatMessage(data)
+    }
+
+    private fun gotoCameraCapture() {
+        SmartJump.from(this).startForResult(PictureVideoActivity::class.java) { resultCode, data ->
+            hideFunctionMenu()
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                val state = data.getIntExtra(IntentExtra.stateEvent, StateEvent.STATE_FINISH_IMG)
+                if (state == StateEvent.STATE_FINISH_VIDEO) {
+                    addChatData(
+                        ChatRecordEntity(
+                            fromUid = 2,
+                            toUid = 1,
+                            chatType = ChatRecordEntity.TYPE_VIDEO,
+                            videoPath = data.getStringExtra(IntentExtra.videoImgPath)!!,
+                            videoDuration = data.getIntExtra(IntentExtra.videoDuration, 0).toLong()
+                        )
+                    )
+                }else {
+                    addChatData(
+                        ChatRecordEntity(
+                            fromUid = 2,
+                            toUid = 1,
+                            chatType = ChatRecordEntity.TYPE_IMG,
+                            imgUrl = data.getStringExtra(IntentExtra.videoImgPath)!!
+                        )
+                    )
+                }
+            }
+        }
     }
 }

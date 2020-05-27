@@ -36,6 +36,20 @@ fun Context.versionCode(): String {
     return versionCode
 }
 
+fun Context.versionName(): String {
+    val packageManager = packageManager
+    val packageInfo: PackageInfo
+    var versionName = ""
+    try {
+        packageInfo = packageManager.getPackageInfo(packageName, 0)
+        versionName = packageInfo.versionName
+    } catch (e: PackageManager.NameNotFoundException) {
+        e.printStackTrace()
+    }
+
+    return versionName
+}
+
 private val handler = Handler(Looper.getMainLooper())
 fun runUnUiThread(block: () -> Unit) {
     if (Looper.myLooper() == Looper.getMainLooper()) {

@@ -1,7 +1,9 @@
 package com.benyq.guochat.model.vm
 
+import android.os.Parcelable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.android.parcel.Parcelize
 
 /**
  * @author benyq
@@ -17,8 +19,8 @@ class PictureVideoViewModel : ViewModel() {
         mState.postValue(StateEvent(StateEvent.STATE_IMG, path))
     }
 
-    fun showVideoConfirm(path: String) {
-        mState.postValue(StateEvent(StateEvent.STATE_VIDEO, path))
+    fun showVideoConfirm(path: String, videoDuration: Int) {
+        mState.postValue(StateEvent(StateEvent.STATE_VIDEO, path, videoDuration))
     }
 
     fun clearTop() {
@@ -33,12 +35,12 @@ class PictureVideoViewModel : ViewModel() {
         mState.value = StateEvent(StateEvent.STATE_FINISH_IMG, path)
     }
 
-    fun finishVideo(path: String) {
-        mState.value = StateEvent(StateEvent.STATE_FINISH_VIDEO, path)
+    fun finishVideo(path: String, videoDuration: Int) {
+        mState.value = StateEvent(StateEvent.STATE_FINISH_VIDEO, path, videoDuration)
     }
 }
 
-class StateEvent(val state: Int, val path: String? = null) {
+class StateEvent(val state: Int, val path: String? = null, var videoDuration: Int = 0) {
 
     companion object {
         const val STATE_IMG = 1
