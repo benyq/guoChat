@@ -16,4 +16,10 @@
         app:toolbar_type="dark"
         app:toolbar_title="@string/avatar"/>
 
+    <ImageView
+        android:id="@+id/ivAvatar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="30dp"/>
+
 </LinearLayout>

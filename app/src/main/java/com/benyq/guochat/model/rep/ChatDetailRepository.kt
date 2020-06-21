@@ -13,9 +13,9 @@ import com.benyq.mvvm.mvvm.BaseRepository
  */
 class ChatDetailRepository : BaseRepository(){
 
-    suspend fun getChatRecord(chatId: Long, page: Long, size: Long): ChatResponse<List<ChatRecordEntity>> {
+    suspend fun getChatRecord(chatId: Long, page: Int, size: Int): ChatResponse<List<ChatRecordEntity>> {
         return launchIO {
-            ChatResponse.success(ObjectBox.getChatRecord(chatId, page, size))
+            ChatResponse.success(ObjectBox.getChatRecord(chatId, page.toLong(), size.toLong()))
         }
     }
 

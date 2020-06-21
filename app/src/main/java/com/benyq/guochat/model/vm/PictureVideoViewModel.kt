@@ -1,9 +1,7 @@
 package com.benyq.guochat.model.vm
 
-import android.os.Parcelable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.android.parcel.Parcelize
 
 /**
  * @author benyq
@@ -47,6 +45,7 @@ class StateEvent(val state: Int, val path: String? = null, var videoDuration: In
         const val STATE_VIDEO = 2
         const val STATE_CLEAR_TOP = 3
         const val STATE_CLEAR_ALL = 4
+
         //结果返回
         const val STATE_FINISH_IMG = 5
         const val STATE_FINISH_VIDEO = 6

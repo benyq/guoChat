@@ -16,7 +16,7 @@ class ChatDetailViewModel : BaseViewModel<ChatDetailRepository>(){
     val mChatRecordData = MutableLiveData<List<ChatRecordEntity>>()
     val mSendMessageData = MutableLiveData<Boolean>()
 
-    fun getChatRecord(chatId: Long, page: Long, size: Long) {
+    fun getChatRecord(chatId: Long, page: Int, size: Int) {
         quickLaunch<List<ChatRecordEntity>> {
             onSuccess {
                 mChatRecordData.value = it

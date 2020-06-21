@@ -23,6 +23,10 @@ import kotlinx.android.synthetic.main.view_icon_form_line.view.*
 class IconFormLine(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
     LinearLayout(context, attrs, defStyleAttr) {
 
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+
+    constructor(context: Context) : this(context, null)
+
     private val imgResNone = 0
 
     private var title: String? = ""
@@ -37,10 +41,6 @@ class IconFormLine(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
     private val imgRes: Int
 
     private var hint: String? = ""
-
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-
-    constructor(context: Context) : this(context, null)
 
     init {
         View.inflate(context, R.layout.view_icon_form_line, this)

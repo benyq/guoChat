@@ -1,60 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_alipay"
+    android:orientation="vertical"
     tools:context=".ui.TestActivity">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <com.benyq.guochat.ui.common.widget.HeaderView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical">
+        app:toolbar_title="测试"/>
 
-        <TextView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:text="右移1"
-            android:textColor="@color/white"
-            android:background="@color/color_2a2a2a" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:text="右移2"
-            android:textColor="@color/white"
-            android:background="@color/color_2a2a2a" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:text="右移1"
+                android:textColor="@color/white"
+                android:background="@color/color_2a2a2a" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:text="右移3"
-            android:textColor="@color/white"
-            android:background="@color/color_2a2a2a" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:text="右移2"
+                android:textColor="@color/white"
+                android:background="@color/color_2a2a2a" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:text="右移4"
-            android:textColor="@color/white"
-            android:background="@color/color_2a2a2a" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:text="右移3"
+                android:textColor="@color/white"
+                android:background="@color/color_2a2a2a" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:text="右移5"
-            android:textColor="@color/white"
-            android:background="@color/color_2a2a2a" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:text="右移4"
+                android:textColor="@color/white"
+                android:background="@color/color_2a2a2a" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:text="右移6"
-            android:textColor="@color/white"
-            android:background="@color/color_2a2a2a" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:text="右移5"
+                android:textColor="@color/white"
+                android:background="@color/color_2a2a2a" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:text="右移6"
+                android:textColor="@color/white"
+                android:background="@color/color_2a2a2a" />
 
-</ScrollView>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

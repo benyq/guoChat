@@ -1,12 +1,25 @@
 package com.benyq.guochat.ui.discover
 
 import android.graphics.Color
+import android.graphics.drawable.AnimationDrawable
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.StateListDrawable
+import android.graphics.drawable.shapes.OvalShape
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageButton
+import androidx.activity.OnBackPressedCallback
 import com.benyq.guochat.R
 import com.benyq.guochat.loadAvatar
 import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.common.widget.HeaderView
-import com.benyq.mvvm.ext.loge
+import com.benyq.guochat.ui.common.widget.satellite_menu.MenuItemView
+import com.benyq.guochat.ui.common.widget.satellite_menu.OnMenuActionListener
+import com.benyq.guochat.ui.common.widget.satellite_menu.SatelliteMenuLayout
+import com.benyq.mvvm.ext.getDrawableRef
+import com.benyq.mvvm.ext.startActivity
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.gyf.immersionbar.ImmersionBar
@@ -20,6 +33,35 @@ import kotlin.math.abs
  * @note 果聊朋友圈，当前用户的
  */
 class FriendCircleActivity : LifecycleActivity() {
+
+    private val frameDuration = 20
+    private lateinit var frameAnim: AnimationDrawable
+    private lateinit var frameReverseAnim: AnimationDrawable
+
+    private val frameAnimRes = intArrayOf(
+        R.mipmap.compose_anim_1,
+        R.mipmap.compose_anim_2,
+        R.mipmap.compose_anim_3,
+        R.mipmap.compose_anim_4,
+        R.mipmap.compose_anim_5,
+        R.mipmap.compose_anim_6,
+        R.mipmap.compose_anim_7,
+        R.mipmap.compose_anim_8,
+        R.mipmap.compose_anim_9,
+        R.mipmap.compose_anim_10,
+        R.mipmap.compose_anim_11,
+        R.mipmap.compose_anim_12,
+        R.mipmap.compose_anim_13,
+        R.mipmap.compose_anim_14,
+        R.mipmap.compose_anim_15,
+        R.mipmap.compose_anim_15,
+        R.mipmap.compose_anim_16,
+        R.mipmap.compose_anim_17,
+        R.mipmap.compose_anim_18,
+        R.mipmap.compose_anim_19
+    )
+
+    private lateinit var mSatelliteMenuLayout: SatelliteMenuLayout
 
     override fun getLayoutId() = R.layout.activity_friend_circle
 
@@ -39,6 +81,8 @@ class FriendCircleActivity : LifecycleActivity() {
         Glide.with(this)
             .load("https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=11232128,2567744034&fm=26&gp=0.jpg")
             .centerCrop().into(ivBg)
+
+        setSatelliteMenu()
     }
 
     override fun initListener() {
@@ -78,5 +122,141 @@ class FriendCircleActivity : LifecycleActivity() {
             }
         })
 
+    }
+
+    private fun setSatelliteMenu(){
+        createFabFrameAnim()
+        createFabReverseFrameAnim()
+
+        val mFab = ImageButton(this)
+        val drawable =
+            StateListDrawable()
+        drawable.addState(intArrayOf(android.R.attr.state_pressed), createDrawable(Color.parseColor("#36465d")))
+        drawable.addState(intArrayOf(-android.R.attr.state_enabled), createDrawable(Color.parseColor("#529ecc")))
+        drawable.addState(intArrayOf(), createDrawable(Color.parseColor("#529ecc")))
+
+        mFab.background = drawable
+
+        mFab.setImageDrawable(frameAnim)
+        val menuItemListener = createMenuListener()
+        mSatelliteMenuLayout = SatelliteMenuLayout.SatelliteMenuLayoutBuilder()
+            .apply {
+                context = this@FriendCircleActivity
+                fab = mFab
+                addMenuItem(
+                    R.color.photo,
+                    R.mipmap.ic_messaging_posttype_photo,
+                    "图片",
+                    R.color.text_color,
+                    menuItemListener
+                )
+                addMenuItem(
+                    R.color.chat,
+                    R.mipmap.ic_messaging_posttype_chat,
+                    "Chat",
+                    R.color.text_color,
+                    menuItemListener
+                )
+                addMenuItem(
+                    R.color.quote,
+                    R.mipmap.ic_messaging_posttype_quote,
+                    "Quote",
+                    R.color.text_color,
+                    menuItemListener
+                )
+                addMenuItem(
+                    R.color.link,
+                    R.mipmap.ic_messaging_posttype_link,
+                    "链接",
+                    R.color.text_color,
+                    menuItemListener
+                )
+                addMenuItem(
+                    R.color.audio,
+                    R.mipmap.ic_messaging_posttype_audio,
+                    "音频",
+                    R.color.text_color,
+                    menuItemListener
+                )
+                addMenuItem(
+                    R.color.text,
+                    R.mipmap.ic_messaging_posttype_text,
+                    "文字",
+                    R.color.text_color,
+                    menuItemListener
+                )
+                addMenuItem(
+                    R.color.video,
+                    R.mipmap.ic_messaging_posttype_video,
+                    "视频",
+                    R.color.text_color,
+                    menuItemListener
+                )
+                revealColor = R.color.color_36465d
+                onMenuActionListener(object: OnMenuActionListener {
+                    override fun onMenuClose() {
+                        mFab.setImageDrawable(frameReverseAnim)
+                        frameReverseAnim.start()
+                    }
+
+                    override fun onMenuOpen() {
+                        mFab.setImageDrawable(frameAnim)
+                        frameAnim.start()
+                    }
+                })
+            }.build()
+
+
+        val rootView = findViewById<ViewGroup>(android.R.id.content)
+        rootView.addView(mSatelliteMenuLayout)
+
+        onBackPressedDispatcher.addCallback(this,object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (mSatelliteMenuLayout.mMenuOpen) {
+                    mSatelliteMenuLayout.hideMenu()
+                } else {
+                    finish()
+                }
+            }
+        })
+    }
+
+    private fun createMenuListener(): View.OnClickListener {
+        return View.OnClickListener {
+            if (it is MenuItemView) {
+                when(it.getMenuIcon()) {
+                    R.mipmap.ic_messaging_posttype_photo -> {
+                        startActivity<AddCircleActivity>()
+                    }
+                    R.mipmap.ic_messaging_posttype_text -> {
+
+                    }
+                }
+                mSatelliteMenuLayout.hideMenu()
+            }
+        }
+    }
+
+    private fun createFabFrameAnim() {
+        frameAnim = AnimationDrawable()
+        frameAnim.isOneShot = true
+        frameAnimRes.forEach {
+            frameAnim.addFrame(getDrawableRef(it)!!, frameDuration)
+        }
+    }
+
+    private fun createFabReverseFrameAnim() {
+        frameReverseAnim = AnimationDrawable()
+        frameReverseAnim.isOneShot = true
+        for (i in frameAnimRes.size - 1 downTo 0) {
+            frameReverseAnim.addFrame(getDrawableRef(frameAnimRes[i])!!, frameDuration)
+        }
+    }
+
+    private fun createDrawable(color: Int): Drawable? {
+        val ovalShape = OvalShape()
+        val shapeDrawable = ShapeDrawable(ovalShape)
+        shapeDrawable.paint.color = color
+        return shapeDrawable
     }
 }

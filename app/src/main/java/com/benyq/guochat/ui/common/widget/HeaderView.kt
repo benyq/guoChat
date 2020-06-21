@@ -12,6 +12,7 @@ import androidx.annotation.IntDef
 import androidx.annotation.RestrictTo
 import androidx.core.graphics.drawable.DrawableCompat
 import com.benyq.guochat.R
+import com.benyq.guochat.ui.base.DrawableBuilder
 import com.benyq.mvvm.ext.getColorRef
 import com.benyq.mvvm.ext.getDrawableRef
 import kotlinx.android.synthetic.main.layout_common_toolbar.view.*
@@ -52,10 +53,16 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
     private var mMenuText: String
     private var mMenuBtnShow: Boolean
     private val headerViewBg: Drawable?
+    private val mToolbarMenuSrc: Drawable?
 
+    private val mBgMenuBtn: Drawable
 
     init {
         View.inflate(context, R.layout.layout_common_toolbar, this)
+        mBgMenuBtn = DrawableBuilder(context)
+            .fill(context.getColorRef(R.color.color_3fa9a9a9))
+            .corner(5f)
+            .build()
         val array = getContext().obtainStyledAttributes(
             attrs,
             R.styleable.HeaderView
@@ -68,7 +75,7 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
         mTitleGravity = array.getInt(R.styleable.HeaderView_title_gravity, titleCenter)
         mToolbarType = array.getInt(R.styleable.HeaderView_toolbar_type, toolbarTypeNormal)
         headerViewBg = array.getDrawable(R.styleable.HeaderView_toolbar_bg)
-
+        mToolbarMenuSrc = array.getDrawable(R.styleable.HeaderView_toolbar_menu_src) ?: context.getDrawable(R.drawable.ic_three_dots)
 
         array.recycle()
 
@@ -80,7 +87,7 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
 
         toolbarBack.visibility = if (mEnableBack) View.VISIBLE else View.INVISIBLE
         toolbarMenu.visibility = if (mEnableMenu) View.VISIBLE else View.INVISIBLE
-
+        toolbarMenu.setImageDrawable(mToolbarMenuSrc)
         toolbarTitle.gravity = when (mTitleGravity) {
             titleEnd -> {
                 Gravity.END
@@ -126,7 +133,7 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
             tvMenu.setTextColor(Color.WHITE)
         } else {
             tvMenu.setTextColor(context.getColorRef(R.color.gray))
-            tvMenu.setBackgroundColor(context.getColorRef(R.color.color_3fa9a9a9))
+            tvMenu.background = mBgMenuBtn
         }
         tvMenu.isEnabled = enabled
     }
@@ -171,6 +178,7 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
                 )
             )
         }
+        toolbarMenu.setImageDrawable(mToolbarMenuSrc)
         headerViewBg?.run {
             toolbar.background = this
         }

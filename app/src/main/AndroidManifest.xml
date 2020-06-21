@@ -21,7 +21,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.discover.FriendCircleActivity"></activity>
+        <activity android:name=".ui.discover.CirclePhotoViewPagerActivity"></activity>
+        <activity android:name=".ui.discover.AddCircleActivity" />
+
+        <service android:name=".function.message.MessageService" />
+
+        <activity android:name=".ui.contracts.ContractNickActivity" />
+        <activity android:name=".ui.discover.FriendCircleActivity" />
         <activity android:name=".ui.contracts.ContractDetailActivity" />
         <activity android:name=".ui.TestActivity" />
         <activity android:name=".ui.settings.AboutAppActivity" />

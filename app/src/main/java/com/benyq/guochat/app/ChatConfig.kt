@@ -1,5 +1,7 @@
 package com.benyq.guochat.app
 
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+
 /**
  * @author benyq
  * @time 2020/5/2
@@ -23,3 +25,8 @@ const val VIDEO_PATH = "video"
 const val GENDER_FEMALE = 0
 const val GENDER_MALE = 1
 const val GENDER_UNKNOWN = 2
+
+val TEXT = "text/plain; charset=utf-8".toMediaTypeOrNull()
+val STREAM = "application/octet-stream".toMediaTypeOrNull()
+val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
+val FormUrlEncoded = "application/x-www-form-urlencoded;charset=UTF-8".toMediaTypeOrNull()

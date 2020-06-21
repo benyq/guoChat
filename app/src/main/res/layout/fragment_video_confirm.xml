@@ -21,6 +21,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="15dp"
         style="@style/normalButton"
-        android:text="@string/picture_finish" />
+        android:text="@string/finish" />
 
 </FrameLayout>

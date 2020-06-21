@@ -1,6 +1,8 @@
 package com.benyq.guochat.ui.contracts
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import com.benyq.guochat.R
 import com.benyq.guochat.app.GENDER_FEMALE
 import com.benyq.guochat.app.GENDER_MALE
@@ -13,6 +15,7 @@ import com.benyq.guochat.local.entity.ContractEntity
 import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.chats.ChatDetailActivity
 import com.benyq.guochat.ui.common.CommonBottomDialog
+import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.ext.Toasts
 import com.benyq.mvvm.ext.startActivity
 import com.bumptech.glide.Glide
@@ -71,7 +74,7 @@ class ContractDetailActivity : LifecycleActivity() {
                     setOnMenuAction { _, index ->
                         when (index) {
                             0 -> {
-                                Toasts.show("设置备注和标签")
+                                editContractRemarks()
                             }
                             1 -> {
                                 Toasts.show("朋友权限")
@@ -83,5 +86,15 @@ class ContractDetailActivity : LifecycleActivity() {
                     }
                 }
         mBottomDialog?.show(supportFragmentManager)
+    }
+
+    private fun editContractRemarks(){
+        SmartJump.from(this@ContractDetailActivity).startForResult(Intent(this@ContractDetailActivity, ContractNickActivity::class.java).apply {
+            putExtra(IntentExtra.contractData, mContractEntity)
+        }) { code, data->
+            if (code == Activity.RESULT_OK && data != null) {
+
+            }
+        }
     }
 }

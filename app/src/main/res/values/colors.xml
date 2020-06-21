@@ -38,4 +38,24 @@
     <color name="viewfinder_laser">#ffcc0000</color> <!-- Android standard ICS color -->
     <color name="viewfinder_mask">#60000000</color>
 
+
+
+
+
+
+
+
+    <color name="chat">#559fca</color>
+    <color name="quote">#f0983c</color>
+    <color name="link">#5abb8b</color>
+    <color name="audio">#a67fc0</color>
+    <color name="photo">#d75f45</color>
+    <color name="text">#444444</color>
+    <color name="video">#748089</color>
+
+    <color name="fab">#529ecc</color>
+
+    <color name="text_color">#949ca8</color>
+    <color name="color_36465d">#36465d</color>
+
 </resources>

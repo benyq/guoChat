@@ -43,7 +43,7 @@
             <ImageView
                 android:id="@+id/ivContent"
                 android:layout_width="100dp"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:layout_marginStart="15dp"/>
 

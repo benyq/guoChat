@@ -20,4 +20,8 @@ object IntentExtra {
     const val stateEvent = "StateEvent"
 
     const val contractData = "contractData"
+
+    const val circlePhotos = "circlePhotos"
+
+    const val circlePhotosIndex = "circlePhotosIndex"
 }

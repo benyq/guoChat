@@ -74,7 +74,7 @@ object ObjectBox {
                 ),
                 ContractEntity(
                     0, "2", "klfjjasjasjda", "三公主", 0, "三公主",
-                    "https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3170379310,1742401393&fm=111&gp=0.jpg",
+                    "https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=909846316,603824306&fm=111&gp=0.jpg",
                     CHAT_TYPE_CONTRACT
                 ),
                 ContractEntity(
@@ -84,7 +84,7 @@ object ObjectBox {
                 ),
                 ContractEntity(
                     0, "2", "klfjjasjasjda", "凯南", 1, "凯南",
-                    "https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4156830825,3265157570&fm=111&gp=0.jpg",
+                    "https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3321238736,733069773&fm=26&gp=0.jpg",
                     CHAT_TYPE_CONTRACT
                 )
             )
@@ -113,11 +113,12 @@ object ObjectBox {
      */
     fun getChatRecord(chatId: Long, page: Long, size: Long): List<ChatRecordEntity> {
         val chatRecordBox: Box<ChatRecordEntity> = boxStore.boxFor()
-        val chatRecords = chatRecordBox.query {
+        val data =  chatRecordBox.query {
             equal(ChatRecordEntity_.fromToId, chatId)
-            order(ChatRecordEntity_.sendTime)
+            orderDesc(ChatRecordEntity_.sendTime)
         }.find((page - 1) * size, size)
-        return chatRecords
+        data.reverse()
+        return data
     }
 
     fun updateChatRecord(chatId: Long) {

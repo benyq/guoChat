@@ -24,8 +24,6 @@
             app:contentScrim="@color/darkgrey"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-
-
             <ImageView
                 android:id="@+id/ivBg"
                 android:layout_width="match_parent"

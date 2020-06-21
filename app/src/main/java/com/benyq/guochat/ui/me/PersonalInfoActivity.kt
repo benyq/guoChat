@@ -3,6 +3,8 @@ package com.benyq.guochat.ui.me
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.benyq.guochat.R
+import com.benyq.guochat.loadAvatar
+import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.contracts.CallingCardActivity
 import com.benyq.mvvm.SmartJump
@@ -18,6 +20,14 @@ import kotlinx.android.synthetic.main.activity_personal_info.*
 class PersonalInfoActivity : LifecycleActivity() {
 
     override fun getLayoutId() = R.layout.activity_personal_info
+
+    override fun initView() {
+        LocalStorage.userAccount.run {
+            loadAvatar(ivAvatar, avatarUrl)
+            ifNickName.setContent(nickName)
+            ifChatNo.setContent(chatNo)
+        }
+    }
 
     override fun initListener() {
 

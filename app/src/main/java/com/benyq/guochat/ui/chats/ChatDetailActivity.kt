@@ -6,6 +6,7 @@ import android.graphics.Rect
 import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.os.postDelayed
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +24,7 @@ import com.benyq.guochat.ui.chats.video.PictureVideoActivity
 import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.annotation.BindViewModel
 import com.benyq.mvvm.ext.*
+import com.gyf.immersionbar.ktx.immersionBar
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
@@ -102,7 +104,7 @@ class ChatDetailActivity : LifecycleActivity(), View.OnClickListener {
         rootLayout.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
             if (oldBottom != -1 && oldBottom > bottom) {
                 if (mAdapter.data.isNotEmpty()) {
-                    rvChatRecord.smoothScrollToPosition(mAdapter.data.size - 1)
+                    rvChatRecord.scrollToPosition(mAdapter.data.size - 1)
                 }
             }
         }
@@ -125,6 +127,18 @@ class ChatDetailActivity : LifecycleActivity(), View.OnClickListener {
 
         }
         headerView.setToolbarTitle(mChatListBean.contractName)
+    }
+
+    override fun initImmersionBar() {
+        immersionBar {
+            fitsSystemWindows(true)
+            statusBarColor(R.color.darkgrey)
+            statusBarDarkFont(
+                true,
+                0.2f
+            ) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+            keyboardEnable(true)
+        }
     }
 
     override fun initListener() {
@@ -160,7 +174,7 @@ class ChatDetailActivity : LifecycleActivity(), View.OnClickListener {
         }
         mAdapter.setOnItemChildClickListener { adapter, view, position ->
             val chatRecord = mAdapter.data[position]
-            when(view.id) {
+            when (view.id) {
                 R.id.ivContent -> {
                     startActivity<ChatImageActivity>(IntentExtra.imgPath to chatRecord.imgUrl)
                     overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out)
@@ -183,12 +197,15 @@ class ChatDetailActivity : LifecycleActivity(), View.OnClickListener {
     }
 
     override fun initData() {
-        mViewModel.getChatRecord(mChatListBean.fromToId, 1L, 10L)
+        mViewModel.getChatRecord(mChatListBean.fromToId, 1, 10)
     }
 
     override fun dataObserver() {
         with(mViewModel) {
             mChatRecordData.observe(this@ChatDetailActivity, Observer {
+                //根据item总高度显示区分 stackFromEnd 会出现问题，所以目前先靠估算吧
+                val layoutManager = rvChatRecord.layoutManager as LinearLayoutManager
+                layoutManager.stackFromEnd = it.size > 5
                 mAdapter.setNewInstance(it.toMutableList())
             })
             mSendMessageData.observe(this@ChatDetailActivity, Observer {
@@ -264,10 +281,14 @@ class ChatDetailActivity : LifecycleActivity(), View.OnClickListener {
                     })
             }
             R.id.llCapture -> {
-                PermissionX.request(this, Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO) { grated, denyList ->
+                PermissionX.request(
+                    this,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.RECORD_AUDIO
+                ) { grated, denyList ->
                     if (grated) {
                         gotoCameraCapture()
-                    }else {
+                    } else {
                         Toasts.show("请授予相应权限")
                     }
                 }
@@ -334,7 +355,7 @@ class ChatDetailActivity : LifecycleActivity(), View.OnClickListener {
                             videoDuration = data.getIntExtra(IntentExtra.videoDuration, 0).toLong()
                         )
                     )
-                }else {
+                } else {
                     addChatData(
                         ChatRecordEntity(
                             fromUid = 2,

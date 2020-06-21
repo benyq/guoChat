@@ -21,7 +21,7 @@ class DrawableBuilder(private val mContext: Context) {
     private val defaultLineColor: Int = Color.parseColor("#e9e9e9")
 
     private val defaultCornerRadius = 2
-    private var defaultCornerRadii = FloatArray(8){0f}
+    private var defaultCornerRadii: FloatArray ? = null
     //椭圆形圆角
     private val defaultRoundCornerRadius = 100
 
@@ -58,7 +58,9 @@ class DrawableBuilder(private val mContext: Context) {
         bg.shape = shape
         bg.setStroke(lineWidth, lineColor, dashWidth, dashGap)
         bg.cornerRadius = cornerRadius
-        bg.cornerRadii = defaultCornerRadii
+        defaultCornerRadii?.run {
+            bg.cornerRadii = this
+        }
         bg.setColor(bkColor)
         return bg
     }

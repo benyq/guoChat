@@ -1,7 +1,5 @@
 package com.benyq.guochat.model.rep
 
-import com.benyq.guochat.local.ObjectBox
-import com.benyq.guochat.model.bean.ChatListBean
 import com.benyq.mvvm.mvvm.BaseRepository
 
 /**

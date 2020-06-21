@@ -25,7 +25,7 @@
     <string name="search_phone_id">果聊号/手机号</string>
     <string name="my_chat_id">我的果聊号:</string>
     <string name="scan_qr_calling_card">扫描二维码名片</string>
-    <string name="picture_finish">完成</string>
+    <string name="finish">完成</string>
     <string name="avatar">头像</string>
     <string name="personal_info">个人信息</string>
     <string name="nick_name">昵称</string>
@@ -45,6 +45,10 @@
     <string name="guo_chat_circle">果聊圈</string>
     <string name="send_message">发送消息</string>
     <string name="gender_column">性别: </string>
+    <string name="setting_remarks">设置备注</string>
+    <string name="remarks_name">备注名</string>
+    <string name="submit">发表</string>
+    <string name="current_ideas">这一刻想法</string>
 
 
     <string name="msg_camera_framework_bug">Sorry, the Android camera encountered a problem. You may need to restart the device.</string>

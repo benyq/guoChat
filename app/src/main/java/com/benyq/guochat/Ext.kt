@@ -1,10 +1,13 @@
 package com.benyq.guochat
 
 import android.content.Context
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.benyq.mvvm.ext.loge
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import kotlinx.coroutines.*

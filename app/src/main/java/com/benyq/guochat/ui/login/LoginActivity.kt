@@ -5,6 +5,7 @@ import com.benyq.guochat.R
 import com.benyq.guochat.model.vm.LoginViewModel
 import com.benyq.guochat.textTrim
 import com.benyq.guochat.ui.MainActivity
+import com.benyq.guochat.ui.TestActivity
 import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.mvvm.annotation.BindViewModel
 import com.benyq.mvvm.ext.Toasts

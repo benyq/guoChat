@@ -1,98 +1,180 @@
 package com.benyq.guochat.ui
 
-import android.animation.ValueAnimator
 import android.graphics.Color
+import android.graphics.drawable.*
+import android.graphics.drawable.shapes.OvalShape
 import android.os.Bundle
-import android.view.MotionEvent
-import android.view.ViewConfiguration
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.animation.addListener
+import androidx.navigation.fragment.NavHostFragment
 import com.benyq.guochat.R
-import com.benyq.mvvm.ext.getScreenWidth
+import com.benyq.guochat.ui.common.widget.satellite_menu.MenuItemView
+import com.benyq.guochat.ui.common.widget.satellite_menu.OnMenuActionListener
+import com.benyq.guochat.ui.common.widget.satellite_menu.SatelliteMenuLayout
+import com.benyq.mvvm.ext.getDrawableRef
 import com.benyq.mvvm.ext.loge
-import kotlinx.android.synthetic.main.activity_test.*
-import kotlin.math.abs
 
-class TestActivity : AppCompatActivity() {
+class TestActivity : AppCompatActivity(), View.OnClickListener {
+
+    private val frameDuration = 20
+    private lateinit var frameAnim: AnimationDrawable
+    private lateinit var frameReverseAnim: AnimationDrawable
+
+    private val frameAnimRes = intArrayOf(
+        R.mipmap.compose_anim_1,
+        R.mipmap.compose_anim_2,
+        R.mipmap.compose_anim_3,
+        R.mipmap.compose_anim_4,
+        R.mipmap.compose_anim_5,
+        R.mipmap.compose_anim_6,
+        R.mipmap.compose_anim_7,
+        R.mipmap.compose_anim_8,
+        R.mipmap.compose_anim_9,
+        R.mipmap.compose_anim_10,
+        R.mipmap.compose_anim_11,
+        R.mipmap.compose_anim_12,
+        R.mipmap.compose_anim_13,
+        R.mipmap.compose_anim_14,
+        R.mipmap.compose_anim_15,
+        R.mipmap.compose_anim_15,
+        R.mipmap.compose_anim_16,
+        R.mipmap.compose_anim_17,
+        R.mipmap.compose_anim_18,
+        R.mipmap.compose_anim_19
+    )
+
+    private var count = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test)
-    }
 
-    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        return swipeBackAction(ev) || super.dispatchTouchEvent(ev)
-    }
+        createFabFrameAnim()
+        createFabReverseFrameAnim()
 
-    private var touchX = 0f
-    private var touchY = 0f
-    private var touchOriginX = 0f
-    private var scrolling = false
+        val mFab = ImageButton(this)
+        val drawable =
+            StateListDrawable()
+        drawable.addState(intArrayOf(android.R.attr.state_pressed), createDrawable(Color.parseColor("#36465d")))
+        drawable.addState(intArrayOf(-android.R.attr.state_enabled), createDrawable(Color.parseColor("#529ecc")))
+        drawable.addState(intArrayOf(), createDrawable(Color.parseColor("#529ecc")))
 
-    /**
-     * 开启右移退出后，水平的方向的事件都被拦截
-     */
-    open fun swipeBackAction(ev: MotionEvent?) : Boolean{
-        when(ev?.action) {
-            MotionEvent.ACTION_DOWN -> {
-                touchX = ev.x
-                touchY = ev.y
-                touchOriginX = ev.x
-            }
-            MotionEvent.ACTION_MOVE -> {
-                //拦截水平方向的移动
-                val moveX = -(ev.x - touchX).toInt()
-                val moveY = -(ev.y - touchY).toInt()
-                if (abs(ViewConfiguration.get(this).scaledTouchSlop) > abs(moveX) && !scrolling) {
-                    return false
-                }
-                touchX = ev.x
-                touchY = ev.y
-                if (abs(moveY) > abs(moveX) && !scrolling) {
-                    return false
-                }
-                scrolling = true
-                loge("MotionEvent.ACTION_MOVE   moveX $moveX  touchOriginX $touchOriginX")
-                if (ev.x - touchOriginX >= 0) {
-                    window.decorView.scrollBy(moveX, 0)
-                }else {
-                    window.decorView.scrollTo(0, 0)
-                }
-                return true
-            }
-            MotionEvent.ACTION_UP -> {
-                //偏移量
-                val moveX = ev.x - touchOriginX
-                loge("MotionEvent.ACTION_UP   moveX $moveX  touchOriginX $touchOriginX  --- ${ViewConfiguration.get(this).scaledTouchSlop}")
-                touchX = 0f
-                touchOriginX = 0f
-                scrolling = false
+        mFab.background = drawable
 
-                if (abs(ViewConfiguration.get(this).scaledTouchSlop) < abs(moveX)) {
-                    //水平方向存在滑动
-                    if (moveX > 0.4 * getScreenWidth()) {
-                        //finish
-                        val valueObjectAnimator = ValueAnimator.ofFloat(moveX - getScreenWidth())
-                            .setDuration(200)
-                        valueObjectAnimator.addUpdateListener {
-                            val x = it.animatedValue as Float
-                            loge("valueObjectAnimator $x")
-                            window.decorView.scrollBy(x.toInt(), 0)
-                        }
-                        valueObjectAnimator.addListener(onEnd = {
-                            finish()
-                        })
-                        valueObjectAnimator.start()
-                    }else {
-                        //rollBack
-                        window.decorView.scrollTo(0, 0)
+        mFab.setImageDrawable(frameAnim)
+        val satelliteMenuLayout = SatelliteMenuLayout.SatelliteMenuLayoutBuilder()
+            .apply {
+                context = this@TestActivity
+                fab = mFab
+                addMenuItem(
+                    R.color.photo,
+                    R.mipmap.ic_messaging_posttype_photo,
+                    "Photo",
+                    R.color.text_color,
+                    this@TestActivity
+                )
+                addMenuItem(
+                    R.color.chat,
+                    R.mipmap.ic_messaging_posttype_chat,
+                    "Chat",
+                    R.color.text_color,
+                    this@TestActivity
+                )
+                addMenuItem(
+                    R.color.quote,
+                    R.mipmap.ic_messaging_posttype_quote,
+                    "Quote",
+                    R.color.text_color,
+                    this@TestActivity
+                )
+                addMenuItem(
+                    R.color.link,
+                    R.mipmap.ic_messaging_posttype_link,
+                    "Link",
+                    R.color.text_color,
+                    this@TestActivity
+                )
+                addMenuItem(
+                    R.color.audio,
+                    R.mipmap.ic_messaging_posttype_audio,
+                    "Audio",
+                    R.color.text_color,
+                    this@TestActivity
+                )
+                addMenuItem(
+                    R.color.text,
+                    R.mipmap.ic_messaging_posttype_text,
+                    "Text",
+                    R.color.text_color,
+                    this@TestActivity
+                )
+                addMenuItem(
+                    R.color.video,
+                    R.mipmap.ic_messaging_posttype_video,
+                    "Video",
+                    R.color.text_color,
+                    this@TestActivity
+                )
+                revealColor = R.color.color_36465d
+                onMenuActionListener(object: OnMenuActionListener {
+                    override fun onMenuClose() {
+                        mFab.setImageDrawable(frameReverseAnim)
+                        frameReverseAnim.start()
                     }
-                    return true
-                }else {
-                    window.decorView.scrollTo(0, 0)
+
+                    override fun onMenuOpen() {
+                        mFab.setImageDrawable(frameAnim)
+                        frameAnim.start()
+                    }
+                })
+            }.build()
+
+
+        val rootView = findViewById<ViewGroup>(android.R.id.content)
+        rootView.addView(satelliteMenuLayout)
+
+        onBackPressedDispatcher.addCallback(this,object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (satelliteMenuLayout.mMenuOpen) {
+                    satelliteMenuLayout.hideMenu()
+                } else {
+                    finish()
                 }
             }
-        }
-        return false
+        })
     }
+
+    override fun onClick(v: View?) {
+        val menuItemView: MenuItemView = v as MenuItemView
+        Toast.makeText(this, "ddddd", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun createFabFrameAnim() {
+        frameAnim = AnimationDrawable()
+        frameAnim.isOneShot = true
+        frameAnimRes.forEach {
+            frameAnim.addFrame(getDrawableRef(it)!!, frameDuration)
+        }
+    }
+
+    private fun createFabReverseFrameAnim() {
+        frameReverseAnim = AnimationDrawable()
+        frameReverseAnim.isOneShot = true
+        for (i in frameAnimRes.size - 1 downTo 0) {
+            frameReverseAnim.addFrame(getDrawableRef(frameAnimRes[i])!!, frameDuration)
+        }
+    }
+
+    private fun createDrawable(color: Int): Drawable? {
+        val ovalShape = OvalShape()
+        val shapeDrawable = ShapeDrawable(ovalShape)
+        shapeDrawable.paint.color = color
+        return shapeDrawable
+    }
+
+
 }

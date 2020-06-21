@@ -1,6 +1,9 @@
 package com.benyq.guochat.ui.me
 
 import com.benyq.guochat.R
+import com.benyq.guochat.app.IntentExtra
+import com.benyq.guochat.loadAvatar
+import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.ui.base.LifecycleFragment
 import com.benyq.guochat.ui.contracts.CallingCardActivity
 import com.benyq.guochat.ui.settings.SettingsActivity
@@ -18,7 +21,6 @@ class MeFragment : LifecycleFragment() {
     override fun getLayoutId() = R.layout.fragment_me
 
     override fun initView() {
-        super.initView()
     }
 
     override fun initListener() {
@@ -32,6 +34,19 @@ class MeFragment : LifecycleFragment() {
 
         ifSettings.setOnClickListener {
             startActivity<SettingsActivity>()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showUserInfo()
+    }
+
+    private fun showUserInfo(){
+        LocalStorage.userAccount.run {
+            loadAvatar(ivAvatar, avatarUrl)
+            tvUserNick.text = nickName
+            tvChatNo.text = chatNo
         }
     }
 }

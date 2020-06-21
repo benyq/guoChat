@@ -3,6 +3,7 @@ package com.benyq.guochat.app
 import android.app.Application
 import com.benyq.guochat.function.other.NotificationHelper
 import com.benyq.guochat.local.ObjectBox
+import com.benyq.guochat.model.net.ServiceFactory
 import com.github.promeg.pinyinhelper.Pinyin
 import com.tencent.mmkv.MMKV
 
@@ -21,11 +22,11 @@ class App : Application(){
     override fun onCreate() {
         super.onCreate()
         MMKV.initialize(this)
-//        ServiceFactory.initClient()
         sInstance = this
         ObjectBox.init(this)
         Pinyin.init(null)
         NotificationHelper.init(this)
+        ServiceFactory.initClient()
     }
 
 

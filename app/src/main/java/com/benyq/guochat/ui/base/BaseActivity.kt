@@ -163,9 +163,8 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
                 )
                 touchX = 0f
                 touchOriginX = 0f
-                scrolling = false
 
-                if (abs(ViewConfiguration.get(this).scaledTouchSlop) < abs(moveX)) {
+                if (abs(ViewConfiguration.get(this).scaledTouchSlop) < abs(moveX) && scrolling) {
                     //水平方向存在滑动
                     if (moveX > 0.4 * getScreenWidth()) {
                         //finish
@@ -184,9 +183,11 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
                         //rollBack
                         window.decorView.scrollTo(0, 0)
                     }
+                    scrolling = false
                     return true
                 } else {
                     window.decorView.scrollTo(0, 0)
+                    scrolling = false
                 }
             }
         }

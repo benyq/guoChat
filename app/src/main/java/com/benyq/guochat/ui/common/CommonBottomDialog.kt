@@ -13,6 +13,7 @@ import androidx.core.view.setPadding
 import com.benyq.guochat.R
 import com.benyq.guochat.dip2px
 import com.benyq.guochat.ui.base.BaseDialogFragment
+import com.benyq.guochat.ui.base.DrawableBuilder
 import com.benyq.mvvm.ext.getColorRef
 import com.benyq.mvvm.ext.getScreenWidth
 import kotlinx.android.synthetic.main.dialog_common_bottom_menu.*
@@ -45,6 +46,15 @@ class CommonBottomDialog : BaseDialogFragment() {
     override fun getLayoutId() = R.layout.dialog_common_bottom_menu
 
     override fun initView() {
+        llAvatarMenu.background = DrawableBuilder(mContext)
+            .cornerRadii(FloatArray(8){0f}.apply {
+                set(0, dip2px(mContext, 10))
+                set(1, dip2px(mContext, 10))
+                set(2, dip2px(mContext, 10))
+                set(3, dip2px(mContext, 10))
+            })
+            .fill(Color.WHITE)
+            .build()
         tvCancel.setOnClickListener { dismiss() }
         mTitles.forEachIndexed { index, s ->
             val textView = TextView(mContext)
