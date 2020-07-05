@@ -2,6 +2,7 @@ package com.benyq.guochat.ui.discover
 
 import android.Manifest
 import com.benyq.guochat.R
+import com.benyq.guochat.function.other.NotificationHelper
 import com.benyq.guochat.function.permissionX.PermissionX
 import com.benyq.guochat.function.zxing.android.CaptureActivity
 import com.benyq.guochat.ui.base.LifecycleFragment
@@ -21,7 +22,8 @@ class DiscoverFragment : LifecycleFragment() {
 
     override fun initListener() {
         ifFriendCircle.setOnClickListener {
-            startActivity<FriendCircleActivity>()
+//            startActivity<FriendCircleActivity>()
+            NotificationHelper.showMessageNotification(mContext)
         }
         ifScan.setOnClickListener {
             PermissionX.request(

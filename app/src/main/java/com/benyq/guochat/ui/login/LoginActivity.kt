@@ -1,15 +1,18 @@
 package com.benyq.guochat.ui.login
 
+import android.app.Activity
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
+import com.benyq.guochat.app.IntentExtra
+import com.benyq.guochat.model.bean.RegisterBean
 import com.benyq.guochat.model.vm.LoginViewModel
-import com.benyq.guochat.textTrim
 import com.benyq.guochat.ui.MainActivity
-import com.benyq.guochat.ui.TestActivity
 import com.benyq.guochat.ui.base.LifecycleActivity
+import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.annotation.BindViewModel
 import com.benyq.mvvm.ext.Toasts
 import com.benyq.mvvm.ext.startActivity
+import com.benyq.mvvm.ext.textTrim
 import kotlinx.android.synthetic.main.activity_login.*
 
 /**
@@ -42,11 +45,21 @@ class LoginActivity : LifecycleActivity() {
                 Toasts.show(R.string.password_empty)
                 return@setOnClickListener
             }
-//            showLoading("正在登录")
+            showLoading("正在登录")
             mViewModel.login(username, password)
         }
+
         btnRegister.setOnClickListener {
-            startActivity<RegisterActivity>()
+            SmartJump.from(this).startForResult(RegisterActivity::class.java) { code, data ->
+                if (code == Activity.RESULT_OK && data != null){
+                    val registerData = data.getParcelableExtra<RegisterBean>(IntentExtra.registerData)
+                    registerData?.run {
+                        etUserName.setText(userName)
+                        etPassword.setText(registerData.pwd)
+                        btnLogin.performClick()
+                    }
+                }
+            }
         }
     }
 

@@ -5,9 +5,9 @@ import androidx.lifecycle.Observer
 import com.benyq.guochat.R
 import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.model.vm.PersonalInfoViewModel
-import com.benyq.guochat.textTrim
 import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.mvvm.annotation.BindViewModel
+import com.benyq.mvvm.ext.textTrim
 import kotlinx.android.synthetic.main.activity_personal_info_edit.*
 
 /**

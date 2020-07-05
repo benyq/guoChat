@@ -5,8 +5,8 @@ import android.os.Bundle
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.local.entity.ContractEntity
-import com.benyq.guochat.textTrim
 import com.benyq.guochat.ui.base.LifecycleActivity
+import com.benyq.mvvm.ext.textTrim
 import kotlinx.android.synthetic.main.activity_contract_nick.*
 
 /**

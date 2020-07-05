@@ -127,6 +127,7 @@ class ChatDetailActivity : LifecycleActivity(), View.OnClickListener {
 
         }
         headerView.setToolbarTitle(mChatListBean.contractName)
+        mAdapter.notifyDataSetChanged()
     }
 
     override fun initImmersionBar() {

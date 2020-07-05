@@ -3,6 +3,7 @@ package com.benyq.guochat.ui.me
 import android.content.ContentValues
 import android.graphics.Bitmap
 import android.provider.MediaStore
+import android.util.Log
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +17,7 @@ import com.benyq.guochat.ui.common.CommonBottomDialog
 import com.benyq.mvvm.annotation.BindViewModel
 import com.benyq.mvvm.ext.Toasts
 import com.benyq.mvvm.ext.loge
+import com.benyq.mvvm.ext.setThrottleClickListener
 import com.gyf.immersionbar.ktx.immersionBar
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
@@ -116,29 +118,29 @@ class AvatarActivity : LifecycleActivity() {
     }
 
     private suspend fun savePhoto() {
-        withContext(Dispatchers.IO) {
-
-            val bitmap = ivAvatar.drawable.toBitmap()
-
-            val saveUri = contentResolver.insert(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                ContentValues().apply {
-                    put(MediaStore.Images.Media.DISPLAY_NAME, "漂亮MM")
-                    put(MediaStore.Images.Media.DESCRIPTION, "漂亮MM")
-                    put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-                }
-            ) ?: kotlin.run {
-                Toasts.show("存储失败")
-                return@withContext
-            }
-            contentResolver.openOutputStream(saveUri).use {
-                if (bitmap.compress(Bitmap.CompressFormat.JPEG, 90, it)) {
-                    Toasts.show("存储成功")
-                } else {
-                    Toasts.show("存储失败")
-                }
-            }
-        }
+//        withContext(Dispatchers.IO) {
+//
+//            val bitmap = ivAvatar.drawable.toBitmap()
+//
+//            val saveUri = contentResolver.insert(
+//                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+//                ContentValues().apply {
+//                    put(MediaStore.Images.Media.DISPLAY_NAME, "漂亮MM")
+//                    put(MediaStore.Images.Media.DESCRIPTION, "漂亮MM")
+//                    put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+//                }
+//            ) ?: kotlin.run {
+//                Toasts.show("存储失败")
+//                return@withContext
+//            }
+//            contentResolver.openOutputStream(saveUri).use {
+//                if (bitmap.compress(Bitmap.CompressFormat.JPEG, 90, it)) {
+//                    Toasts.show("存储成功")
+//                } else {
+//                    Toasts.show("存储失败")
+//                }
+//            }
+//        }
     }
 
     private fun uploadAvatar(filePath: String){
@@ -149,5 +151,10 @@ class AvatarActivity : LifecycleActivity() {
             return
         }
         mViewModel.uploadAvatar(file)
+    }
+
+    inline fun test(inlined: () -> Unit, crossinline action: (String)->Unit) {
+        inlined.invoke()
+        action.invoke("dddd")
     }
 }

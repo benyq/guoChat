@@ -1,8 +1,13 @@
 package com.benyq.guochat.model.rep
 
+import com.benyq.guochat.app.JSON
+import com.benyq.guochat.mapOfToBodyJson
 import com.benyq.guochat.model.bean.ChatResponse
+import com.benyq.guochat.model.net.ServiceFactory
+import com.benyq.mvvm.ext.loge
 import com.benyq.mvvm.mvvm.BaseRepository
 import kotlinx.coroutines.delay
+import okhttp3.RequestBody.Companion.toRequestBody
 
 /**
  * @author benyq
@@ -21,4 +26,11 @@ class LoginRepository : BaseRepository() {
             }
         }
     }
+
+    suspend fun register(username: String, pwd: String): ChatResponse<String> {
+        return launchIO {
+            ServiceFactory.apiService.register(mapOfToBodyJson("userName" to username, "passWord" to pwd))
+        }
+    }
+
 }

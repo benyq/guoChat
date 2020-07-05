@@ -13,16 +13,20 @@ import retrofit2.http.*
  * @e-mail 1520063035@qq.com
  * @note
  */
-@BaseUrl("")
+@BaseUrl("http://111.229.84.254:7070/")
 interface ApiService {
 
     /**
      * 登录
      */
-    @POST
-    @FormUrlEncoded
-    suspend fun login(@Field("account") account: String, @Field("password") password: String): ChatResponse<UserBean>
+    @Headers("Content-type:application/json;charset=UTF-8")
+    @POST("user/login")
+    suspend fun login(@Field("userName") account: String, @Field("passWord") password: String): ChatResponse<UserBean>
 
+
+    @Headers("Content-type:application/json;charset=UTF-8")
+    @POST("user/register")
+    suspend fun register(@Body body: RequestBody): ChatResponse<String>
 
     /**
      * 上传头像

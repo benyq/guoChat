@@ -14,7 +14,7 @@ import java.net.URI
  */
 object WebSocketManager {
 
-    private val url = ""
+    private val url = "ws:111.229.84.254:7000/ws"
     private var mWebSocketClient: WebSocketClient ? = null
     private val wsReConnectRunnable = Runnable {
         mWebSocketClient?.reconnect()

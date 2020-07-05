@@ -61,17 +61,12 @@ object NotificationHelper {
             .setWhen(System.currentTimeMillis()) // the time stamp
             .setContentTitle("苏打先生")
             .setContentText("我就说你这个事情是不可能完成的，你还不相信。相信我说的就是没问题的。不要你觉得，我要我觉得")
-            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setOngoing(false)
             .setOnlyAlertOnce(true)
             .setAutoCancel(true)
-            .apply {
-                if (fromO()) {
-                    setContentIntent(contentIntent)
-                }else {
-                    setFullScreenIntent(contentIntent, true) // The intent to send when the entry is clicked
-                }
-            }
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
+            .setContentIntent(contentIntent)
             .build()
         mNotificationManager.notify(messageNotify, notification)
     }

@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_contracts.*
  * @e-mail 1520063035@qq.com
  * @note
  */
-class ContractsFragment : LifecycleFragment(){
+class ContractsFragment : LifecycleFragment() {
 
     private val mAdapter = ContractsSectionAdapter()
     @BindViewModel

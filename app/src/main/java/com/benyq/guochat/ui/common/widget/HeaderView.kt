@@ -53,7 +53,7 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
     private var mMenuText: String
     private var mMenuBtnShow: Boolean
     private val headerViewBg: Drawable?
-    private val mToolbarMenuSrc: Drawable?
+    private val mToolbarMenuSrc: Drawable
 
     private val mBgMenuBtn: Drawable
 
@@ -75,7 +75,7 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
         mTitleGravity = array.getInt(R.styleable.HeaderView_title_gravity, titleCenter)
         mToolbarType = array.getInt(R.styleable.HeaderView_toolbar_type, toolbarTypeNormal)
         headerViewBg = array.getDrawable(R.styleable.HeaderView_toolbar_bg)
-        mToolbarMenuSrc = array.getDrawable(R.styleable.HeaderView_toolbar_menu_src) ?: context.getDrawable(R.drawable.ic_three_dots)
+        mToolbarMenuSrc = array.getDrawable(R.styleable.HeaderView_toolbar_menu_src) ?: context.getDrawable(R.drawable.ic_three_dots)!!
 
         array.recycle()
 
@@ -156,7 +156,7 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
             )
             toolbarMenu.setImageDrawable(
                 tintDrawable(
-                    context.getDrawableRef(R.drawable.ic_three_dots)!!,
+                    mToolbarMenuSrc,
                     ColorStateList.valueOf(Color.WHITE)
                 )
             )
@@ -173,12 +173,11 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
             )
             toolbarMenu.setImageDrawable(
                 tintDrawable(
-                    context.getDrawableRef(R.drawable.ic_three_dots)!!,
+                    mToolbarMenuSrc,
                     ColorStateList.valueOf(Color.BLACK)
                 )
             )
         }
-        toolbarMenu.setImageDrawable(mToolbarMenuSrc)
         headerViewBg?.run {
             toolbar.background = this
         }

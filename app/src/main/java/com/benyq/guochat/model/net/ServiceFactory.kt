@@ -27,7 +27,8 @@ object ServiceFactory {
         })
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
-        BaseOkHttpClient.init(ParamsInterceptor, loggingInterceptor)
+//        BaseOkHttpClient.init(ParamsInterceptor, loggingInterceptor)
+        BaseOkHttpClient.init(loggingInterceptor)
     }
 
     val apiService by lazy { RetrofitFactory.create(ApiService::class.java) }

@@ -7,10 +7,15 @@ import android.widget.ImageView
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.benyq.guochat.app.JSON
 import com.benyq.mvvm.ext.loge
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import kotlinx.coroutines.*
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.BufferedReader
+import java.io.FileReader
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -74,10 +79,6 @@ fun dip2px(context: Context, dipValue: Int): Float {
     return (dipValue * scale + 0.5f)
 }
 
-fun EditText.textTrim(): String {
-    return this.text.toString().trim()
-}
-
 inline fun <reified T> singleton(crossinline initializer: (Context) -> T): (Context) -> T {
     var instance: T? = null
     return { context ->
@@ -120,3 +121,8 @@ fun loadAvatar(iv: ImageView, url: String, round: Int = 10) {
         .transform(RoundedCorners(dip2px(iv.context, round).toInt()))
         .into(iv)
 }
+
+ fun <K, V> mapOfToBodyJson(vararg pairs: Pair<K, V>): RequestBody{
+    return mapOf(*pairs).toString().toRequestBody(JSON)
+}
+
