@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.function.other.GlideEngine
+import com.benyq.guochat.ui.base.BaseActivity
 import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.common.CommonBottomDialog
 import com.benyq.mvvm.SmartJump
@@ -28,7 +29,7 @@ import kotlinx.android.synthetic.main.activity_add_circle.*
  * @e-mail 1520063035@qq.com
  * @note  发布朋友圈
  */
-class AddCircleActivity : LifecycleActivity() {
+class AddCircleActivity : BaseActivity() {
 
     private var mBottomDialog: CommonBottomDialog? = null
 

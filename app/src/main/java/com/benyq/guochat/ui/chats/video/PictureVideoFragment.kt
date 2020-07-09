@@ -7,6 +7,7 @@ import com.benyq.guochat.function.media.VideoCaptureManager
 import com.benyq.guochat.model.vm.PictureVideoViewModel
 import com.benyq.guochat.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_picture_video.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
  * @author benyq
@@ -17,14 +18,13 @@ import kotlinx.android.synthetic.main.fragment_picture_video.*
 class PictureVideoFragment : BaseFragment() {
 
     private lateinit var mVideoCaptureManager: VideoCaptureManager
-    private lateinit var pictureVideoViewModel: PictureVideoViewModel
+    private val pictureVideoViewModel: PictureVideoViewModel by sharedViewModel()
 
 
     override fun getLayoutId() = R.layout.fragment_picture_video
 
     override fun initView() {
         super.initView()
-        pictureVideoViewModel = ViewModelProvider(activity!!).get(PictureVideoViewModel::class.java)
         mVideoCaptureManager = VideoCaptureManager(mContext as Activity, textureView).apply {
             setPictureCapturedAction { imgPath ->
                 pictureVideoViewModel.showPictureConfirm(imgPath)

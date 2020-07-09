@@ -30,6 +30,7 @@ import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
 import kotlinx.android.synthetic.main.activity_chat_detail.*
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import kotlin.properties.Delegates
 
 
@@ -40,7 +41,7 @@ import kotlin.properties.Delegates
  * @note 与联系人的聊天界面
  */
 
-class ChatDetailActivity : LifecycleActivity(), View.OnClickListener {
+class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClickListener {
 
     private val TYPE_TEXT = 0
     private val TYPE_VOICE = 1
@@ -91,10 +92,9 @@ class ChatDetailActivity : LifecycleActivity(), View.OnClickListener {
         }
     })
 
-    @BindViewModel
-    lateinit var mViewModel: ChatDetailViewModel
-
     lateinit var mChatListBean: ChatListBean
+
+    override fun initVM(): ChatDetailViewModel = getViewModel()
 
     override fun getLayoutId() = R.layout.activity_chat_detail
 
@@ -369,4 +369,5 @@ class ChatDetailActivity : LifecycleActivity(), View.OnClickListener {
             }
         }
     }
+
 }

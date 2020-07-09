@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.benyq.mvvm.Setting
 import com.benyq.mvvm.base.IFragment
-import com.benyq.mvvm.mvvm.IMvmFragment
 
 /**
  * @author benyq
@@ -89,11 +88,6 @@ object FragmentLifecycle : FragmentManager.FragmentLifecycleCallbacks()  {
     }
 
     private fun newDelegate(fm: FragmentManager, f: Fragment): FragmentDelegate {
-
-        if (f is IMvmFragment) {
-            return MvmFragmentDelegateImpl(fm, f)
-        }
-
         return FragmentDelegateImpl(fm, f)
     }
 

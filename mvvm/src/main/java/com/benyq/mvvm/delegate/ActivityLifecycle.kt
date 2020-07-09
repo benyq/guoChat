@@ -7,8 +7,6 @@ import androidx.collection.LruCache
 import androidx.fragment.app.FragmentActivity
 import com.benyq.mvvm.ActivityManager
 import com.benyq.mvvm.Setting
-import com.benyq.mvvm.ext.loge
-import com.benyq.mvvm.mvvm.IMvmActivity
 import com.benyq.mvvm.base.IActivity
 
 /**
@@ -31,6 +29,7 @@ object ActivityLifecycle : Application.ActivityLifecycleCallbacks{
 
     override fun onActivityDestroyed(activity: Activity) {
         fetchActivityDelegate(activity)?.onDestroy()
+        ActivityManager.remove(activity)
     }
 
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
@@ -69,9 +68,6 @@ object ActivityLifecycle : Application.ActivityLifecycleCallbacks{
     }
 
     private fun newDelegate(activity: Activity): ActivityDelegate {
-        if (activity is IMvmActivity) {
-            return MvmActivityDelegateImpl(activity)
-        }
 
         return ActivityDelegateImpl(activity)
     }

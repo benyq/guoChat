@@ -6,6 +6,9 @@ import com.benyq.guochat.local.ObjectBox
 import com.benyq.guochat.model.net.ServiceFactory
 import com.github.promeg.pinyinhelper.Pinyin
 import com.tencent.mmkv.MMKV
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
 /**
  * @author benyq
@@ -26,6 +29,11 @@ class App : Application(){
         ObjectBox.init(this)
         Pinyin.init(null)
         NotificationHelper.init(this)
+        startKoin{
+            androidLogger()
+            androidContext(this@App)
+            modules(appModule)
+        }
         ServiceFactory.initClient()
     }
 

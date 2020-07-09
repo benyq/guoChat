@@ -5,6 +5,7 @@ import com.benyq.guochat.dip2px
 import com.benyq.guochat.function.zxing.encode.CodeEncodingCreator
 import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.model.bean.UserBean
+import com.benyq.guochat.ui.base.BaseActivity
 import com.benyq.guochat.ui.base.LifecycleActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -18,7 +19,7 @@ import kotlinx.coroutines.*
  * @note 二维码名片
  *  预想的是根据传入的果聊号生成名片信息
  */
-class CallingCardActivity : LifecycleActivity() {
+class CallingCardActivity : BaseActivity() {
 
     private val mLoadIconJob: Job = Job()
 

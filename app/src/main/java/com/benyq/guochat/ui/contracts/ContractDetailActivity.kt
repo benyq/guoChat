@@ -12,6 +12,7 @@ import com.benyq.guochat.loadAvatar
 import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.local.ObjectBox
 import com.benyq.guochat.local.entity.ContractEntity
+import com.benyq.guochat.ui.base.BaseActivity
 import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.chats.ChatDetailActivity
 import com.benyq.guochat.ui.common.CommonBottomDialog
@@ -27,7 +28,7 @@ import kotlinx.android.synthetic.main.activity_contract_detail.*
  * @e-mail 1520063035@qq.com
  * @note 联系人详情
  */
-class ContractDetailActivity : LifecycleActivity() {
+class ContractDetailActivity : BaseActivity() {
 
     override fun getLayoutId() = R.layout.activity_contract_detail
 

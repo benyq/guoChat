@@ -10,13 +10,14 @@ import com.benyq.mvvm.mvvm.BaseViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
-class LoginViewModel : BaseViewModel<LoginRepository>() {
+class LoginViewModel(private val mRepository: LoginRepository) : BaseViewModel() {
 
     val mLoginResult = MutableLiveData<Boolean>()
     val mRegisterResult = MutableLiveData<String>()
 
     fun login(username: String, pwd: String) {
         quickLaunch<Boolean> {
+            onStart { showLoading("") }
             onSuccess { mLoginResult.value = it }
             onFinal { hideLoading() }
             request { mRepository.login(username, pwd) }
@@ -25,6 +26,7 @@ class LoginViewModel : BaseViewModel<LoginRepository>() {
 
     fun register(username: String, pwd: String){
         quickLaunch<String> {
+            onStart { showLoading("") }
             onSuccess { mRegisterResult.value = it }
             onFinal { hideLoading() }
             request { mRepository.register(username, pwd) }

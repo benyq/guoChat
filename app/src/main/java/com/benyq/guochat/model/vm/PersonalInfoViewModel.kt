@@ -11,7 +11,7 @@ import java.io.File
  * @e-mail 1520063035@qq.com
  * @note 修改个人信息的ViewModel， 几个viewModelOwner公用
  */
-class PersonalInfoViewModel : BaseViewModel<UserInfoRepository>(){
+class PersonalInfoViewModel(private val mRepository: UserInfoRepository) : BaseViewModel(){
 
     val editNickLiveData = MutableLiveData<String>()
     val uploadAvatarLiveData = MutableLiveData<String>()

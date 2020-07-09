@@ -1,7 +1,9 @@
 package com.benyq.guochat.ui.base
 
+import android.os.Bundle
+import android.view.View
 import com.benyq.mvvm.ext.loge
-import com.benyq.mvvm.mvvm.IMvmFragment
+import com.benyq.mvvm.mvvm.BaseViewModel
 
 /**
  * @author benyq
@@ -9,11 +11,19 @@ import com.benyq.mvvm.mvvm.IMvmFragment
  * @e-mail 1520063035@qq.com
  * @note
  */
-abstract class LifecycleFragment : BaseFragment(), IMvmFragment {
+abstract class LifecycleFragment<VM : BaseViewModel> : BaseFragment(){
+
+    lateinit var mViewModel: VM
 
     protected var TAG = this.javaClass.simpleName
 
     open var isFirstLoad = true
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        mViewModel = initVM()
+        dataObserver()
+        super.onViewCreated(view, savedInstanceState)
+    }
 
     //ViewPaper2 懒加载
     override fun onResume() {
@@ -37,4 +47,7 @@ abstract class LifecycleFragment : BaseFragment(), IMvmFragment {
         super.onDestroyView()
         isFirstLoad = true
     }
+
+    abstract fun initVM(): VM
+    abstract fun dataObserver()
 }

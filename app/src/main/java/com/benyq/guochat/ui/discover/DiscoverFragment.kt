@@ -5,6 +5,7 @@ import com.benyq.guochat.R
 import com.benyq.guochat.function.other.NotificationHelper
 import com.benyq.guochat.function.permissionX.PermissionX
 import com.benyq.guochat.function.zxing.android.CaptureActivity
+import com.benyq.guochat.ui.base.BaseFragment
 import com.benyq.guochat.ui.base.LifecycleFragment
 import com.benyq.mvvm.ext.startActivity
 import com.benyq.mvvm.ext.toast
@@ -16,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_discover.*
  * @e-mail 1520063035@qq.com
  * @note
  */
-class DiscoverFragment : LifecycleFragment() {
+class DiscoverFragment : BaseFragment() {
 
     override fun getLayoutId() = R.layout.fragment_discover
 

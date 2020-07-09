@@ -9,6 +9,7 @@ import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.mvvm.annotation.BindViewModel
 import com.benyq.mvvm.ext.textTrim
 import kotlinx.android.synthetic.main.activity_personal_info_edit.*
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
  * @author benyq
@@ -16,10 +17,9 @@ import kotlinx.android.synthetic.main.activity_personal_info_edit.*
  * @e-mail 1520063035@qq.com
  * @note  修改信息，目前只有昵称
  */
-class PersonalInfoEditActivity : LifecycleActivity() {
+class PersonalInfoEditActivity : LifecycleActivity<PersonalInfoViewModel>() {
 
-    @BindViewModel
-    lateinit var mViewModel: PersonalInfoViewModel
+    override fun initVM(): PersonalInfoViewModel = getViewModel()
 
     private var oldValue = "更改名字"
 

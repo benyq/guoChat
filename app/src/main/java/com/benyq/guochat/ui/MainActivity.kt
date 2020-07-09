@@ -15,6 +15,7 @@ import com.benyq.guochat.function.music.PlayerController
 import com.benyq.guochat.function.permissionX.PermissionX
 import com.benyq.guochat.function.zxing.android.CaptureActivity
 import com.benyq.guochat.local.ObjectBox
+import com.benyq.guochat.model.vm.LoginViewModel
 import com.benyq.guochat.model.vm.MainViewModel
 import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.chats.ChatFragment
@@ -29,12 +30,13 @@ import com.benyq.mvvm.ext.startActivity
 import com.benyq.mvvm.ext.toast
 import com.gyf.immersionbar.ktx.immersionBar
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 
-class MainActivity : LifecycleActivity() {
+class MainActivity : LifecycleActivity<MainViewModel>() {
 
-    @BindViewModel
-    lateinit var mViewModel: MainViewModel
+    override fun initVM(): MainViewModel = getViewModel()
+
     private val titleArray = arrayOf("聊天", "联系人", "发现", "我")
 
     /**
@@ -202,5 +204,8 @@ class MainActivity : LifecycleActivity() {
 
         popWindow.isOutsideTouchable = true
         return popWindow
+    }
+
+    override fun dataObserver() {
     }
 }

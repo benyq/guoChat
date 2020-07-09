@@ -12,6 +12,9 @@ import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.model.vm.PictureVideoViewModel
 import com.benyq.guochat.model.vm.StateEvent
 import com.benyq.guochat.ui.base.BaseActivity
+import org.koin.androidx.viewmodel.compat.SharedViewModelCompat.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * @author benyq
@@ -21,7 +24,7 @@ import com.benyq.guochat.ui.base.BaseActivity
  */
 class PictureVideoActivity : BaseActivity() {
 
-    private lateinit var pictureVideoViewModel: PictureVideoViewModel
+    private val pictureVideoViewModel: PictureVideoViewModel by viewModel()
 
     override fun initWidows() {
         window.setFlags(
@@ -44,7 +47,6 @@ class PictureVideoActivity : BaseActivity() {
     }
 
     override fun initView() {
-        pictureVideoViewModel = ViewModelProvider(this).get(PictureVideoViewModel::class.java)
         pictureVideoViewModel.mState.observe(this, Observer {
             when (it.state) {
                 StateEvent.STATE_IMG -> {

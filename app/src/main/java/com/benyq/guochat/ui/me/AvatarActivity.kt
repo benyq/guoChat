@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.activity_avatar.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import java.io.File
 import java.lang.ref.ReferenceQueue
 import java.lang.ref.WeakReference
@@ -38,10 +39,9 @@ import java.util.*
  * @e-mail 1520063035@qq.com
  * @note 头像显示与修改
  */
-class AvatarActivity : LifecycleActivity() {
+class AvatarActivity : LifecycleActivity<PersonalInfoViewModel>() {
 
-    @BindViewModel
-    lateinit var mViewModel: PersonalInfoViewModel
+    override fun initVM(): PersonalInfoViewModel = getViewModel()
 
     private var mBottomDialog: CommonBottomDialog? = null
 

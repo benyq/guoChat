@@ -11,7 +11,7 @@ import com.benyq.mvvm.mvvm.BaseViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
-class ChatDetailViewModel : BaseViewModel<ChatDetailRepository>(){
+class ChatDetailViewModel(private val mRepository: ChatDetailRepository) : BaseViewModel(){
 
     val mChatRecordData = MutableLiveData<List<ChatRecordEntity>>()
     val mSendMessageData = MutableLiveData<Boolean>()

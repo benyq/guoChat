@@ -8,6 +8,7 @@ import com.benyq.guochat.model.vm.PictureVideoViewModel
 import com.benyq.guochat.ui.base.BaseFragment
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_picture_confirm.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
  * @author benyq
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_picture_confirm.*
 
 class PictureConfirmFragment : BaseFragment() {
 
-    private lateinit var pictureVideoViewModel: PictureVideoViewModel
+    private val pictureVideoViewModel: PictureVideoViewModel by sharedViewModel()
 
     private lateinit var imgPath: String
 
@@ -29,8 +30,6 @@ class PictureConfirmFragment : BaseFragment() {
         imgPath = arguments?.getString(IntentExtra.imgPath, defaultImgPath) ?: defaultImgPath
 
         Glide.with(this).load(imgPath).into(ivPicture)
-
-        pictureVideoViewModel = ViewModelProvider(activity!!).get(PictureVideoViewModel::class.java)
 
     }
 

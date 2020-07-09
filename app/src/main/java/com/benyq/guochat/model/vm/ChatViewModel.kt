@@ -11,14 +11,13 @@ import com.benyq.mvvm.mvvm.BaseViewModel
  * @e-mail 1520063035@qq.com
  * @note 聊天列表
  */
-class ChatViewModel : BaseViewModel<ChatRepository>(){
+class ChatViewModel(private val mRepository: ChatRepository) : BaseViewModel(){
 
     val mChatListData = MutableLiveData<List<ChatListBean>>()
 
     fun getChatContracts() {
         quickLaunch<List<ChatListBean>> {
             request { mRepository.getChatContracts() }
-
             onSuccess {
                 mChatListData.value = it
             }

@@ -9,11 +9,13 @@ import com.benyq.guochat.model.vm.LoginViewModel
 import com.benyq.guochat.ui.MainActivity
 import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.mvvm.SmartJump
-import com.benyq.mvvm.annotation.BindViewModel
 import com.benyq.mvvm.ext.Toasts
+import com.benyq.mvvm.ext.loge
 import com.benyq.mvvm.ext.startActivity
 import com.benyq.mvvm.ext.textTrim
+import com.benyq.mvvm.response.SharedType
 import kotlinx.android.synthetic.main.activity_login.*
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
  * @author benyq
@@ -21,10 +23,9 @@ import kotlinx.android.synthetic.main.activity_login.*
  * @e-mail 1520063035@qq.com
  * @note
  */
-class LoginActivity : LifecycleActivity() {
+class LoginActivity : LifecycleActivity<LoginViewModel>() {
 
-    @BindViewModel
-    lateinit var mViewModel: LoginViewModel
+    override fun initVM(): LoginViewModel = getViewModel()
 
     override fun getLayoutId() = R.layout.activity_login
 
@@ -51,8 +52,9 @@ class LoginActivity : LifecycleActivity() {
 
         btnRegister.setOnClickListener {
             SmartJump.from(this).startForResult(RegisterActivity::class.java) { code, data ->
-                if (code == Activity.RESULT_OK && data != null){
-                    val registerData = data.getParcelableExtra<RegisterBean>(IntentExtra.registerData)
+                if (code == Activity.RESULT_OK && data != null) {
+                    val registerData =
+                        data.getParcelableExtra<RegisterBean>(IntentExtra.registerData)
                     registerData?.run {
                         etUserName.setText(userName)
                         etPassword.setText(registerData.pwd)
@@ -66,9 +68,15 @@ class LoginActivity : LifecycleActivity() {
     override fun dataObserver() {
         with(mViewModel) {
             mLoginResult.observe(this@LoginActivity, Observer {
-//                startActivity<TestActivity>()
                 startActivity<MainActivity>()
                 finish()
+            })
+            mSharedData.observe(this@LoginActivity, Observer {
+                if (it.type == SharedType.SHOW_LOADING) {
+                    showLoading(it.msg)
+                }else if (it.type == SharedType.HIDE_LOADING) {
+                    hideLoading()
+                }
             })
         }
     }

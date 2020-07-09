@@ -11,7 +11,7 @@ import com.benyq.mvvm.mvvm.BaseViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
-class ContractsViewModel : BaseViewModel<ContractsRepository>(){
+class ContractsViewModel(private val mRepository: ContractsRepository) : BaseViewModel(){
 
     val mContractsData = MutableLiveData<List<ContractSectionBean>>()
 

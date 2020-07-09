@@ -8,6 +8,7 @@ import com.benyq.guochat.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_picture_confirm.btnFinished
 import kotlinx.android.synthetic.main.fragment_picture_confirm.ivClose
 import kotlinx.android.synthetic.main.fragment_video_confirm.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
  * @author benyq
@@ -17,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_video_confirm.*
  */
 class VideoConfirmFragment : BaseFragment(){
 
-    private lateinit var videoVideoViewModel: PictureVideoViewModel
+    private val videoVideoViewModel: PictureVideoViewModel by sharedViewModel()
 
     private lateinit var videoPath: String
     private var videoDuration: Int = 0
@@ -25,7 +26,6 @@ class VideoConfirmFragment : BaseFragment(){
     override fun getLayoutId() = R.layout.fragment_video_confirm
 
     override fun initView() {
-        videoVideoViewModel = ViewModelProvider(activity!!).get(PictureVideoViewModel::class.java)
 
         val defaultVideoPath = ""
         videoPath = arguments?.getString(IntentExtra.videoPath, defaultVideoPath) ?: defaultVideoPath

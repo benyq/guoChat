@@ -1,6 +1,7 @@
 package com.benyq.guochat.ui.base
 
-import com.benyq.mvvm.mvvm.IMvmActivity
+import android.os.Bundle
+import com.benyq.mvvm.mvvm.BaseViewModel
 
 /**
  * @author benyq
@@ -8,13 +9,16 @@ import com.benyq.mvvm.mvvm.IMvmActivity
  * @e-mail 1520063035@qq.com
  * @note
  */
-abstract class LifecycleActivity : BaseActivity(), IMvmActivity {
+abstract class LifecycleActivity<VM : BaseViewModel> : BaseActivity() {
 
-    override fun hideLoading() {
-        loadingHide()
+    lateinit var mViewModel: VM
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        mViewModel = initVM()
+        dataObserver()
+        super.onCreate(savedInstanceState)
     }
 
-    override fun showLoading(content: String?) {
-        loadingShow(content)
-    }
+    abstract fun initVM(): VM
+    abstract fun dataObserver()
 }

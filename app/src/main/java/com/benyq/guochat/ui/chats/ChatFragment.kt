@@ -11,6 +11,7 @@ import com.benyq.mvvm.annotation.BindViewModel
 import com.benyq.mvvm.ext.startActivity
 import com.scwang.smartrefresh.header.WaterDropHeader
 import kotlinx.android.synthetic.main.fragment_chat.*
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
  * @author benyq
@@ -18,12 +19,11 @@ import kotlinx.android.synthetic.main.fragment_chat.*
  * @e-mail 1520063035@qq.com
  * @note 聊天列表
  */
-class ChatFragment : LifecycleFragment() {
+class ChatFragment : LifecycleFragment<ChatViewModel>() {
 
     private val mChatAdapter = ChatAdapter()
 
-    @BindViewModel
-    lateinit var mViewModel: ChatViewModel
+    override fun initVM(): ChatViewModel = getViewModel()
 
     override fun getLayoutId() = R.layout.fragment_chat
 

@@ -13,6 +13,7 @@ import androidx.activity.OnBackPressedCallback
 import com.benyq.guochat.R
 import com.benyq.guochat.loadAvatar
 import com.benyq.guochat.local.LocalStorage
+import com.benyq.guochat.ui.base.BaseActivity
 import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.common.widget.HeaderView
 import com.benyq.guochat.ui.common.widget.satellite_menu.MenuItemView
@@ -32,7 +33,7 @@ import kotlin.math.abs
  * @e-mail 1520063035@qq.com
  * @note 果聊朋友圈，当前用户的
  */
-class FriendCircleActivity : LifecycleActivity() {
+class FriendCircleActivity : BaseActivity() {
 
     private val frameDuration = 20
     private lateinit var frameAnim: AnimationDrawable

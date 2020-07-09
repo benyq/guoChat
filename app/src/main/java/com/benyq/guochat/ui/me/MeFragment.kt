@@ -4,6 +4,7 @@ import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.loadAvatar
 import com.benyq.guochat.local.LocalStorage
+import com.benyq.guochat.ui.base.BaseFragment
 import com.benyq.guochat.ui.base.LifecycleFragment
 import com.benyq.guochat.ui.contracts.CallingCardActivity
 import com.benyq.guochat.ui.settings.SettingsActivity
@@ -16,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_me.*
  * @e-mail 1520063035@qq.com
  * @note
  */
-class MeFragment : LifecycleFragment() {
+class MeFragment : BaseFragment() {
 
     override fun getLayoutId() = R.layout.fragment_me
 

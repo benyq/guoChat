@@ -1,10 +1,8 @@
 package com.benyq.guochat.ui.contracts
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import com.benyq.guochat.R
 import com.benyq.guochat.function.zxing.android.CaptureActivity
-import com.benyq.guochat.ui.base.LifecycleActivity
+import com.benyq.guochat.ui.base.BaseActivity
 import com.benyq.mvvm.ext.startActivity
 import kotlinx.android.synthetic.main.activity_add_contract.*
 
@@ -14,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_add_contract.*
  * @e-mail 1520063035@qq.com
  * @note 添加朋友
  */
-class AddContractActivity : LifecycleActivity() {
+class AddContractActivity : BaseActivity() {
 
     override fun getLayoutId() = R.layout.activity_add_contract
 

@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.benyq.guochat.R
 import com.benyq.guochat.loadAvatar
 import com.benyq.guochat.local.LocalStorage
+import com.benyq.guochat.ui.base.BaseActivity
 import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.contracts.CallingCardActivity
 import com.benyq.mvvm.SmartJump
@@ -17,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_personal_info.*
  * @e-mail 1520063035@qq.com
  * @note 个人信息
  */
-class PersonalInfoActivity : LifecycleActivity() {
+class PersonalInfoActivity : BaseActivity() {
 
     override fun getLayoutId() = R.layout.activity_personal_info
 

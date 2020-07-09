@@ -9,6 +9,7 @@ import com.benyq.guochat.ui.base.LifecycleFragment
 import com.benyq.mvvm.annotation.BindViewModel
 import com.benyq.mvvm.ext.startActivity
 import kotlinx.android.synthetic.main.fragment_contracts.*
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
  * @author benyq
@@ -16,11 +17,11 @@ import kotlinx.android.synthetic.main.fragment_contracts.*
  * @e-mail 1520063035@qq.com
  * @note
  */
-class ContractsFragment : LifecycleFragment() {
+class ContractsFragment : LifecycleFragment<ContractsViewModel>() {
 
     private val mAdapter = ContractsSectionAdapter()
-    @BindViewModel
-    lateinit var mViewModel: ContractsViewModel
+
+    override fun initVM(): ContractsViewModel = getViewModel()
 
     override fun getLayoutId() = R.layout.fragment_contracts
 

@@ -13,6 +13,7 @@ import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.mvvm.annotation.BindViewModel
 import com.benyq.mvvm.ext.textTrim
 import kotlinx.android.synthetic.main.activity_register.*
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
  * @author benyq
@@ -20,10 +21,9 @@ import kotlinx.android.synthetic.main.activity_register.*
  * @e-mail 1520063035@qq.com
  * @note
  */
-class RegisterActivity : LifecycleActivity() {
+class RegisterActivity : LifecycleActivity<LoginViewModel>() {
 
-    @BindViewModel
-    lateinit var mViewModel: LoginViewModel
+    override fun initVM(): LoginViewModel = getViewModel()
     
     override fun getLayoutId() = R.layout.activity_register
 

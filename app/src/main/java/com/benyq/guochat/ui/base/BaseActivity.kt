@@ -81,11 +81,11 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
 
     }
 
-    protected fun loadingShow(msg: String?) {
+    protected fun showLoading(msg: String?) {
         NormalProgressDialogManager.showLoading(this, msg)
     }
 
-    protected fun loadingHide() {
+    protected fun hideLoading() {
         NormalProgressDialogManager.dismissLoading()
     }
 

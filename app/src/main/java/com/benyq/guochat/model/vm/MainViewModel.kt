@@ -9,7 +9,7 @@ import com.benyq.mvvm.mvvm.BaseViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
-class MainViewModel : BaseViewModel<MainRepository>(){
+class MainViewModel(private val mRepository: MainRepository) : BaseViewModel(){
 
     /**
      * MainActivity中页面下标
