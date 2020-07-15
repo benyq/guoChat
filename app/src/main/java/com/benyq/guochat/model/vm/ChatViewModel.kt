@@ -3,6 +3,7 @@ package com.benyq.guochat.model.vm
 import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.model.bean.ChatListBean
 import com.benyq.guochat.model.rep.ChatRepository
+import com.benyq.mvvm.ext.loge
 import com.benyq.mvvm.mvvm.BaseViewModel
 
 /**

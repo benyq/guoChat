@@ -1,5 +1,6 @@
 package com.benyq.guochat.ui.discover
 
+import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.Drawable
@@ -10,21 +11,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.activity.OnBackPressedCallback
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.R
+import com.benyq.guochat.app.CIRCLE__TYPE_TEXT
+import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.loadAvatar
 import com.benyq.guochat.local.LocalStorage
-import com.benyq.guochat.ui.base.BaseActivity
+import com.benyq.guochat.model.bean.CircleComment
+import com.benyq.guochat.model.bean.FriendCircleBean
+import com.benyq.guochat.model.vm.FriendCircleViewModel
 import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.common.widget.HeaderView
 import com.benyq.guochat.ui.common.widget.satellite_menu.MenuItemView
 import com.benyq.guochat.ui.common.widget.satellite_menu.OnMenuActionListener
 import com.benyq.guochat.ui.common.widget.satellite_menu.SatelliteMenuLayout
+import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.ext.getDrawableRef
-import com.benyq.mvvm.ext.startActivity
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.gyf.immersionbar.ImmersionBar
 import kotlinx.android.synthetic.main.activity_friend_circle.*
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import kotlin.math.abs
 
 /**
@@ -33,7 +41,7 @@ import kotlin.math.abs
  * @e-mail 1520063035@qq.com
  * @note 果聊朋友圈，当前用户的
  */
-class FriendCircleActivity : BaseActivity() {
+class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
 
     private val frameDuration = 20
     private lateinit var frameAnim: AnimationDrawable
@@ -63,6 +71,9 @@ class FriendCircleActivity : BaseActivity() {
     )
 
     private lateinit var mSatelliteMenuLayout: SatelliteMenuLayout
+    private val mAdapter by lazy { FriendCircleAdapter() }
+
+    override fun initVM(): FriendCircleViewModel = getViewModel()
 
     override fun getLayoutId() = R.layout.activity_friend_circle
 
@@ -84,6 +95,45 @@ class FriendCircleActivity : BaseActivity() {
             .centerCrop().into(ivBg)
 
         setSatelliteMenu()
+
+        rvFriendCircle.layoutManager = LinearLayoutManager(this)
+        rvFriendCircle.itemAnimator?.changeDuration = 0
+        mAdapter.setOnItemChildClickListener { adapter, view, position ->
+            val friendCircleBean = mAdapter.data[position]
+            if (view.id == R.id.ivLike) {
+                mViewModel.friendCircleLike(friendCircleBean.circleId, friendCircleBean.like)
+                friendCircleBean.like = !friendCircleBean.like
+                mAdapter.notifyItemChanged(position)
+            } else if (view.id == R.id.ivComments) {
+                AddCircleCommentDialog.newInstance().apply {
+                    setConfirmAction {
+                        if (friendCircleBean.commentsList == null) {
+                            friendCircleBean.commentsList = mutableListOf()
+                        }
+                        friendCircleBean.commentsList?.let { comments ->
+                            comments.add(
+                                CircleComment(
+                                    "3",
+                                    it,
+                                    user.chatId,
+                                    user.nickName,
+                                    "",
+                                    "",
+                                    ""
+                                )
+                            )
+                        }
+                        mAdapter.notifyItemChanged(position)
+                    }
+                    show(supportFragmentManager)
+                }
+            }
+        }
+        rvFriendCircle.adapter = mAdapter
+    }
+
+    override fun initData() {
+        mViewModel.queryFriendCircles()
     }
 
     override fun initListener() {
@@ -119,21 +169,37 @@ class FriendCircleActivity : BaseActivity() {
                     headerView.setHeaderViewMode(HeaderView.toolbarTypeDark)
                     headerView.setToolbarTitle("")
                 }
-                ImmersionBar.with(this@FriendCircleActivity).statusBarDarkFont(abs(verticalOffset) >= offHeight, 0.2f).init()
+                ImmersionBar.with(this@FriendCircleActivity)
+                    .statusBarDarkFont(abs(verticalOffset) >= offHeight, 0.2f).init()
             }
         })
 
     }
 
-    private fun setSatelliteMenu(){
+    override fun dataObserver() {
+        mViewModel.mFriendCircleData.observe(this, Observer {
+            mAdapter.setNewInstance(it.toMutableList())
+        })
+        mViewModel.mFriendCircleLikeData.observe(this, Observer {
+//            initData()
+        })
+    }
+
+    private fun setSatelliteMenu() {
         createFabFrameAnim()
         createFabReverseFrameAnim()
 
         val mFab = ImageButton(this)
         val drawable =
             StateListDrawable()
-        drawable.addState(intArrayOf(android.R.attr.state_pressed), createDrawable(Color.parseColor("#36465d")))
-        drawable.addState(intArrayOf(-android.R.attr.state_enabled), createDrawable(Color.parseColor("#529ecc")))
+        drawable.addState(
+            intArrayOf(android.R.attr.state_pressed),
+            createDrawable(Color.parseColor("#36465d"))
+        )
+        drawable.addState(
+            intArrayOf(-android.R.attr.state_enabled),
+            createDrawable(Color.parseColor("#529ecc"))
+        )
         drawable.addState(intArrayOf(), createDrawable(Color.parseColor("#529ecc")))
 
         mFab.background = drawable
@@ -194,7 +260,7 @@ class FriendCircleActivity : BaseActivity() {
                     menuItemListener
                 )
                 revealColor = R.color.color_36465d
-                onMenuActionListener(object: OnMenuActionListener {
+                onMenuActionListener(object : OnMenuActionListener {
                     override fun onMenuClose() {
                         mFab.setImageDrawable(frameReverseAnim)
                         frameReverseAnim.start()
@@ -211,7 +277,7 @@ class FriendCircleActivity : BaseActivity() {
         val rootView = findViewById<ViewGroup>(android.R.id.content)
         rootView.addView(mSatelliteMenuLayout)
 
-        onBackPressedDispatcher.addCallback(this,object : OnBackPressedCallback(true) {
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (mSatelliteMenuLayout.mMenuOpen) {
                     mSatelliteMenuLayout.hideMenu()
@@ -225,9 +291,31 @@ class FriendCircleActivity : BaseActivity() {
     private fun createMenuListener(): View.OnClickListener {
         return View.OnClickListener {
             if (it is MenuItemView) {
-                when(it.getMenuIcon()) {
+                when (it.getMenuIcon()) {
                     R.mipmap.ic_messaging_posttype_photo -> {
-                        startActivity<AddCircleActivity>()
+                        SmartJump.from(this)
+                            .startForResult(AddCircleActivity::class.java) { resultCode, data ->
+                                if (resultCode == Activity.RESULT_OK && data != null) {
+                                    val content = data.getStringExtra(IntentExtra.addCircleContent)
+                                    val images : Array<String> = data.getStringArrayExtra(IntentExtra.addCircleImages) ?: arrayOf()
+                                    mAdapter.addData(
+                                        0, FriendCircleBean(
+                                            "3",
+                                            "张三",
+                                            "",
+                                            "https://tse1-mm.cn.bing.net/th?id=OIP.FYHKQ4QDg7JI02RToq-CqgHaHM&w=180&h=160&c=8&rs=1&qlt=90&dpr=1.25&pid=3.1&rm=2",
+                                            CIRCLE__TYPE_TEXT,
+                                            content,
+                                            images.toList(),
+                                            "",
+                                            "",
+                                            false,
+                                            listOf(),
+                                            null
+                                        )
+                                    )
+                                }
+                            }
                     }
                     R.mipmap.ic_messaging_posttype_text -> {
 

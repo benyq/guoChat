@@ -62,7 +62,8 @@ class NineGridLayout(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
     constructor(context: Context) : this(context, null)
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val widthMode = MeasureSpec.getMode(widthMeasureSpec)
+        val oldWidth = MeasureSpec.getSize(widthMeasureSpec)
+        mGap = oldWidth / 30
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
         val width = MeasureSpec.getSize(widthMeasureSpec) - 2 * mGap
         loge("width $width")
@@ -74,11 +75,14 @@ class NineGridLayout(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
             child.measure(childMeasureSpec, childMeasureSpec)
         }
         totalHeight = max((childCount - 1) / rowCount, 0) * (itemWidth + mGap) + itemWidth
+        if(!mEnableAdd) {
+            totalHeight -= itemWidth
+        }
         setMeasuredDimension(widthMeasureSpec, MeasureSpec.makeMeasureSpec(totalHeight, heightMode))
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
+//        super.onLayout(changed, left, top, right, bottom)
         var startX = 0
         var startY = 0
 
@@ -125,6 +129,8 @@ class NineGridLayout(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
             addItem(it)
         }
     }
+
+    fun getPhotoUrls(): List<String> = mPhotoUrls
 
     private fun removeAllItems(){
         mPhotoUrls.clear()

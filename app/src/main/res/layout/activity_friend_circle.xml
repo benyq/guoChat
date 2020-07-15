@@ -72,35 +72,11 @@
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFriendCircle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:text="ddddd"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:text="ddddd"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:text="ddddd"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:text="ddddd"
-                android:textSize="20sp" />
-        </LinearLayout>
+            android:layout_height="match_parent"
+            android:overScrollMode="never"/>
 
     </androidx.core.widget.NestedScrollView>
 

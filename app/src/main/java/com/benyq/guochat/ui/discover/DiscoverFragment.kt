@@ -23,8 +23,8 @@ class DiscoverFragment : BaseFragment() {
 
     override fun initListener() {
         ifFriendCircle.setOnClickListener {
-//            startActivity<FriendCircleActivity>()
-            NotificationHelper.showMessageNotification(mContext)
+            startActivity<FriendCircleActivity>()
+//            NotificationHelper.showMessageNotification(mContext)
         }
         ifScan.setOnClickListener {
             PermissionX.request(

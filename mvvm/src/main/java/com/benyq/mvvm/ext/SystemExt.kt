@@ -51,13 +51,11 @@ fun Context.versionName(): String {
 }
 
 private val handler = Handler(Looper.getMainLooper())
-fun runUnUiThread(block: () -> Unit) {
+fun runUnUiThread(duration: Long = 0L, block: () -> Unit) {
     if (Looper.myLooper() == Looper.getMainLooper()) {
         block()
     } else {
-        handler.post {
-            block()
-        }
+        handler.postDelayed(block, duration)
     }
 }
 
@@ -67,13 +65,17 @@ fun Context.isConnected(): Boolean {
     return info?.isConnected ?: false
 }
 
-fun Context.changeSize(dialog: Dialog, @FloatRange(from = 0.0, to = 1.0) width: Float, isSquare : Boolean= false){
+fun Context.changeSize(
+    dialog: Dialog,
+    @FloatRange(from = 0.0, to = 1.0) width: Float,
+    isSquare: Boolean = false
+) {
     val window = dialog.window
     window?.let {
         val lp = it.attributes
         //横屏
         lp.width = (getScreenWidth() * width).toInt()
-        if (isSquare){
+        if (isSquare) {
             lp.height = lp.width
         }
         lp.gravity = Gravity.CENTER
@@ -81,7 +83,11 @@ fun Context.changeSize(dialog: Dialog, @FloatRange(from = 0.0, to = 1.0) width: 
     }
 }
 
-fun Context.changeSize(dialog: Dialog, @FloatRange(from = 0.0, to = 1.0) width: Float, @FloatRange(from = 0.0, to = 1.0) height: Float){
+fun Context.changeSize(
+    dialog: Dialog,
+    @FloatRange(from = 0.0, to = 1.0) width: Float,
+    @FloatRange(from = 0.0, to = 1.0) height: Float
+) {
     val window = dialog.window
     window?.let {
         val lp = it.attributes
@@ -94,7 +100,7 @@ fun Context.changeSize(dialog: Dialog, @FloatRange(from = 0.0, to = 1.0) width: 
 }
 
 
-fun Context.getScreenWidth():Int {
+fun Context.getScreenWidth(): Int {
     val wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
     val point = Point()
     wm.defaultDisplay.getRealSize(point)
@@ -109,7 +115,8 @@ fun Context.getScreenHeight(): Int {
 }
 
 fun Context.isNetWorkConnected(): Boolean {
-    val cm : ConnectivityManager? = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val cm: ConnectivityManager? =
+        getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     return cm?.activeNetworkInfo?.isConnected ?: false
 }
 

@@ -10,7 +10,6 @@ import com.benyq.guochat.ui.MainActivity
 import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.ext.Toasts
-import com.benyq.mvvm.ext.loge
 import com.benyq.mvvm.ext.startActivity
 import com.benyq.mvvm.ext.textTrim
 import com.benyq.mvvm.response.SharedType
@@ -74,7 +73,7 @@ class LoginActivity : LifecycleActivity<LoginViewModel>() {
             mSharedData.observe(this@LoginActivity, Observer {
                 if (it.type == SharedType.SHOW_LOADING) {
                     showLoading(it.msg)
-                }else if (it.type == SharedType.HIDE_LOADING) {
+                } else if (it.type == SharedType.HIDE_LOADING) {
                     hideLoading()
                 }
             })

@@ -19,7 +19,7 @@ class LoginRepository : BaseRepository() {
 
     suspend fun login(username: String, pwd: String): ChatResponse<Boolean> {
         return launchIO {
-            delay(500)
+            delay(200)
             if (username == "benyq" && pwd == "123456") {
                 ChatResponse.success(true)
             }else {

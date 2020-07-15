@@ -26,4 +26,8 @@ object IntentExtra {
     const val circlePhotosIndex = "circlePhotosIndex"
 
     const val registerData = "registerData"
+
+    //朋友圈
+    const val addCircleContent = "addCircleContent"
+    const val addCircleImages = "addCircleImages"
 }

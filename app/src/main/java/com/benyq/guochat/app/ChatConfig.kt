@@ -30,3 +30,7 @@ val TEXT = "text/plain; charset=utf-8".toMediaTypeOrNull()
 val STREAM = "application/octet-stream".toMediaTypeOrNull()
 val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
 val FormUrlEncoded = "application/x-www-form-urlencoded;charset=UTF-8".toMediaTypeOrNull()
+
+const val CIRCLE__TYPE_TEXT = 1
+const val CIRCLE__TYPE_IMG = 2
+const val CIRCLE__TYPE_VIDEO = 3

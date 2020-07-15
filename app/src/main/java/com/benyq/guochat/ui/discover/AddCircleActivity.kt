@@ -1,5 +1,6 @@
 package com.benyq.guochat.ui.discover
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -17,6 +18,7 @@ import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.ext.Toasts
 import com.benyq.mvvm.ext.getColorRef
 import com.benyq.mvvm.ext.loge
+import com.benyq.mvvm.ext.textTrim
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
@@ -40,7 +42,13 @@ class AddCircleActivity : BaseActivity() {
             setBackAction { finish() }
             setMenuBtnAction {
                 //发布
-
+                val content = etContent.textTrim()
+                val images = nineGrid.getPhotoUrls()
+                val intent = Intent()
+                intent.putExtra(IntentExtra.addCircleContent, content)
+                intent.putExtra(IntentExtra.addCircleImages, images.toTypedArray())
+                setResult(Activity.RESULT_OK, intent)
+                finish()
             }
         }
 
