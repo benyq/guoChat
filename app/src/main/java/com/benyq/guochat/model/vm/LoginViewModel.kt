@@ -17,7 +17,7 @@ class LoginViewModel(private val mRepository: LoginRepository) : BaseViewModel()
 
     fun login(username: String, pwd: String) {
         quickLaunch<Boolean> {
-            onStart { showLoading("") }
+            onStart { showLoading("正在登录") }
             onSuccess { mLoginResult.value = it }
             onFinal { hideLoading() }
             request { mRepository.login(username, pwd) }

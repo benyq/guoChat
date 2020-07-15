@@ -63,10 +63,9 @@ class NineGridLayout(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val oldWidth = MeasureSpec.getSize(widthMeasureSpec)
-        mGap = oldWidth / 30
+        mGap = oldWidth / 40
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
         val width = MeasureSpec.getSize(widthMeasureSpec) - 2 * mGap
-        loge("width $width")
         val itemWidth = width / rowCount
         var totalHeight = 0
         val childMeasureSpec = MeasureSpec.makeMeasureSpec(itemWidth, MeasureSpec.EXACTLY)
@@ -74,10 +73,13 @@ class NineGridLayout(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
             val child = getChildAt(i)
             child.measure(childMeasureSpec, childMeasureSpec)
         }
-        totalHeight = max((childCount - 1) / rowCount, 0) * (itemWidth + mGap) + itemWidth
-        if(!mEnableAdd) {
-            totalHeight -= itemWidth
+        var childViewCount = childCount
+        if (!mEnableAdd || childViewCount == 10) {
+            //不显示AddButton
+            childViewCount -= 1
         }
+        val lineCount = (childViewCount + rowCount - 1) / rowCount
+        totalHeight = lineCount * itemWidth + (lineCount - 1) * mGap
         setMeasuredDimension(widthMeasureSpec, MeasureSpec.makeMeasureSpec(totalHeight, heightMode))
     }
 

@@ -28,6 +28,7 @@ import com.benyq.guochat.ui.common.widget.satellite_menu.OnMenuActionListener
 import com.benyq.guochat.ui.common.widget.satellite_menu.SatelliteMenuLayout
 import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.ext.getDrawableRef
+import com.benyq.mvvm.ext.loge
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.gyf.immersionbar.ImmersionBar
@@ -298,6 +299,7 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
                                 if (resultCode == Activity.RESULT_OK && data != null) {
                                     val content = data.getStringExtra(IntentExtra.addCircleContent)
                                     val images : Array<String> = data.getStringArrayExtra(IntentExtra.addCircleImages) ?: arrayOf()
+                                    loge("images ${images.size}")
                                     mAdapter.addData(
                                         0, FriendCircleBean(
                                             "3",

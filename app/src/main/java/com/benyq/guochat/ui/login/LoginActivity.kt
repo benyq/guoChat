@@ -45,7 +45,6 @@ class LoginActivity : LifecycleActivity<LoginViewModel>() {
                 Toasts.show(R.string.password_empty)
                 return@setOnClickListener
             }
-            showLoading("正在登录")
             mViewModel.login(username, password)
         }
 

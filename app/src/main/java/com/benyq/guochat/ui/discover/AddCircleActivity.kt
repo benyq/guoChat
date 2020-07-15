@@ -59,7 +59,6 @@ class AddCircleActivity : BaseActivity() {
             }){ code, data ->
                 data?.let {
                     val photots = it.getStringArrayExtra(IntentExtra.circlePhotos) ?: arrayOf<String>()
-                    loge("photots $photots")
                     nineGrid.addItems(photots.toList())
                 }
 
@@ -96,9 +95,9 @@ class AddCircleActivity : BaseActivity() {
             .loadImageEngine(GlideEngine)
             .forResult(object : OnResultCallbackListener<LocalMedia> {
                 override fun onResult(result: List<LocalMedia>) {
-                    nineGrid.addItems(result.map {
-                        it.path
-                    })
+                    result.forEach {
+                        nineGrid.addItem(it.path)
+                    }
                 }
 
                 override fun onCancel() {
@@ -113,9 +112,9 @@ class AddCircleActivity : BaseActivity() {
             .loadImageEngine(GlideEngine)
             .forResult(object : OnResultCallbackListener<LocalMedia> {
                 override fun onResult(result: List<LocalMedia>) {
-                    nineGrid.addItems(result.map {
-                        it.path
-                    })
+                    result.forEach {
+                        nineGrid.addItem(it.path)
+                    }
                 }
 
                 override fun onCancel() {

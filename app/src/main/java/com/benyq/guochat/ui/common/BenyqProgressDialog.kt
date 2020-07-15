@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog
 import com.benyq.guochat.R
 import com.benyq.guochat.ui.base.DrawableBuilder
 import com.benyq.mvvm.ext.gone
+import com.benyq.mvvm.ext.loge
 import kotlinx.android.synthetic.main.progress_dialog.*
 
 /**
@@ -20,8 +21,8 @@ class BenyqProgressDialog(context: Context, val content: String? = "") : AlertDi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.progress_dialog)
         llContainer.background = DrawableBuilder(context)
-            .fill("#7f000000")
-            .corner(8f)
+            .fill("#202020")
+            .corner(5f)
             .build()
         if (content.isNullOrEmpty()) {
             tvLoading.gone()
