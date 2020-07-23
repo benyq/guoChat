@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/black"
-    tools:context=".ui.discover.CirclePhotoViewPagerActivity">
+    android:background="@color/black">
 
     <com.benyq.guochat.ui.common.widget.HeaderView
         android:id="@+id/headerView"

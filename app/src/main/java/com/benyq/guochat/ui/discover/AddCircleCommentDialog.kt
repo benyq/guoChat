@@ -10,7 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import com.benyq.guochat.R
 import com.benyq.guochat.ui.base.BaseDialogFragment
 import com.benyq.mvvm.ext.getScreenWidth
-import com.benyq.mvvm.ext.runUnUiThread
+import com.benyq.mvvm.ext.runOnUiThread
 import com.benyq.mvvm.ext.textTrim
 import kotlinx.android.synthetic.main.dialog_bottom_comment.*
 
@@ -57,7 +57,7 @@ class AddCircleCommentDialog : BaseDialogFragment(){
 
     override fun onResume() {
         super.onResume()
-        runUnUiThread{
+        runOnUiThread{
             val inManager: InputMethodManager= etContent.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS)
         }

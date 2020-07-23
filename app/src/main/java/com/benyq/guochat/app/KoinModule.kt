@@ -24,6 +24,7 @@ val viewModelModule = module {
     viewModel { PersonalInfoViewModel(get()) }
     viewModel { PictureVideoViewModel() }
     viewModel { FriendCircleViewModel(get()) }
+    viewModel { AddCircleViewModel(get()) }
 }
 
 val repositoryModule = module {
@@ -38,6 +39,7 @@ val repositoryModule = module {
     single { ChatDetailRepository() }
     single { UserInfoRepository() }
     single { FriendCircleRepository() }
+    single { AddCircleRepository() }
 }
 
 val appModule = listOf(viewModelModule, repositoryModule)

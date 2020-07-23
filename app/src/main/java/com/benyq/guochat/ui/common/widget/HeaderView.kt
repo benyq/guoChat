@@ -8,8 +8,6 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.widget.RelativeLayout
-import androidx.annotation.IntDef
-import androidx.annotation.RestrictTo
 import androidx.core.graphics.drawable.DrawableCompat
 import com.benyq.guochat.R
 import com.benyq.guochat.ui.base.DrawableBuilder
@@ -75,7 +73,8 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
         mTitleGravity = array.getInt(R.styleable.HeaderView_title_gravity, titleCenter)
         mToolbarType = array.getInt(R.styleable.HeaderView_toolbar_type, toolbarTypeNormal)
         headerViewBg = array.getDrawable(R.styleable.HeaderView_toolbar_bg)
-        mToolbarMenuSrc = array.getDrawable(R.styleable.HeaderView_toolbar_menu_src) ?: context.getDrawable(R.drawable.ic_three_dots)!!
+        mToolbarMenuSrc = array.getDrawable(R.styleable.HeaderView_toolbar_menu_src)
+            ?: context.getDrawable(R.drawable.ic_three_dots)!!
 
         array.recycle()
 

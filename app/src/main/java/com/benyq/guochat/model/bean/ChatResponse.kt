@@ -13,7 +13,7 @@ import com.benyq.mvvm.response.BenyqResponse
 data class ChatResponse<T>(val code: Int, val msg: String, val data: T?) : BenyqResponse<T> {
 
     companion object {
-        fun <R> success(data: R) : ChatResponse<R>{
+        fun <R> success(data: R?) : ChatResponse<R>{
             return ChatResponse(0, "success", data)
         }
         fun <R> error(msg: String) : ChatResponse<R>{
@@ -32,7 +32,7 @@ data class ChatResponse<T>(val code: Int, val msg: String, val data: T?) : Benyq
             success?.invoke(this.getRealData())
             return
         }
-
-        this.getMessage().let { error?.invoke(it) ?: Toasts.show(it) }
+        throw Throwable("数据不能是null")
+//        this.getMessage().let { error?.invoke(it) ?: Toasts.show(it) }
     }
 }

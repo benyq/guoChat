@@ -61,6 +61,11 @@ class NineGridLayout(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
 
     constructor(context: Context) : this(context, null)
 
+    /**
+     * 不滑动就可以返回false
+     */
+    override fun shouldDelayChildPressedState() = false
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val oldWidth = MeasureSpec.getSize(widthMeasureSpec)
         mGap = oldWidth / 40

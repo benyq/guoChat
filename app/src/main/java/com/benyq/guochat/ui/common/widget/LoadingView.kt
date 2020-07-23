@@ -49,6 +49,7 @@ class LoadingView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
 
     init {
         paint.strokeWidth = 0f
+        paint.strokeCap = Paint.Cap.ROUND
 
         removeCallbacks(increaseTask)
     }
@@ -67,8 +68,6 @@ class LoadingView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
         startX = centerX + radiusOffset
         endX = startX + radius / 3f
 
-//        radius * 2 / 3
-
     }
 
 
@@ -81,9 +80,6 @@ class LoadingView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
             val color = argbEvaluator.evaluate(fraction, startColor, endColor) as Int
             paint.color = color
             canvas!!.drawLine(startX, centerY.toFloat(), endX, centerY.toFloat(), paint)
-            // 线的两端画个点，看着圆滑
-            canvas.drawCircle(startX, centerY.toFloat(), stokeWidth / 2, paint)
-            canvas.drawCircle(endX, centerY.toFloat(), stokeWidth / 2, paint)
             canvas.rotate(avgAngle, centerX.toFloat(), centerY.toFloat())
         }
 

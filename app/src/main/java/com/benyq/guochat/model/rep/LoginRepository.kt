@@ -21,7 +21,7 @@ class LoginRepository : BaseRepository() {
         return launchIO {
             delay(300)
             if (username == "benyq" && pwd == "123456") {
-                ChatResponse.success(true)
+                ChatResponse.success<Boolean>(true)
             }else {
                 ChatResponse.error("账号或者密码错误")
             }

@@ -1,7 +1,6 @@
 package com.benyq.mvvm.ext
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.widget.Toast
 import androidx.annotation.StringRes
@@ -22,13 +21,13 @@ object Toasts {
     }
 
     fun show(message: String) {
-        runUnUiThread {
+        runOnUiThread {
             mToast?.apply { setText(message) }?.show()
         }
     }
 
     fun show(@StringRes stringId: Int) {
-        runUnUiThread {
+        runOnUiThread {
             mToast?.apply { setText(stringId) }?.show()
         }
     }

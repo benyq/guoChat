@@ -1,6 +1,7 @@
 package com.benyq.guochat.model.vm
 
 import androidx.lifecycle.MutableLiveData
+import com.benyq.guochat.app.ErrorHandler
 import com.benyq.guochat.model.rep.LoginRepository
 import com.benyq.mvvm.mvvm.BaseViewModel
 
@@ -20,6 +21,7 @@ class LoginViewModel(private val mRepository: LoginRepository) : BaseViewModel()
             onStart { showLoading("正在登录") }
             onSuccess { mLoginResult.value = it }
             onFinal { hideLoading() }
+            onException { ErrorHandler.handle(it) }
             request { mRepository.login(username, pwd) }
         }
     }

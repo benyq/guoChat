@@ -13,13 +13,13 @@
     <com.benyq.guochat.ui.common.widget.LoadingView
         android:id="@+id/loadingView"
         android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="5dp"/>
+        android:layout_height="30dp"/>
 
     <TextView
         android:id="@+id/tvLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:textColor="@color/white"
         android:textSize="15sp"
         tools:text="ddddd"/>
