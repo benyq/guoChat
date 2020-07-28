@@ -72,6 +72,7 @@ object FragmentLifecycle : FragmentManager.FragmentLifecycleCallbacks()  {
 
     override fun onFragmentDetached(fm: FragmentManager, f: Fragment) {
         fetchFragmentDelegateFromCache(f)?.onDetached()
+        cache.remove(getKey(f))
     }
 
     private fun fetchFragmentDelegate(f: Fragment, fm: FragmentManager): FragmentDelegate {

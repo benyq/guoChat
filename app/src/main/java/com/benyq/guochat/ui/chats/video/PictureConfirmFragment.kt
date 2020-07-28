@@ -1,7 +1,5 @@
 package com.benyq.guochat.ui.chats.video
 
-import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.model.vm.PictureVideoViewModel

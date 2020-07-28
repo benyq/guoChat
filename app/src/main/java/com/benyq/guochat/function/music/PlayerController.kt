@@ -30,7 +30,7 @@ object PlayerController : IPlayController{
         mPauseLiveData.value = newValue
     }
 
-    private lateinit var mContext: Context
+    private var mContext: Context? = null
 
 
     override fun playNext() {
@@ -113,6 +113,7 @@ object PlayerController : IPlayController{
     }
 
     fun release() {
+        mContext = null
         MediaPlayerHelper.release()
         isPaused = true
         mPauseLiveData.value = true
@@ -121,9 +122,9 @@ object PlayerController : IPlayController{
 
     private fun notifyService(bool: Boolean) {
         if (bool) {
-            mContext.startService(Intent(mContext, PlayMusicService::class.java))
+            mContext?.startService(Intent(mContext, PlayMusicService::class.java))
         }else {
-            mContext.stopService(Intent(mContext, PlayMusicService::class.java))
+            mContext?.stopService(Intent(mContext, PlayMusicService::class.java))
         }
     }
 
@@ -133,7 +134,7 @@ object PlayerController : IPlayController{
             playPause()
         }else {
             if (url.contains("http:") || url.contains("ftp:") || url.contains("https:")) {
-                if (mContext.isConnected()) {
+                if (mContext!!.isConnected()) {
                     MediaPlayerHelper.play(url)
 //                    afterPlay(context)
                     bindProgressListener()

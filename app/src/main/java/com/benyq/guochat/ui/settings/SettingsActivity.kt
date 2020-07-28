@@ -2,7 +2,7 @@ package com.benyq.guochat.ui.settings
 
 import com.benyq.guochat.R
 import com.benyq.guochat.ui.base.BaseActivity
-import com.benyq.mvvm.ext.startActivity
+import com.benyq.mvvm.ext.goToActivity
 import kotlinx.android.synthetic.main.activity_settings.*
 
 /**
@@ -19,7 +19,7 @@ class SettingsActivity : BaseActivity() {
         headerView.setBackAction { finish() }
 
         ifAboutApp.setOnClickListener {
-            startActivity<AboutAppActivity>()
+            goToActivity<AboutAppActivity>()
         }
     }
 }

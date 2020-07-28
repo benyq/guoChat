@@ -88,12 +88,11 @@ class CommonBottomDialog : BaseDialogFragment() {
         super.onStart()
         dialog?.window?.let {
             val lp = it.attributes
-            it.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             lp.width = mContext.getScreenWidth()
             lp.height = ViewGroup.LayoutParams.WRAP_CONTENT
             lp.gravity = Gravity.BOTTOM
             it.attributes = lp
-            it.setWindowAnimations(R.style.exist_menu_animstyle)
+            it.setWindowAnimations(R.style.exist_menu_anim_style)
         }
     }
 

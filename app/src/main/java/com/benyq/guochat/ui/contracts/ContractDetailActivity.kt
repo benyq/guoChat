@@ -6,20 +6,17 @@ import android.content.Intent
 import com.benyq.guochat.R
 import com.benyq.guochat.app.GENDER_FEMALE
 import com.benyq.guochat.app.GENDER_MALE
-import com.benyq.guochat.app.GENDER_UNKNOWN
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.loadAvatar
 import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.local.ObjectBox
 import com.benyq.guochat.local.entity.ContractEntity
 import com.benyq.guochat.ui.base.BaseActivity
-import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.chats.ChatDetailActivity
 import com.benyq.guochat.ui.common.CommonBottomDialog
 import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.ext.Toasts
-import com.benyq.mvvm.ext.startActivity
-import com.bumptech.glide.Glide
+import com.benyq.mvvm.ext.goToActivity
 import kotlinx.android.synthetic.main.activity_contract_detail.*
 
 /**
@@ -64,7 +61,7 @@ class ContractDetailActivity : BaseActivity() {
         llSendMessage.setOnClickListener {
             val user = LocalStorage.userAccount
             val bean = ObjectBox.findFromToByIds(user.chatId, mContractEntity.id)
-            startActivity<ChatDetailActivity>(IntentExtra.fromToId to bean)
+            goToActivity<ChatDetailActivity>(IntentExtra.fromToId to bean)
         }
     }
 

@@ -30,6 +30,7 @@ object ActivityLifecycle : Application.ActivityLifecycleCallbacks{
     override fun onActivityDestroyed(activity: Activity) {
         fetchActivityDelegate(activity)?.onDestroy()
         ActivityManager.remove(activity)
+        cache.remove(getKey(activity))
     }
 
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {

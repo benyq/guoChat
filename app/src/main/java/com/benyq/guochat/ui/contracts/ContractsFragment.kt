@@ -6,8 +6,7 @@ import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.model.vm.ContractsViewModel
 import com.benyq.guochat.ui.base.LifecycleFragment
-import com.benyq.mvvm.annotation.BindViewModel
-import com.benyq.mvvm.ext.startActivity
+import com.benyq.mvvm.ext.goToActivity
 import kotlinx.android.synthetic.main.fragment_contracts.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -31,14 +30,14 @@ class ContractsFragment : LifecycleFragment<ContractsViewModel>() {
         mAdapter.setOnItemClickListener { adapter, view, position ->
             val contractBean = mAdapter.data[position]
             if (!contractBean.isHeader && contractBean.contractEntity != null) {
-                startActivity<ContractDetailActivity>(IntentExtra.contractData to contractBean.contractEntity)
+                goToActivity<ContractDetailActivity>(IntentExtra.contractData to contractBean.contractEntity)
             }
         }
     }
 
     override fun initListener() {
         iconAddContract.setOnClickListener {
-            startActivity<AddContractActivity>()
+            goToActivity<AddContractActivity>()
         }
     }
 

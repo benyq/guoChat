@@ -1,14 +1,12 @@
 package com.benyq.guochat.ui.me
 
 import com.benyq.guochat.R
-import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.loadAvatar
 import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.ui.base.BaseFragment
-import com.benyq.guochat.ui.base.LifecycleFragment
 import com.benyq.guochat.ui.contracts.CallingCardActivity
 import com.benyq.guochat.ui.settings.SettingsActivity
-import com.benyq.mvvm.ext.startActivity
+import com.benyq.mvvm.ext.goToActivity
 import kotlinx.android.synthetic.main.fragment_me.*
 
 /**
@@ -26,15 +24,15 @@ class MeFragment : BaseFragment() {
 
     override fun initListener() {
         llChatQr.setOnClickListener {
-            startActivity<CallingCardActivity>()
+            goToActivity<CallingCardActivity>()
         }
 
         ifPersonalInfo.setOnClickListener {
-            startActivity<PersonalInfoActivity>()
+            goToActivity<PersonalInfoActivity>()
         }
 
         ifSettings.setOnClickListener {
-            startActivity<SettingsActivity>()
+            goToActivity<SettingsActivity>()
         }
     }
 

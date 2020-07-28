@@ -81,6 +81,7 @@
         app:form_title="@string/scan"
         app:form_content="@string/scan_qr_calling_card"
         app:layout_constraintTop_toBottomOf="@id/llChatIdCode"
+        app:line_show_divide="false"
         android:layout_marginTop="20dp" />
 
 

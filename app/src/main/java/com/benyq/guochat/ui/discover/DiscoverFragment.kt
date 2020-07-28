@@ -2,12 +2,10 @@ package com.benyq.guochat.ui.discover
 
 import android.Manifest
 import com.benyq.guochat.R
-import com.benyq.guochat.function.other.NotificationHelper
 import com.benyq.guochat.function.permissionX.PermissionX
 import com.benyq.guochat.function.zxing.android.CaptureActivity
 import com.benyq.guochat.ui.base.BaseFragment
-import com.benyq.guochat.ui.base.LifecycleFragment
-import com.benyq.mvvm.ext.startActivity
+import com.benyq.mvvm.ext.goToActivity
 import com.benyq.mvvm.ext.toast
 import kotlinx.android.synthetic.main.fragment_discover.*
 
@@ -23,7 +21,7 @@ class DiscoverFragment : BaseFragment() {
 
     override fun initListener() {
         ifFriendCircle.setOnClickListener {
-            startActivity<FriendCircleActivity>()
+            goToActivity<FriendCircleActivity>()
 //            NotificationHelper.showMessageNotification(mContext)
         }
         ifScan.setOnClickListener {
@@ -32,7 +30,7 @@ class DiscoverFragment : BaseFragment() {
                 Manifest.permission.CAMERA
             ) { allGranted, _ ->
                 if (allGranted) {
-                    startActivity<CaptureActivity>()
+                    goToActivity<CaptureActivity>()
                 } else {
                     toast("权限拒绝")
                 }

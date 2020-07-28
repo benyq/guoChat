@@ -6,7 +6,6 @@ import android.graphics.Rect
 import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
-import androidx.core.os.postDelayed
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +21,6 @@ import com.benyq.guochat.model.vm.StateEvent
 import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.chats.video.PictureVideoActivity
 import com.benyq.mvvm.SmartJump
-import com.benyq.mvvm.annotation.BindViewModel
 import com.benyq.mvvm.ext.*
 import com.gyf.immersionbar.ktx.immersionBar
 import com.luck.picture.lib.PictureSelector
@@ -177,12 +175,11 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
             val chatRecord = mAdapter.data[position]
             when (view.id) {
                 R.id.ivContent -> {
-                    startActivity<ChatImageActivity>(IntentExtra.imgPath to chatRecord.imgUrl)
-                    overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out)
+                    goToActivity<ChatImageActivity>(IntentExtra.imgPath to chatRecord.imgUrl, enterAnim = R.anim.alpha_scale_in, exitAnim = R.anim.alpha_scale_out)
                 }
                 R.id.flVideo -> {
-                    startActivity<ChatVideoActivity>(IntentExtra.videoPath to chatRecord.videoPath)
-                    overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out)
+                    goToActivity<ChatVideoActivity>(IntentExtra.videoPath to chatRecord.videoPath, enterAnim = R.anim.alpha_scale_in, exitAnim = R.anim.alpha_scale_out)
+                    overridePendingTransition(R.anim.alpha_scale_in, R.anim.alpha_scale_out)
                 }
             }
         }
@@ -280,6 +277,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
 
                         override fun onCancel() {}
                     })
+                hideFunctionMenu()
             }
             R.id.llCapture -> {
                 PermissionX.request(
@@ -293,6 +291,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
                         Toasts.show("请授予相应权限")
                     }
                 }
+                hideFunctionMenu()
             }
             R.id.llContracts -> {
 
@@ -316,6 +315,11 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
         if (!iv && !fl) {
             hideFunctionMenu()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        MediaRecordController.reset()
     }
 
     private fun checkView(v: View, event: MotionEvent): Boolean {

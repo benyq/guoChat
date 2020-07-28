@@ -1,15 +1,12 @@
 package com.benyq.guochat.ui.me
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import com.benyq.guochat.R
 import com.benyq.guochat.loadAvatar
 import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.ui.base.BaseActivity
-import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.contracts.CallingCardActivity
 import com.benyq.mvvm.SmartJump
-import com.benyq.mvvm.ext.startActivity
+import com.benyq.mvvm.ext.goToActivity
 import kotlinx.android.synthetic.main.activity_personal_info.*
 
 /**
@@ -35,14 +32,14 @@ class PersonalInfoActivity : BaseActivity() {
         headerView.setBackAction { finish() }
 
         llAvatar.setOnClickListener {
-            startActivity<AvatarActivity>()
+            goToActivity<AvatarActivity>()
         }
         ifNickName.setOnClickListener {
             SmartJump.from(this).startActivity(PersonalInfoEditActivity::class.java)
         }
 
         ifCallCardQR.setOnClickListener {
-            startActivity<CallingCardActivity>()
+            goToActivity<CallingCardActivity>()
         }
 
     }

@@ -50,7 +50,7 @@ class AddCircleCommentDialog : BaseDialogFragment(){
             lp.height = ViewGroup.LayoutParams.WRAP_CONTENT
             lp.gravity = Gravity.BOTTOM
             it.attributes = lp
-            it.setWindowAnimations(R.style.exist_menu_animstyle)
+            it.setWindowAnimations(R.style.exist_menu_anim_style)
             it.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         }
     }

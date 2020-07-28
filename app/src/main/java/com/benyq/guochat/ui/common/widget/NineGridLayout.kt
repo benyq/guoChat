@@ -4,7 +4,9 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -24,7 +26,7 @@ import kotlin.math.min
  * @note  9宫格图片
  */
 class NineGridLayout(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
-    FrameLayout(context, attrs, defStyleAttr) {
+    ViewGroup(context, attrs, defStyleAttr) {
 
     // attrs
     private var mEnableAdd: Boolean = false
@@ -121,6 +123,11 @@ class NineGridLayout(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
             )
         }
         showPhoto()
+    }
+
+    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        loge("onInterceptTouchEvent ${ev?.action}")
+        return super.onInterceptTouchEvent(ev)
     }
 
     fun addItem(url: String) {

@@ -8,6 +8,7 @@ import android.os.Parcelable
 import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.benyq.mvvm.R
 import java.io.Serializable
 
 /**
@@ -17,16 +18,22 @@ import java.io.Serializable
  * description:
  */
 
-inline fun <reified T : Activity> Context.startActivity(vararg params: Pair<String, Any?>) {
+inline fun <reified T : Activity> Context.goToActivity(vararg params: Pair<String, Any?>, enterAnim: Int = R.anim.slide_right_in, exitAnim: Int = R.anim.slide_right_out) {
     val intent = Intent(this, T::class.java)
     if (params.isNotEmpty()) fillIntentArguments(intent, params)
     this.startActivity(intent)
+    if (this is Activity) {
+        overridePendingTransition(enterAnim, exitAnim)
+    }
 }
 
-inline fun <reified T : Activity> Fragment.startActivity(vararg params: Pair<String, Any?>) {
+inline fun <reified T : Activity> Fragment.goToActivity(vararg params: Pair<String, Any?>, enterAnim: Int = R.anim.slide_right_in, exitAnim: Int = R.anim.slide_right_out) {
     val intent = Intent(context, T::class.java)
     if (params.isNotEmpty()) fillIntentArguments(intent, params)
-    activity?.startActivity(intent)
+    requireActivity().run {
+        startActivity(intent)
+        overridePendingTransition(enterAnim, exitAnim)
+    }
 }
 
 fun fillIntentArguments(intent: Intent, params: Array<out Pair<String, Any?>>) {

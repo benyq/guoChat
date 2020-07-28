@@ -1,6 +1,5 @@
 package com.benyq.guochat.ui.chats
 
-import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.view.View
 import android.view.WindowManager
@@ -31,7 +30,6 @@ class ChatVideoActivity : BaseActivity() {
     private val mVideoProgressJob = Job()
     private lateinit var videoPath: String
     private val launch = CoroutineScope(mVideoProgressJob)
-
 
 
     override fun initWidows() {
@@ -72,7 +70,7 @@ class ChatVideoActivity : BaseActivity() {
             loge("开始播放 $what")
             if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
                 ivFirstFrame.gone()
-            }else if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
+            } else if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
 
             }
             false
@@ -93,7 +91,7 @@ class ChatVideoActivity : BaseActivity() {
                 videoView.start()
                 calculateVideoProgress()
                 checkState(true)
-            }else {
+            } else {
                 videoView.pause()
                 checkState(false)
             }
@@ -102,7 +100,7 @@ class ChatVideoActivity : BaseActivity() {
         ivTogglePlay.setOnClickListener(playListener)
         ivVideoFill.setOnClickListener(playListener)
 
-        sbVideo.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+        sbVideo.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
 
             }
@@ -132,7 +130,7 @@ class ChatVideoActivity : BaseActivity() {
         if (flag) {
             ivVideoFill.gone()
             ivTogglePlay.setImageResource(R.drawable.ic_remote_view_play_white)
-        }else {
+        } else {
             ivVideoFill.visible()
             ivTogglePlay.setImageResource(R.drawable.ic_remote_view_pause_white)
         }
@@ -142,7 +140,7 @@ class ChatVideoActivity : BaseActivity() {
         launch.launch(Dispatchers.Main) {
             while (!mVideoPaused) {
                 val position = videoView.currentPosition
-                tvCurrentPosition.text = calculateTime(position  / 1000)
+                tvCurrentPosition.text = calculateTime(position / 1000)
                 sbVideo.progress = position
                 delay(1000)
             }

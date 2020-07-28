@@ -15,7 +15,6 @@ import com.benyq.guochat.function.music.PlayerController
 import com.benyq.guochat.function.permissionX.PermissionX
 import com.benyq.guochat.function.zxing.android.CaptureActivity
 import com.benyq.guochat.local.ObjectBox
-import com.benyq.guochat.model.vm.LoginViewModel
 import com.benyq.guochat.model.vm.MainViewModel
 import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.chats.ChatFragment
@@ -24,9 +23,8 @@ import com.benyq.guochat.ui.contracts.AddContractActivity
 import com.benyq.guochat.ui.contracts.ContractsFragment
 import com.benyq.guochat.ui.discover.DiscoverFragment
 import com.benyq.guochat.ui.me.MeFragment
-import com.benyq.mvvm.annotation.BindViewModel
 import com.benyq.mvvm.ext.getScreenWidth
-import com.benyq.mvvm.ext.startActivity
+import com.benyq.mvvm.ext.goToActivity
 import com.benyq.mvvm.ext.toast
 import com.gyf.immersionbar.ktx.immersionBar
 import kotlinx.android.synthetic.main.activity_main.*
@@ -178,7 +176,7 @@ class MainActivity : LifecycleActivity<MainViewModel>() {
 
             }
             findViewById<LinearLayout>(R.id.llAddContract)?.setOnClickListener {
-                startActivity<AddContractActivity>()
+                goToActivity<AddContractActivity>()
                 mMoreFunctionPop.dismiss()
             }
             findViewById<LinearLayout>(R.id.llScan)?.setOnClickListener {
@@ -188,7 +186,7 @@ class MainActivity : LifecycleActivity<MainViewModel>() {
                     Manifest.permission.CAMERA
                 ) { allGranted, denyList ->
                     if (allGranted) {
-                        startActivity<CaptureActivity>()
+                        goToActivity<CaptureActivity>()
                     } else {
                         toast("权限拒绝")
                     }

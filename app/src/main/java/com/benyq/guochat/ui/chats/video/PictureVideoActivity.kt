@@ -6,14 +6,11 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.model.vm.PictureVideoViewModel
 import com.benyq.guochat.model.vm.StateEvent
 import com.benyq.guochat.ui.base.BaseActivity
-import org.koin.androidx.viewmodel.compat.SharedViewModelCompat.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -86,7 +83,7 @@ class PictureVideoActivity : BaseActivity() {
     private fun navigate(last: Fragment?, dest: Fragment, bundle: Bundle) {
         dest.arguments = bundle
         supportFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.alpha_in, R.anim.alpha_out)
+            .setCustomAnimations(R.anim.alpha_scale_in, R.anim.alpha_scale_out)
             .add(R.id.flContainer, dest, dest.javaClass.simpleName)
             .apply {
                 if (last != null) {

@@ -4,15 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.benyq.guochat.R
-import com.benyq.guochat.asyncWithLifecycle
-import com.benyq.guochat.then
 import com.benyq.guochat.ui.login.LoginActivity
-import com.benyq.mvvm.ext.startActivity
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
+import com.benyq.mvvm.ext.goToActivity
+import kotlinx.coroutines.*
 
 class SplashActivity : AppCompatActivity() {
-
+    private val mJob = Job()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
@@ -21,13 +18,19 @@ class SplashActivity : AppCompatActivity() {
             return
         }
 
-        GlobalScope.asyncWithLifecycle(this) {
+        val launch = CoroutineScope(mJob)
+        launch.launch(Dispatchers.IO) {
             delay(1500)
-        }.then {
-            startActivity<LoginActivity>()
-            finish()
+            withContext(Dispatchers.Main) {
+                goToActivity<LoginActivity>(exitAnim = R.anim.normal_out)
+                finish()
+            }
         }
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mJob.cancel()
     }
 
     private fun avoidLaunchHereAgain(): Boolean {

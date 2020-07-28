@@ -3,8 +3,10 @@ package com.benyq.guochat.ui.discover
 import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
@@ -13,7 +15,7 @@ import com.benyq.guochat.ui.base.BaseDialogFragment
 import com.benyq.mvvm.ext.getScreenHeight
 import com.benyq.mvvm.ext.getScreenWidth
 import kotlinx.android.synthetic.main.dialog_circle_photo_view_pager.*
-import java.util.*
+
 
 /**
  * @author benyq
@@ -50,6 +52,10 @@ class CirclePhotoViewPagerFragment : BaseDialogFragment() {
 
         val photoUrls = mViewModel.addCirclePhotoUrlData.value ?: mutableListOf()
         val photoUrlsIndex = arguments?.getInt(IntentExtra.circlePhotosIndex, 0) ?: 0
+
+        val child: View = viewPager.getChildAt(0)
+        (child as? RecyclerView)?.overScrollMode = View.OVER_SCROLL_NEVER
+
         viewPager.adapter = mAdapter
         viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         mAdapter.setNewInstance(photoUrls)
@@ -73,6 +79,7 @@ class CirclePhotoViewPagerFragment : BaseDialogFragment() {
             lp.height = mContext.getScreenHeight()
             it.attributes = lp
             it.setDimAmount(0f)
+            it.setWindowAnimations(R.style.exist_menu_anim_style)
         }
     }
 

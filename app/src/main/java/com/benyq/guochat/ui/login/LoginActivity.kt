@@ -7,11 +7,10 @@ import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.model.bean.RegisterBean
 import com.benyq.guochat.model.vm.LoginViewModel
 import com.benyq.guochat.ui.MainActivity
-import com.benyq.guochat.ui.TestActivity
 import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.ext.Toasts
-import com.benyq.mvvm.ext.startActivity
+import com.benyq.mvvm.ext.goToActivity
 import com.benyq.mvvm.ext.textTrim
 import com.benyq.mvvm.response.SharedType
 import kotlinx.android.synthetic.main.activity_login.*
@@ -67,7 +66,7 @@ class LoginActivity : LifecycleActivity<LoginViewModel>() {
     override fun dataObserver() {
         with(mViewModel) {
             mLoginResult.observe(this@LoginActivity, Observer {
-                startActivity<MainActivity>()
+                goToActivity<MainActivity>(exitAnim = R.anim.normal_out)
 //                startActivity<TestActivity>()
                 finish()
             })

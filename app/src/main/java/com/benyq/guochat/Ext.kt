@@ -118,7 +118,11 @@ fun calculateTime(time: Int): String {
 
 fun loadAvatar(iv: ImageView, url: String, round: Int = 10) {
     Glide.with(iv.context).load(url)
-        .transform(RoundedCorners(dip2px(iv.context, round).toInt()))
+        .apply {
+            if (round > 0) {
+                transform(RoundedCorners(dip2px(iv.context, round).toInt()))
+            }
+        }
         .into(iv)
 }
 

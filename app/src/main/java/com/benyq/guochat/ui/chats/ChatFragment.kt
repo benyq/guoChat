@@ -7,8 +7,7 @@ import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.local.ObjectBox
 import com.benyq.guochat.model.vm.ChatViewModel
 import com.benyq.guochat.ui.base.LifecycleFragment
-import com.benyq.mvvm.annotation.BindViewModel
-import com.benyq.mvvm.ext.startActivity
+import com.benyq.mvvm.ext.goToActivity
 import com.scwang.smartrefresh.header.WaterDropHeader
 import kotlinx.android.synthetic.main.fragment_chat.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -31,7 +30,7 @@ class ChatFragment : LifecycleFragment<ChatViewModel>() {
         rvChats.layoutManager = LinearLayoutManager(mContext)
         rvChats.adapter = mChatAdapter
         mChatAdapter.setOnItemClickListener { adapter, view, position ->
-            startActivity<ChatDetailActivity>(IntentExtra.fromToId to mChatAdapter.data[position])
+            goToActivity<ChatDetailActivity>(IntentExtra.fromToId to mChatAdapter.data[position])
         }
 
         mChatAdapter.setOnItemLongClickListener { adapter, view, position ->

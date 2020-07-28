@@ -13,10 +13,10 @@
     </style>
 
     <style name="exitEntryAnim" parent="AppTheme">
-        <item name="android:activityOpenEnterAnimation">@anim/alpha_in</item>
-        <item name="android:activityOpenExitAnimation">@anim/alpha_in</item>
-        <item name="android:activityCloseEnterAnimation">@anim/alpha_out</item>
-        <item name="android:activityCloseExitAnimation">@anim/alpha_out</item>
+        <item name="android:activityOpenEnterAnimation">@anim/alpha_scale_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/alpha_scale_in</item>
+        <item name="android:activityCloseEnterAnimation">@anim/alpha_scale_out</item>
+        <item name="android:activityCloseExitAnimation">@anim/alpha_scale_out</item>
     </style>
 
     <style name="thin_horizontal_divider">
@@ -83,7 +83,7 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="exist_menu_animstyle">
+    <style name="exist_menu_anim_style">
         <item name="android:windowEnterAnimation">@anim/slide_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/slide_bottom_out</item>
     </style>

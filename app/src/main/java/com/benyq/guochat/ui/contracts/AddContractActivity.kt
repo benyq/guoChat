@@ -3,7 +3,7 @@ package com.benyq.guochat.ui.contracts
 import com.benyq.guochat.R
 import com.benyq.guochat.function.zxing.android.CaptureActivity
 import com.benyq.guochat.ui.base.BaseActivity
-import com.benyq.mvvm.ext.startActivity
+import com.benyq.mvvm.ext.goToActivity
 import kotlinx.android.synthetic.main.activity_add_contract.*
 
 /**
@@ -22,10 +22,10 @@ class AddContractActivity : BaseActivity() {
         }
         llChatIdCode.setOnClickListener {
             //跳转到二维码名片界面
-            startActivity<CallingCardActivity>()
+            goToActivity<CallingCardActivity>()
         }
         ilScanCode.setOnClickListener {
-            startActivity<CaptureActivity>()
+            goToActivity<CaptureActivity>()
         }
 
         headerView.setBackAction {

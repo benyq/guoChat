@@ -107,6 +107,11 @@ object MediaRecordController {
         mPlayer.prepareAsync()
     }
 
+    fun reset() {
+        mCompleteAction = null
+        mPlayer.release()
+    }
+
     fun setCompleteAction(action: (Long)->Unit) {
         mCompleteAction = action
     }
