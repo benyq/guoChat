@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'koin'
+apply plugin: 'android-aspectjx'
 
 android {
     compileSdkVersion 29
@@ -77,7 +78,7 @@ dependencies {
 
     implementation 'com.tencent:mmkv:1.0.23'
     //内存泄漏检测
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
 
     debugImplementation "io.objectbox:objectbox-android-objectbrowser:2.5.1"
     releaseImplementation "io.objectbox:objectbox-android:2.5.1"
@@ -92,6 +93,14 @@ dependencies {
 
     implementation 'com.facebook.rebound:rebound:0.3.8'
     implementation 'com.tumblr:backboard:0.1.0'
+
+    def camerax_version = "1.0.0-beta07"
+// CameraX core library using camera2 implementation
+    implementation "androidx.camera:camera-camera2:$camerax_version"
+// CameraX Lifecycle Library
+    implementation "androidx.camera:camera-lifecycle:$camerax_version"
+// CameraX View class
+    implementation "androidx.camera:camera-view:1.0.0-alpha14"
 }
 
 apply plugin: 'io.objectbox'

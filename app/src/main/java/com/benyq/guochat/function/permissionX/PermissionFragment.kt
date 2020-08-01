@@ -4,12 +4,15 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.benyq.mvvm.ext.beforeM
 import com.benyq.mvvm.ext.fromM
 import com.benyq.mvvm.ext.fromN
+import com.benyq.mvvm.ext.loge
+import java.util.*
 
 /**
  * @author benyq
@@ -23,6 +26,7 @@ typealias PermissionCallBack = (Boolean, List<String>)->Unit
 class PermissionFragment : Fragment(){
 
     private var callBack : PermissionCallBack? = null
+    private var checkCallback : PermissionCheckCallBack? = null
     private var mContext: Context? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,8 +51,33 @@ class PermissionFragment : Fragment(){
                         denyPermissions.add(it)
                     }
                 }
+                Log.e("ProceedingJoinPoint", "check: check 10 ${denyPermissions}")
                 if (denyPermissions.isEmpty()) {
                     callBack?.invoke(true, mutableListOf())
+                }else {
+                    requestPermissions(denyPermissions.toTypedArray(), 1)
+                }
+            }
+        }else {
+            requestPermissions(permissions, 1)
+        }
+    }
+
+    fun requestNow(cb: PermissionCheckCallBack, vararg permissions: String) {
+        loge(permissions.contentToString())
+        checkCallback = cb
+        if (mContext != null && mContext is FragmentActivity) {
+            if (beforeM()) {
+                checkCallback?.onResult(true, mutableListOf())
+            }else {
+                val denyPermissions = mutableListOf<String>()
+                permissions.forEach {
+                    if (mContext!!.checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED) {
+                        denyPermissions.add(it)
+                    }
+                }
+                if (denyPermissions.isEmpty()) {
+                    checkCallback?.onResult(true, mutableListOf())
                 }else {
                     requestPermissions(denyPermissions.toTypedArray(), 1)
                 }
@@ -71,6 +100,10 @@ class PermissionFragment : Fragment(){
                 }
             }
             callBack?.invoke(denyList.isEmpty(), denyList)
+            checkCallback?.onResult(denyList.isEmpty(), denyList)
+
+            callBack = null
+            checkCallback = null
         }
     }
 }

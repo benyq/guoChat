@@ -37,8 +37,6 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
-        pendingTransition()
-
     }
 
     override fun initWidows() {
@@ -89,15 +87,6 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         NormalProgressDialogManager.dismissLoading()
     }
 
-
-    override fun finish() {
-        super.finish()
-        pendingTransition()
-    }
-
-    open fun pendingTransition() {
-        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out)
-    }
 
     open fun isImmersionBarEnabled() = true
 

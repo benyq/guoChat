@@ -97,9 +97,6 @@ class MainActivity : LifecycleActivity<MainViewModel>() {
 
     }
 
-    override fun pendingTransition() {
-
-    }
 
     override fun initData() {
     }

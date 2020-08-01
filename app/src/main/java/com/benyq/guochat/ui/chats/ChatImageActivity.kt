@@ -43,7 +43,7 @@ class ChatImageActivity : BaseActivity() {
 
     override fun finish() {
         super.finish()
-        overridePendingTransition(0, 0)
+        overridePendingTransition(R.anim.alpha_scale_in, R.anim.alpha_scale_out)
     }
 
 }

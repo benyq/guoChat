@@ -1,23 +1,36 @@
 package com.benyq.guochat
 
+import android.R.attr.path
+import android.annotation.TargetApi
+import android.content.ContentValues
 import android.content.Context
-import android.view.View
-import android.widget.EditText
+import android.content.Intent
+import android.media.MediaScannerConnection
+import android.media.MediaScannerConnection.OnScanCompletedListener
+import android.net.Uri
+import android.os.Build
+import android.os.Environment
+import android.provider.MediaStore
+import android.util.Log
 import android.widget.ImageView
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.app.JSON
+import com.benyq.mvvm.ext.Toasts
+import com.benyq.mvvm.ext.fromQ
 import com.benyq.mvvm.ext.loge
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import kotlinx.coroutines.*
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.BufferedReader
-import java.io.FileReader
+import okio.buffer
+import okio.sink
+import okio.source
+import java.io.File
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
+
 
 /**
  * @author benyq
@@ -130,3 +143,64 @@ fun loadAvatar(iv: ImageView, url: String, round: Int = 10) {
     return mapOf(*pairs).toString().toRequestBody(JSON)
 }
 
+suspend fun saveImg(context: Context, file: File, targetPath: String, imgName: String) : Boolean {
+    return if (fromQ()) {
+        saveImgVersionQ(context, file, targetPath, imgName)
+    }else {
+        saveImgLegacy(context, file, targetPath, imgName)
+    }
+}
+
+private suspend fun saveImgLegacy(context: Context, file: File, targetPath: String, imgName: String) : Boolean{
+    val parentFile = File(targetPath)
+    if (!parentFile.exists()) {
+        parentFile.mkdirs()
+    }
+    if (!file.exists()) {
+        return false
+    }
+//    withContext(Dispatchers.IO) {
+        val source = file.source().buffer()
+        val sink = File(targetPath + imgName).sink().buffer()
+        sink.writeAll(source)
+        sink.close()
+        source.close()
+
+        MediaScannerConnection.scanFile(
+            context,
+            arrayOf(targetPath + imgName),
+            arrayOf("image/jpeg"),
+            null
+        )
+//    }
+    return true
+}
+
+@TargetApi(Build.VERSION_CODES.Q)
+private suspend fun saveImgVersionQ(context: Context, file: File, targetPath: String, imgName: String) : Boolean{
+    withContext(Dispatchers.IO) {
+        val values = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, System.currentTimeMillis().toString())
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+            put(MediaStore.MediaColumns.IS_PENDING, 1)
+        }
+        val saveUri = context.contentResolver.insert(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            values
+        ) ?: kotlin.run {
+            Toasts.show("存储失败")
+            return@withContext
+        }
+        context.contentResolver.openOutputStream(saveUri)?.use {
+            val sink = it.sink().buffer()
+            val source = file.source().buffer()
+            sink.writeAll(source)
+            sink.close()
+            source.close()
+            Toasts.show("存储成功")
+        }
+        values.put(MediaStore.Video.Media.IS_PENDING, 0)
+        context.contentResolver.update(saveUri, values, null, null)
+    }
+    return true
+}

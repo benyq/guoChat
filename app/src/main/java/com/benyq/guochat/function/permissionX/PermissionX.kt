@@ -1,7 +1,7 @@
 package com.benyq.guochat.function.permissionX
 
 import android.content.Context
-import androidx.fragment.app.Fragment
+import android.util.Log
 import androidx.fragment.app.FragmentActivity
 
 /**

@@ -139,7 +139,9 @@ fun Context.getVersionCode(): String {
 }
 
 fun fromM() = fromSpecificVersion(Build.VERSION_CODES.M)
+fun fromQ() = fromSpecificVersion(Build.VERSION_CODES.Q)
 fun beforeM() = beforeSpecificVersion(Build.VERSION_CODES.M)
+fun beforeQ() = beforeSpecificVersion(Build.VERSION_CODES.Q)
 fun fromN() = fromSpecificVersion(Build.VERSION_CODES.N)
 fun beforeN() = beforeSpecificVersion(Build.VERSION_CODES.N)
 fun fromO() = fromSpecificVersion(Build.VERSION_CODES.O)
