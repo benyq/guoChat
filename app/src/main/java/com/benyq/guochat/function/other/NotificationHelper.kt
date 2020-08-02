@@ -28,8 +28,12 @@ object NotificationHelper {
     private var messageNotify = 33
     private var musicNotify = 11
 
+    private var progressNotify = 22
+
     private val mContentViewBig: RemoteViews? = null
     private var mContentViewSmall: RemoteViews? = null
+
+    private var mProgressView: RemoteViews? = null
 
     lateinit var mNotificationManager : NotificationManager
 
@@ -89,7 +93,6 @@ object NotificationHelper {
             .setWhen(System.currentTimeMillis()) // the time stamp
             .setCustomContentView(getMessageView(context, isPlaying))
             .setPriority(NotificationCompat.PRIORITY_MAX)
-            .setOngoing(true)
             .setOngoing(true)
             .setOnlyAlertOnce(true)
             .setContentIntent(contentIntent)
@@ -154,4 +157,46 @@ object NotificationHelper {
         return PendingIntent.getBroadcast(context, 0, Intent(action).setPackage(context.packageName), PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
+
+    //测试下载进度通知栏
+    fun createProgressNotification(context: Context, progress: Int) {
+        if (fromO()) {
+            val notificationChannel =
+                NotificationChannel(
+                    OTHER_CHANNEL_ID,
+                    OTHER_CHANNEL_NAME,
+                    NotificationManager.IMPORTANCE_HIGH
+                )
+            //如果这里用IMPORTANCE_NOENE就需要在系统的设置里面开启渠道，
+            //通知才能正常弹出
+            mNotificationManager.createNotificationChannel(notificationChannel)
+        }
+
+        val notification = NotificationCompat.Builder(context, OTHER_CHANNEL_ID)
+            .setSmallIcon(R.mipmap.ic_launcher) // the status icon
+            .setWhen(System.currentTimeMillis()) // the time stamp
+            .setCustomContentView(createProgressView(context, progress))
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setAutoCancel(true)
+            .setOngoing(true)
+            .setOnlyAlertOnce(true)
+            .build()
+
+        if (context is Service) {
+            context.startForeground(musicNotify, notification)
+        }else {
+            mNotificationManager.notify(progressNotify, notification)
+        }
+    }
+
+
+    private fun createProgressView(context: Context, progress: Int): RemoteViews {
+        mProgressView = mProgressView ?: RemoteViews(
+            context.packageName,
+            R.layout.remote_layout_progress
+        )
+        mProgressView?.setProgressBar(R.id.pbDownload, 100, progress, false)
+        mProgressView?.setTextViewText(R.id.tvProgressContent, "$progress%")
+        return mProgressView!!
+    }
 }

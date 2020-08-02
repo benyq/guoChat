@@ -84,5 +84,11 @@
         app:form_title="设置"
         app:form_icon="@drawable/ic_settings"/>
 
+    <com.benyq.guochat.ui.common.widget.IconFormLine
+        android:id="@+id/ifNotificationTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:form_title="通知测试"
+        app:form_icon="@drawable/ic_add"/>
 
 </LinearLayout>

@@ -1,11 +1,6 @@
 package com.benyq.guochat.ui.me
 
-import android.content.ContentValues
-import android.graphics.Bitmap
-import android.os.Build
 import android.os.Environment
-import android.provider.MediaStore
-import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
@@ -121,7 +116,7 @@ class AvatarActivity : LifecycleActivity<PersonalInfoViewModel>() {
         mBottomDialog?.show(supportFragmentManager)
     }
 
-    //    @PermissionCheck(checkString = [Manifest.permission.WRITE_EXTERNAL_STORAGE])
+    //@PermissionCheck(checkString = [Manifest.permission.WRITE_EXTERNAL_STORAGE])
     private suspend fun savePhoto() {
         //在 Environment.getExternalStoragePublicDirectory 下的图片才能被刷新到系统， getExternalFilesDir 不行
         val parentPath = getExternalFilesDir("avatar")!!.absolutePath + "/"

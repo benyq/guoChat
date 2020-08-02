@@ -1,6 +1,7 @@
 package com.benyq.guochat.ui.me
 
 import com.benyq.guochat.R
+import com.benyq.guochat.function.other.NotificationHelper
 import com.benyq.guochat.loadAvatar
 import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.ui.base.BaseFragment
@@ -8,6 +9,7 @@ import com.benyq.guochat.ui.contracts.CallingCardActivity
 import com.benyq.guochat.ui.settings.SettingsActivity
 import com.benyq.mvvm.ext.goToActivity
 import kotlinx.android.synthetic.main.fragment_me.*
+import kotlinx.coroutines.*
 
 /**
  * @author benyq
@@ -16,6 +18,8 @@ import kotlinx.android.synthetic.main.fragment_me.*
  * @note
  */
 class MeFragment : BaseFragment() {
+
+    private val mJob = Job()
 
     override fun getLayoutId() = R.layout.fragment_me
 
@@ -33,6 +37,20 @@ class MeFragment : BaseFragment() {
 
         ifSettings.setOnClickListener {
             goToActivity<SettingsActivity>()
+        }
+
+        ifNotificationTest.setOnClickListener {
+            val launch = CoroutineScope(mJob)
+            var progress = 0
+            launch.launch {
+                withContext(Dispatchers.IO){
+                    while (progress <= 100) {
+                        delay(200)
+                        NotificationHelper.createProgressNotification(requireContext(), progress)
+                        progress++
+                    }
+                }
+            }
         }
     }
 
