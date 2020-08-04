@@ -1,5 +1,6 @@
 package com.benyq.guochat.ui.me
 
+import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
 import com.benyq.guochat.function.other.NotificationHelper
 import com.benyq.guochat.loadAvatar
@@ -40,10 +41,10 @@ class MeFragment : BaseFragment() {
         }
 
         ifNotificationTest.setOnClickListener {
-            val launch = CoroutineScope(mJob)
+            val launch = CoroutineScope(mJob + Dispatchers.Main)
             var progress = 0
             launch.launch {
-                withContext(Dispatchers.IO){
+                withContext(Dispatchers.IO) {
                     while (progress <= 100) {
                         delay(200)
                         NotificationHelper.createProgressNotification(requireContext(), progress)
@@ -59,7 +60,7 @@ class MeFragment : BaseFragment() {
         showUserInfo()
     }
 
-    private fun showUserInfo(){
+    private fun showUserInfo() {
         LocalStorage.userAccount.run {
             loadAvatar(ivAvatar, avatarUrl)
             tvUserNick.text = nickName

@@ -4,6 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.local.entity.ChatRecordEntity
 import com.benyq.guochat.model.rep.ChatDetailRepository
 import com.benyq.mvvm.mvvm.BaseViewModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * @author benyq

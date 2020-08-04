@@ -1,6 +1,7 @@
 package com.benyq.guochat.ui.me
 
 import android.os.Environment
+import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
@@ -23,9 +24,6 @@ import kotlinx.android.synthetic.main.activity_avatar.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okio.buffer
-import okio.sink
-import okio.source
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import java.io.File
 
@@ -76,6 +74,11 @@ class AvatarActivity : LifecycleActivity<PersonalInfoViewModel>() {
         })
     }
 
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(0, R.anim.slide_right_out)
+    }
+
     private fun showBottomDialog() {
         mBottomDialog =
             mBottomDialog ?: CommonBottomDialog.newInstance(
@@ -105,7 +108,7 @@ class AvatarActivity : LifecycleActivity<PersonalInfoViewModel>() {
                             }
                             1 -> {
                                 //保存图片
-                                viewLifecycleOwner.lifecycleScope.launch {
+                                lifecycleScope.launch {
                                     savePhoto()
                                 }
                             }
@@ -116,7 +119,6 @@ class AvatarActivity : LifecycleActivity<PersonalInfoViewModel>() {
         mBottomDialog?.show(supportFragmentManager)
     }
 
-    //@PermissionCheck(checkString = [Manifest.permission.WRITE_EXTERNAL_STORAGE])
     private suspend fun savePhoto() {
         //在 Environment.getExternalStoragePublicDirectory 下的图片才能被刷新到系统， getExternalFilesDir 不行
         val parentPath = getExternalFilesDir("avatar")!!.absolutePath + "/"
@@ -127,26 +129,14 @@ class AvatarActivity : LifecycleActivity<PersonalInfoViewModel>() {
                 .asFile()
                 .load(LocalStorage.userAccount.avatarUrl)
                 .submit()
-
-            val file: File = futureTarget.get()
+            val file = futureTarget.get()
             saveImg(this@AvatarActivity, file, parentPath2, imgName)
         }
-        loge("图片保存结果 $result")
         if (result) {
-            Toasts.show("保存成功")
+            Toasts.show("保存成功, 路径 $parentPath2$imgName")
         } else {
             Toasts.show("保存失败")
         }
-
-        val file = File("")
-        val targetFile = File(parentPath, "ddddddd.png")
-
-        val bufferedSource = file.source().buffer()
-        val bufferedSink = targetFile.sink().buffer()
-        bufferedSink.writeAll(bufferedSource)
-        bufferedSink.close()
-        bufferedSource.close()
-        Toasts.show("存储成功")
     }
 
     private fun uploadAvatar(filePath: String) {

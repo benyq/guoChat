@@ -3,7 +3,9 @@ package com.benyq.guochat
 import android.annotation.TargetApi
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.media.MediaScannerConnection
+import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.widget.ImageView
@@ -12,6 +14,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.benyq.guochat.app.JSON
 import com.benyq.mvvm.ext.Toasts
 import com.benyq.mvvm.ext.fromQ
+import com.benyq.mvvm.ext.loge
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import kotlinx.coroutines.*
@@ -137,7 +140,7 @@ fun <K, V> mapOfToBodyJson(vararg pairs: Pair<K, V>): RequestBody {
 }
 
 
-fun saveImg(context: Context, file: File, targetPath: String, imgName: String): Boolean {
+suspend fun saveImg(context: Context, file: File, targetPath: String, imgName: String): Boolean {
     return if (fromQ()) {
         saveImgVersionQ(context, file, targetPath, imgName)
     } else {
@@ -145,7 +148,7 @@ fun saveImg(context: Context, file: File, targetPath: String, imgName: String): 
     }
 }
 
-private fun saveImgLegacy(
+private suspend fun saveImgLegacy(
     context: Context,
     file: File,
     targetPath: String,
@@ -164,17 +167,23 @@ private fun saveImgLegacy(
     sink.close()
     source.close()
 
-    MediaScannerConnection.scanFile(
-        context,
-        arrayOf(targetPath + imgName),
-        arrayOf("image/jpeg"),
-        null
-    )
+    //下面的刷新代码会和协程有一点问题，会导致withContext()之后的代码不执行（第一次不执行，以后执行）
+//    MediaScannerConnection.scanFile(
+//        context,
+//        arrayOf(targetPath + imgName),
+//        arrayOf("image/jpeg"),
+//        null
+//    )
+
+    val contentUri = Uri.fromFile(File(targetPath + imgName))
+    val mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, contentUri)
+    context.sendBroadcast(mediaScanIntent)
+
     return true
 }
 
 @TargetApi(Build.VERSION_CODES.Q)
-private fun saveImgVersionQ(
+private suspend fun saveImgVersionQ(
     context: Context,
     file: File,
     targetPath: String,
@@ -188,19 +197,19 @@ private fun saveImgVersionQ(
     val saveUri = context.contentResolver.insert(
         MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
         values
-    ) ?: kotlin.run {
-        Toasts.show("存储失败")
+    ) ?: run {
         return false
     }
-    context.contentResolver.openOutputStream(saveUri)?.use {
-        val sink = it.sink().buffer()
-        val source = file.source().buffer()
-        sink.writeAll(source)
-        sink.close()
-        source.close()
-        Toasts.show("存储成功")
-    }
-    values.put(MediaStore.Video.Media.IS_PENDING, 0)
-    context.contentResolver.update(saveUri, values, null, null)
-    return true
+    val result = runCatching {
+            context.contentResolver.openOutputStream(saveUri)?.use {
+                val sink = it.sink().buffer()
+                val source = file.source().buffer()
+                sink.writeAll(source)
+                sink.close()
+                source.close()
+            }
+            values.put(MediaStore.Video.Media.IS_PENDING, 0)
+            context.contentResolver.update(saveUri, values, null, null)
+        }
+    return result.isSuccess
 }

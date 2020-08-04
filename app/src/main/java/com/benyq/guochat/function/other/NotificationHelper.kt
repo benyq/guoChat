@@ -35,7 +35,7 @@ object NotificationHelper {
 
     private var mProgressView: RemoteViews? = null
 
-    lateinit var mNotificationManager : NotificationManager
+    private lateinit var mNotificationManager : NotificationManager
 
     fun init(context: Context) {
         mNotificationManager = context.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

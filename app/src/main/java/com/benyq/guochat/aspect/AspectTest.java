@@ -48,6 +48,7 @@ public class AspectTest {
 
     // 碰到过的问题 ：
     // 1、不能使用lambda， 例如 PermissionCheckCallBack
+    // 2、目前在kotlin协程时会有问题，估计是gradle-plugin 的transform问题
     @Around("checkPermission(permissioncheck)")
     public void check(ProceedingJoinPoint joinPoint, PermissionCheck permissioncheck) throws Throwable {
         if (permissioncheck != null) {
