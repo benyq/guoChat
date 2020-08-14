@@ -8,12 +8,15 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
+import com.benyq.guochat.app.SharedViewModel
 import com.benyq.guochat.function.media.MediaRecordController
 import com.benyq.guochat.function.other.GlideEngine
 import com.benyq.guochat.function.permissionX.PermissionX
+import com.benyq.guochat.getViewModel
 import com.benyq.guochat.local.entity.ChatRecordEntity
 import com.benyq.guochat.model.bean.ChatListBean
 import com.benyq.guochat.model.vm.ChatDetailViewModel
@@ -27,8 +30,8 @@ import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_chat_detail.*
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 import kotlin.properties.Delegates
 
 
@@ -38,7 +41,7 @@ import kotlin.properties.Delegates
  * @e-mail 1520063035@qq.com
  * @note 与联系人的聊天界面
  */
-
+@AndroidEntryPoint
 class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClickListener {
 
     private val TYPE_TEXT = 0
@@ -196,11 +199,11 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
     }
 
     override fun initData() {
-        mViewModel.getChatRecord(mChatListBean.fromToId, 1, 10)
+        viewModelGet().getChatRecord(mChatListBean.fromToId, 1, 10)
     }
 
     override fun dataObserver() {
-        with(mViewModel) {
+        with(viewModelGet()) {
             mChatRecordData.observe(this@ChatDetailActivity, Observer {
                 //根据item总高度显示区分 stackFromEnd 会出现问题，所以目前先靠估算吧
                 val layoutManager = rvChatRecord.layoutManager as LinearLayoutManager
@@ -235,6 +238,11 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
             flBottom.gone()
         }.translationY(0f).setDuration(duration).start()
 
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(0, R.anim.slide_right_out)
     }
 
     override fun onClick(v: View?) {
@@ -343,11 +351,13 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
             val mLayoutManager = rvChatRecord.layoutManager as LinearLayoutManager
             mLayoutManager.scrollToPositionWithOffset(mAdapter.data.size - 1, 0)
         }, 200)
-        mViewModel.sendChatMessage(data)
+        viewModelGet().sendChatMessage(data)
+
+        getAppViewModelProvider().get(SharedViewModel::class.java).notifyChatChange(true)
     }
 
     private fun gotoCameraCapture() {
-        SmartJump.from(this).startForResult(PictureVideoActivity::class.java) { resultCode, data ->
+        SmartJump.from(this).startForResult(PictureVideoActivity::class.java, { resultCode, data ->
             hideFunctionMenu()
             if (resultCode == Activity.RESULT_OK && data != null) {
                 val state = data.getIntExtra(IntentExtra.stateEvent, StateEvent.STATE_FINISH_IMG)
@@ -372,7 +382,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
                     )
                 }
             }
-        }
+        })
     }
 
 }

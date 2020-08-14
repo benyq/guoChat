@@ -1,5 +1,6 @@
 package com.benyq.guochat.model.vm
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.model.bean.FriendCircleBean
 import com.benyq.guochat.model.rep.FriendCircleRepository
@@ -12,7 +13,7 @@ import com.benyq.mvvm.mvvm.BaseViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
-class FriendCircleViewModel(private val mRepository: FriendCircleRepository) : BaseViewModel(){
+class FriendCircleViewModel @ViewModelInject constructor(private val mRepository: FriendCircleRepository) : BaseViewModel(){
 
     val mFriendCircleData = MutableLiveData<List<FriendCircleBean>>()
     val mFriendCircleLikeData = MutableLiveData<Boolean>()

@@ -49,32 +49,34 @@ class SmartJump(fragmentManager: FragmentManager) {
         resultBridgeFragment = getResultBridgeFragment(fragmentManager)
     }
 
-    fun startForResult(intent: Intent, callback: ActivityResultCallback) {
+    fun startForResult(intent: Intent, callback: ActivityResultCallback, enterAnim: Int = 0, exitAnim: Int = 0) {
         val nowTime = System.currentTimeMillis()
         if (nowTime < lastJumpTime + interval) {
             return
         }
         lastJumpTime = nowTime
         resultBridgeFragment.startForResult(intent, callback)
+        resultBridgeFragment.requireActivity().overridePendingTransition(enterAnim, exitAnim)
     }
 
-    fun startForResult(clazz: Class<*>, callback: ActivityResultCallback) {
+    fun startForResult(clazz: Class<*>, callback: ActivityResultCallback, enterAnim: Int = 0, exitAnim: Int = 0) {
         val intent = Intent(resultBridgeFragment.activity, clazz)
-        startForResult(intent, callback)
+        startForResult(intent, callback, enterAnim, exitAnim)
     }
 
-    private fun startActivity(intent: Intent) {
+    private fun startActivity(intent: Intent, enterAnim: Int = 0, exitAnim: Int = 0) {
         val nowTime = System.currentTimeMillis()
         if (nowTime < lastJumpTime + interval) {
             return
         }
         lastJumpTime = nowTime
         resultBridgeFragment.startActivity(intent)
+        resultBridgeFragment.requireActivity().overridePendingTransition(enterAnim, exitAnim)
     }
 
-    fun startActivity(clazz: Class<*>) {
+    fun startActivity(clazz: Class<*>, enterAnim: Int = 0, exitAnim: Int = 0) {
         val intent = Intent(resultBridgeFragment.activity, clazz)
-        startActivity(intent)
+        startActivity(intent, enterAnim, exitAnim)
     }
 
 

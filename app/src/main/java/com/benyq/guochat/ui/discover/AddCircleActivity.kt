@@ -2,28 +2,24 @@ package com.benyq.guochat.ui.discover
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.LinearLayout
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
 import com.benyq.guochat.R
+import com.benyq.guochat.TestEntity
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.function.other.GlideEngine
+import com.benyq.guochat.getViewModel
 import com.benyq.guochat.model.vm.AddCircleViewModel
-import com.benyq.guochat.ui.base.BaseActivity
 import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.common.CommonBottomDialog
-import com.benyq.mvvm.SmartJump
-import com.benyq.mvvm.ext.*
+import com.benyq.mvvm.ext.loge
+import com.benyq.mvvm.ext.textTrim
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_circle.*
-import org.koin.androidx.viewmodel.ext.android.getViewModel
+import javax.inject.Inject
 
 /**
  * @author benyq
@@ -31,9 +27,13 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
  * @e-mail 1520063035@qq.com
  * @note  发布朋友圈
  */
+@AndroidEntryPoint
 class AddCircleActivity : LifecycleActivity<AddCircleViewModel>() {
 
     private var mBottomDialog: CommonBottomDialog? = null
+
+    @Inject
+    lateinit var mTestEntity: TestEntity
 
     override fun initVM(): AddCircleViewModel = getViewModel()
 
@@ -62,7 +62,9 @@ class AddCircleActivity : LifecycleActivity<AddCircleViewModel>() {
         }
     }
 
-    private fun showSelectPhotoBottomDialog(){
+    private fun showSelectPhotoBottomDialog() {
+        loge("mTestEntity  ${mTestEntity.name} --- ${mTestEntity.age}")
+
         mBottomDialog =
             mBottomDialog ?: CommonBottomDialog.newInstance(arrayOf("拍摄", "从相册选择"))
                 .apply {
@@ -81,13 +83,13 @@ class AddCircleActivity : LifecycleActivity<AddCircleViewModel>() {
         mBottomDialog?.show(supportFragmentManager)
     }
 
-    private fun takePicture(){
+    private fun takePicture() {
         PictureSelector.create(this@AddCircleActivity)
             .openCamera(PictureMimeType.ofImage())
             .loadImageEngine(GlideEngine)
             .forResult(object : OnResultCallbackListener<LocalMedia> {
                 override fun onResult(result: List<LocalMedia>) {
-                    mViewModel.addCirclePhotoUrl(result.map { it.path })
+                    viewModelGet().addCirclePhotoUrl(result.map { it.path })
                 }
 
                 override fun onCancel() {
@@ -96,13 +98,13 @@ class AddCircleActivity : LifecycleActivity<AddCircleViewModel>() {
             })
     }
 
-    private fun selectPhoto(){
+    private fun selectPhoto() {
         PictureSelector.create(this@AddCircleActivity)
             .openGallery(PictureMimeType.ofAll())
             .loadImageEngine(GlideEngine)
             .forResult(object : OnResultCallbackListener<LocalMedia> {
                 override fun onResult(result: List<LocalMedia>) {
-                    mViewModel.addCirclePhotoUrl(result.map { it.path })
+                    viewModelGet().addCirclePhotoUrl(result.map { it.path })
                 }
 
                 override fun onCancel() {
@@ -112,7 +114,7 @@ class AddCircleActivity : LifecycleActivity<AddCircleViewModel>() {
     }
 
     override fun dataObserver() {
-        mViewModel.addCirclePhotoUrlData.observe(this, Observer {
+        viewModelGet().addCirclePhotoUrlData.observe(this, Observer {
             nineGrid.addItems(it)
         })
     }

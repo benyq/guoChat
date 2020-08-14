@@ -1,6 +1,7 @@
 package com.benyq.guochat.ui.base
 
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
 import com.benyq.mvvm.mvvm.BaseViewModel
 
 /**
@@ -11,14 +12,22 @@ import com.benyq.mvvm.mvvm.BaseViewModel
  */
 abstract class LifecycleActivity<VM : BaseViewModel> : BaseActivity() {
 
-    lateinit var mViewModel: VM
+    private lateinit var mViewModel: VM
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        mViewModel = initVM()
-        dataObserver()
+        isLifeCircle = true
         super.onCreate(savedInstanceState)
+        dataObserver()
+        initData()
     }
 
     abstract fun initVM(): VM
     abstract fun dataObserver()
+
+    open fun viewModelGet(): VM {
+        if (!this::mViewModel.isInitialized) {
+            mViewModel = initVM()
+        }
+        return mViewModel
+    }
 }

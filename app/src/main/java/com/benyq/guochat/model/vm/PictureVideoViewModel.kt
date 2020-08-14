@@ -1,5 +1,6 @@
 package com.benyq.guochat.model.vm
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -9,7 +10,7 @@ import androidx.lifecycle.ViewModel
  * @e-mail 1520063035@qq.com
  * @note 只是在PictureVideoActivity 与 Fragment之间传递消息的
  */
-class PictureVideoViewModel : ViewModel() {
+class PictureVideoViewModel @ViewModelInject constructor() : ViewModel() {
 
     val mState = MutableLiveData<StateEvent>()
 

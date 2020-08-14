@@ -89,10 +89,10 @@ class ContractDetailActivity : BaseActivity() {
     private fun editContractRemarks(){
         SmartJump.from(this@ContractDetailActivity).startForResult(Intent(this@ContractDetailActivity, ContractNickActivity::class.java).apply {
             putExtra(IntentExtra.contractData, mContractEntity)
-        }) { code, data->
+        }, { code, data->
             if (code == Activity.RESULT_OK && data != null) {
 
             }
-        }
+        })
     }
 }

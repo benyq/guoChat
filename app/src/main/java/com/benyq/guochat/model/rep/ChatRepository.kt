@@ -4,6 +4,7 @@ import com.benyq.guochat.local.ObjectBox
 import com.benyq.guochat.model.bean.ChatListBean
 import com.benyq.guochat.model.bean.ChatResponse
 import com.benyq.mvvm.mvvm.BaseRepository
+import javax.inject.Inject
 
 /**
  * @author benyq
@@ -11,7 +12,7 @@ import com.benyq.mvvm.mvvm.BaseRepository
  * @e-mail 1520063035@qq.com
  * @note
  */
-class ChatRepository : BaseRepository(){
+class ChatRepository @Inject constructor() : BaseRepository(){
 
     suspend fun getChatContracts(): ChatResponse<List<ChatListBean>> {
         return launchIO {

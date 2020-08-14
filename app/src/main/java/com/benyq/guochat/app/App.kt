@@ -1,14 +1,14 @@
 package com.benyq.guochat.app
 
 import android.app.Application
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
 import com.benyq.guochat.function.other.NotificationHelper
 import com.benyq.guochat.local.ObjectBox
 import com.benyq.guochat.model.net.ServiceFactory
 import com.github.promeg.pinyinhelper.Pinyin
 import com.tencent.mmkv.MMKV
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
+import dagger.hilt.android.HiltAndroidApp
 
 /**
  * @author benyq
@@ -16,11 +16,14 @@ import org.koin.core.context.startKoin
  * @e-mail 1520063035@qq.com
  * @note
  */
-class App : Application(){
+@HiltAndroidApp
+class App : Application(), ViewModelStoreOwner{
 
     companion object{
         lateinit var sInstance : App
     }
+
+    private val mAppViewModelStore: ViewModelStore = ViewModelStore()
 
     override fun onCreate() {
         super.onCreate()
@@ -29,13 +32,8 @@ class App : Application(){
         ObjectBox.init(this)
         Pinyin.init(null)
         NotificationHelper.init(this)
-        startKoin{
-            androidLogger()
-            androidContext(this@App)
-            modules(appModule)
-        }
         ServiceFactory.initClient()
     }
 
-
+    override fun getViewModelStore()= mAppViewModelStore
 }

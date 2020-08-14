@@ -11,6 +11,7 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import javax.inject.Inject
 
 /**
  * @author benyq
@@ -18,7 +19,7 @@ import java.io.File
  * @e-mail 1520063035@qq.com
  * @note  用户信息的数据源
  */
-class UserInfoRepository : BaseRepository(){
+class UserInfoRepository @Inject constructor() : BaseRepository(){
 
     suspend fun uploadAvatar(file: File): ChatResponse<String> {
         return launchIO {

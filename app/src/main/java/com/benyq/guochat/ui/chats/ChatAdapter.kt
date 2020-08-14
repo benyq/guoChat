@@ -21,9 +21,9 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
  * @note
  */
 class ChatAdapter : BaseQuickAdapter<ChatListBean, BaseViewHolder>(R.layout.item_chat_list) {
-    override fun convert(helper: BaseViewHolder, item: ChatListBean) {
+    override fun convert(holder: BaseViewHolder, item: ChatListBean) {
         item.run {
-            helper.setText(R.id.tvContractName, contractName)
+            holder.setText(R.id.tvContractName, contractName)
                 .setText(R.id.tvLatestTime, DateFormatUtil.dateLongToString(latestTime))
                 .setText(R.id.tvLatestConversion, latestConversation)
                 .setVisible(R.id.ivNotificationOff, !notificationOff)
@@ -41,7 +41,7 @@ class ChatAdapter : BaseQuickAdapter<ChatListBean, BaseViewHolder>(R.layout.item
                     diskCacheStrategy(DiskCacheStrategy.NONE)
                 })
                 .transform(RoundedCorners(dip2px(context, 10).toInt()))
-                .into(helper.getView(R.id.ivAvatar))
+                .into(holder.getView(R.id.ivAvatar))
         }
     }
 }

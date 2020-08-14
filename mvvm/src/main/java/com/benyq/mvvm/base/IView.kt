@@ -15,5 +15,4 @@ interface IView {
 
     fun initListener() {}
 
-    fun initData() {}
 }

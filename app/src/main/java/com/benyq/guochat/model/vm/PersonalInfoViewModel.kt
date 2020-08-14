@@ -1,5 +1,6 @@
 package com.benyq.guochat.model.vm
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.model.rep.UserInfoRepository
 import com.benyq.mvvm.mvvm.BaseViewModel
@@ -11,7 +12,7 @@ import java.io.File
  * @e-mail 1520063035@qq.com
  * @note 修改个人信息的ViewModel， 几个viewModelOwner公用
  */
-class PersonalInfoViewModel(private val mRepository: UserInfoRepository) : BaseViewModel(){
+class PersonalInfoViewModel @ViewModelInject constructor(private val mRepository: UserInfoRepository) : BaseViewModel(){
 
     val editNickLiveData = MutableLiveData<String>()
     val uploadAvatarLiveData = MutableLiveData<String>()

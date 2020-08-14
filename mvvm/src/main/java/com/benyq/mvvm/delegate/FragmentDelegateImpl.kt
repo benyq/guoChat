@@ -38,7 +38,6 @@ open class FragmentDelegateImpl(private val fragmentManager: FragmentManager,
         iFragment.initBefore()
         iFragment.initView()
         iFragment.initListener()
-//        iFragment.initData()
     }
 
     override fun onActivityCreate(savedInstanceState: Bundle?) {

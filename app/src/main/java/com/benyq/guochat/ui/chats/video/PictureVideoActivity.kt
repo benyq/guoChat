@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
+import com.benyq.guochat.getViewModel
 import com.benyq.guochat.model.vm.PictureVideoViewModel
 import com.benyq.guochat.model.vm.StateEvent
 import com.benyq.guochat.ui.base.BaseActivity
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * @author benyq
@@ -21,7 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class PictureVideoActivity : BaseActivity() {
 
-    private val pictureVideoViewModel: PictureVideoViewModel by viewModel()
+    private val pictureVideoViewModel: PictureVideoViewModel = getViewModel()
 
     override fun initWidows() {
         window.setFlags(

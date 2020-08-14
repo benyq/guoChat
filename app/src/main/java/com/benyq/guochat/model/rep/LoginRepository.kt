@@ -8,6 +8,7 @@ import com.benyq.mvvm.ext.loge
 import com.benyq.mvvm.mvvm.BaseRepository
 import kotlinx.coroutines.delay
 import okhttp3.RequestBody.Companion.toRequestBody
+import javax.inject.Inject
 
 /**
  * @author benyq
@@ -15,7 +16,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
  * @e-mail 1520063035@qq.com
  * @note
  */
-class LoginRepository : BaseRepository() {
+class LoginRepository @Inject constructor() : BaseRepository() {
 
     suspend fun login(username: String, pwd: String): ChatResponse<Boolean> {
         return launchIO {

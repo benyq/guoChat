@@ -1,6 +1,7 @@
 package com.benyq.guochat.model.rep
 
 import com.benyq.mvvm.mvvm.BaseRepository
+import javax.inject.Inject
 
 /**
  * @author benyq
@@ -8,5 +9,4 @@ import com.benyq.mvvm.mvvm.BaseRepository
  * @e-mail 1520063035@qq.com
  * @note
  */
-class AddCircleRepository : BaseRepository(){
-}
+class AddCircleRepository @Inject constructor() : BaseRepository(){}

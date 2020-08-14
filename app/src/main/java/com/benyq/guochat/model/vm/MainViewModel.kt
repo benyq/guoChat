@@ -1,5 +1,6 @@
 package com.benyq.guochat.model.vm
 
+import androidx.hilt.lifecycle.ViewModelInject
 import com.benyq.guochat.model.rep.MainRepository
 import com.benyq.mvvm.mvvm.BaseViewModel
 
@@ -9,7 +10,7 @@ import com.benyq.mvvm.mvvm.BaseViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
-class MainViewModel(private val mRepository: MainRepository) : BaseViewModel(){
+class MainViewModel @ViewModelInject constructor(private val mRepository: MainRepository) : BaseViewModel(){
 
     /**
      * MainActivity中页面下标

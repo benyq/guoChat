@@ -3,10 +3,10 @@ package com.benyq.guochat.ui.chats.video
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.model.vm.PictureVideoViewModel
+import com.benyq.guochat.sharedViewModel
 import com.benyq.guochat.ui.base.BaseFragment
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_picture_confirm.*
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
  * @author benyq
@@ -17,7 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class PictureConfirmFragment : BaseFragment() {
 
-    private val pictureVideoViewModel: PictureVideoViewModel by sharedViewModel()
+    private val pictureVideoViewModel: PictureVideoViewModel = sharedViewModel()
 
     private lateinit var imgPath: String
 

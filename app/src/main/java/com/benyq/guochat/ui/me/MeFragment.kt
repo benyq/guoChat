@@ -1,6 +1,5 @@
 package com.benyq.guochat.ui.me
 
-import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
 import com.benyq.guochat.function.other.NotificationHelper
 import com.benyq.guochat.loadAvatar

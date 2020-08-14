@@ -2,18 +2,16 @@ package com.benyq.guochat.ui.login
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
+import com.benyq.guochat.getViewModel
 import com.benyq.guochat.model.bean.RegisterBean
 import com.benyq.guochat.model.vm.LoginViewModel
 import com.benyq.guochat.ui.base.LifecycleActivity
-import com.benyq.mvvm.annotation.BindViewModel
 import com.benyq.mvvm.ext.textTrim
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_register.*
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
  * @author benyq
@@ -21,10 +19,11 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
+@AndroidEntryPoint
 class RegisterActivity : LifecycleActivity<LoginViewModel>() {
 
     override fun initVM(): LoginViewModel = getViewModel()
-    
+
     override fun getLayoutId() = R.layout.activity_register
 
     override fun initView() {
@@ -38,14 +37,17 @@ class RegisterActivity : LifecycleActivity<LoginViewModel>() {
         btnRegister.setOnClickListener {
             val userName = etUserName.textTrim()
             val pwd = etPassword.textTrim()
-            mViewModel.register(userName, pwd)
+            viewModelGet().register(userName, pwd)
         }
     }
 
     override fun dataObserver() {
-        mViewModel.mRegisterResult.observe(this, Observer {
+        viewModelGet().mRegisterResult.observe(this, Observer {
             setResult(Activity.RESULT_OK, Intent().apply {
-                putExtra(IntentExtra.registerData, RegisterBean(etUserName.textTrim(), etPassword.textTrim()))
+                putExtra(
+                    IntentExtra.registerData,
+                    RegisterBean(etUserName.textTrim(), etPassword.textTrim())
+                )
             })
             finish()
         })

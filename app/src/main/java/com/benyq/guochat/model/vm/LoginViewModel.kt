@@ -1,5 +1,6 @@
 package com.benyq.guochat.model.vm
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.app.ErrorHandler
 import com.benyq.guochat.model.rep.LoginRepository
@@ -11,7 +12,7 @@ import com.benyq.mvvm.mvvm.BaseViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
-class LoginViewModel(private val mRepository: LoginRepository) : BaseViewModel() {
+class LoginViewModel @ViewModelInject constructor(private val mRepository: LoginRepository) : BaseViewModel() {
 
     val mLoginResult = MutableLiveData<Boolean>()
     val mRegisterResult = MutableLiveData<String>()

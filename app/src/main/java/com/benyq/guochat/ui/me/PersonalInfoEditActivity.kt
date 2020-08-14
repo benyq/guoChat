@@ -3,13 +3,14 @@ package com.benyq.guochat.ui.me
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
+import com.benyq.guochat.getViewModel
 import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.model.vm.PersonalInfoViewModel
 import com.benyq.guochat.ui.base.LifecycleActivity
 import com.benyq.mvvm.annotation.BindViewModel
 import com.benyq.mvvm.ext.textTrim
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_personal_info_edit.*
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
  * @author benyq
@@ -17,6 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
  * @e-mail 1520063035@qq.com
  * @note  修改信息，目前只有昵称
  */
+@AndroidEntryPoint
 class PersonalInfoEditActivity : LifecycleActivity<PersonalInfoViewModel>() {
 
     override fun initVM(): PersonalInfoViewModel = getViewModel()
@@ -35,7 +37,7 @@ class PersonalInfoEditActivity : LifecycleActivity<PersonalInfoViewModel>() {
         headerView.setBackAction { finish() }
         headerView.setMenuBtnAction {
             val value = etContent.textTrim()
-            mViewModel.editUserNick(value)
+            viewModelGet().editUserNick(value)
         }
 
         etContent.addTextChangedListener {
@@ -48,7 +50,7 @@ class PersonalInfoEditActivity : LifecycleActivity<PersonalInfoViewModel>() {
     }
 
     override fun dataObserver() {
-        mViewModel.editNickLiveData.observe(this, Observer {
+        viewModelGet().editNickLiveData.observe(this, Observer {
             LocalStorage.updateUserAccount {
                 nickName = it
             }

@@ -4,11 +4,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
+import com.benyq.guochat.getViewModel
 import com.benyq.guochat.model.vm.ContractsViewModel
 import com.benyq.guochat.ui.base.LifecycleFragment
 import com.benyq.mvvm.ext.goToActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_contracts.*
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
  * @author benyq
@@ -16,6 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
+@AndroidEntryPoint
 class ContractsFragment : LifecycleFragment<ContractsViewModel>() {
 
     private val mAdapter = ContractsSectionAdapter()

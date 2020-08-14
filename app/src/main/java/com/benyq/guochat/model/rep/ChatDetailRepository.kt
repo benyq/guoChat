@@ -4,6 +4,7 @@ import com.benyq.guochat.local.ObjectBox
 import com.benyq.guochat.local.entity.ChatRecordEntity
 import com.benyq.guochat.model.bean.ChatResponse
 import com.benyq.mvvm.mvvm.BaseRepository
+import javax.inject.Inject
 
 /**
  * @author benyq
@@ -11,7 +12,7 @@ import com.benyq.mvvm.mvvm.BaseRepository
  * @e-mail 1520063035@qq.com
  * @note
  */
-class ChatDetailRepository : BaseRepository(){
+class ChatDetailRepository @Inject constructor() : BaseRepository(){
 
     suspend fun getChatRecord(chatId: Long, page: Int, size: Int): ChatResponse<List<ChatRecordEntity>> {
         return launchIO {

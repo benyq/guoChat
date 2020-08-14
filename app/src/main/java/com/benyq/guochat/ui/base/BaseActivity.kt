@@ -11,7 +11,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.addListener
+import androidx.lifecycle.ViewModelProvider
 import com.benyq.guochat.R
+import com.benyq.guochat.app.App
 import com.benyq.guochat.ui.common.NormalProgressDialogManager
 import com.benyq.mvvm.base.IActivity
 import com.benyq.mvvm.ext.getScreenWidth
@@ -35,14 +37,38 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
     var hideKeyboard = true
     var isSupportSwipeBack = true
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    /**
+     * 是否有ViewModel
+     */
+    var isLifeCircle = false
+
+    private lateinit var appViewModelProvider: ViewModelProvider
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (!isLifeCircle) {
+            initData()
+        }
+    }
+
+    open fun getAppViewModelProvider(): ViewModelProvider {
+        if (!this::appViewModelProvider.isInitialized) {
+            appViewModelProvider = ViewModelProvider(applicationContext as App, ViewModelProvider.AndroidViewModelFactory.getInstance(application))
+        }
+        return appViewModelProvider
     }
 
     override fun initWidows() {
         if (isImmersionBarEnabled()) {
             initImmersionBar()
         }
+    }
+
+    open fun initData() {}
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(0, R.anim.slide_right_out)
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
@@ -97,6 +123,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
             statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
         }
     }
+
 
     private var touchX = 0f
     private var touchY = 0f

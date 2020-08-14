@@ -1,5 +1,6 @@
 package com.benyq.guochat.model.vm
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.model.bean.ContractSectionBean
 import com.benyq.guochat.model.rep.ContractsRepository
@@ -11,7 +12,7 @@ import com.benyq.mvvm.mvvm.BaseViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
-class ContractsViewModel(private val mRepository: ContractsRepository) : BaseViewModel(){
+class ContractsViewModel@ViewModelInject constructor(private val mRepository: ContractsRepository) : BaseViewModel(){
 
     val mContractsData = MutableLiveData<List<ContractSectionBean>>()
 

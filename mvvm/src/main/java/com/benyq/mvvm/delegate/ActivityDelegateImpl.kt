@@ -15,6 +15,7 @@ open class ActivityDelegateImpl(private val activity: Activity) : ActivityDelega
 
     private val iActivity = activity as IActivity
 
+    // 因为在Activity中，ViewModel需要在OnCreate之后，所以这里会有问题
     override fun onCreate(savedInstanceState: Bundle?) {
         // 在界面未初始化之前调用的初始化窗口
         iActivity.initWidows()
@@ -24,7 +25,6 @@ open class ActivityDelegateImpl(private val activity: Activity) : ActivityDelega
             iActivity.initBefore()
             iActivity.initView()
             iActivity.initListener()
-            iActivity.initData()
         } else {
             activity.finish()
         }

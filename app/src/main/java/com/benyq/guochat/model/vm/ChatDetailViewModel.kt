@@ -1,5 +1,6 @@
 package com.benyq.guochat.model.vm
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.local.entity.ChatRecordEntity
 import com.benyq.guochat.model.rep.ChatDetailRepository
@@ -14,7 +15,7 @@ import kotlinx.coroutines.withContext
  * @e-mail 1520063035@qq.com
  * @note
  */
-class ChatDetailViewModel(private val mRepository: ChatDetailRepository) : BaseViewModel(){
+class ChatDetailViewModel@ViewModelInject constructor(private val mRepository: ChatDetailRepository) : BaseViewModel(){
 
     val mChatRecordData = MutableLiveData<List<ChatRecordEntity>>()
     val mSendMessageData = MutableLiveData<Boolean>()

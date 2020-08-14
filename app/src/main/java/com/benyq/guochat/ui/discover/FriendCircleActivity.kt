@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.R
 import com.benyq.guochat.app.CIRCLE__TYPE_TEXT
 import com.benyq.guochat.app.IntentExtra
+import com.benyq.guochat.getViewModel
 import com.benyq.guochat.loadAvatar
 import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.model.bean.CircleComment
@@ -32,8 +33,8 @@ import com.benyq.mvvm.ext.loge
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.gyf.immersionbar.ImmersionBar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_friend_circle.*
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 import kotlin.math.abs
 
 /**
@@ -42,6 +43,7 @@ import kotlin.math.abs
  * @e-mail 1520063035@qq.com
  * @note 果聊朋友圈，当前用户的
  */
+@AndroidEntryPoint
 class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
 
     private val frameDuration = 20
@@ -102,7 +104,7 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
         mAdapter.setOnItemChildClickListener { adapter, view, position ->
             val friendCircleBean = mAdapter.data[position]
             if (view.id == R.id.ivLike) {
-                mViewModel.friendCircleLike(friendCircleBean.circleId, friendCircleBean.like)
+                viewModelGet().friendCircleLike(friendCircleBean.circleId, friendCircleBean.like)
                 friendCircleBean.like = !friendCircleBean.like
                 mAdapter.notifyItemChanged(position)
             } else if (view.id == R.id.ivComments) {
@@ -134,7 +136,7 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
     }
 
     override fun initData() {
-        mViewModel.queryFriendCircles()
+        viewModelGet().queryFriendCircles()
     }
 
     override fun initListener() {
@@ -178,10 +180,10 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
     }
 
     override fun dataObserver() {
-        mViewModel.mFriendCircleData.observe(this, Observer {
+        viewModelGet().mFriendCircleData.observe(this, Observer {
             mAdapter.setNewInstance(it.toMutableList())
         })
-        mViewModel.mFriendCircleLikeData.observe(this, Observer {
+        viewModelGet().mFriendCircleLikeData.observe(this, Observer {
 //            initData()
         })
     }
@@ -295,7 +297,7 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
                 when (it.getMenuIcon()) {
                     R.mipmap.ic_messaging_posttype_photo -> {
                         SmartJump.from(this)
-                            .startForResult(AddCircleActivity::class.java) { resultCode, data ->
+                            .startForResult(AddCircleActivity::class.java, { resultCode, data ->
                                 if (resultCode == Activity.RESULT_OK && data != null) {
                                     val content = data.getStringExtra(IntentExtra.addCircleContent)
                                     val images : Array<String> = data.getStringArrayExtra(IntentExtra.addCircleImages) ?: arrayOf()
@@ -317,7 +319,7 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
                                         )
                                     )
                                 }
-                            }
+                            })
                     }
                     R.mipmap.ic_messaging_posttype_text -> {
 

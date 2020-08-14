@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.PopupWindow
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.FragmentTransaction
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
@@ -14,6 +15,7 @@ import com.benyq.guochat.R
 import com.benyq.guochat.function.music.PlayerController
 import com.benyq.guochat.function.permissionX.PermissionX
 import com.benyq.guochat.function.zxing.android.CaptureActivity
+import com.benyq.guochat.getViewModel
 import com.benyq.guochat.local.ObjectBox
 import com.benyq.guochat.model.vm.MainViewModel
 import com.benyq.guochat.ui.base.LifecycleActivity
@@ -23,14 +25,12 @@ import com.benyq.guochat.ui.contracts.AddContractActivity
 import com.benyq.guochat.ui.contracts.ContractsFragment
 import com.benyq.guochat.ui.discover.DiscoverFragment
 import com.benyq.guochat.ui.me.MeFragment
-import com.benyq.mvvm.ext.getScreenWidth
-import com.benyq.mvvm.ext.goToActivity
-import com.benyq.mvvm.ext.toast
+import com.benyq.mvvm.ext.*
 import com.gyf.immersionbar.ktx.immersionBar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-
+@AndroidEntryPoint
 class MainActivity : LifecycleActivity<MainViewModel>() {
 
     override fun initVM(): MainViewModel = getViewModel()
@@ -45,21 +45,43 @@ class MainActivity : LifecycleActivity<MainViewModel>() {
     override fun getLayoutId() = R.layout.activity_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        loge("我在测试   onCreate1")
+
         super.onCreate(savedInstanceState)
+        loge("我在测试   onCreate2")
+
         ObjectBox.testAddChatFromTo()
         PlayerController.setContext(this)
         isSupportSwipeBack = false
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            private var tapTime = 0L
+            override fun handleOnBackPressed() {
+                if (System.currentTimeMillis() - tapTime > 2000) {
+                    tapTime = System.currentTimeMillis()
+                    Toasts.show("再点击一次退出")
+                } else {
+                    finish()
+                }
+            }
+        })
+
+        bottomNavigationBar.selectTab(viewModelGet().mCurrentIndex)
+
+        loge("我在测试   onCreate2")
     }
 
     override fun initImmersionBar() {
         immersionBar {
             statusBarColor(R.color.darkgrey)
-            statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+            statusBarDarkFont(
+                true,
+                0.2f
+            ) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
         }
     }
 
     override fun initView() {
-
         bottomNavigationBar
             .addItem(BottomNavigationItem(R.drawable.ic_chat, titleArray[0]))
             .addItem(BottomNavigationItem(R.drawable.ic_contracts, titleArray[1]))
@@ -88,7 +110,6 @@ class MainActivity : LifecycleActivity<MainViewModel>() {
 
         })
 
-        bottomNavigationBar.selectTab(mViewModel.mCurrentIndex)
 
         toolbarAdd.setOnClickListener {
             val widthX = getScreenWidth() - mMoreFunctionPop.contentView.measuredWidth - 10
@@ -110,7 +131,7 @@ class MainActivity : LifecycleActivity<MainViewModel>() {
         toolbarTitle.text = titleArray[position]
         hideFragment()
         changeTab(position)
-        mViewModel.mCurrentIndex = position
+        viewModelGet().mCurrentIndex = position
     }
 
     private fun changeTab(position: Int) {
@@ -149,7 +170,7 @@ class MainActivity : LifecycleActivity<MainViewModel>() {
      */
     private fun hideFragment() {
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        val tag = "mainFragment ${mViewModel.mCurrentIndex}"
+        val tag = "mainFragment ${viewModelGet().mCurrentIndex}"
         val fragment = supportFragmentManager.findFragmentByTag(tag)
 
         if (fragment != null && fragment.isVisible) {

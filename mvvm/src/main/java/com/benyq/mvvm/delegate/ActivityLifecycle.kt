@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentActivity
 import com.benyq.mvvm.ActivityManager
 import com.benyq.mvvm.Setting
 import com.benyq.mvvm.base.IActivity
+import com.benyq.mvvm.ext.loge
 
 /**
  * @author benyq
@@ -42,6 +43,7 @@ object ActivityLifecycle : Application.ActivityLifecycleCallbacks{
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+        loge("我在测试   onActivityCreated")
         ActivityManager.add(activity)
         if (activity !is IActivity) {
             return

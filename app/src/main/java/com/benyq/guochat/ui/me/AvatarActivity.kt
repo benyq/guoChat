@@ -1,11 +1,11 @@
 package com.benyq.guochat.ui.me
 
 import android.os.Environment
-import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
 import com.benyq.guochat.function.other.GlideEngine
+import com.benyq.guochat.getViewModel
 import com.benyq.guochat.loadAvatar
 import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.model.vm.PersonalInfoViewModel
@@ -20,11 +20,11 @@ import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_avatar.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 import java.io.File
 
 /**
@@ -33,6 +33,7 @@ import java.io.File
  * @e-mail 1520063035@qq.com
  * @note 头像显示与修改
  */
+@AndroidEntryPoint
 class AvatarActivity : LifecycleActivity<PersonalInfoViewModel>() {
 
     override fun initVM(): PersonalInfoViewModel = getViewModel()
@@ -66,7 +67,7 @@ class AvatarActivity : LifecycleActivity<PersonalInfoViewModel>() {
     }
 
     override fun dataObserver() {
-        mViewModel.uploadAvatarLiveData.observe(this, Observer {
+        viewModelGet().uploadAvatarLiveData.observe(this, Observer {
             LocalStorage.updateUserAccount {
                 avatarUrl = it
             }
@@ -146,6 +147,6 @@ class AvatarActivity : LifecycleActivity<PersonalInfoViewModel>() {
             Toasts.show("图片地址错误")
             return
         }
-        mViewModel.uploadAvatar(file)
+        viewModelGet().uploadAvatar(file)
     }
 }

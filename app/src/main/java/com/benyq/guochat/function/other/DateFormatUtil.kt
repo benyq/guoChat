@@ -1,5 +1,6 @@
 package com.benyq.guochat.function.other
 
+import com.benyq.mvvm.ext.loge
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,6 +24,7 @@ object DateFormatUtil {
     private const val TIME_UNIT = 60
 
     val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINESE)
+    val simpleDateFormatNotHour = SimpleDateFormat("yyyy-MM-dd", Locale.CHINESE)
     var weekArray = arrayOf("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六")
 
     fun dateLongToString(timeMillis: Long) : String{
@@ -52,7 +54,7 @@ object DateFormatUtil {
             difDate < DAY_OF_WEEK -> {
                 "${weekArray[calendar.get(Calendar.DAY_OF_WEEK) - 1]} $hs"
             }
-            else -> simpleDateFormat.format(date)
+            else -> simpleDateFormatNotHour.format(date)
         }
     }
 

@@ -5,6 +5,7 @@ import com.benyq.guochat.model.bean.ChatResponse
 import com.benyq.guochat.model.bean.CircleComment
 import com.benyq.guochat.model.bean.FriendCircleBean
 import com.benyq.mvvm.mvvm.BaseRepository
+import javax.inject.Inject
 
 /**
  * @author benyq
@@ -12,7 +13,7 @@ import com.benyq.mvvm.mvvm.BaseRepository
  * @e-mail 1520063035@qq.com
  * @note
  */
-class FriendCircleRepository : BaseRepository() {
+class FriendCircleRepository @Inject constructor() : BaseRepository() {
 
     suspend fun queryFriendCircles(): ChatResponse<List<FriendCircleBean>> {
         return launchIO {

@@ -35,7 +35,7 @@ class PersonalInfoActivity : BaseActivity() {
             goToActivity<AvatarActivity>()
         }
         ifNickName.setOnClickListener {
-            SmartJump.from(this).startActivity(PersonalInfoEditActivity::class.java)
+            SmartJump.from(this).startActivity(PersonalInfoEditActivity::class.java, R.anim.slide_right_in, R.anim.slide_right_out)
         }
 
         ifCallCardQR.setOnClickListener {

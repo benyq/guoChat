@@ -5,6 +5,7 @@ import com.benyq.guochat.model.bean.ChatResponse
 import com.benyq.guochat.model.bean.ContractSectionBean
 import com.benyq.mvvm.mvvm.BaseRepository
 import com.github.promeg.pinyinhelper.Pinyin
+import javax.inject.Inject
 
 /**
  * @author benyq
@@ -12,7 +13,7 @@ import com.github.promeg.pinyinhelper.Pinyin
  * @e-mail 1520063035@qq.com
  * @note
  */
-class ContractsRepository : BaseRepository() {
+class ContractsRepository @Inject constructor() : BaseRepository() {
 
     suspend fun getAllContracts(): ChatResponse<List<ContractSectionBean>> {
         return launchIO {

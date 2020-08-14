@@ -4,17 +4,18 @@ import android.annotation.TargetApi
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
-import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.widget.ImageView
+import androidx.activity.ComponentActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.benyq.guochat.app.JSON
-import com.benyq.mvvm.ext.Toasts
 import com.benyq.mvvm.ext.fromQ
-import com.benyq.mvvm.ext.loge
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import kotlinx.coroutines.*
@@ -24,6 +25,7 @@ import okio.buffer
 import okio.sink
 import okio.source
 import java.io.File
+import java.util.HashMap
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -140,7 +142,7 @@ fun <K, V> mapOfToBodyJson(vararg pairs: Pair<K, V>): RequestBody {
 }
 
 
-suspend fun saveImg(context: Context, file: File, targetPath: String, imgName: String): Boolean {
+fun saveImg(context: Context, file: File, targetPath: String, imgName: String): Boolean {
     return if (fromQ()) {
         saveImgVersionQ(context, file, targetPath, imgName)
     } else {
@@ -148,7 +150,7 @@ suspend fun saveImg(context: Context, file: File, targetPath: String, imgName: S
     }
 }
 
-private suspend fun saveImgLegacy(
+private fun saveImgLegacy(
     context: Context,
     file: File,
     targetPath: String,
@@ -183,7 +185,7 @@ private suspend fun saveImgLegacy(
 }
 
 @TargetApi(Build.VERSION_CODES.Q)
-private suspend fun saveImgVersionQ(
+private fun saveImgVersionQ(
     context: Context,
     file: File,
     targetPath: String,
@@ -201,15 +203,28 @@ private suspend fun saveImgVersionQ(
         return false
     }
     val result = runCatching {
-            context.contentResolver.openOutputStream(saveUri)?.use {
-                val sink = it.sink().buffer()
-                val source = file.source().buffer()
-                sink.writeAll(source)
-                sink.close()
-                source.close()
-            }
-            values.put(MediaStore.Video.Media.IS_PENDING, 0)
-            context.contentResolver.update(saveUri, values, null, null)
+        context.contentResolver.openOutputStream(saveUri)?.use {
+            val sink = it.sink().buffer()
+            val source = file.source().buffer()
+            sink.writeAll(source)
+            sink.close()
+            source.close()
         }
+        values.put(MediaStore.Video.Media.IS_PENDING, 0)
+        context.contentResolver.update(saveUri, values, null, null)
+    }
     return result.isSuccess
+}
+
+
+inline fun <reified VM: ViewModel> ComponentActivity.getViewModel(): VM {
+    return ViewModelProvider(this).get(VM::class.java)
+}
+
+inline fun <reified VM: ViewModel> Fragment.getViewModel(): VM {
+    return ViewModelProvider(this).get(VM::class.java)
+}
+
+inline fun <reified VM: ViewModel> Fragment.sharedViewModel(): VM {
+    return ViewModelProvider(requireActivity()).get(VM::class.java)
 }
