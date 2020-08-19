@@ -78,6 +78,7 @@ class WebViewActivity : BaseActivity() {
                 } else {
                     if (progressBar.visibility == View.GONE) progressBar.visibility = View.VISIBLE
                     progressBar.progress = newProgress
+                    headerView.setToolbarTitle("正在加载中")
                 }
             }
 

@@ -1,15 +1,10 @@
 package com.benyq.guochat.ui.login
 
-import android.Manifest
 import android.app.Activity
-import android.os.Environment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
-import com.benyq.guochat.aspect.PermissionCheck
 import com.benyq.guochat.getViewModel
-import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.model.bean.RegisterBean
 import com.benyq.guochat.model.vm.LoginViewModel
 import com.benyq.guochat.ui.MainActivity
@@ -19,14 +14,8 @@ import com.benyq.mvvm.ext.Toasts
 import com.benyq.mvvm.ext.goToActivity
 import com.benyq.mvvm.ext.textTrim
 import com.benyq.mvvm.response.SharedType
-import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.coroutines.launch
-import okio.buffer
-import okio.sink
-import okio.source
-import java.io.File
 
 /**
  * @author benyq

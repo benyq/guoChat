@@ -32,7 +32,6 @@ class App : Application(), ViewModelStoreOwner{
         ObjectBox.init(this)
         Pinyin.init(null)
         NotificationHelper.init(this)
-        ServiceFactory.initClient()
     }
 
     override fun getViewModelStore()= mAppViewModelStore

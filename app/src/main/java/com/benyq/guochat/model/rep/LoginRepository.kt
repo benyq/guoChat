@@ -3,6 +3,7 @@ package com.benyq.guochat.model.rep
 import com.benyq.guochat.app.JSON
 import com.benyq.guochat.mapOfToBodyJson
 import com.benyq.guochat.model.bean.ChatResponse
+import com.benyq.guochat.model.net.ApiService
 import com.benyq.guochat.model.net.ServiceFactory
 import com.benyq.mvvm.ext.loge
 import com.benyq.mvvm.mvvm.BaseRepository
@@ -16,7 +17,7 @@ import javax.inject.Inject
  * @e-mail 1520063035@qq.com
  * @note
  */
-class LoginRepository @Inject constructor() : BaseRepository() {
+class LoginRepository @Inject constructor(private val apiService: ApiService) : BaseRepository() {
 
     suspend fun login(username: String, pwd: String): ChatResponse<Boolean> {
         return launchIO {
@@ -31,7 +32,7 @@ class LoginRepository @Inject constructor() : BaseRepository() {
 
     suspend fun register(username: String, pwd: String): ChatResponse<String> {
         return launchIO {
-            ServiceFactory.apiService.register(mapOfToBodyJson("userName" to username, "passWord" to pwd))
+            apiService.register(mapOfToBodyJson("userName" to username, "passWord" to pwd))
         }
     }
 

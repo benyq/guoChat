@@ -78,7 +78,7 @@ dependencies {
 
     implementation 'com.tencent:mmkv:1.0.23'
     //内存泄漏检测
-//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
 
     debugImplementation "io.objectbox:objectbox-android-objectbrowser:2.5.1"
     releaseImplementation "io.objectbox:objectbox-android:2.5.1"

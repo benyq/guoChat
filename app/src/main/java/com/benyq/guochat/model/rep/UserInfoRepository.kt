@@ -4,7 +4,9 @@ import com.benyq.guochat.app.STREAM
 import com.benyq.guochat.app.TEXT
 import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.model.bean.ChatResponse
+import com.benyq.guochat.model.net.ApiService
 import com.benyq.guochat.model.net.ServiceFactory
+import com.benyq.mvvm.ext.loge
 import com.benyq.mvvm.mvvm.BaseRepository
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -19,7 +21,7 @@ import javax.inject.Inject
  * @e-mail 1520063035@qq.com
  * @note  用户信息的数据源
  */
-class UserInfoRepository @Inject constructor() : BaseRepository(){
+class UserInfoRepository @Inject constructor(private val apiService: ApiService) : BaseRepository(){
 
     suspend fun uploadAvatar(file: File): ChatResponse<String> {
         return launchIO {
@@ -29,14 +31,15 @@ class UserInfoRepository @Inject constructor() : BaseRepository(){
             val userBody = LocalStorage.uid.toRequestBody(TEXT)
             val map = mutableMapOf<String, RequestBody>()
             map["uid"] = userBody
-
-            ServiceFactory.apiService.uploadAvatar(map, body)
+            loge("UserInfoRepository apiService $apiService")
+            apiService.uploadAvatar(map, body)
         }
     }
 
     suspend fun editUserNick(nickName: String): ChatResponse<String>{
         return launchIO {
-            ServiceFactory.apiService.editUserNick(LocalStorage.uid, nickName)
+            loge("UserInfoRepository apiService $apiService")
+            apiService.editUserNick(LocalStorage.uid, nickName)
         }
     }
 

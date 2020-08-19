@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
-import com.benyq.guochat.TestEntity
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.function.other.GlideEngine
 import com.benyq.guochat.getViewModel
@@ -31,9 +30,6 @@ import javax.inject.Inject
 class AddCircleActivity : LifecycleActivity<AddCircleViewModel>() {
 
     private var mBottomDialog: CommonBottomDialog? = null
-
-    @Inject
-    lateinit var mTestEntity: TestEntity
 
     override fun initVM(): AddCircleViewModel = getViewModel()
 
@@ -63,8 +59,6 @@ class AddCircleActivity : LifecycleActivity<AddCircleViewModel>() {
     }
 
     private fun showSelectPhotoBottomDialog() {
-        loge("mTestEntity  ${mTestEntity.name} --- ${mTestEntity.age}")
-
         mBottomDialog =
             mBottomDialog ?: CommonBottomDialog.newInstance(arrayOf("拍摄", "从相册选择"))
                 .apply {

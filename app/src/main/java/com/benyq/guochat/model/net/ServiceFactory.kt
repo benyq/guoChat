@@ -5,7 +5,13 @@ import com.benyq.mvvm.ext.logi
 import com.benyq.mvvm.http.BaseOkHttpClient
 import com.benyq.mvvm.http.RetrofitFactory
 import com.socks.library.KLog
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.components.ApplicationComponent
 import okhttp3.logging.HttpLoggingInterceptor
+import javax.inject.Singleton
 
 /**
  * @author benyq
@@ -13,9 +19,11 @@ import okhttp3.logging.HttpLoggingInterceptor
  * @e-mail 1520063035@qq.com
  * @note
  */
+@Module
+@InstallIn(ApplicationComponent::class)
 object ServiceFactory {
 
-    fun initClient() {
+    private fun initClient() {
         val loggingInterceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
             override fun log(message: String) {
                 if (message.isJson()){
@@ -33,4 +41,10 @@ object ServiceFactory {
 
     val apiService by lazy { RetrofitFactory.create(ApiService::class.java) }
 
+    @Singleton
+    @Provides
+    fun provideApiService(): ApiService {
+        initClient()
+        return RetrofitFactory.create(ApiService::class.java)
+    }
 }
