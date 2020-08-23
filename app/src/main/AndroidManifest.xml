@@ -22,6 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.contracts.ContractIdCardActivity"></activity>
         <activity android:name=".ui.discover.AddCircleActivity" />
 
         <service android:name=".function.message.MessageService" />

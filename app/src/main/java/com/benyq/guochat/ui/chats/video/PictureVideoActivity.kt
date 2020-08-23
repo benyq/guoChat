@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
@@ -12,6 +13,7 @@ import com.benyq.guochat.getViewModel
 import com.benyq.guochat.model.vm.PictureVideoViewModel
 import com.benyq.guochat.model.vm.StateEvent
 import com.benyq.guochat.ui.base.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * @author benyq
@@ -19,9 +21,10 @@ import com.benyq.guochat.ui.base.BaseActivity
  * @e-mail 1520063035@qq.com
  * @note 聊天界面 拍照或者摄像宿主
  */
+@AndroidEntryPoint
 class PictureVideoActivity : BaseActivity() {
 
-    private val pictureVideoViewModel: PictureVideoViewModel = getViewModel()
+    private val pictureVideoViewModel: PictureVideoViewModel by viewModels()
 
     override fun initWidows() {
         window.setFlags(
@@ -36,6 +39,7 @@ class PictureVideoActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        dataObserver()
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .add(R.id.flContainer, PictureVideoFragment(), "PictureVideoFragment")
@@ -44,6 +48,9 @@ class PictureVideoActivity : BaseActivity() {
     }
 
     override fun initView() {
+    }
+
+    private fun dataObserver() {
         pictureVideoViewModel.mState.observe(this, Observer {
             when (it.state) {
                 StateEvent.STATE_IMG -> {

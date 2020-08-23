@@ -41,6 +41,9 @@ class ContractsFragment : LifecycleFragment<ContractsViewModel>() {
         iconAddContract.setOnClickListener {
             goToActivity<AddContractActivity>()
         }
+        iconContractCard.setOnClickListener {
+            goToActivity<ContractIdCardActivity>()
+        }
     }
 
     override fun initData() {

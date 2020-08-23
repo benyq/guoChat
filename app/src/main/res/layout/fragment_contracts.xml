@@ -9,10 +9,20 @@
         android:id="@+id/iconAddContract"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:line_show_divide="false"
+        app:line_show_divide="true"
         app:form_icon="@drawable/ic_add_contract"
         app:form_icon_bg="@drawable/shape_bg_round_green"
         app:form_title="@string/add_contract"
+        app:line_show_arrow="false" />
+
+    <com.benyq.guochat.ui.common.widget.IconFormLine
+        android:id="@+id/iconContractCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:line_show_divide="false"
+        app:form_icon="@drawable/ic_id_card"
+        app:form_icon_bg="@drawable/shape_bg_round_blue"
+        app:form_title="@string/contract_id_card"
         app:line_show_arrow="false" />
 
     <androidx.recyclerview.widget.RecyclerView

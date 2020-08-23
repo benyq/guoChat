@@ -1,10 +1,11 @@
 package com.benyq.guochat.ui.chats.video
 
+import androidx.fragment.app.activityViewModels
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.model.vm.PictureVideoViewModel
-import com.benyq.guochat.sharedViewModel
 import com.benyq.guochat.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_picture_confirm.btnFinished
 import kotlinx.android.synthetic.main.fragment_picture_confirm.ivClose
 import kotlinx.android.synthetic.main.fragment_video_confirm.*
@@ -15,9 +16,10 @@ import kotlinx.android.synthetic.main.fragment_video_confirm.*
  * @e-mail 1520063035@qq.com
  * @note
  */
+@AndroidEntryPoint
 class VideoConfirmFragment : BaseFragment() {
 
-    private val videoVideoViewModel: PictureVideoViewModel = sharedViewModel()
+    private val videoVideoViewModel: PictureVideoViewModel by activityViewModels()
 
     private lateinit var videoPath: String
     private var videoDuration: Int = 0

@@ -1,6 +1,7 @@
 package com.benyq.guochat.ui.chats.video
 
 import android.app.Activity
+import androidx.fragment.app.activityViewModels
 import com.benyq.guochat.R
 import com.benyq.guochat.function.media.VideoCaptureManager
 import com.benyq.guochat.model.vm.PictureVideoViewModel
@@ -17,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_picture_video.*
 class PictureVideoFragment : BaseFragment() {
 
     private lateinit var mVideoCaptureManager: VideoCaptureManager
-    private val pictureVideoViewModel: PictureVideoViewModel = sharedViewModel()
+    private val pictureVideoViewModel: PictureVideoViewModel by activityViewModels()
 
 
     override fun getLayoutId() = R.layout.fragment_picture_video
