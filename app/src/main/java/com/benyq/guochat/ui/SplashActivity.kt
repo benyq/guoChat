@@ -4,6 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.benyq.guochat.R
+import com.benyq.guochat.function.fingerprint.FingerprintVerifyManager
+import com.benyq.guochat.local.LocalStorage
+import com.benyq.guochat.ui.login.FingerLoginActivity
 import com.benyq.guochat.ui.login.LoginActivity
 import com.benyq.mvvm.ext.goToActivity
 import kotlinx.coroutines.*
@@ -22,7 +25,12 @@ class SplashActivity : AppCompatActivity() {
         launch.launch(Dispatchers.IO) {
             delay(1500)
             withContext(Dispatchers.Main) {
-                goToActivity<LoginActivity>(exitAnim = R.anim.normal_out)
+                //这边要判断，是否开启指纹登录
+                if (FingerprintVerifyManager.canAuthenticate(this@SplashActivity) && LocalStorage.personConfig.fingerprintLogin) {
+                    goToActivity<FingerLoginActivity>(exitAnim = R.anim.normal_out)
+                } else {
+                    goToActivity<LoginActivity>(exitAnim = R.anim.normal_out)
+                }
                 finish()
             }
         }

@@ -20,6 +20,8 @@
     <string name="username">用户名</string>
     <string name="password">密码</string>
     <string name="login">登录</string>
+    <string name="change_pwd_login">切换为密码登录</string>
+    <string name="click_fingerprint_login">点击进行密码登录</string>
     <string name="register">注册</string>
     <string name="username_empty">用户名不能为空</string>
     <string name="password_empty">密码不能为空</string>
@@ -50,6 +52,10 @@
     <string name="remarks_name">备注名</string>
     <string name="submit">发表</string>
     <string name="current_ideas">这一刻想法</string>
+
+    <string name="please_check_fingerprint">请验证指纹</string>
+    <string name="please_try_again">请再试一次</string>
+    <string name="fingerprint_login">指纹登陆</string>
 
 
     <string name="msg_camera_framework_bug">Sorry, the Android camera encountered a problem. You may need to restart the device.</string>

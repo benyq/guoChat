@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.Switch
 import androidx.core.content.ContextCompat
 import com.benyq.guochat.R
 import kotlinx.android.synthetic.main.view_switch_line.view.*
@@ -21,7 +22,7 @@ class SwitchFormLine(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
     private var showDivide = true
     private var isChecked = false
     private val lineTitleColor: Int
-    private var mListener: OnCheckChangedListener? = null
+    private var mOnCheckedAction: ((View, Boolean)->Unit)? = null
 
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -59,7 +60,7 @@ class SwitchFormLine(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
         swContent.isChecked = isChecked
 
         swContent.setOnCheckedChangeListener { buttonView, isChecked ->
-            mListener?.onChange(isChecked)
+            mOnCheckedAction?.invoke(buttonView, isChecked)
         }
     }
 
@@ -71,11 +72,10 @@ class SwitchFormLine(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
 
     fun isChecked() = swContent.isChecked
 
-    fun setOnCheckChangedListener(listener: OnCheckChangedListener){
-        mListener = listener
+    fun getSwitchButton(): Switch = swContent
+
+    fun setOnCheckChangedAction(listener: (View, Boolean)->Unit){
+        mOnCheckedAction = listener
     }
 
-    interface OnCheckChangedListener {
-        fun onChange(checked: Boolean)
-    }
 }

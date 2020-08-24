@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:text="benyq"/>
+            android:text="13512345678"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

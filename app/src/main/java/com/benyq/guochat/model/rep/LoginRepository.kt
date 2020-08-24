@@ -22,7 +22,7 @@ class LoginRepository @Inject constructor(private val apiService: ApiService) : 
     suspend fun login(username: String, pwd: String): ChatResponse<Boolean> {
         return launchIO {
             delay(300)
-            if (username == "benyq" && pwd == "123456") {
+            if (username == "13512345678" && pwd == "123456") {
                 ChatResponse.success<Boolean>(true)
             }else {
                 ChatResponse.error("账号或者密码错误")

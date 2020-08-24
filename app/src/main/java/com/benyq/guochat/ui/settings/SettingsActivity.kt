@@ -1,8 +1,12 @@
 package com.benyq.guochat.ui.settings
 
 import com.benyq.guochat.R
+import com.benyq.guochat.function.fingerprint.FingerprintVerifyManager
+import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.ui.base.BaseActivity
+import com.benyq.guochat.ui.common.CheckFingerprintDialog
 import com.benyq.mvvm.ext.goToActivity
+import com.benyq.mvvm.ext.loge
 import kotlinx.android.synthetic.main.activity_settings.*
 
 /**
@@ -13,7 +17,19 @@ import kotlinx.android.synthetic.main.activity_settings.*
  */
 class SettingsActivity : BaseActivity() {
 
+    private val mCheckFingerprintDialog by lazy { CheckFingerprintDialog.newInstance() }
+
+    private lateinit var mFingerprintManager: FingerprintVerifyManager
+
+    private val personConfig = LocalStorage.personConfig
+
+
     override fun getLayoutId() = R.layout.activity_settings
+
+    override fun initView() {
+        super.initView()
+        initFingerprintManager()
+    }
 
     override fun initListener() {
         headerView.setBackAction { finish() }
@@ -21,5 +37,48 @@ class SettingsActivity : BaseActivity() {
         ifAboutApp.setOnClickListener {
             goToActivity<AboutAppActivity>()
         }
+
+        sfFingerprintLogin.setChecked(personConfig.fingerprintLogin)
+
+        sfFingerprintLogin.getSwitchButton().run {
+            setOnClickListener {
+                sfFingerprintLogin.getSwitchButton().isChecked = !isChecked
+                mCheckFingerprintDialog.show(supportFragmentManager)
+                mFingerprintManager.authenticate()
+            }
+        }
+
+        tvLogout.setOnClickListener {
+            //删除数据
+
+            //跳转到LoginActivity 或者 FingerLoginActivity
+
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LocalStorage.personConfig = personConfig
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+    }
+
+    private fun initFingerprintManager() {
+        mFingerprintManager = FingerprintVerifyManager(this, {
+            loge("识别成功")
+            mCheckFingerprintDialog.dismiss()
+            personConfig.fingerprintLogin = !personConfig.fingerprintLogin
+            sfFingerprintLogin.setChecked(personConfig.fingerprintLogin)
+            mFingerprintManager.closeAuthenticate()
+        }, {
+            mCheckFingerprintDialog.verifyMessage(it)
+            if (it.isNotEmpty()) {
+                mFingerprintManager.closeAuthenticate()
+            }
+            loge("识别失败")
+        })
     }
 }

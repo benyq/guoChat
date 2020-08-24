@@ -43,7 +43,6 @@ object ActivityLifecycle : Application.ActivityLifecycleCallbacks{
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-        loge("我在测试   onActivityCreated")
         ActivityManager.add(activity)
         if (activity !is IActivity) {
             return

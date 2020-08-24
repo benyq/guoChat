@@ -24,8 +24,13 @@
         android:id="@+id/ifAboutApp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:form_title="@string/about_app"
-        app:line_show_divide="false"/>
+        app:form_title="@string/about_app"/>
+
+    <com.benyq.guochat.ui.common.widget.SwitchFormLine
+        android:id="@+id/sfFingerprintLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:sf_form_title="@string/fingerprint_login"/>
 
     <View style="@style/string_horizontal_divider"/>
 
@@ -36,7 +41,6 @@
         android:gravity="center"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-
         android:text="@string/logout"
         android:textColor="@color/color_2a2a2a"/>
 

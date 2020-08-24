@@ -17,6 +17,8 @@
         <attr name="toolbar_menu_src" format="reference"/>
         <attr name="toolbar_menu_btn_show" format="boolean"/>
         <attr name="toolbar_bg" format="reference"/>
+        <attr name="toolbar_back_icon" format="reference"/>
+
     </declare-styleable>
 
     <declare-styleable name="IconFormLine">

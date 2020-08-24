@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.GradientDrawable.OVAL
 import android.graphics.drawable.GradientDrawable.RECTANGLE
 import androidx.annotation.ColorInt
 import com.benyq.guochat.dip2px
@@ -31,6 +32,7 @@ class DrawableBuilder(private val mContext: Context) {
     private val defaultDashGap = 2
 
     private var shape = RECTANGLE
+    private var circleRadius = 50f
     private var lineWidth = 0
     @ColorInt
     private var lineColor: Int = Color.TRANSPARENT
@@ -61,12 +63,24 @@ class DrawableBuilder(private val mContext: Context) {
         defaultCornerRadii?.run {
             bg.cornerRadii = this
         }
+        if (shape == OVAL) {
+            bg.setSize(circleRadius.toInt(), circleRadius.toInt())
+        }
         bg.setColor(bkColor)
         return bg
     }
 
     fun shape(shape: Int): DrawableBuilder {
         this.shape = shape
+        return this
+    }
+
+    /**
+     * 设置圆半径时，默认设置shape
+     */
+    fun circleRadius(radius: Float) :DrawableBuilder{
+        this.shape = OVAL
+        this.circleRadius = radius
         return this
     }
 

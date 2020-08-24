@@ -45,11 +45,7 @@ class MainActivity : LifecycleActivity<MainViewModel>() {
     override fun getLayoutId() = R.layout.activity_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        loge("我在测试   onCreate1")
-
         super.onCreate(savedInstanceState)
-        loge("我在测试   onCreate2")
-
         ObjectBox.testAddChatFromTo()
         PlayerController.setContext(this)
         isSupportSwipeBack = false
@@ -67,8 +63,6 @@ class MainActivity : LifecycleActivity<MainViewModel>() {
         })
 
         bottomNavigationBar.selectTab(viewModelGet().mCurrentIndex)
-
-        loge("我在测试   onCreate2")
     }
 
     override fun initImmersionBar() {

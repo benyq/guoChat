@@ -52,6 +52,7 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
     private var mMenuBtnShow: Boolean
     private val headerViewBg: Drawable?
     private val mToolbarMenuSrc: Drawable
+    private val mToolbarBackIcon: Drawable
 
     private val mBgMenuBtn: Drawable
 
@@ -74,7 +75,10 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
         mToolbarType = array.getInt(R.styleable.HeaderView_toolbar_type, toolbarTypeNormal)
         headerViewBg = array.getDrawable(R.styleable.HeaderView_toolbar_bg)
         mToolbarMenuSrc = array.getDrawable(R.styleable.HeaderView_toolbar_menu_src)
-            ?: context.getDrawable(R.drawable.ic_three_dots)!!
+            ?: context.getDrawableRef(R.drawable.ic_three_dots)!!
+
+        mToolbarBackIcon = array.getDrawable(R.styleable.HeaderView_toolbar_back_icon)
+            ?: context.getDrawableRef(R.drawable.ic_arrow_left_dark)!!
 
         array.recycle()
 
@@ -87,6 +91,7 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
         toolbarBack.visibility = if (mEnableBack) View.VISIBLE else View.INVISIBLE
         toolbarMenu.visibility = if (mEnableMenu) View.VISIBLE else View.INVISIBLE
         toolbarMenu.setImageDrawable(mToolbarMenuSrc)
+        toolbarBack.setImageDrawable(mToolbarBackIcon)
         toolbarTitle.gravity = when (mTitleGravity) {
             titleEnd -> {
                 Gravity.END
@@ -149,7 +154,7 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
 
             toolbarBack.setImageDrawable(
                 tintDrawable(
-                    context.getDrawableRef(R.drawable.ic_arrow_left_dark)!!,
+                    mToolbarBackIcon,
                     ColorStateList.valueOf(Color.WHITE)
                 )
             )
@@ -166,7 +171,7 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
 
             toolbarBack.setImageDrawable(
                 tintDrawable(
-                    context.getDrawableRef(R.drawable.ic_arrow_left_dark)!!,
+                    mToolbarBackIcon,
                     ColorStateList.valueOf(Color.BLACK)
                 )
             )
