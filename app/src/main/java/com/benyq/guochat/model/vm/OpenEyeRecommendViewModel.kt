@@ -60,10 +60,6 @@ class OpenEyeRecommendViewModel @ViewModelInject constructor(private val mReposi
                 }
             }
 
-            onFail {
-
-            }
-
             request { mRepository.refreshCommunityRecommend(url) }
         }
     }

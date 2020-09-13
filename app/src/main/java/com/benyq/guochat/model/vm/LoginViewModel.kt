@@ -2,7 +2,6 @@ package com.benyq.guochat.model.vm
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
-import com.benyq.guochat.app.ErrorHandler
 import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.model.bean.PersonConfig
 import com.benyq.guochat.model.rep.LoginRepository
@@ -32,7 +31,6 @@ class LoginViewModel @ViewModelInject constructor(private val mRepository: Login
                 mLoginResult.value = it
             }
             onFinal { hideLoading() }
-            onException { ErrorHandler.handle(it) }
             request { mRepository.login(username, pwd) }
         }
     }

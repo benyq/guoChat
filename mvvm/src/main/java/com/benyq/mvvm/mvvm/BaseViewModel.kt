@@ -1,11 +1,8 @@
 package com.benyq.mvvm.mvvm
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.benyq.mvvm.Setting
-import com.benyq.mvvm.ext.Toasts
 import com.benyq.mvvm.ext.tryCatch
 import com.benyq.mvvm.response.BenyqResponse
 import com.benyq.mvvm.response.SharedData
@@ -57,6 +54,7 @@ abstract class BaseViewModel : ViewModel() {
         Execute<R>().apply(block)
     }
 
+    //在 ErrorHandler 类中注入 全局异常处理方法
     inner class Execute<R> {
 
         private var startBlock: (() -> Unit)? = null
@@ -65,8 +63,7 @@ abstract class BaseViewModel : ViewModel() {
         private var successBlock: ((R?) -> Unit)? = null
         private var successRspBlock: ((BenyqResponse<R>) -> Unit)? = null
 
-        private var failBlock: ((String?) -> Unit) = { Toasts.show(it ?: Setting.MESSAGE_EMPTY) }
-        private var exceptionBlock: ((Throwable) -> Unit)? = null
+        private var errorBlock: ((Throwable) -> Unit)? = ErrorHandler.errorBlock
 
         fun onStart(block: () -> Unit) {
             this.startBlock = block
@@ -77,12 +74,11 @@ abstract class BaseViewModel : ViewModel() {
             startBlock?.invoke()
 
             launchUI({
-
                 successBlock?.let {
-                    block()?.execute(successBlock, failBlock)
-                } ?: block()?.executeRsp(successRspBlock, failBlock)
+                    block()?.execute(successBlock, errorBlock)
+                } ?: block()?.executeRsp(successRspBlock, errorBlock)
 
-            }, exceptionBlock, finalBlock)
+            }, errorBlock, finalBlock)
         }
 
         fun onSuccess(block: (R?) -> Unit) {
@@ -93,12 +89,8 @@ abstract class BaseViewModel : ViewModel() {
             this.successRspBlock = block
         }
 
-        fun onFail(block: (String?) -> Unit) {
-            this.failBlock = block
-        }
-
-        fun onException(block: (Throwable) -> Unit) {
-            this.exceptionBlock = block
+        fun onError(block: (Throwable) -> Unit) {
+            this.errorBlock = block
         }
 
         fun onFinal(block: () -> Unit) {

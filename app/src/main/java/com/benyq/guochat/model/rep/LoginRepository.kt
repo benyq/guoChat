@@ -25,7 +25,7 @@ class LoginRepository @Inject constructor(private val apiService: ApiService) : 
             if (username == "13512345678" && pwd == "123456") {
                 ChatResponse.success<Boolean>(true)
             }else {
-                ChatResponse.error("账号或者密码错误")
+                ChatResponse.error("账号或者密码错误", -101)
             }
         }
     }

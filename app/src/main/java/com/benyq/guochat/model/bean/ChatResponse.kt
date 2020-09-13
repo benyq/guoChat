@@ -1,7 +1,8 @@
 package com.benyq.guochat.model.bean
 
-import com.benyq.mvvm.Setting
 import com.benyq.mvvm.ext.Toasts
+import com.benyq.mvvm.ext.loge
+import com.benyq.mvvm.http.ApiException
 import com.benyq.mvvm.response.BenyqResponse
 
 /**
@@ -13,11 +14,12 @@ import com.benyq.mvvm.response.BenyqResponse
 data class ChatResponse<T>(val code: Int, val msg: String, val data: T?) : BenyqResponse<T> {
 
     companion object {
-        fun <R> success(data: R?) : ChatResponse<R>{
+        fun <R> success(data: R?): ChatResponse<R> {
             return ChatResponse(0, "success", data)
         }
-        fun <R> error(msg: String) : ChatResponse<R>{
-            return ChatResponse(-1, msg, null)
+
+        fun <R> error(msg: String, errorCode: Int = -1): ChatResponse<R> {
+            return ChatResponse(errorCode, msg, null)
         }
     }
 
@@ -27,12 +29,15 @@ data class ChatResponse<T>(val code: Int, val msg: String, val data: T?) : Benyq
 
     override fun getRealData() = data
 
-    override fun execute(success: ((T?) -> Unit)?, error: ((String) -> Unit)?) {
-        if (this.isSuccess() && data != null) {
-            success?.invoke(this.getRealData()!!)
+    override fun execute(success: ((T?) -> Unit)?, error: ((Exception) -> Unit)?) {
+        if (!this.isSuccess()) {
+            this.getMessage().let { error?.invoke(ApiException(code, msg)) ?: Toasts.show(it) }
             return
         }
-        throw Throwable("数据不能是null")
-//        this.getMessage().let { error?.invoke(it) ?: Toasts.show(it) }
+        if (data == null) {
+            this.getMessage().let { error?.invoke(ApiException(code, "数据不能是null")) ?: Toasts.show(it) }
+            return
+        }
+        success?.invoke(this.getRealData()!!)
     }
 }

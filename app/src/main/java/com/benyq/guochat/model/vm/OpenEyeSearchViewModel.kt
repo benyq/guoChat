@@ -20,7 +20,7 @@ class OpenEyeSearchViewModel @ViewModelInject constructor(private val mRepositor
             onSuccess {
                 mHotKeywordsData.value = it
             }
-            onException {
+            onError {
 
             }
             request { mRepository.getHotSearch() }

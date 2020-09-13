@@ -13,9 +13,14 @@ import java.util.concurrent.TimeUnit
  */
 object BaseOkHttpClient {
 
+    private var hasInit = false
     private val builder = OkHttpClient.Builder()
 
     fun init(vararg interceptors: Interceptor) {
+        if (hasInit){
+            return
+        }
+        hasInit = !hasInit
         interceptors.forEach {
             builder.addInterceptor(it)
         }

@@ -2,6 +2,7 @@ package com.benyq.guochat.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
@@ -10,8 +11,19 @@ import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.ui.login.FingerLoginActivity
 import com.benyq.guochat.ui.login.LoginActivity
 import com.benyq.guochat.ui.openeye.OpenEyeCommunityActivity
+import com.benyq.mvvm.ext.Toasts
 import com.benyq.mvvm.ext.goToActivity
+import com.benyq.mvvm.http.ApiException
+import com.benyq.mvvm.mvvm.ErrorHandler
+import com.benyq.mvvm.mvvm.ExceptionReason
+import com.google.gson.JsonParseException
 import kotlinx.coroutines.*
+import org.json.JSONException
+import retrofit2.HttpException
+import java.io.InterruptedIOException
+import java.net.ConnectException
+import java.net.UnknownHostException
+import java.text.ParseException
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

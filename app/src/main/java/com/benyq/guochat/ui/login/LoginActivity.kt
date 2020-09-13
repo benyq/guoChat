@@ -69,7 +69,6 @@ class LoginActivity : LifecycleActivity<LoginViewModel>() {
         with(viewModelGet()) {
             mLoginResult.observe(this@LoginActivity, Observer {
                 goToActivity<MainActivity>(exitAnim = R.anim.normal_out)
-//                startActivity<TestActivity>()
                 finish()
             })
             mSharedData.observe(this@LoginActivity, Observer {

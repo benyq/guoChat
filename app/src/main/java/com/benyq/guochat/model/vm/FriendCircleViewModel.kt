@@ -20,7 +20,7 @@ class FriendCircleViewModel @ViewModelInject constructor(private val mRepository
 
     fun queryFriendCircles() {
         quickLaunch<List<FriendCircleBean>> {
-            onException { Toasts.show("请求失败") }
+            onError { Toasts.show("请求失败") }
             onSuccess { mFriendCircleData.value = it }
             request { mRepository.queryFriendCircles() }
         }
@@ -28,7 +28,7 @@ class FriendCircleViewModel @ViewModelInject constructor(private val mRepository
 
     fun friendCircleLike(circleId: String, like: Boolean) {
         quickLaunch<Boolean> {
-            onException { Toasts.show("请求失败") }
+            onError { Toasts.show("请求失败") }
             onSuccess { mFriendCircleLikeData.value = it }
             request { mRepository.friendCircleLike(like) }
         }

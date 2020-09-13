@@ -39,8 +39,6 @@ object ServiceFactory {
         BaseOkHttpClient.init(loggingInterceptor)
     }
 
-    val apiService by lazy { RetrofitFactory.create(ApiService::class.java) }
-
     @Singleton
     @Provides
     fun provideApiService(): ApiService {
