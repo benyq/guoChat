@@ -16,6 +16,7 @@ import com.benyq.guochat.ui.common.openeye.WaterDropHeader
 import com.benyq.mvvm.ext.getScreenWidth
 import com.benyq.mvvm.response.SharedType
 import com.bumptech.glide.Glide
+import com.scwang.smart.refresh.footer.BallPulseFooter
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
@@ -69,6 +70,7 @@ class RecommendFragment : LifecycleFragment<OpenEyeRecommendViewModel>(){
         rvRecommend.addItemDecoration(ItemDecoration())
 
         refreshLayout.setRefreshHeader(WaterDropHeader(mContext))
+        refreshLayout.setRefreshFooter(BallPulseFooter(mContext))
         refreshLayout.setOnRefreshListener { mViewModel.onRefresh() }
         refreshLayout.setOnLoadMoreListener { mViewModel.onLoadMore() }
     }

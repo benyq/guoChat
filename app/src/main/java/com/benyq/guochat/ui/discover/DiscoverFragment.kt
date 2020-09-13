@@ -29,7 +29,7 @@ class DiscoverFragment : BaseFragment() {
         }
         ifScan.setOnClickListener {
             PermissionX.request(
-                requireContext(),
+                requireActivity(),
                 Manifest.permission.CAMERA
             ) { allGranted, _ ->
                 if (allGranted) {
