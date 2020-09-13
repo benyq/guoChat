@@ -5,8 +5,10 @@ import com.benyq.guochat.R
 import com.benyq.guochat.function.permissionX.PermissionX
 import com.benyq.guochat.function.zxing.android.CaptureActivity
 import com.benyq.guochat.ui.base.BaseFragment
+import com.benyq.guochat.ui.openeye.OpenEyeCommunityActivity
 import com.benyq.mvvm.ext.goToActivity
 import com.benyq.mvvm.ext.toast
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_discover.*
 
 /**
@@ -15,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_discover.*
  * @e-mail 1520063035@qq.com
  * @note
  */
+@AndroidEntryPoint
 class DiscoverFragment : BaseFragment() {
 
     override fun getLayoutId() = R.layout.fragment_discover
@@ -35,6 +38,9 @@ class DiscoverFragment : BaseFragment() {
                     toast("权限拒绝")
                 }
             }
+        }
+        ifOpenEye.setOnClickListener {
+            goToActivity<OpenEyeCommunityActivity>()
         }
     }
 }

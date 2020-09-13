@@ -2,7 +2,7 @@ package com.benyq.guochat.ui.me
 
 import com.benyq.guochat.R
 import com.benyq.guochat.function.other.NotificationHelper
-import com.benyq.guochat.loadAvatar
+import com.benyq.guochat.loadImage
 import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.ui.base.BaseFragment
 import com.benyq.guochat.ui.contracts.CallingCardActivity
@@ -61,7 +61,7 @@ class MeFragment : BaseFragment() {
 
     private fun showUserInfo() {
         LocalStorage.userAccount.run {
-            loadAvatar(ivAvatar, avatarUrl)
+            ivAvatar.loadImage(avatarUrl)
             tvUserNick.text = nickName
             tvChatNo.text = chatNo
         }

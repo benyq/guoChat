@@ -6,13 +6,12 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebChromeClient
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
 import com.benyq.guochat.R
 import com.benyq.guochat.ui.base.BaseActivity
+import com.benyq.mvvm.ext.fromM
+import com.benyq.mvvm.ext.loge
 import kotlinx.android.synthetic.main.activity_web_view.*
 /**
  * @author benyq
@@ -61,7 +60,9 @@ class WebViewActivity : BaseActivity() {
         webSettings.allowFileAccess = true
         webSettings.allowFileAccessFromFileURLs = true
         webSettings.allowUniversalAccessFromFileURLs = true
-
+        if (fromM()) {
+            webSettings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW;
+        }
         mWebView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)

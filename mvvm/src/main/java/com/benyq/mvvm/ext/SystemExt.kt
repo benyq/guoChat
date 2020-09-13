@@ -138,6 +138,23 @@ fun Context.getVersionCode(): String {
     return versionCode
 }
 
+/**
+ * 将dip或dp值转换为px值，保证尺寸大小不变
+ *
+ * @param dipValue
+ * （DisplayMetrics类中属性density）
+ * @return
+ */
+fun Context.dip2px(dipValue: Float): Float {
+    val scale = resources.displayMetrics.density
+    return (dipValue * scale + 0.5f)
+}
+
+fun Context.dip2px(dipValue: Int): Float {
+    val scale = resources.displayMetrics.density
+    return (dipValue * scale + 0.5f)
+}
+
 fun fromM() = fromSpecificVersion(Build.VERSION_CODES.M)
 fun fromQ() = fromSpecificVersion(Build.VERSION_CODES.Q)
 fun beforeM() = beforeSpecificVersion(Build.VERSION_CODES.M)

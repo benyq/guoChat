@@ -3,16 +3,17 @@ package com.benyq.guochat.ui
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
 import com.benyq.guochat.function.fingerprint.FingerprintVerifyManager
 import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.ui.login.FingerLoginActivity
 import com.benyq.guochat.ui.login.LoginActivity
+import com.benyq.guochat.ui.openeye.OpenEyeCommunityActivity
 import com.benyq.mvvm.ext.goToActivity
 import kotlinx.coroutines.*
 
 class SplashActivity : AppCompatActivity() {
-    private val mJob = Job()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
@@ -20,9 +21,7 @@ class SplashActivity : AppCompatActivity() {
         if (avoidLaunchHereAgain()) {
             return
         }
-
-        val launch = CoroutineScope(mJob)
-        launch.launch(Dispatchers.IO) {
+        lifecycleScope.launch(Dispatchers.IO) {
             delay(1500)
             withContext(Dispatchers.Main) {
                 //这边要判断，是否开启指纹登录
@@ -38,7 +37,6 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mJob.cancel()
     }
 
     private fun avoidLaunchHereAgain(): Boolean {

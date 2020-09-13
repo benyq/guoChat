@@ -6,7 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
 import com.benyq.guochat.function.other.GlideEngine
 import com.benyq.guochat.getViewModel
-import com.benyq.guochat.loadAvatar
+import com.benyq.guochat.loadImage
 import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.model.vm.PersonalInfoViewModel
 import com.benyq.guochat.saveImg
@@ -53,7 +53,7 @@ class AvatarActivity : LifecycleActivity<PersonalInfoViewModel>() {
         //从本地缓存中取出user信息
         //Glide加载头像
         LocalStorage.userAccount.run {
-            loadAvatar(ivAvatar, avatarUrl, 0)
+            ivAvatar.loadImage(avatarUrl, 0)
         }
     }
 

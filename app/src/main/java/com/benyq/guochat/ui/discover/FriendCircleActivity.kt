@@ -17,7 +17,7 @@ import com.benyq.guochat.R
 import com.benyq.guochat.app.CIRCLE__TYPE_TEXT
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.getViewModel
-import com.benyq.guochat.loadAvatar
+import com.benyq.guochat.loadImage
 import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.model.bean.CircleComment
 import com.benyq.guochat.model.bean.FriendCircleBean
@@ -91,7 +91,7 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
         ImmersionBar.setTitleBar(this, toolbar)
 
         val user = LocalStorage.userAccount
-        loadAvatar(ivAvatar, user.avatarUrl)
+        ivAvatar.loadImage(user.avatarUrl)
         tvNickName.text = user.nickName
         Glide.with(this)
             .load("https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=11232128,2567744034&fm=26&gp=0.jpg")

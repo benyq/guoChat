@@ -15,7 +15,8 @@ open class ActivityDelegateImpl(private val activity: Activity) : ActivityDelega
 
     private val iActivity = activity as IActivity
 
-    // 因为在Activity中，ViewModel需要在OnCreate之后，所以这里会有问题
+    // 因为在Activity中，ViewModel 需要在OnCreate之后，所以这里会有问题
+    //Application.ActivityLifecycleCallbacks 在Activity类下执行，而ViewModel在子类中，会有冲突
     override fun onCreate(savedInstanceState: Bundle?) {
         // 在界面未初始化之前调用的初始化窗口
         iActivity.initWidows()

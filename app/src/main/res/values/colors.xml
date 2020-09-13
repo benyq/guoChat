@@ -24,6 +24,8 @@
     <color name="colorE3E3E6">#E3E3E6</color>
     <color name="skyblue">#87ceeb</color>
     <color name="color_alipay">#108ee9</color>
+    <color name="yellow">#ffff00</color>
+    <color name="colorE6E6E6">#e6e6e6</color>
 
 
     <!--Zxing相关-->
@@ -42,6 +44,8 @@
     <color name="color_697A9F">#697A9F</color>
 
 
+    <color name="color4687d7">#4687d7</color>
+    <color name="blackAlpha50">#80000000</color>
 
 
 

@@ -7,7 +7,7 @@ import com.benyq.guochat.R
 import com.benyq.guochat.app.GENDER_FEMALE
 import com.benyq.guochat.app.GENDER_MALE
 import com.benyq.guochat.app.IntentExtra
-import com.benyq.guochat.loadAvatar
+import com.benyq.guochat.loadImage
 import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.local.ObjectBox
 import com.benyq.guochat.local.entity.ContractEntity
@@ -36,7 +36,7 @@ class ContractDetailActivity : BaseActivity() {
     override fun initView() {
         //根据传过来的联系人信息初始化页面
         mContractEntity = intent.getParcelableExtra(IntentExtra.contractData)!!
-        loadAvatar(ivAvatar, mContractEntity.avatarUrl)
+        ivAvatar.loadImage(mContractEntity.avatarUrl)
         tvNickName.text = mContractEntity.nick
         tvChatNo.text = "果聊号: ${mContractEntity.contractId}"
         if (mContractEntity.gender == GENDER_FEMALE) {

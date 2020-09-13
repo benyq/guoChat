@@ -29,7 +29,7 @@ data class ChatResponse<T>(val code: Int, val msg: String, val data: T?) : Benyq
 
     override fun execute(success: ((T?) -> Unit)?, error: ((String) -> Unit)?) {
         if (this.isSuccess() && data != null) {
-            success?.invoke(this.getRealData())
+            success?.invoke(this.getRealData()!!)
             return
         }
         throw Throwable("数据不能是null")

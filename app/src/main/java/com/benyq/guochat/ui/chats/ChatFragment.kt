@@ -1,8 +1,5 @@
 package com.benyq.guochat.ui.chats
 
-import android.app.Activity
-import android.content.Intent
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,17 +7,13 @@ import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.app.SharedViewModel
 import com.benyq.guochat.getViewModel
-import com.benyq.guochat.local.ObjectBox
 import com.benyq.guochat.model.bean.ChatListBean
 import com.benyq.guochat.model.vm.ChatViewModel
 import com.benyq.guochat.ui.base.LifecycleFragment
-import com.benyq.mvvm.SmartJump
+import com.benyq.guochat.ui.common.openeye.WaterDropHeader
 import com.benyq.mvvm.ext.goToActivity
-import com.benyq.mvvm.ext.loge
-import com.scwang.smartrefresh.header.WaterDropHeader
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_chat.*
-import java.util.concurrent.Executors
 
 /**
  * @author benyq
@@ -40,7 +33,7 @@ class ChatFragment : LifecycleFragment<ChatViewModel>() {
     override fun initView() {
         rvChats.layoutManager = LinearLayoutManager(mContext)
         rvChats.adapter = mChatAdapter
-        mChatAdapter.setDiffCallback(object: DiffUtil.ItemCallback<ChatListBean>() {
+        mChatAdapter.setDiffCallback(object : DiffUtil.ItemCallback<ChatListBean>() {
             override fun areItemsTheSame(oldItem: ChatListBean, newItem: ChatListBean): Boolean {
                 return oldItem.fromToId == newItem.fromToId
             }
@@ -60,9 +53,11 @@ class ChatFragment : LifecycleFragment<ChatViewModel>() {
         }
         refreshLayout.setRefreshHeader(WaterDropHeader(mContext))
 
-        getAppViewModelProvider().get(SharedViewModel::class.java).chatChange.observe(viewLifecycleOwner, Observer {
-            initData()
-        })
+        getAppViewModelProvider().get(SharedViewModel::class.java).chatChange.observe(
+            viewLifecycleOwner,
+            Observer {
+                initData()
+            })
     }
 
     override fun initListener() {

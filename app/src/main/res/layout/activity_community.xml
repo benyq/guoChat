@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/darkgrey">
+
+        <ImageView
+            android:id="@+id/ivSearch"
+            android:layout_width="43dp"
+            android:layout_height="43dp"
+            android:layout_gravity="end"
+            android:padding="8dp"
+            android:src="@drawable/ic_search"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayoutCommunity"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:background="@color/darkgrey"
+            android:paddingBottom="1dp"
+            app:tabIndicatorColor="@color/color3C4044"
+            app:tabMaxWidth="0dp"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabPadding="0dp"
+            app:tabPaddingBottom="0dp"
+            app:tabPaddingEnd="0dp"
+            app:tabPaddingStart="0dp"
+            app:tabPaddingTop="0dp"
+            app:tabSelectedTextColor="@color/color3C4044"
+            app:tabTextColor="@color/color3C4044"
+            app:tabIndicatorFullWidth="false"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ivSearch"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPagerCommunity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

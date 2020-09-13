@@ -26,4 +26,16 @@
         app:form_title="@string/scan"
         app:form_icon="@drawable/ic_discover_scan"/>
 
+    <View style="@style/string_horizontal_divider"/>
+
+    <com.benyq.guochat.ui.common.widget.IconFormLine
+        android:id="@+id/ifOpenEye"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:line_show_divide="false"
+        app:form_title="@string/open_eye_function"
+        app:form_icon="@drawable/ic_open_eye"/>
+
+    <View style="@style/string_horizontal_divider"/>
+
 </LinearLayout>

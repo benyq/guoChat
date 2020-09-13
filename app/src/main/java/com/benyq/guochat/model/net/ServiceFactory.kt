@@ -47,4 +47,11 @@ object ServiceFactory {
         initClient()
         return RetrofitFactory.create(ApiService::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun provideOpenEyeService(): OpenEyeService {
+        initClient()
+        return RetrofitFactory.create(OpenEyeService::class.java)
+    }
 }

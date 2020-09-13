@@ -20,17 +20,17 @@
         android:layout_height="wrap_content"
         app:form_title="@string/message_settings" />
 
-    <com.benyq.guochat.ui.common.widget.IconFormLine
-        android:id="@+id/ifAboutApp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:form_title="@string/about_app"/>
-
     <com.benyq.guochat.ui.common.widget.SwitchFormLine
         android:id="@+id/sfFingerprintLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:sf_form_title="@string/fingerprint_login"/>
+
+    <com.benyq.guochat.ui.common.widget.IconFormLine
+        android:id="@+id/ifAboutApp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:form_title="@string/about_app"/>
 
     <View style="@style/string_horizontal_divider"/>
 

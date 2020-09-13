@@ -5,7 +5,7 @@ import com.benyq.guochat.R
 import com.benyq.guochat.app.GENDER_FEMALE
 import com.benyq.guochat.app.GENDER_MALE
 import com.benyq.guochat.dip2px
-import com.benyq.guochat.loadAvatar
+import com.benyq.guochat.loadImage
 import com.benyq.guochat.model.bean.ContractSectionBean
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -23,7 +23,7 @@ class ContractIdCardAdapter :
         val contractEntity = item.contractEntity
         contractEntity?.run {
             val ivAvatar = holder.getView<ImageView>(R.id.ivAvatar)
-            loadAvatar(ivAvatar, avatarUrl, dip2px(context, 5).toInt())
+            ivAvatar.loadImage(avatarUrl, dip2px(context, 5).toInt())
 
             holder.setText(R.id.tvContractName, contractName)
             val gender = when (gender) {

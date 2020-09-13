@@ -24,7 +24,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.login.FingerLoginActivity"></activity>
+        <activity android:name=".ui.openeye.OpenEyeUgcDetailActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.openeye.OpenEyeCommunityActivity" />
+        <activity android:name=".ui.login.FingerLoginActivity" />
         <activity android:name=".ui.contracts.ContractIdCardActivity" />
         <activity android:name=".ui.discover.AddCircleActivity" />
 

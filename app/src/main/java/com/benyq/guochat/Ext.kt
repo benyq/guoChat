@@ -7,17 +7,30 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.view.View
+import android.view.animation.AlphaAnimation
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.ComponentActivity
+import androidx.annotation.StyleRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.benyq.guochat.app.JSON
 import com.benyq.mvvm.ext.fromQ
+import com.benyq.mvvm.ext.loge
+import com.benyq.mvvm.ext.setTextAppearanceCustomer
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.activity_community.*
 import kotlinx.coroutines.*
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -127,14 +140,17 @@ fun calculateTime(time: Int): String {
     }
 }
 
-fun loadAvatar(iv: ImageView, url: String, round: Int = 10) {
-    Glide.with(iv.context).load(url)
+fun ImageView.loadImage(url: String, round: Int = 10, isCircle: Boolean = false, placeHolder: Int = R.drawable.shape_album_loading_bg) {
+    Glide.with(context).load(url)
         .apply {
-            if (round > 0) {
-                transform(RoundedCorners(dip2px(iv.context, round).toInt()))
+            if (isCircle) {
+                transform(CircleCrop())
+            }else if (round > 0){
+                transform(RoundedCorners(dip2px(context, round).toInt()))
+                    .placeholder(placeHolder)
             }
         }
-        .into(iv)
+        .into(this)
 }
 
 fun <K, V> mapOfToBodyJson(vararg pairs: Pair<K, V>): RequestBody {
@@ -168,14 +184,6 @@ private fun saveImgLegacy(
     sink.writeAll(source)
     sink.close()
     source.close()
-
-    //下面的刷新代码会和协程有一点问题，会导致withContext()之后的代码不执行（第一次不执行，以后执行）
-//    MediaScannerConnection.scanFile(
-//        context,
-//        arrayOf(targetPath + imgName),
-//        arrayOf("image/jpeg"),
-//        null
-//    )
 
     val contentUri = Uri.fromFile(File(targetPath + imgName))
     val mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, contentUri)
@@ -228,3 +236,44 @@ inline fun <reified VM: ViewModel> Fragment.getViewModel(): VM {
 inline fun <reified VM: ViewModel> Fragment.sharedViewModel(): VM {
     return ViewModelProvider(requireActivity()).get(VM::class.java)
 }
+
+
+fun TabLayout.setTextStyleSelectState(position: Int, @StyleRes style: Int) {
+    val title =
+        ((getChildAt(0) as LinearLayout).getChildAt(position) as LinearLayout).getChildAt(
+            1
+        ) as TextView
+    title.setTextAppearanceCustomer(context, style)
+}
+
+fun ViewPager2.overScrollNever(){
+    val child: View = getChildAt(0)
+    (child as? RecyclerView)?.overScrollMode = View.OVER_SCROLL_NEVER
+}
+
+/**
+ * 占位隐藏view，带有渐隐动画效果。
+ *
+ * @param duration 毫秒，动画持续时长，默认500毫秒。
+ */
+fun View?.invisibleAlphaAnimation(duration: Long = 500L) {
+    this?.visibility = View.INVISIBLE
+    this?.startAnimation(AlphaAnimation(1f, 0f).apply {
+        this.duration = duration
+        fillAfter = true
+    })
+}
+
+/**
+ * 显示view，带有渐显动画效果。
+ *
+ * @param duration 毫秒，动画持续时长，默认500毫秒。
+ */
+fun View?.visibleAlphaAnimation(duration: Long = 500L) {
+    this?.visibility = View.VISIBLE
+    this?.startAnimation(AlphaAnimation(0f, 1f).apply {
+        this.duration = duration
+        fillAfter = true
+    })
+}
+
