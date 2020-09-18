@@ -113,7 +113,7 @@
     },
     {
       "id": "3:8333801691090877818",
-      "lastPropertyId": "8:6678703835186557313",
+      "lastPropertyId": "9:4039433026473455347",
       "name": "ContractEntity",
       "properties": [
         {
@@ -153,6 +153,11 @@
           "name": "gender",
           "type": 5,
           "flags": 4
+        },
+        {
+          "id": "9:4039433026473455347",
+          "name": "ownUserId",
+          "type": 9
         }
       ],
       "relations": []

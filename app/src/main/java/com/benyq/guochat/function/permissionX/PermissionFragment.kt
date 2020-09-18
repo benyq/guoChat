@@ -26,7 +26,6 @@ typealias PermissionCallBack = (Boolean, List<String>)->Unit
 class PermissionFragment : Fragment(){
 
     private var callBack : PermissionCallBack? = null
-    private var checkCallback : PermissionCheckCallBack? = null
     private var mContext: Context? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,30 +62,6 @@ class PermissionFragment : Fragment(){
         }
     }
 
-    fun requestNow(cb: PermissionCheckCallBack, vararg permissions: String) {
-        loge(permissions.contentToString())
-        checkCallback = cb
-        if (mContext != null && mContext is FragmentActivity) {
-            if (beforeM()) {
-                checkCallback?.onResult(true, mutableListOf())
-            }else {
-                val denyPermissions = mutableListOf<String>()
-                permissions.forEach {
-                    if (mContext!!.checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED) {
-                        denyPermissions.add(it)
-                    }
-                }
-                if (denyPermissions.isEmpty()) {
-                    checkCallback?.onResult(true, mutableListOf())
-                }else {
-                    requestPermissions(denyPermissions.toTypedArray(), 1)
-                }
-            }
-        }else {
-            requestPermissions(permissions, 1)
-        }
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -100,10 +75,7 @@ class PermissionFragment : Fragment(){
                 }
             }
             callBack?.invoke(denyList.isEmpty(), denyList)
-            checkCallback?.onResult(denyList.isEmpty(), denyList)
-
             callBack = null
-            checkCallback = null
         }
     }
 }
