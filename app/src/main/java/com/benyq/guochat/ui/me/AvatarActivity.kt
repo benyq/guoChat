@@ -87,14 +87,12 @@ class AvatarActivity : LifecycleActivity<PersonalInfoViewModel>() {
                     getString(R.string.select_from_album),
                     getString(R.string.save_to_phone)
                 )
-            )
-                .apply {
+            ).apply {
                     setOnMenuAction { _, index ->
                         when (index) {
                             0 -> {
                                 PictureSelector.create(this@AvatarActivity)
                                     .openGallery(PictureMimeType.ofAll())
-                                    .isUseCustomCamera(true)
                                     .loadImageEngine(GlideEngine)
                                     .forResult(object : OnResultCallbackListener<LocalMedia> {
                                         override fun onResult(result: List<LocalMedia>) {

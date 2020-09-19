@@ -11,8 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.activity.OnBackPressedCallback
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.postDelayed
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.benyq.guochat.R
 import com.benyq.guochat.app.CIRCLE__TYPE_TEXT
 import com.benyq.guochat.app.IntentExtra
@@ -36,6 +39,7 @@ import com.gyf.immersionbar.ImmersionBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_friend_circle.*
 import kotlin.math.abs
+
 
 /**
  * @author benyq
@@ -300,8 +304,11 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
                             .startForResult(AddCircleActivity::class.java, { resultCode, data ->
                                 if (resultCode == Activity.RESULT_OK && data != null) {
                                     val content = data.getStringExtra(IntentExtra.addCircleContent)
-                                    val images : Array<String> = data.getStringArrayExtra(IntentExtra.addCircleImages) ?: arrayOf()
-                                    loge("images ${images.size}")
+                                    val images: Array<String> = data.getStringArrayExtra(
+                                        IntentExtra.addCircleImages
+                                    ) ?: arrayOf()
+
+                                    //一开始 rvFriendCircle.scrollToPosition(0)失效的原因是因为RecyclerView在NestedScrollView内部导致的
                                     mAdapter.addData(
                                         0, FriendCircleBean(
                                             "3",
@@ -318,6 +325,8 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
                                             null
                                         )
                                     )
+                                    appBar.setExpanded(true)
+                                    rvFriendCircle.scrollToPosition(0)
                                 }
                             })
                     }
