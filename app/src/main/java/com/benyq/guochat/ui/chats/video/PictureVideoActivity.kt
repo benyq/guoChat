@@ -27,6 +27,7 @@ class PictureVideoActivity : BaseActivity() {
     private val pictureVideoViewModel: PictureVideoViewModel by viewModels()
 
     override fun initWidows() {
+        isSupportSwipeBack = false
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -75,12 +76,10 @@ class PictureVideoActivity : BaseActivity() {
                 }
 
                 StateEvent.STATE_FINISH_IMG -> {
-                    supportFragmentManager.popBackStack()
                     popBack(it.path!!)
                 }
 
                 StateEvent.STATE_FINISH_VIDEO -> {
-                    supportFragmentManager.popBackStack()
                     popBack(it.path!!, StateEvent.STATE_FINISH_VIDEO, it.videoDuration)
                 }
             }
@@ -90,7 +89,6 @@ class PictureVideoActivity : BaseActivity() {
     private fun navigate(last: Fragment?, dest: Fragment, bundle: Bundle) {
         dest.arguments = bundle
         supportFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.alpha_scale_in, R.anim.alpha_scale_out)
             .add(R.id.flContainer, dest, dest.javaClass.simpleName)
             .apply {
                 if (last != null) {

@@ -178,12 +178,10 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
             val chatRecord = mAdapter.data[position]
             when (view.id) {
                 R.id.ivContent -> {
-                    goToActivity<ChatImageActivity>(IntentExtra.imgPath to chatRecord.imgUrl, enterAnim = R.anim.alpha_scale_in, exitAnim = R.anim.alpha_scale_out)
-                    overridePendingTransition(R.anim.alpha_scale_in, R.anim.alpha_scale_out)
+                    goToActivity<ChatImageActivity>(IntentExtra.imgPath to chatRecord.imgUrl, enterAnim = R.anim.alpha_scale_in)
                 }
                 R.id.flVideo -> {
-                    goToActivity<ChatVideoActivity>(IntentExtra.videoPath to chatRecord.videoPath, enterAnim = R.anim.alpha_scale_in, exitAnim = R.anim.alpha_scale_out)
-                    overridePendingTransition(R.anim.alpha_scale_in, R.anim.alpha_scale_out)
+                    goToActivity<ChatVideoActivity>(IntentExtra.videoPath to chatRecord.videoPath, enterAnim = R.anim.alpha_scale_in)
                 }
             }
         }

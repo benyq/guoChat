@@ -485,12 +485,13 @@ class VideoCaptureManager(private val context: Activity, private val mTextureVie
     }
 
     fun stopRecordingVideo() {
+        mCameraCaptureSession?.abortCaptures()
+        mCameraCaptureSession?.stopRepeating()
+
         mediaRecorder?.apply {
             stop()
             reset()
         }
-        mCameraCaptureSession?.abortCaptures()
-        mCameraCaptureSession?.stopRepeating()
         Toasts.show("Video saved: $nextVideoAbsolutePath")
         onVideoCapturedAction?.invoke(nextVideoAbsolutePath!!,
             ((System.currentTimeMillis() - videoRecordStartTime) / 1000).toInt()

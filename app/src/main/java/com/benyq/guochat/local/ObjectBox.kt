@@ -159,6 +159,9 @@ object ObjectBox {
                     record.voiceRecordPath.isNotEmpty() -> {
                         "[语音]"
                     }
+                    record.videoPath.isNotEmpty() -> {
+                        "[视频]"
+                    }
                     else -> {
                         "[图片]"
                     }

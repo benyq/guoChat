@@ -45,11 +45,12 @@
         <activity android:name=".ui.me.PersonalInfoActivity" />
         <activity
             android:name=".ui.chats.ChatVideoActivity"
-            android:theme="@style/exitEntryAnim" />
+            android:theme="@style/AppThemeNotTranslucent" />
         <activity
-            android:name=".ui.chats.ChatImageActivity"
-            android:theme="@style/exitEntryAnim" />
-        <activity android:name=".ui.chats.video.PictureVideoActivity" />
+            android:name=".ui.chats.ChatImageActivity" />
+        <activity android:name=".ui.chats.video.PictureVideoActivity"
+            android:theme="@style/AppThemeNotTranslucent" />
+
         <activity android:name=".ui.contracts.CallingCardActivity" />
         <activity android:name=".ui.contracts.AddContractActivity" />
         <activity android:name=".ui.login.RegisterActivity" />

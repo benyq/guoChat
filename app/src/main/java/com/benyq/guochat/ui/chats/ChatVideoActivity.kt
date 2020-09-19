@@ -4,6 +4,7 @@ import android.media.MediaPlayer
 import android.view.View
 import android.view.WindowManager
 import android.widget.SeekBar
+import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.calculateTime
@@ -27,10 +28,7 @@ class ChatVideoActivity : BaseActivity() {
 
     private var mVideoPaused = true
     private var mVideoPrepared = false
-    private val mVideoProgressJob = Job()
     private lateinit var videoPath: String
-    private val launch = CoroutineScope(mVideoProgressJob)
-
 
     override fun initWidows() {
         window.setFlags(
@@ -115,11 +113,14 @@ class ChatVideoActivity : BaseActivity() {
         })
     }
 
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(0, R.anim.alpha_scale_out)
+    }
 
     override fun onDestroy() {
         super.onDestroy()
         mVideoPaused = true
-        mVideoProgressJob.cancel()
     }
 
 
@@ -137,7 +138,7 @@ class ChatVideoActivity : BaseActivity() {
     }
 
     private fun calculateVideoProgress() {
-        launch.launch(Dispatchers.Main) {
+        lifecycleScope.launch(Dispatchers.Main) {
             while (!mVideoPaused) {
                 val position = videoView.currentPosition
                 tvCurrentPosition.text = calculateTime(position / 1000)
@@ -162,6 +163,8 @@ class ChatVideoActivity : BaseActivity() {
 //                }
 //            }
 //        }
-        Glide.with(this).load(videoPath).into(ivFirstFrame)
+        Glide.with(this)
+            .load(videoPath)
+            .placeholder(R.color.black).into(ivFirstFrame)
     }
 }

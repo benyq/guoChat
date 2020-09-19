@@ -18,7 +18,8 @@ import java.io.Serializable
  * description:
  */
 
-inline fun <reified T : Activity> Context.goToActivity(vararg params: Pair<String, Any?>, enterAnim: Int = R.anim.slide_right_in, exitAnim: Int = R.anim.slide_right_out) {
+//当Activity Window背景设为透明之后，exitAnim无效
+inline fun <reified T : Activity> Context.goToActivity(vararg params: Pair<String, Any?>, enterAnim: Int = R.anim.slide_right_in, exitAnim: Int = 0) {
     val intent = Intent(this, T::class.java)
     if (params.isNotEmpty()) fillIntentArguments(intent, params)
     this.startActivity(intent)
@@ -27,7 +28,7 @@ inline fun <reified T : Activity> Context.goToActivity(vararg params: Pair<Strin
     }
 }
 
-inline fun <reified T : Activity> Fragment.goToActivity(vararg params: Pair<String, Any?>, enterAnim: Int = R.anim.slide_right_in, exitAnim: Int = R.anim.slide_right_out) {
+inline fun <reified T : Activity> Fragment.goToActivity(vararg params: Pair<String, Any?>, enterAnim: Int = R.anim.slide_right_in, exitAnim: Int = 0) {
     val intent = Intent(context, T::class.java)
     if (params.isNotEmpty()) fillIntentArguments(intent, params)
     requireActivity().run {
