@@ -1,8 +1,9 @@
 package com.benyq.guochat.ui
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
@@ -10,31 +11,30 @@ import com.benyq.guochat.function.fingerprint.FingerprintVerifyManager
 import com.benyq.guochat.local.LocalStorage
 import com.benyq.guochat.ui.login.FingerLoginActivity
 import com.benyq.guochat.ui.login.LoginActivity
-import com.benyq.guochat.ui.openeye.OpenEyeCommunityActivity
-import com.benyq.mvvm.ext.Toasts
+import com.benyq.mvvm.ext.fromP
 import com.benyq.mvvm.ext.goToActivity
-import com.benyq.mvvm.http.ApiException
-import com.benyq.mvvm.mvvm.ErrorHandler
-import com.benyq.mvvm.mvvm.ExceptionReason
-import com.google.gson.JsonParseException
-import kotlinx.coroutines.*
-import org.json.JSONException
-import retrofit2.HttpException
-import java.io.InterruptedIOException
-import java.net.ConnectException
-import java.net.UnknownHostException
-import java.text.ParseException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
 
         if (avoidLaunchHereAgain()) {
             return
         }
+        //在全面屏手机上拉升开屏页图片
+        if (fromP()) {
+            val lp = window.attributes
+            lp.layoutInDisplayCutoutMode =
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+            window.attributes = lp
+        }
         lifecycleScope.launch(Dispatchers.IO) {
-            delay(1500)
+            delay(1000)
             withContext(Dispatchers.Main) {
                 //这边要判断，是否开启指纹登录
                 if (FingerprintVerifyManager.canAuthenticate(this@SplashActivity) && LocalStorage.personConfig.fingerprintLogin) {
