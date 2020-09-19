@@ -13,6 +13,10 @@ import com.benyq.guochat.ui.login.FingerLoginActivity
 import com.benyq.guochat.ui.login.LoginActivity
 import com.benyq.mvvm.ext.fromP
 import com.benyq.mvvm.ext.goToActivity
+import com.gyf.immersionbar.BarHide
+import com.gyf.immersionbar.ImmersionBar
+import com.gyf.immersionbar.ktx.hideStatusBar
+import com.gyf.immersionbar.ktx.immersionBar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -21,8 +25,11 @@ import kotlinx.coroutines.withContext
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        immersionBar {
+            hideBar(BarHide.FLAG_HIDE_NAVIGATION_BAR)
+        }
         super.onCreate(savedInstanceState)
-
+        setContentView(R.layout.activity_splash)
         if (avoidLaunchHereAgain()) {
             return
         }
@@ -45,10 +52,6 @@ class SplashActivity : AppCompatActivity() {
                 finish()
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     private fun avoidLaunchHereAgain(): Boolean {
