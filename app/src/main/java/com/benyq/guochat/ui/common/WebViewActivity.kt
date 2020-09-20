@@ -7,11 +7,9 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
-import androidx.appcompat.app.AppCompatActivity
 import com.benyq.guochat.R
-import com.benyq.guochat.ui.base.BaseActivity
+import com.benyq.mvvm.ui.base.BaseActivity
 import com.benyq.mvvm.ext.fromM
-import com.benyq.mvvm.ext.loge
 import kotlinx.android.synthetic.main.activity_web_view.*
 /**
  * @author benyq

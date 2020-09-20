@@ -9,7 +9,6 @@ import android.view.View
 import androidx.core.view.postDelayed
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
@@ -22,7 +21,7 @@ import com.benyq.guochat.local.entity.ChatRecordEntity
 import com.benyq.guochat.model.bean.ChatListBean
 import com.benyq.guochat.model.vm.ChatDetailViewModel
 import com.benyq.guochat.model.vm.StateEvent
-import com.benyq.guochat.ui.base.LifecycleActivity
+import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.chats.video.PictureVideoActivity
 import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.ext.*

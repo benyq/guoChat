@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HeaderView">
+        <attr name="toolbar_title" format="string|reference"/>
+        <attr name="enable_back" format="boolean"/>
+        <attr name="toolbar_menu" format="boolean"/>
+        <attr name="title_gravity" format="enum">
+            <enum name="start" value="1"/>
+            <enum name="center" value="2"/>
+            <enum name="end" value="3"/>
+        </attr>
+        <attr name="toolbar_type" format="enum">
+            <enum name="normal" value="1"/>
+            <enum name="dark" value="2"/>
+        </attr>
+        <attr name="toolbar_menu_text" format="string|reference"/>
+        <attr name="toolbar_menu_src" format="reference"/>
+        <attr name="toolbar_menu_btn_show" format="boolean"/>
+        <attr name="toolbar_bg" format="reference"/>
+        <attr name="toolbar_back_icon" format="reference"/>
+
+    </declare-styleable>
+
+    <declare-styleable name="IconFormLine">
+        <attr name="form_title" format="string" />
+        <attr name="form_content" format="string" />
+        <attr name="line_show_divide" format="boolean" />
+        <attr name="line_show_arrow" format="boolean" />
+        <attr name="line_single_line" format="boolean" />
+        <attr name="line_editable" format="boolean" />
+        <attr name="et_hint" format="string" />
+        <attr name="et_size" format="float" />
+        <attr name="et_input_type" format="integer|reference" />
+        <attr name="form_title_color" format="color|reference" />
+        <attr name="form_content_color" format="color|reference" />
+        <attr name="form_icon" format="reference" />
+        <attr name="form_icon_bg" format="reference" />
+        <attr name="et_gravity" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="SwitchFormLine">
+        <attr name="sf_form_title" format="string" />
+        <attr name="checked" format="boolean" />
+        <attr name="sf_line_show_divide" format="boolean" />
+        <attr name="title_color" format="color" />
+        <attr name="sf_form_title_color" format="color|reference" />
+
+    </declare-styleable>
+
+</resources>

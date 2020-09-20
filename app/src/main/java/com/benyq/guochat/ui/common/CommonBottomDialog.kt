@@ -1,7 +1,6 @@
 package com.benyq.guochat.ui.common
 
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -11,9 +10,9 @@ import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.core.view.setPadding
 import com.benyq.guochat.R
-import com.benyq.guochat.dip2px
-import com.benyq.guochat.ui.base.BaseDialogFragment
-import com.benyq.guochat.ui.base.DrawableBuilder
+import com.benyq.mvvm.ui.base.BaseDialogFragment
+import com.benyq.mvvm.DrawableBuilder
+import com.benyq.mvvm.ext.dip2px
 import com.benyq.mvvm.ext.getColorRef
 import com.benyq.mvvm.ext.getScreenWidth
 import kotlinx.android.synthetic.main.dialog_common_bottom_menu.*
@@ -48,10 +47,10 @@ class CommonBottomDialog : BaseDialogFragment() {
     override fun initView() {
         llAvatarMenu.background = DrawableBuilder(mContext)
             .cornerRadii(FloatArray(8){0f}.apply {
-                set(0, dip2px(mContext, 10))
-                set(1, dip2px(mContext, 10))
-                set(2, dip2px(mContext, 10))
-                set(3, dip2px(mContext, 10))
+                set(0, mContext.dip2px(10))
+                set(1, mContext.dip2px(10))
+                set(2, mContext.dip2px(10))
+                set(3, mContext.dip2px(10))
             })
             .fill(Color.WHITE)
             .build()
@@ -59,7 +58,7 @@ class CommonBottomDialog : BaseDialogFragment() {
         mTitles.forEachIndexed { index, s ->
             val textView = TextView(mContext)
             textView.gravity = Gravity.CENTER
-            textView.setPadding(dip2px(mContext, 15).toInt())
+            textView.setPadding(mContext.dip2px(15).toInt())
             textView.text = s
             textView.textSize = 14f
             textView.setTextColor(mContext.getColorRef(R.color.color_2a2a2a))
@@ -76,7 +75,7 @@ class CommonBottomDialog : BaseDialogFragment() {
                 val view = View(mContext)
                 val viewParams = LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
-                    dip2px(mContext, 0.3f).toInt()
+                    mContext.dip2px(0.3f).toInt()
                 )
                 view.setBackgroundResource(R.color.gray)
                 llContainer.addView(view, viewParams)

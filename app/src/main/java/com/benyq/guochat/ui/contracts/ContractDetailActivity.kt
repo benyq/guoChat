@@ -8,10 +8,10 @@ import com.benyq.guochat.app.GENDER_FEMALE
 import com.benyq.guochat.app.GENDER_MALE
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.loadImage
-import com.benyq.guochat.local.LocalStorage
+import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.local.ObjectBox
 import com.benyq.guochat.local.entity.ContractEntity
-import com.benyq.guochat.ui.base.BaseActivity
+import com.benyq.mvvm.ui.base.BaseActivity
 import com.benyq.guochat.ui.chats.ChatDetailActivity
 import com.benyq.guochat.ui.common.CommonBottomDialog
 import com.benyq.mvvm.SmartJump
@@ -59,7 +59,7 @@ class ContractDetailActivity : BaseActivity() {
 
         }
         llSendMessage.setOnClickListener {
-            val user = LocalStorage.userAccount
+            val user = ChatLocalStorage.userAccount
             val bean = ObjectBox.findFromToByIds(user.chatId, mContractEntity.id)
             goToActivity<ChatDetailActivity>(IntentExtra.fromToId to bean)
         }

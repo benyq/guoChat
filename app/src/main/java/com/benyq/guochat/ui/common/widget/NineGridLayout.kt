@@ -7,16 +7,12 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
-import androidx.core.view.setPadding
 import com.benyq.guochat.R
-import com.benyq.guochat.dip2px
-import com.benyq.mvvm.ext.getColorRef
+import com.benyq.mvvm.ext.dip2px
 import com.benyq.mvvm.ext.loge
 import com.bumptech.glide.Glide
-import kotlin.math.max
 import kotlin.math.min
 
 /**
@@ -38,12 +34,12 @@ class NineGridLayout(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
 
     private val rowCount = 3
 
-    private var mItemAction : ((View, List<String>, Int)->Unit)? = null
+    private var mItemAction: ((View, List<String>, Int) -> Unit)? = null
 
     /**
      * 图片之间间距
      */
-    private var mGap: Int = dip2px(context, 5).toInt()
+    private var mGap: Int = context.dip2px(5).toInt()
 
     init {
 
@@ -137,7 +133,7 @@ class NineGridLayout(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
         addView(imageView)
     }
 
-    fun addItems(urls: List<String>){
+    fun addItems(urls: List<String>) {
         removeAllItems()
         urls.forEach {
             addItem(it)
@@ -146,27 +142,27 @@ class NineGridLayout(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
 
     fun getPhotoUrls(): List<String> = mPhotoUrls
 
-    private fun removeAllItems(){
+    private fun removeAllItems() {
         mPhotoUrls.clear()
         mPhotoImageViews.forEach {
-            if (indexOfChild(it) != -1){
+            if (indexOfChild(it) != -1) {
                 removeView(it)
             }
         }
         mPhotoImageViews.clear()
     }
 
-    fun setAddAction(action: (View)->Unit){
+    fun setAddAction(action: (View) -> Unit) {
         mAddButton.setOnClickListener {
             action.invoke(it)
         }
     }
 
-    fun setItemAction(action: (View, List<String>, Int)->Unit){
+    fun setItemAction(action: (View, List<String>, Int) -> Unit) {
         mItemAction = action
     }
 
-    private fun createImageView(position : Int): ImageView {
+    private fun createImageView(position: Int): ImageView {
         val imageView = ImageView(context)
         imageView.scaleType = ImageView.ScaleType.CENTER_CROP
         imageView.setOnClickListener {

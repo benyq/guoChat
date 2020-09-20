@@ -2,8 +2,7 @@ package com.benyq.mvvm.delegate
 
 import android.app.Activity
 import android.os.Bundle
-import com.benyq.mvvm.ext.loge
-import com.benyq.mvvm.base.IActivity
+import com.benyq.mvvm.ui.base.IActivity
 
 /**
  * @author benyq

@@ -7,7 +7,7 @@ import androidx.collection.LruCache
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.benyq.mvvm.Setting
-import com.benyq.mvvm.base.IFragment
+import com.benyq.mvvm.ui.base.IFragment
 
 /**
  * @author benyq

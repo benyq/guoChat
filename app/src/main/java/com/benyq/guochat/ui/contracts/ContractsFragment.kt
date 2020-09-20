@@ -6,7 +6,7 @@ import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.getViewModel
 import com.benyq.guochat.model.vm.ContractsViewModel
-import com.benyq.guochat.ui.base.LifecycleFragment
+import com.benyq.mvvm.ui.base.LifecycleFragment
 import com.benyq.mvvm.ext.goToActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_contracts.*

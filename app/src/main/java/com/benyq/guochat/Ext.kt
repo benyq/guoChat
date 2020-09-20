@@ -21,16 +21,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.benyq.guochat.app.JSON
+import com.benyq.mvvm.JSON
+import com.benyq.mvvm.ext.dip2px
 import com.benyq.mvvm.ext.fromQ
-import com.benyq.mvvm.ext.loge
 import com.benyq.mvvm.ext.setTextAppearanceCustomer
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.activity_community.*
 import kotlinx.coroutines.*
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -38,7 +36,6 @@ import okio.buffer
 import okio.sink
 import okio.source
 import java.io.File
-import java.util.HashMap
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -86,23 +83,6 @@ class LifecycleCoroutineListener(private val job: Job) : DefaultLifecycleObserve
     }
 }
 
-/**
- * 将dip或dp值转换为px值，保证尺寸大小不变
- *
- * @param dipValue
- * （DisplayMetrics类中属性density）
- * @return
- */
-fun dip2px(context: Context, dipValue: Float): Float {
-    val scale = context.resources.displayMetrics.density
-    return (dipValue * scale + 0.5f)
-}
-
-fun dip2px(context: Context, dipValue: Int): Float {
-    val scale = context.resources.displayMetrics.density
-    return (dipValue * scale + 0.5f)
-}
-
 inline fun <reified T> singleton(crossinline initializer: (Context) -> T): (Context) -> T {
     var instance: T? = null
     return { context ->
@@ -140,13 +120,18 @@ fun calculateTime(time: Int): String {
     }
 }
 
-fun ImageView.loadImage(url: String, round: Int = 10, isCircle: Boolean = false, placeHolder: Int = R.drawable.shape_album_loading_bg) {
+fun ImageView.loadImage(
+    url: String,
+    round: Int = 10,
+    isCircle: Boolean = false,
+    placeHolder: Int = R.drawable.shape_album_loading_bg
+) {
     Glide.with(context).load(url)
         .apply {
             if (isCircle) {
                 transform(CircleCrop())
-            }else if (round > 0){
-                transform(RoundedCorners(dip2px(context, round).toInt()))
+            } else if (round > 0) {
+                transform(RoundedCorners(context.dip2px(round).toInt()))
                     .placeholder(placeHolder)
             }
         }
@@ -225,15 +210,15 @@ private fun saveImgVersionQ(
 }
 
 
-inline fun <reified VM: ViewModel> ComponentActivity.getViewModel(): VM {
+inline fun <reified VM : ViewModel> ComponentActivity.getViewModel(): VM {
     return ViewModelProvider(this).get(VM::class.java)
 }
 
-inline fun <reified VM: ViewModel> Fragment.getViewModel(): VM {
+inline fun <reified VM : ViewModel> Fragment.getViewModel(): VM {
     return ViewModelProvider(this).get(VM::class.java)
 }
 
-inline fun <reified VM: ViewModel> Fragment.sharedViewModel(): VM {
+inline fun <reified VM : ViewModel> Fragment.sharedViewModel(): VM {
     return ViewModelProvider(requireActivity()).get(VM::class.java)
 }
 
@@ -246,7 +231,7 @@ fun TabLayout.setTextStyleSelectState(position: Int, @StyleRes style: Int) {
     title.setTextAppearanceCustomer(context, style)
 }
 
-fun ViewPager2.overScrollNever(){
+fun ViewPager2.overScrollNever() {
     val child: View = getChildAt(0)
     (child as? RecyclerView)?.overScrollMode = View.OVER_SCROLL_NEVER
 }

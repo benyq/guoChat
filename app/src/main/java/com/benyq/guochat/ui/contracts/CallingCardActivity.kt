@@ -1,12 +1,11 @@
 package com.benyq.guochat.ui.contracts
 
 import com.benyq.guochat.R
-import com.benyq.guochat.dip2px
 import com.benyq.guochat.function.zxing.encode.CodeEncodingCreator
-import com.benyq.guochat.local.LocalStorage
+import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.bean.UserBean
-import com.benyq.guochat.ui.base.BaseActivity
-import com.benyq.guochat.ui.base.LifecycleActivity
+import com.benyq.mvvm.ext.dip2px
+import com.benyq.mvvm.ui.base.BaseActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import kotlinx.android.synthetic.main.activity_calling_card.*
@@ -28,9 +27,9 @@ class CallingCardActivity : BaseActivity() {
     private lateinit var mUserBean: UserBean
 
     override fun initView() {
-        mUserBean = LocalStorage.userAccount
+        mUserBean = ChatLocalStorage.userAccount
         Glide.with(this).load(mUserBean.avatarUrl)
-            .transform(RoundedCorners(dip2px(this, 10).toInt()))
+            .transform(RoundedCorners(dip2px(10).toInt()))
             .into(ivAvatar)
 
         tvContractName.text = mUserBean.nickName
@@ -51,7 +50,7 @@ class CallingCardActivity : BaseActivity() {
                     .asBitmap() //必须
                     .load(mUserBean.avatarUrl)
                     .centerCrop()
-                    .transform(RoundedCorners(dip2px(this@CallingCardActivity, 5).toInt()))
+                    .transform(RoundedCorners(dip2px(5).toInt()))
                     .submit(150, 150)
                     .get()
             }

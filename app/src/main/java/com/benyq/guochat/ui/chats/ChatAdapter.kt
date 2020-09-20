@@ -1,9 +1,9 @@
 package com.benyq.guochat.ui.chats
 
 import com.benyq.guochat.R
-import com.benyq.guochat.dip2px
 import com.benyq.guochat.function.other.DateFormatUtil
 import com.benyq.guochat.model.bean.ChatListBean
+import com.benyq.mvvm.ext.dip2px
 import com.benyq.mvvm.ext.loge
 import com.benyq.mvvm.glide.ProgressInterceptor
 import com.benyq.mvvm.glide.ProgressListener
@@ -40,7 +40,7 @@ class ChatAdapter : BaseQuickAdapter<ChatListBean, BaseViewHolder>(R.layout.item
                     skipMemoryCache(true)
                     diskCacheStrategy(DiskCacheStrategy.NONE)
                 })
-                .transform(RoundedCorners(dip2px(context, 10).toInt()))
+                .transform(RoundedCorners(context.dip2px(10).toInt()))
                 .into(holder.getView(R.id.ivAvatar))
         }
     }

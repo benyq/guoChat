@@ -18,7 +18,7 @@ import com.benyq.guochat.function.zxing.android.CaptureActivity
 import com.benyq.guochat.getViewModel
 import com.benyq.guochat.local.ObjectBox
 import com.benyq.guochat.model.vm.MainViewModel
-import com.benyq.guochat.ui.base.LifecycleActivity
+import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.chats.ChatFragment
 import com.benyq.guochat.ui.common.WebViewActivity
 import com.benyq.guochat.ui.contracts.AddContractActivity

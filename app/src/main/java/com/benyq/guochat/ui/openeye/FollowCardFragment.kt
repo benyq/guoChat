@@ -1,6 +1,5 @@
 package com.benyq.guochat.ui.openeye
 
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -11,20 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.benyq.guochat.*
 import com.benyq.guochat.model.bean.openeye.CommunityRecommend
-import com.benyq.guochat.ui.base.BaseFragment
+import com.benyq.mvvm.ui.base.BaseFragment
 import com.benyq.mvvm.ext.gone
-import com.benyq.mvvm.ext.loge
 import com.benyq.mvvm.ext.visible
 import com.github.chrisbanes.photoview.PhotoView
 import com.shuyu.gsyvideoplayer.GSYVideoManager
-import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
-import com.shuyu.gsyvideoplayer.cache.CacheFactory
-import com.shuyu.gsyvideoplayer.cache.ICacheManager
-import com.shuyu.gsyvideoplayer.cache.ProxyCacheManager
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
 import kotlinx.android.synthetic.main.fragment_open_eye_follow_card.*
-import java.io.File
 
 
 /**

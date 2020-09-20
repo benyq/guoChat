@@ -1,12 +1,9 @@
 package com.benyq.guochat.ui.chats
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.view.MotionEvent
 import com.benyq.guochat.R
-import com.benyq.guochat.dip2px
-import com.benyq.guochat.ui.base.BaseDialogFragment
-import com.benyq.guochat.ui.base.DrawableBuilder
+import com.benyq.mvvm.ui.base.BaseDialogFragment
+import com.benyq.mvvm.DrawableBuilder
 import com.benyq.mvvm.ext.*
 import kotlinx.android.synthetic.main.fragment_voice_record.*
 
@@ -71,7 +68,7 @@ class VoiceRecordDialog : BaseDialogFragment() {
 
         when (ev.action) {
             MotionEvent.ACTION_MOVE -> {
-                if (ev.y <= dip2px(mContext, 20) + mTouchY && ev.y >= mTouchY - dip2px(mContext, 20)) {
+                if (ev.y <= mContext.dip2px(20) + mTouchY && ev.y >= mTouchY - mContext.dip2px(20)) {
                     lottieAnimationView.visible()
                     ivRecordCancel.gone()
                     tvRecord.setText(R.string.release_finger_send)
@@ -85,7 +82,7 @@ class VoiceRecordDialog : BaseDialogFragment() {
 
                 loge("event ${ev.x} -- ${ev.y} **** -- $mTouchY")
 
-                if (ev.y <= dip2px(mContext, 20) + mTouchY && ev.y >= mTouchY - dip2px(mContext, 20)) {
+                if (ev.y <= mContext.dip2px(20) + mTouchY && ev.y >= mTouchY - mContext.dip2px(20)) {
                     //判定为发送语音
                     loge("判定为发送语音")
                     mConfirmAction?.invoke()

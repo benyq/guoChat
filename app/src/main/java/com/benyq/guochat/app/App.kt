@@ -1,12 +1,9 @@
 package com.benyq.guochat.app
 
-import android.app.Application
-import android.os.SystemClock
 import android.util.Log
-import androidx.lifecycle.ViewModelStore
-import androidx.lifecycle.ViewModelStoreOwner
 import com.benyq.guochat.function.other.NotificationHelper
 import com.benyq.guochat.local.ObjectBox
+import com.benyq.mvvm.ui.base.BaseApplication
 import com.benyq.mvvm.ext.Toasts
 import com.benyq.mvvm.http.ApiException
 import com.benyq.mvvm.mvvm.ErrorHandler
@@ -29,13 +26,12 @@ import java.text.ParseException
  * @note
  */
 @HiltAndroidApp
-class App : Application(), ViewModelStoreOwner {
+class App : BaseApplication(){
 
     companion object {
         lateinit var sInstance: App
     }
 
-    private val mAppViewModelStore: ViewModelStore = ViewModelStore()
 
     override fun onCreate() {
         super.onCreate()
@@ -47,7 +43,6 @@ class App : Application(), ViewModelStoreOwner {
         injectError()
     }
 
-    override fun getViewModelStore() = mAppViewModelStore
 
     private fun injectError(){
         ErrorHandler.injectHandler { e ->

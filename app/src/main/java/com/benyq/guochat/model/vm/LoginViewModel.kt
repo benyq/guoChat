@@ -2,7 +2,7 @@ package com.benyq.guochat.model.vm
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
-import com.benyq.guochat.local.LocalStorage
+import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.bean.PersonConfig
 import com.benyq.guochat.model.rep.LoginRepository
 import com.benyq.mvvm.mvvm.BaseViewModel
@@ -23,11 +23,11 @@ class LoginViewModel @ViewModelInject constructor(private val mRepository: Login
             onStart { showLoading("正在登录") }
             onSuccess {
                 //模拟登录之后获取配置
-                val oldConfig = LocalStorage.personConfig
+                val oldConfig = ChatLocalStorage.personConfig
                 if (oldConfig.phoneNumber != username) {
-                    LocalStorage.personConfig = PersonConfig(username, false)
+                    ChatLocalStorage.personConfig = PersonConfig(username, false)
                 }
-                LocalStorage.phoneNumber = username
+                ChatLocalStorage.phoneNumber = username
                 mLoginResult.value = it
             }
             onFinal { hideLoading() }

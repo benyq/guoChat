@@ -1,11 +1,10 @@
 package com.benyq.guochat.model.rep
 
-import com.benyq.guochat.app.STREAM
-import com.benyq.guochat.app.TEXT
-import com.benyq.guochat.local.LocalStorage
+import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.bean.ChatResponse
 import com.benyq.guochat.model.net.ApiService
-import com.benyq.guochat.model.net.ServiceFactory
+import com.benyq.mvvm.STREAM
+import com.benyq.mvvm.TEXT
 import com.benyq.mvvm.ext.loge
 import com.benyq.mvvm.mvvm.BaseRepository
 import okhttp3.MultipartBody
@@ -28,7 +27,7 @@ class UserInfoRepository @Inject constructor(private val apiService: ApiService)
             val requestFile = file.asRequestBody(STREAM)
             val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
-            val userBody = LocalStorage.uid.toRequestBody(TEXT)
+            val userBody = ChatLocalStorage.uid.toRequestBody(TEXT)
             val map = mutableMapOf<String, RequestBody>()
             map["uid"] = userBody
             loge("UserInfoRepository apiService $apiService")
@@ -39,7 +38,7 @@ class UserInfoRepository @Inject constructor(private val apiService: ApiService)
     suspend fun editUserNick(nickName: String): ChatResponse<String>{
         return launchIO {
             loge("UserInfoRepository apiService $apiService")
-            apiService.editUserNick(LocalStorage.uid, nickName)
+            apiService.editUserNick(ChatLocalStorage.uid, nickName)
         }
     }
 

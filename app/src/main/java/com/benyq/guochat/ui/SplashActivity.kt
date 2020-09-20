@@ -1,21 +1,18 @@
 package com.benyq.guochat.ui
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
 import com.benyq.guochat.function.fingerprint.FingerprintVerifyManager
-import com.benyq.guochat.local.LocalStorage
+import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.ui.login.FingerLoginActivity
 import com.benyq.guochat.ui.login.LoginActivity
 import com.benyq.mvvm.ext.fromP
 import com.benyq.mvvm.ext.goToActivity
 import com.gyf.immersionbar.BarHide
-import com.gyf.immersionbar.ImmersionBar
-import com.gyf.immersionbar.ktx.hideStatusBar
 import com.gyf.immersionbar.ktx.immersionBar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -44,7 +41,7 @@ class SplashActivity : AppCompatActivity() {
             delay(1000)
             withContext(Dispatchers.Main) {
                 //这边要判断，是否开启指纹登录
-                if (FingerprintVerifyManager.canAuthenticate(this@SplashActivity) && LocalStorage.personConfig.fingerprintLogin) {
+                if (FingerprintVerifyManager.canAuthenticate(this@SplashActivity) && ChatLocalStorage.personConfig.fingerprintLogin) {
                     goToActivity<FingerLoginActivity>(exitAnim = R.anim.normal_out)
                 } else {
                     goToActivity<LoginActivity>(exitAnim = R.anim.normal_out)

@@ -11,28 +11,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.activity.OnBackPressedCallback
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.view.postDelayed
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.benyq.guochat.R
 import com.benyq.guochat.app.CIRCLE__TYPE_TEXT
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.getViewModel
 import com.benyq.guochat.loadImage
-import com.benyq.guochat.local.LocalStorage
+import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.bean.CircleComment
 import com.benyq.guochat.model.bean.FriendCircleBean
 import com.benyq.guochat.model.vm.FriendCircleViewModel
-import com.benyq.guochat.ui.base.LifecycleActivity
-import com.benyq.guochat.ui.common.widget.HeaderView
+import com.benyq.mvvm.ui.base.LifecycleActivity
+import com.benyq.mvvm.ui.widget.HeaderView
 import com.benyq.guochat.ui.common.widget.satellite_menu.MenuItemView
 import com.benyq.guochat.ui.common.widget.satellite_menu.OnMenuActionListener
 import com.benyq.guochat.ui.common.widget.satellite_menu.SatelliteMenuLayout
 import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.ext.getDrawableRef
-import com.benyq.mvvm.ext.loge
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.gyf.immersionbar.ImmersionBar
@@ -94,7 +90,7 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
     override fun initView() {
         ImmersionBar.setTitleBar(this, toolbar)
 
-        val user = LocalStorage.userAccount
+        val user = ChatLocalStorage.userAccount
         ivAvatar.loadImage(user.avatarUrl)
         tvNickName.text = user.nickName
         Glide.with(this)

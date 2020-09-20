@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.R
 import com.benyq.guochat.getViewModel
 import com.benyq.guochat.model.vm.OpenEyeDailyPaperViewModel
-import com.benyq.guochat.ui.base.LifecycleFragment
+import com.benyq.mvvm.ui.base.LifecycleFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_daily_paper.*
 

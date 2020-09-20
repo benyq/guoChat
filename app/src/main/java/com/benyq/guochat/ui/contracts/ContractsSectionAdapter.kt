@@ -2,8 +2,8 @@ package com.benyq.guochat.ui.contracts
 
 import android.widget.ImageView
 import com.benyq.guochat.R
-import com.benyq.guochat.dip2px
 import com.benyq.guochat.model.bean.ContractSectionBean
+import com.benyq.mvvm.ext.dip2px
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
@@ -25,15 +25,12 @@ class ContractsSectionAdapter :
 
     override fun convert(holder: BaseViewHolder, item: ContractSectionBean) {
         holder.setText(R.id.tvContractName, item.contractEntity?.nick)
-        val ivAvatar : ImageView = holder.getView(R.id.ivAvatar)
+        val ivAvatar: ImageView = holder.getView(R.id.ivAvatar)
         Glide.with(context).load(item.contractEntity?.avatarUrl)
             .apply(
                 RequestOptions.bitmapTransform(
                     RoundedCorners(
-                        dip2px(
-                            context,
-                            5
-                        ).toInt()
+                        context.dip2px(5).toInt()
                     )
                 )
             )

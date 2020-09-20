@@ -7,12 +7,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.benyq.guochat.R
-import com.benyq.guochat.dip2px
 import com.benyq.guochat.getViewModel
 import com.benyq.guochat.model.bean.openeye.CommunityRecommend
 import com.benyq.guochat.model.vm.OpenEyeRecommendViewModel
-import com.benyq.guochat.ui.base.LifecycleFragment
+import com.benyq.mvvm.ui.base.LifecycleFragment
 import com.benyq.guochat.ui.common.openeye.WaterDropHeader
+import com.benyq.mvvm.ext.dip2px
 import com.benyq.mvvm.ext.getScreenWidth
 import com.benyq.mvvm.response.SharedType
 import com.bumptech.glide.Glide
@@ -54,8 +54,8 @@ class RecommendFragment : LifecycleFragment<OpenEyeRecommendViewModel>(){
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        bothSideSpace = dip2px(context, 14).toInt()
-        middleSpace = dip2px(context, 3).toInt()
+        bothSideSpace = context.dip2px(14).toInt()
+        middleSpace = context.dip2px(3).toInt()
         maxImageWidth = (context.getScreenWidth() - bothSideSpace * 2 - middleSpace) / 2
     }
 

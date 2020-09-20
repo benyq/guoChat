@@ -7,7 +7,7 @@
     android:background="@color/white"
     tools:context=".ui.login.RegisterActivity">
 
-    <com.benyq.guochat.ui.common.widget.HeaderView
+    <com.benyq.mvvm.ui.widget.HeaderView
         android:id="@+id/headerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

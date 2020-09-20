@@ -1,23 +1,18 @@
 package com.benyq.guochat.ui.login
 
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
-import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.shapes.Shape
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
-import com.benyq.guochat.dip2px
 import com.benyq.guochat.function.fingerprint.FingerprintVerifyManager
 import com.benyq.guochat.getViewModel
-import com.benyq.guochat.local.LocalStorage
+import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.vm.LoginViewModel
 import com.benyq.guochat.ui.MainActivity
-import com.benyq.guochat.ui.base.DrawableBuilder
-import com.benyq.guochat.ui.base.LifecycleActivity
+import com.benyq.mvvm.DrawableBuilder
+import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.common.CheckFingerprintDialog
+import com.benyq.mvvm.ext.dip2px
 import com.benyq.mvvm.ext.getColorRef
 import com.benyq.mvvm.ext.goToActivity
 import com.benyq.mvvm.ext.loge
@@ -48,12 +43,12 @@ class FingerLoginActivity : LifecycleActivity<LoginViewModel>() {
 
         //为ivAvatarFinger 设置背景
         ivAvatarFinger.background = DrawableBuilder(this)
-            .circleRadius(dip2px(this, 50))
+            .circleRadius(dip2px(50))
             .fill(getColorRef(R.color.color_3fa9a9a9))
             .build()
 
 
-        val phoneNumber = LocalStorage.phoneNumber
+        val phoneNumber = ChatLocalStorage.phoneNumber
         tvUserAccount.text = if (phoneNumber.length == 11) {
             phoneNumber.substring(0, 3) + "****" + phoneNumber.substring(7)
         }else {

@@ -8,7 +8,7 @@ import com.benyq.guochat.getViewModel
 import com.benyq.guochat.model.bean.RegisterBean
 import com.benyq.guochat.model.vm.LoginViewModel
 import com.benyq.guochat.ui.MainActivity
-import com.benyq.guochat.ui.base.LifecycleActivity
+import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.ext.Toasts
 import com.benyq.mvvm.ext.goToActivity

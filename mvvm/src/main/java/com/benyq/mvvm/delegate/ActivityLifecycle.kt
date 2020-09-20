@@ -7,8 +7,7 @@ import androidx.collection.LruCache
 import androidx.fragment.app.FragmentActivity
 import com.benyq.mvvm.ActivityManager
 import com.benyq.mvvm.Setting
-import com.benyq.mvvm.base.IActivity
-import com.benyq.mvvm.ext.loge
+import com.benyq.mvvm.ui.base.IActivity
 
 /**
  * @author benyq

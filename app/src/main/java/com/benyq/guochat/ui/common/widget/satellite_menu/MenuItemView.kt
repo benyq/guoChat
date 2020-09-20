@@ -10,7 +10,7 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.benyq.guochat.dip2px
+import com.benyq.mvvm.ext.dip2px
 
 /**
  * @author benyq
@@ -66,8 +66,8 @@ class MenuItemView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
 
         mBtn?.run {
             val params = layoutParams as LayoutParams
-            params.width = dip2px(context, menuItem.diameter).toInt()
-            params.height = dip2px(context, menuItem.diameter).toInt()
+            params.width = context.dip2px(menuItem.diameter).toInt()
+            params.height = context.dip2px(menuItem.diameter).toInt()
             params.gravity = Gravity.CENTER_HORIZONTAL
             params.bottomMargin = mGapSize
             val ovalShape = OvalShape()

@@ -8,25 +8,25 @@
     android:background="@color/darkgrey"
     tools:context=".ui.settings.SettingsActivity">
 
-    <com.benyq.guochat.ui.common.widget.HeaderView
+    <com.benyq.mvvm.ui.widget.HeaderView
         android:id="@+id/headerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:toolbar_title="@string/settings"/>
 
-    <com.benyq.guochat.ui.common.widget.IconFormLine
+    <com.benyq.mvvm.ui.widget.IconFormLine
         android:id="@+id/ifMessageSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:form_title="@string/message_settings" />
 
-    <com.benyq.guochat.ui.common.widget.SwitchFormLine
+    <com.benyq.mvvm.ui.widget.SwitchFormLine
         android:id="@+id/sfFingerprintLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:sf_form_title="@string/fingerprint_login"/>
 
-    <com.benyq.guochat.ui.common.widget.IconFormLine
+    <com.benyq.mvvm.ui.widget.IconFormLine
         android:id="@+id/ifAboutApp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
