@@ -6,8 +6,10 @@ package com.benyq.guochat.comic
  * @e-mail 1520063035@qq.com
  * @note
  */
-object ComicConfig {
+object ComicIntentExtra {
     const val comicId = "comicId"
 
     const val chapterId = "chapterId"
+    const val chapterPosition = "chapterPosition"
+    const val chapterList = "chapterList"
 }

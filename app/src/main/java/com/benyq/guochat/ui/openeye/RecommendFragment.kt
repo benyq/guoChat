@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.benyq.guochat.R
-import com.benyq.guochat.getViewModel
+import com.benyq.mvvm.ext.getViewModel
 import com.benyq.guochat.model.bean.openeye.CommunityRecommend
 import com.benyq.guochat.model.vm.OpenEyeRecommendViewModel
 import com.benyq.mvvm.ui.base.LifecycleFragment

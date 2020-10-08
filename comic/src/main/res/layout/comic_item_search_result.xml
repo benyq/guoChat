@@ -1,6 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/ivBookCover"
+        android:layout_width="97dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@color/color_2a2a2a"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/tvChapter"
+        android:layout_width="97dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/comic_shape_black_up_shadow"
+        android:gravity="center"
+        android:padding="5dp"
+        android:singleLine="true"
+        tools:text="@string/app_name"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/ivBookCover"
+        app:layout_constraintBottom_toBottomOf="@id/ivBookCover"/>
+
+
+    <TextView
+        android:id="@+id/tvBookName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:textColor="@color/color_2a2a2a"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/ivBookCover"
+        app:layout_constraintTop_toTopOf="@id/ivBookCover"
+        tools:text="@string/app_name" />
+
+    <TextView
+        android:id="@+id/tvAuthor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/ivBookCover"
+        app:layout_constraintTop_toBottomOf="@id/tvBookName"
+        tools:text="@string/app_name" />
+
+
+    <TextView
+        android:id="@+id/tvDesContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="15dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:minLines="3"
+        android:textColor="#999999"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvBookName"
+        app:layout_constraintTop_toBottomOf="@id/tvAuthor"
+        tools:text="asd" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

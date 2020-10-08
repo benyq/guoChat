@@ -94,13 +94,13 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
         toolbarBack.setImageDrawable(mToolbarBackIcon)
         toolbarTitle.gravity = when (mTitleGravity) {
             titleEnd -> {
-                Gravity.END
+                Gravity.END or Gravity.CENTER_VERTICAL
             }
             titleCenter -> {
                 Gravity.CENTER
             }
             else -> {
-                Gravity.START
+                Gravity.START or Gravity.CENTER_VERTICAL
             }
         }
 
@@ -142,7 +142,7 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
         tvMenu.isEnabled = enabled
     }
 
-    fun setToolbarTitle(title: String) {
+    fun setToolbarTitle(title: String?) {
         toolbarTitle.text = title
     }
 

@@ -19,13 +19,14 @@ import io.objectbox.kotlin.query
  * @e-mail 1520063035@qq.com
  * @note
  */
-object ObjectBox {
+object ChatObjectBox {
 
     lateinit var boxStore: BoxStore
         private set
 
     fun init(context: Context) {
         boxStore = MyObjectBox.builder()
+            .name("chat")
             .androidContext(context.applicationContext).build()
 
         if (!BuildConfig.DEBUG) {

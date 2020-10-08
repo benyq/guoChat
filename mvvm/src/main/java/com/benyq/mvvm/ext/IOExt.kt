@@ -27,7 +27,7 @@ inline fun tryCatch(tryBlock: () -> Unit, catchBlock: (Throwable) -> Unit = {}, 
     } catch (t: Throwable) {
         t.printStackTrace()
         catchBlock(t)
-        Log.e("benyq", "Throwable ${t.message}")
+        Log.e("IOExt", "tryCatch Throwable ${t.message}")
     }finally {
         finalBlock()
     }

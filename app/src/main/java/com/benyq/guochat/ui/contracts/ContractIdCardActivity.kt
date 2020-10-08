@@ -5,8 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.benyq.guochat.R
-import com.benyq.guochat.getViewModel
 import com.benyq.guochat.model.vm.ContractsViewModel
+import com.benyq.mvvm.ext.getViewModel
 import com.benyq.mvvm.ui.base.LifecycleActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_c_ontract_id_card.*

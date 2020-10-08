@@ -5,7 +5,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
 import com.benyq.guochat.function.other.GlideEngine
-import com.benyq.guochat.getViewModel
 import com.benyq.guochat.loadImage
 import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.vm.PersonalInfoViewModel
@@ -13,6 +12,7 @@ import com.benyq.guochat.saveImg
 import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.common.CommonBottomDialog
 import com.benyq.mvvm.ext.Toasts
+import com.benyq.mvvm.ext.getViewModel
 import com.benyq.mvvm.ext.loge
 import com.bumptech.glide.Glide
 import com.gyf.immersionbar.ktx.immersionBar

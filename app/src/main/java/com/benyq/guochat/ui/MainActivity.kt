@@ -15,8 +15,7 @@ import com.benyq.guochat.R
 import com.benyq.guochat.function.music.PlayerController
 import com.benyq.guochat.function.permissionX.PermissionX
 import com.benyq.guochat.function.zxing.android.CaptureActivity
-import com.benyq.guochat.getViewModel
-import com.benyq.guochat.local.ObjectBox
+import com.benyq.guochat.local.ChatObjectBox
 import com.benyq.guochat.model.vm.MainViewModel
 import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.chats.ChatFragment
@@ -46,7 +45,7 @@ class MainActivity : LifecycleActivity<MainViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ObjectBox.testAddChatFromTo()
+        ChatObjectBox.testAddChatFromTo()
         PlayerController.setContext(this)
         isSupportSwipeBack = false
 
@@ -172,8 +171,6 @@ class MainActivity : LifecycleActivity<MainViewModel>() {
         }
         transaction.commit()
     }
-
-    var notifyId = 1
 
     private fun createMorePopWindow(): PopupWindow {
         val view = View.inflate(this, R.layout.popup_more_function, null).apply {

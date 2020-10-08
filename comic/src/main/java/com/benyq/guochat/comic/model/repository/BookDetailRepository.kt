@@ -12,7 +12,7 @@ import javax.inject.Inject
  * @e-mail 1520063035@qq.com
  * @note
  */
-class BookRepository @Inject constructor(private val apiService: ComicApiService): BaseRepository(){
+class BookDetailRepository @Inject constructor(private val apiService: ComicApiService): BaseRepository(){
     suspend fun getComicDetail(comicId: String): ComicResponse<ComicDetailResponse> {
         return launchIO {
             apiService.comicDetail(comicId)

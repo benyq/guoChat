@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="black">#000000</color>
 
     <!-- 象牙色 -->
     <color name="ivory">#fffff0</color>
 
 
 
-    <color name="color989CA0">#989CA0</color>
-    <color name="skyblue">#87ceeb</color>
     <color name="yellow">#ffff00</color>
     <color name="colorE6E6E6">#e6e6e6</color>
 

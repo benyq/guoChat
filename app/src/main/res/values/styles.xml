@@ -1,32 +1,5 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppThemeNotTranslucent" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="AppTheme" parent="AppThemeNotTranslucent">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:windowIsTranslucent">true</item>
-    </style>
-
-    <style name="thin_horizontal_divider">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">0.3dp</item>
-        <item name="android:background">@color/color989CA0</item>
-    </style>
-
-    <style name="string_horizontal_divider">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">10dp</item>
-        <item name="android:background">@color/darkgrey</item>
-    </style>
-
-
     <style name="LaunchTheme" parent="AppThemeNotTranslucent">
         <item name="android:windowBackground">@drawable/ic_app_background</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
