@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.R
-import com.benyq.guochat.getViewModel
+import com.benyq.mvvm.ext.getViewModel
 import com.benyq.guochat.model.vm.OpenEyeSearchViewModel
 import com.benyq.mvvm.ui.base.LifecycleFragment
 import com.benyq.mvvm.ext.Toasts

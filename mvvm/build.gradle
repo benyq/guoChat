@@ -84,15 +84,7 @@ dependencies {
     api 'com.gyf.immersionbar:immersionbar:3.0.0'
     api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
 
-}
+    api 'com.ashokvarma.android:bottom-navigation-bar:2.2.0'
+    api 'com.google.android:flexbox:2.0.1'
 
-apply plugin: 'com.novoda.bintray-release'
-publish {
-    repoName = "maven"
-    userOrg = 'youaccount'
-    groupId = 'com.test.novoad'
-    artifactId = 'test-novoad'
-    publishVersion = '1.0.0'
-    desc = 'novoad bintraybuild project'
-    website = 'https://github.com/you project'
 }

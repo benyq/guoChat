@@ -52,10 +52,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':mvvm')
-    implementation project(':comic')
-
-    implementation 'com.ashokvarma.android:bottom-navigation-bar:2.2.0'
 
     //下拉刷新 https://github.com/scwang90/SmartRefreshLayout
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.1'
@@ -64,14 +60,13 @@ dependencies {
 
     implementation 'com.google.zxing:core:3.3.0'
     implementation 'com.google.zxing:android-core:3.3.0'
-    implementation 'com.google.android:flexbox:2.0.1'
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.3'
 
     //https://github.com/airbnb/lottie-android
     implementation 'com.airbnb.android:lottie:3.0.0'
 
-    debugImplementation "io.objectbox:objectbox-android-objectbrowser:2.5.1"
-    releaseImplementation "io.objectbox:objectbox-android:2.5.1"
+//    debugImplementation "io.objectbox:objectbox-android-objectbrowser:2.5.1"
+//    releaseImplementation "io.objectbox:objectbox-android:2.5.1"
 
     //https://github.com/promeG/TinyPinyin 汉字转拼音
     implementation "com.github.promeg:tinypinyin:2.0.3"
@@ -95,6 +90,9 @@ dependencies {
     //Hilt-JetPack
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecircle_version"
     kapt "androidx.hilt:hilt-compiler:$hilt_lifecircle_version"
+
+    implementation project(':comic')
+    implementation project(':mvvm')
 }
 
 apply plugin: 'io.objectbox'

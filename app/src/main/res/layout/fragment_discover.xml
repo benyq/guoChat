@@ -42,9 +42,9 @@
         android:id="@+id/ifComic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:line_show_divide="false"
-        app:form_title="@string/comic_comic"
-        app:form_icon="@drawable/comic_ic_comic"/>
+        app:line_show_divide="false"/>
+<!--        app:form_title="@string/comic_comic"-->
+<!--        app:form_icon="@drawable/comic_ic_comic"/>-->
 
     <View style="@style/string_horizontal_divider"/>
 

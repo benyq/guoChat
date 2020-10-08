@@ -210,19 +210,6 @@ private fun saveImgVersionQ(
 }
 
 
-inline fun <reified VM : ViewModel> ComponentActivity.getViewModel(): VM {
-    return ViewModelProvider(this).get(VM::class.java)
-}
-
-inline fun <reified VM : ViewModel> Fragment.getViewModel(): VM {
-    return ViewModelProvider(this).get(VM::class.java)
-}
-
-inline fun <reified VM : ViewModel> Fragment.sharedViewModel(): VM {
-    return ViewModelProvider(requireActivity()).get(VM::class.java)
-}
-
-
 fun TabLayout.setTextStyleSelectState(position: Int, @StyleRes style: Int) {
     val title =
         ((getChildAt(0) as LinearLayout).getChildAt(position) as LinearLayout).getChildAt(

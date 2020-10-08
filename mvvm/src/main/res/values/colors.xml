@@ -19,4 +19,8 @@
     <color name="color_alipay">#108ee9</color>
     <color name="colorE3E3E6">#E3E3E6</color>
 
+    <color name="black">#000000</color>
+    <color name="color989CA0">#989CA0</color>
+    <color name="skyblue">#87ceeb</color>
+
 </resources>

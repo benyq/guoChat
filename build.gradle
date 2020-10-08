@@ -2,7 +2,7 @@
 
 buildscript {
     ext.kotlin_version = '1.4.10'
-    ext.objectboxVersion = '2.5.1'
+    ext.objectboxVersion = '2.7.1'
     ext.hilt_version = '2.28-alpha'
     ext.hilt_lifecircle_version = '1.0.0-alpha02'
 
@@ -14,7 +14,6 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.novoda:bintray-release:0.9.1'
         classpath "io.objectbox:objectbox-gradle-plugin:$objectboxVersion"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
     }

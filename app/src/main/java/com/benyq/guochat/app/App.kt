@@ -1,10 +1,12 @@
 package com.benyq.guochat.app
 
 import android.util.Log
+import com.benyq.guochat.comic.local.ComicObjectBox
 import com.benyq.guochat.function.other.NotificationHelper
-import com.benyq.guochat.local.ObjectBox
+import com.benyq.guochat.local.ChatObjectBox
 import com.benyq.mvvm.ui.base.BaseApplication
 import com.benyq.mvvm.ext.Toasts
+import com.benyq.mvvm.ext.loge
 import com.benyq.mvvm.http.ApiException
 import com.benyq.mvvm.mvvm.ErrorHandler
 import com.benyq.mvvm.mvvm.ExceptionReason
@@ -37,7 +39,8 @@ class App : BaseApplication(){
         super.onCreate()
         MMKV.initialize(this)
         sInstance = this
-        ObjectBox.init(this)
+        ChatObjectBox.init(this)
+        ComicObjectBox.init(this)
         Pinyin.init(null)
         NotificationHelper.init(this)
         injectError()
@@ -63,7 +66,9 @@ class App : BaseApplication(){
                     Log.e("benyq", e.msg)
                 }
                 Toasts.show(e.msg)
-            } else {
+            } else if(e.message == "Job was cancelled"){
+                //协程取消异常，一般在网络请求取消时出现
+            }else {
                 onException(ExceptionReason.UNKNOWN_ERROR)
             }
         }

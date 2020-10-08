@@ -6,10 +6,10 @@ import androidx.lifecycle.Observer
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.function.other.GlideEngine
-import com.benyq.guochat.getViewModel
 import com.benyq.guochat.model.vm.AddCircleViewModel
 import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.common.CommonBottomDialog
+import com.benyq.mvvm.ext.getViewModel
 import com.benyq.mvvm.ext.textTrim
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType

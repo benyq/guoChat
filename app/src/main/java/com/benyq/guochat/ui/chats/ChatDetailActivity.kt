@@ -16,7 +16,6 @@ import com.benyq.guochat.app.SharedViewModel
 import com.benyq.guochat.function.media.MediaRecordController
 import com.benyq.guochat.function.other.GlideEngine
 import com.benyq.guochat.function.permissionX.PermissionX
-import com.benyq.guochat.getViewModel
 import com.benyq.guochat.local.entity.ChatRecordEntity
 import com.benyq.guochat.model.bean.ChatListBean
 import com.benyq.guochat.model.vm.ChatDetailViewModel

@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.R
 import com.benyq.guochat.app.CIRCLE__TYPE_TEXT
 import com.benyq.guochat.app.IntentExtra
-import com.benyq.guochat.getViewModel
 import com.benyq.guochat.loadImage
 import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.bean.CircleComment
@@ -29,6 +28,7 @@ import com.benyq.guochat.ui.common.widget.satellite_menu.OnMenuActionListener
 import com.benyq.guochat.ui.common.widget.satellite_menu.SatelliteMenuLayout
 import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.ext.getDrawableRef
+import com.benyq.mvvm.ext.getViewModel
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.gyf.immersionbar.ImmersionBar

@@ -5,17 +5,13 @@ import android.view.animation.Animation
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
 import com.benyq.guochat.function.fingerprint.FingerprintVerifyManager
-import com.benyq.guochat.getViewModel
 import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.vm.LoginViewModel
 import com.benyq.guochat.ui.MainActivity
 import com.benyq.mvvm.DrawableBuilder
 import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.common.CheckFingerprintDialog
-import com.benyq.mvvm.ext.dip2px
-import com.benyq.mvvm.ext.getColorRef
-import com.benyq.mvvm.ext.goToActivity
-import com.benyq.mvvm.ext.loge
+import com.benyq.mvvm.ext.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_finger_login.*
 

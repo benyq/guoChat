@@ -3,7 +3,7 @@ package com.benyq.guochat.ui.me
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
-import com.benyq.guochat.getViewModel
+import com.benyq.mvvm.ext.getViewModel
 import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.vm.PersonalInfoViewModel
 import com.benyq.mvvm.ui.base.LifecycleActivity
