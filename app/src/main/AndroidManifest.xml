@@ -70,7 +70,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.MainActivity"
+            android:screenOrientation="sensor"/>
+
         <activity android:name=".function.zxing.android.CaptureActivity" />
 
         <service android:name=".function.music.PlayMusicService" />

@@ -1,6 +1,8 @@
 package com.benyq.guochat.model.vm
 
+import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.SavedStateHandle
 import com.benyq.guochat.model.rep.MainRepository
 import com.benyq.mvvm.mvvm.BaseViewModel
 
@@ -10,12 +12,26 @@ import com.benyq.mvvm.mvvm.BaseViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
-class MainViewModel @ViewModelInject constructor(private val mRepository: MainRepository) : BaseViewModel(){
+class MainViewModel @ViewModelInject constructor(
+    @Assisted private val handle: SavedStateHandle,
+    private val mRepository: MainRepository
+) : BaseViewModel() {
 
     /**
      * MainActivity中页面下标
      */
-    var mCurrentIndex = 0
+    var mCurrentIndex: Int
+        set(value) {
+            handle.set("ds", value)
+        }
+        get() {
+            return handle.get<Int>("ds") ?: 0
+        }
 
+    init {
+        if (!handle.contains("ds")) {
+            handle.set("ds", 0)
+        }
+    }
 
 }
