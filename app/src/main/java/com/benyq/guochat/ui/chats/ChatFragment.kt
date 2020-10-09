@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.app.SharedViewModel
-import com.benyq.guochat.getViewModel
 import com.benyq.guochat.model.bean.ChatListBean
 import com.benyq.guochat.model.vm.ChatViewModel
-import com.benyq.guochat.ui.base.LifecycleFragment
+import com.benyq.mvvm.ui.base.LifecycleFragment
 import com.benyq.guochat.ui.common.openeye.WaterDropHeader
+import com.benyq.mvvm.ext.getViewModel
 import com.benyq.mvvm.ext.goToActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_chat.*

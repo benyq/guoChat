@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.benyq.guochat.comic">
+
+    <application>
+        <activity
+            android:name=".ui.detail.ReadComicBookActivity"
+            android:theme="@style/AppThemeNotTranslucent" />
+        <activity android:name=".ui.detail.BookDetailActivity" />
+        <activity
+            android:name=".ComicActivity"
+            android:theme="@style/AppThemeNotTranslucent" />
+    </application>
+
+</manifest>

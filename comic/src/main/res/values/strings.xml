@@ -1,0 +1,22 @@
+<resources>
+    <string name="comic_comic">漫画</string>
+
+    <string name="comic_shelf_title">憨批的收藏 （%d）</string>
+    <string name="comic_sort_by_update_time">按更新排序</string>
+    <string name="comic_arrange">整理</string>
+    <string name="comic_search_book">搜索</string>
+    <string name="comic_search_info">请输入</string>
+    <string name="comic_search_hot_key">热门搜索</string>
+    <string name="comic_search_history">历史记录</string>
+    <string name="comic_input_keywords_tips">请输入搜索内容</string>
+    <string name="comic_search_info_tip">搜索（%s）共 %d 条记录</string>
+    <string name="comic_read_immediately">立刻阅读</string>
+    <string name="comic_no_support_vip_tip">不支持vip章节</string>
+    <string name="comic_detail">详情</string>
+    <string name="comic_book_chapter">漫画目录</string>
+    <string name="comic_brightness">夜间模式</string>
+
+    <string name="comic_switch_model_horizontal">水平模式</string>
+    <string name="comic_switch_model_vertical">卷轴模式</string>
+
+</resources>

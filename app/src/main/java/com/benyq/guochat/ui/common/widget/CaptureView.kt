@@ -9,7 +9,7 @@ import android.os.Handler
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import com.benyq.guochat.dip2px
+import com.benyq.mvvm.ext.dip2px
 
 /**
  * @author benyq
@@ -31,24 +31,24 @@ class CaptureView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : V
     /**
      * 正常时内部元半径
      */
-    private var mNormalInnerCircleRadius = dip2px(context, 30)
+    private var mNormalInnerCircleRadius = context.dip2px(30)
 
     /**
      * 正常时外部圆半径
      */
-    private var mNormalOuterCircleRadius = dip2px(context, 41)
+    private var mNormalOuterCircleRadius = context.dip2px(41)
 
     /**
      * 拍摄时内部元半径
      */
-    private var mCaptureInnerCircleRadius = dip2px(context, 15)
+    private var mCaptureInnerCircleRadius = context.dip2px(15)
 
     /**
      * 拍摄时外部圆半径
      */
-    private var mCaptureOuterCircleRadius = dip2px(context, 55)
+    private var mCaptureOuterCircleRadius = context.dip2px(55)
 
-    private var mProgressRadius = dip2px(context, 50)
+    private var mProgressRadius = context.dip2px(50)
 
     private val mInnerCircleColor = Color.WHITE
     private val mOuterCircleColor = Color.parseColor("#EDEDED")
@@ -69,7 +69,7 @@ class CaptureView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : V
     private var mProgressPaint = Paint().apply {
         style = Paint.Style.STROKE
         color = Color.parseColor("#6200EE")
-        strokeWidth = dip2px(context, 5)
+        strokeWidth = context.dip2px(5)
     }
 
     private lateinit var mProgressRectF: RectF

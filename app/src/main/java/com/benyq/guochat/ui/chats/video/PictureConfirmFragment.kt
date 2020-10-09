@@ -4,8 +4,7 @@ import androidx.fragment.app.activityViewModels
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.model.vm.PictureVideoViewModel
-import com.benyq.guochat.sharedViewModel
-import com.benyq.guochat.ui.base.BaseFragment
+import com.benyq.mvvm.ui.base.BaseFragment
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_picture_confirm.*

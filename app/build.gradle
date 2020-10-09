@@ -52,46 +52,21 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':mvvm')
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
-    implementation 'com.google.android.material:material:1.2.1'
-
-    implementation 'com.ashokvarma.android:bottom-navigation-bar:2.2.0'
-    implementation 'me.jessyan:autosize:1.1.2'
 
     //下拉刷新 https://github.com/scwang90/SmartRefreshLayout
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.1'
     implementation 'com.scwang.smart:refresh-header-material:2.0.1'
     implementation 'com.scwang.smart:refresh-footer-ball:2.0.1' //球脉冲加载
 
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.3'
-
     implementation 'com.google.zxing:core:3.3.0'
     implementation 'com.google.zxing:android-core:3.3.0'
-    implementation 'com.google.android:flexbox:2.0.1'
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.3'
-
-    //https://github.com/gyf-dev/ImmersionBar
-    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
-    implementation 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
 
     //https://github.com/airbnb/lottie-android
     implementation 'com.airbnb.android:lottie:3.0.0'
 
-    implementation 'com.tencent:mmkv:1.0.23'
-    //内存泄漏检测
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
-
-    debugImplementation "io.objectbox:objectbox-android-objectbrowser:2.5.1"
-    releaseImplementation "io.objectbox:objectbox-android:2.5.1"
+//    debugImplementation "io.objectbox:objectbox-android-objectbrowser:2.5.1"
+//    releaseImplementation "io.objectbox:objectbox-android:2.5.1"
 
     //https://github.com/promeG/TinyPinyin 汉字转拼音
     implementation "com.github.promeg:tinypinyin:2.0.3"
@@ -104,6 +79,11 @@ dependencies {
     implementation 'com.facebook.rebound:rebound:0.3.8'
     implementation 'com.tumblr:backboard:0.1.0'
 
+    //https://github.com/youth5201314/banner
+    implementation 'com.youth.banner:banner:2.1.0'
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+    implementation 'com.shuyu:GSYVideoPlayer:7.1.6'
+
     //Hilt Dagger2简化版
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
@@ -111,11 +91,8 @@ dependencies {
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecircle_version"
     kapt "androidx.hilt:hilt-compiler:$hilt_lifecircle_version"
 
-    //https://github.com/youth5201314/banner
-    implementation 'com.youth.banner:banner:2.1.0'
-    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
-    implementation 'com.shuyu:GSYVideoPlayer:7.1.6'
-
+    implementation project(':comic')
+    implementation project(':mvvm')
 }
 
 apply plugin: 'io.objectbox'

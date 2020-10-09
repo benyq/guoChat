@@ -5,8 +5,7 @@ import androidx.fragment.app.activityViewModels
 import com.benyq.guochat.R
 import com.benyq.guochat.function.media.VideoCaptureManager
 import com.benyq.guochat.model.vm.PictureVideoViewModel
-import com.benyq.guochat.sharedViewModel
-import com.benyq.guochat.ui.base.BaseFragment
+import com.benyq.mvvm.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_picture_video.*
 
 /**

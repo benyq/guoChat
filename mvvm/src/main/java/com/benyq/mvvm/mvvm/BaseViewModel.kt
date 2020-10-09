@@ -7,10 +7,7 @@ import com.benyq.mvvm.ext.tryCatch
 import com.benyq.mvvm.response.BenyqResponse
 import com.benyq.mvvm.response.SharedData
 import com.benyq.mvvm.response.SharedType
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 /**
  * @author benyq

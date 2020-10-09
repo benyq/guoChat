@@ -8,7 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.calculateTime
-import com.benyq.guochat.ui.base.BaseActivity
+import com.benyq.mvvm.ui.base.BaseActivity
 import com.benyq.mvvm.ext.Toasts
 import com.benyq.mvvm.ext.gone
 import com.benyq.mvvm.ext.loge

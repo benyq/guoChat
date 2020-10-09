@@ -1,7 +1,6 @@
 package com.benyq.guochat.ui.openeye
 
 import android.app.Activity
-import android.os.Bundle
 import android.view.KeyEvent
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -12,13 +11,11 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.R
-import com.benyq.guochat.getViewModel
+import com.benyq.mvvm.ext.getViewModel
 import com.benyq.guochat.model.vm.OpenEyeSearchViewModel
-import com.benyq.guochat.ui.base.LifecycleFragment
+import com.benyq.mvvm.ui.base.LifecycleFragment
 import com.benyq.mvvm.ext.Toasts
 import com.benyq.mvvm.ext.hideKeyBoard
-import com.gyf.immersionbar.ImmersionBar
-import com.gyf.immersionbar.ktx.immersionBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_open_eye_search.*
 

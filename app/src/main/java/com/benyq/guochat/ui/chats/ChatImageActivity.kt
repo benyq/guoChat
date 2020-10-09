@@ -4,7 +4,7 @@ import android.os.Handler
 import android.view.WindowManager
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
-import com.benyq.guochat.ui.base.BaseActivity
+import com.benyq.mvvm.ui.base.BaseActivity
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_chat_image.*
 

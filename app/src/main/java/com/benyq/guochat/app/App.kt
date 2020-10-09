@@ -1,13 +1,12 @@
 package com.benyq.guochat.app
 
-import android.app.Application
-import android.os.SystemClock
 import android.util.Log
-import androidx.lifecycle.ViewModelStore
-import androidx.lifecycle.ViewModelStoreOwner
+import com.benyq.guochat.comic.local.ComicObjectBox
 import com.benyq.guochat.function.other.NotificationHelper
-import com.benyq.guochat.local.ObjectBox
+import com.benyq.guochat.local.ChatObjectBox
+import com.benyq.mvvm.ui.base.BaseApplication
 import com.benyq.mvvm.ext.Toasts
+import com.benyq.mvvm.ext.loge
 import com.benyq.mvvm.http.ApiException
 import com.benyq.mvvm.mvvm.ErrorHandler
 import com.benyq.mvvm.mvvm.ExceptionReason
@@ -29,25 +28,24 @@ import java.text.ParseException
  * @note
  */
 @HiltAndroidApp
-class App : Application(), ViewModelStoreOwner {
+class App : BaseApplication(){
 
     companion object {
         lateinit var sInstance: App
     }
 
-    private val mAppViewModelStore: ViewModelStore = ViewModelStore()
 
     override fun onCreate() {
         super.onCreate()
         MMKV.initialize(this)
         sInstance = this
-        ObjectBox.init(this)
+        ChatObjectBox.init(this)
+        ComicObjectBox.init(this)
         Pinyin.init(null)
         NotificationHelper.init(this)
         injectError()
     }
 
-    override fun getViewModelStore() = mAppViewModelStore
 
     private fun injectError(){
         ErrorHandler.injectHandler { e ->
@@ -68,7 +66,9 @@ class App : Application(), ViewModelStoreOwner {
                     Log.e("benyq", e.msg)
                 }
                 Toasts.show(e.msg)
-            } else {
+            } else if(e.message == "Job was cancelled"){
+                //协程取消异常，一般在网络请求取消时出现
+            }else {
                 onException(ExceptionReason.UNKNOWN_ERROR)
             }
         }

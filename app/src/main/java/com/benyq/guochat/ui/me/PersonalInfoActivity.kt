@@ -2,8 +2,8 @@ package com.benyq.guochat.ui.me
 
 import com.benyq.guochat.R
 import com.benyq.guochat.loadImage
-import com.benyq.guochat.local.LocalStorage
-import com.benyq.guochat.ui.base.BaseActivity
+import com.benyq.guochat.local.ChatLocalStorage
+import com.benyq.mvvm.ui.base.BaseActivity
 import com.benyq.guochat.ui.contracts.CallingCardActivity
 import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.ext.goToActivity
@@ -20,7 +20,7 @@ class PersonalInfoActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_personal_info
 
     override fun initView() {
-        LocalStorage.userAccount.run {
+        ChatLocalStorage.userAccount.run {
             ivAvatar.loadImage(avatarUrl)
             ifNickName.setContent(nickName)
             ifChatNo.setContent(chatNo)

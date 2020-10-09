@@ -5,14 +5,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
 import com.benyq.guochat.function.other.GlideEngine
-import com.benyq.guochat.getViewModel
 import com.benyq.guochat.loadImage
-import com.benyq.guochat.local.LocalStorage
+import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.vm.PersonalInfoViewModel
 import com.benyq.guochat.saveImg
-import com.benyq.guochat.ui.base.LifecycleActivity
+import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.common.CommonBottomDialog
 import com.benyq.mvvm.ext.Toasts
+import com.benyq.mvvm.ext.getViewModel
 import com.benyq.mvvm.ext.loge
 import com.bumptech.glide.Glide
 import com.gyf.immersionbar.ktx.immersionBar
@@ -52,7 +52,7 @@ class AvatarActivity : LifecycleActivity<PersonalInfoViewModel>() {
     override fun initView() {
         //从本地缓存中取出user信息
         //Glide加载头像
-        LocalStorage.userAccount.run {
+        ChatLocalStorage.userAccount.run {
             ivAvatar.loadImage(avatarUrl, 0)
         }
     }
@@ -68,7 +68,7 @@ class AvatarActivity : LifecycleActivity<PersonalInfoViewModel>() {
 
     override fun dataObserver() {
         viewModelGet().uploadAvatarLiveData.observe(this, Observer {
-            LocalStorage.updateUserAccount {
+            ChatLocalStorage.updateUserAccount {
                 avatarUrl = it
             }
             initView()
@@ -87,14 +87,12 @@ class AvatarActivity : LifecycleActivity<PersonalInfoViewModel>() {
                     getString(R.string.select_from_album),
                     getString(R.string.save_to_phone)
                 )
-            )
-                .apply {
+            ).apply {
                     setOnMenuAction { _, index ->
                         when (index) {
                             0 -> {
                                 PictureSelector.create(this@AvatarActivity)
                                     .openGallery(PictureMimeType.ofAll())
-                                    .isUseCustomCamera(true)
                                     .loadImageEngine(GlideEngine)
                                     .forResult(object : OnResultCallbackListener<LocalMedia> {
                                         override fun onResult(result: List<LocalMedia>) {
@@ -128,7 +126,7 @@ class AvatarActivity : LifecycleActivity<PersonalInfoViewModel>() {
         val result = withContext(Dispatchers.IO) {
             val futureTarget = Glide.with(this@AvatarActivity)
                 .asFile()
-                .load(LocalStorage.userAccount.avatarUrl)
+                .load(ChatLocalStorage.userAccount.avatarUrl)
                 .submit()
             val file = futureTarget.get()
             saveImg(this@AvatarActivity, file, parentPath2, imgName)

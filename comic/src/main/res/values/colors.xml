@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources >
+
+    <color name="comic_color_353535">#353535</color>
+    <color name="comic_color_aaa000">#aaa000</color>
+    <color name="comic_color_88aaa000">#88aaa000</color>
+
+    <color name="comic_color_3333_80">#80333333</color>
+    <color name="comic_color_333333">#333333</color>
+
+
+</resources>

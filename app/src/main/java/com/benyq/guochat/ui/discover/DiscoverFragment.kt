@@ -4,7 +4,7 @@ import android.Manifest
 import com.benyq.guochat.R
 import com.benyq.guochat.function.permissionX.PermissionX
 import com.benyq.guochat.function.zxing.android.CaptureActivity
-import com.benyq.guochat.ui.base.BaseFragment
+import com.benyq.mvvm.ui.base.BaseFragment
 import com.benyq.guochat.ui.openeye.OpenEyeCommunityActivity
 import com.benyq.mvvm.ext.goToActivity
 import com.benyq.mvvm.ext.toast
@@ -41,6 +41,10 @@ class DiscoverFragment : BaseFragment() {
         }
         ifOpenEye.setOnClickListener {
             goToActivity<OpenEyeCommunityActivity>()
+        }
+
+        ifComic.setOnClickListener {
+
         }
     }
 }

@@ -3,8 +3,8 @@ package com.benyq.guochat.ui.me
 import com.benyq.guochat.R
 import com.benyq.guochat.function.other.NotificationHelper
 import com.benyq.guochat.loadImage
-import com.benyq.guochat.local.LocalStorage
-import com.benyq.guochat.ui.base.BaseFragment
+import com.benyq.guochat.local.ChatLocalStorage
+import com.benyq.mvvm.ui.base.BaseFragment
 import com.benyq.guochat.ui.contracts.CallingCardActivity
 import com.benyq.guochat.ui.settings.SettingsActivity
 import com.benyq.mvvm.ext.goToActivity
@@ -60,7 +60,7 @@ class MeFragment : BaseFragment() {
     }
 
     private fun showUserInfo() {
-        LocalStorage.userAccount.run {
+        ChatLocalStorage.userAccount.run {
             ivAvatar.loadImage(avatarUrl)
             tvUserNick.text = nickName
             tvChatNo.text = chatNo

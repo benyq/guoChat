@@ -2,7 +2,7 @@ package com.benyq.guochat.ui.contracts
 
 import com.benyq.guochat.R
 import com.benyq.guochat.function.zxing.android.CaptureActivity
-import com.benyq.guochat.ui.base.BaseActivity
+import com.benyq.mvvm.ui.base.BaseActivity
 import com.benyq.mvvm.ext.goToActivity
 import kotlinx.android.synthetic.main.activity_add_contract.*
 

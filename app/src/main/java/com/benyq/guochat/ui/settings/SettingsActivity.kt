@@ -2,8 +2,8 @@ package com.benyq.guochat.ui.settings
 
 import com.benyq.guochat.R
 import com.benyq.guochat.function.fingerprint.FingerprintVerifyManager
-import com.benyq.guochat.local.LocalStorage
-import com.benyq.guochat.ui.base.BaseActivity
+import com.benyq.guochat.local.ChatLocalStorage
+import com.benyq.mvvm.ui.base.BaseActivity
 import com.benyq.guochat.ui.common.CheckFingerprintDialog
 import com.benyq.mvvm.ext.goToActivity
 import com.benyq.mvvm.ext.loge
@@ -21,7 +21,7 @@ class SettingsActivity : BaseActivity() {
 
     private lateinit var mFingerprintManager: FingerprintVerifyManager
 
-    private val personConfig = LocalStorage.personConfig
+    private val personConfig = ChatLocalStorage.personConfig
 
 
     override fun getLayoutId() = R.layout.activity_settings
@@ -58,7 +58,7 @@ class SettingsActivity : BaseActivity() {
 
     override fun onPause() {
         super.onPause()
-        LocalStorage.personConfig = personConfig
+        ChatLocalStorage.personConfig = personConfig
     }
 
     override fun onDestroy() {

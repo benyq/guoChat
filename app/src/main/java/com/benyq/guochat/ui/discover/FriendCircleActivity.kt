@@ -16,26 +16,26 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.R
 import com.benyq.guochat.app.CIRCLE__TYPE_TEXT
 import com.benyq.guochat.app.IntentExtra
-import com.benyq.guochat.getViewModel
 import com.benyq.guochat.loadImage
-import com.benyq.guochat.local.LocalStorage
+import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.bean.CircleComment
 import com.benyq.guochat.model.bean.FriendCircleBean
 import com.benyq.guochat.model.vm.FriendCircleViewModel
-import com.benyq.guochat.ui.base.LifecycleActivity
-import com.benyq.guochat.ui.common.widget.HeaderView
+import com.benyq.mvvm.ui.base.LifecycleActivity
+import com.benyq.mvvm.ui.widget.HeaderView
 import com.benyq.guochat.ui.common.widget.satellite_menu.MenuItemView
 import com.benyq.guochat.ui.common.widget.satellite_menu.OnMenuActionListener
 import com.benyq.guochat.ui.common.widget.satellite_menu.SatelliteMenuLayout
 import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.ext.getDrawableRef
-import com.benyq.mvvm.ext.loge
+import com.benyq.mvvm.ext.getViewModel
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.gyf.immersionbar.ImmersionBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_friend_circle.*
 import kotlin.math.abs
+
 
 /**
  * @author benyq
@@ -90,7 +90,7 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
     override fun initView() {
         ImmersionBar.setTitleBar(this, toolbar)
 
-        val user = LocalStorage.userAccount
+        val user = ChatLocalStorage.userAccount
         ivAvatar.loadImage(user.avatarUrl)
         tvNickName.text = user.nickName
         Glide.with(this)
@@ -300,8 +300,11 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
                             .startForResult(AddCircleActivity::class.java, { resultCode, data ->
                                 if (resultCode == Activity.RESULT_OK && data != null) {
                                     val content = data.getStringExtra(IntentExtra.addCircleContent)
-                                    val images : Array<String> = data.getStringArrayExtra(IntentExtra.addCircleImages) ?: arrayOf()
-                                    loge("images ${images.size}")
+                                    val images: Array<String> = data.getStringArrayExtra(
+                                        IntentExtra.addCircleImages
+                                    ) ?: arrayOf()
+
+                                    //一开始 rvFriendCircle.scrollToPosition(0)失效的原因是因为RecyclerView在NestedScrollView内部导致的
                                     mAdapter.addData(
                                         0, FriendCircleBean(
                                             "3",
@@ -318,6 +321,8 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
                                             null
                                         )
                                     )
+                                    appBar.setExpanded(true)
+                                    rvFriendCircle.scrollToPosition(0)
                                 }
                             })
                     }

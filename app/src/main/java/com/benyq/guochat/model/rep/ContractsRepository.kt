@@ -1,6 +1,6 @@
 package com.benyq.guochat.model.rep
 
-import com.benyq.guochat.local.ObjectBox
+import com.benyq.guochat.local.ChatObjectBox
 import com.benyq.guochat.model.bean.ChatResponse
 import com.benyq.guochat.model.bean.ContractSectionBean
 import com.benyq.mvvm.mvvm.BaseRepository
@@ -18,7 +18,7 @@ class ContractsRepository @Inject constructor() : BaseRepository() {
     suspend fun getAllContracts(): ChatResponse<List<ContractSectionBean>> {
         return launchIO {
             val charMap = sortedMapOf<String, MutableList<ContractSectionBean>>()
-            val contractEntityList = ObjectBox.getAllContracts()
+            val contractEntityList = ChatObjectBox.getAllContracts()
             contractEntityList.forEach {
                 val pinyin = Pinyin.toPinyin(it.nick, "").first().toString()
                 charMap[pinyin] = charMap[pinyin]?.apply {

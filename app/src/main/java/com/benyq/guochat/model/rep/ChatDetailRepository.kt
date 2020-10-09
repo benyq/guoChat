@@ -1,6 +1,6 @@
 package com.benyq.guochat.model.rep
 
-import com.benyq.guochat.local.ObjectBox
+import com.benyq.guochat.local.ChatObjectBox
 import com.benyq.guochat.local.entity.ChatRecordEntity
 import com.benyq.guochat.model.bean.ChatResponse
 import com.benyq.mvvm.mvvm.BaseRepository
@@ -16,15 +16,15 @@ class ChatDetailRepository @Inject constructor() : BaseRepository(){
 
     suspend fun getChatRecord(chatId: Long, page: Int, size: Int): ChatResponse<List<ChatRecordEntity>> {
         return launchIO {
-            ChatResponse.success(ObjectBox.getChatRecord(chatId, page.toLong(), size.toLong()))
+            ChatResponse.success(ChatObjectBox.getChatRecord(chatId, page.toLong(), size.toLong()))
         }
     }
 
     suspend fun sendChatMessage(data: ChatRecordEntity) : ChatResponse<Boolean>{
         return launchIO {
-            val id = ObjectBox.saveChatMessage(data)
+            val id = ChatObjectBox.saveChatMessage(data)
             if (id > 0) {
-                ObjectBox.updateChatRecord(data.fromToId)
+                ChatObjectBox.updateChatRecord(data.fromToId)
                 ChatResponse.success(true)
             }else {
                 ChatResponse.success(false)

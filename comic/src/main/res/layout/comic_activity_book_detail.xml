@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/ivBg"
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+        android:scaleType="fitXY" />
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/acAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <View
+                android:id="@+id/bg_mark"
+                android:layout_width="match_parent"
+                android:layout_height="225dp"
+                android:background="#c8b49a84"
+                app:layout_collapseMode="pin" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@drawable/comic_shape_comic_top_conner"
+                    app:layout_anchorGravity="bottom"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvDesContent"
+                    app:layout_constraintTop_toTopOf="@+id/v_flag" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView"
+                    android:layout_width="158dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="60dp"
+                    app:cardBackgroundColor="@null"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="false"
+                    app:layout_constraintDimensionRatio="158:207"
+                    app:layout_constraintEnd_toStartOf="@id/tvBookName"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/ivCover"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop" />
+
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/btnPreview"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="45dp"
+                    android:layout_marginBottom="15dp"
+                    android:gravity="center"
+                    android:text="@string/comic_read_immediately"
+                    android:textColor="@color/white"
+                    android:background="@drawable/comic_book_detail_read"
+                    app:layout_constraintBottom_toBottomOf="@+id/cardView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/cardView"
+                    app:layout_scrollFlags="scroll" />
+
+                <View
+                    android:id="@+id/v_flag"
+                    android:layout_width="20dp"
+                    android:layout_height="30dp"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toTopOf="@id/btnPreview"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvBookName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="15dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toTopOf="@id/tvAuthor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/cardView"
+                    app:layout_constraintTop_toTopOf="@id/cardView"
+                    tools:text="火影忍者" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_tag_list"
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    app:layout_constraintBottom_toTopOf="@id/v_flag"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/cardView"
+                    app:layout_constraintTop_toBottomOf="@+id/tvAuthor" />
+
+                <TextView
+                    android:id="@+id/tvAuthor"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toTopOf="@id/rv_tag_list"
+                    app:layout_constraintEnd_toEndOf="@+id/tvBookName"
+                    app:layout_constraintStart_toStartOf="@+id/tvBookName"
+                    app:layout_constraintTop_toBottomOf="@+id/tvBookName"
+                    tools:text="伊达勇登" />
+
+
+                <TextView
+                    android:id="@+id/tvDesContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/white"
+                    android:ellipsize="end"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:paddingBottom="20dp"
+                    android:textColor="#999999"
+                    android:textSize="13sp"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView"
+                    tools:text="简介：故事从主人公漩涡鸣人的孤儿生活开始，他的父母为了保护村子，将攻击村子九尾妖狐封印到了他体内，鸣人因此受尽了村人的冷落，只是拼命用各种恶作剧试图吸引大家的注意力。好在还是有依鲁卡老师的关心，鸣人的性格才没有变得扭曲，他总是干劲十足、非常乐观。 为了让更多的人认可自己，鸣人的目标是成为火影。整个故事就围绕鸣人的奋..." />
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/acToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:contentInsetRight="0dp"
+                app:contentInsetStart="0dp"
+                app:elevation="0dp"
+                app:contentInsetStartWithNavigation="1dp"
+                app:layout_collapseMode="pin">
+
+                <com.benyq.mvvm.ui.widget.HeaderView
+                    android:id="@+id/headView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:toolbar_title="@string/comic_detail"
+                    app:toolbar_menu="true"
+                    app:toolbar_menu_src="@drawable/comic_ic_collect"
+                    app:title_gravity="start"
+                    app:toolbar_type="dark"
+                    app:toolbar_bg="@android:color/transparent"/>
+
+            </androidx.appcompat.widget.Toolbar>
+
+
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:background="#797979" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="章节列表"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/ivReverse"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@drawable/comic_ic_sort" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvBookChapter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:overScrollMode="never"/>
+
+    </LinearLayout>
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

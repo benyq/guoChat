@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import com.benyq.guochat.R
-import com.benyq.guochat.ui.base.BaseDialogFragment
+import com.benyq.mvvm.ui.base.BaseDialogFragment
 import com.benyq.mvvm.ext.getScreenWidth
 import com.benyq.mvvm.ext.runOnUiThread
 import com.benyq.mvvm.ext.textTrim

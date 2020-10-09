@@ -15,7 +15,7 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import com.benyq.guochat.dip2px
+import com.benyq.mvvm.ext.dip2px
 import com.benyq.mvvm.ext.getColorRef
 import com.benyq.mvvm.ext.loge
 import com.facebook.rebound.Spring
@@ -77,7 +77,7 @@ class SatelliteMenuLayout(context: Context, attrs: AttributeSet?, defStyleAttr: 
         var fabX = 0
         var fabY = 0
 
-        val margin = dip2px(context, 10).toInt()
+        val margin = context.dip2px(10).toInt()
         fabX = right - fabWidth - margin
         fabY = bottom - fabHeight - margin
         mFab.layout(fabX, fabY, fabX + fabWidth, fabY + fabHeight)
@@ -93,7 +93,7 @@ class SatelliteMenuLayout(context: Context, attrs: AttributeSet?, defStyleAttr: 
         val itemWidth = itemViews[0].measuredWidth
         val itemHeight = itemViews[0].measuredHeight
 
-        val itemDiameter: Int = dip2px(context, menuItems[0].diameter).toInt()
+        val itemDiameter: Int = context.dip2px(menuItems[0].diameter).toInt()
         val itemRadius = itemDiameter / 2
 
         val ringRadius = (itemDiameter * 1.5).toInt()

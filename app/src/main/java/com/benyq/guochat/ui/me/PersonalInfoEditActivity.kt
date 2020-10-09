@@ -3,11 +3,10 @@ package com.benyq.guochat.ui.me
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
-import com.benyq.guochat.getViewModel
-import com.benyq.guochat.local.LocalStorage
+import com.benyq.mvvm.ext.getViewModel
+import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.vm.PersonalInfoViewModel
-import com.benyq.guochat.ui.base.LifecycleActivity
-import com.benyq.mvvm.annotation.BindViewModel
+import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.mvvm.ext.textTrim
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_personal_info_edit.*
@@ -51,7 +50,7 @@ class PersonalInfoEditActivity : LifecycleActivity<PersonalInfoViewModel>() {
 
     override fun dataObserver() {
         viewModelGet().editNickLiveData.observe(this, Observer {
-            LocalStorage.updateUserAccount {
+            ChatLocalStorage.updateUserAccount {
                 nickName = it
             }
             finish()

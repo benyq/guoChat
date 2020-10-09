@@ -6,9 +6,9 @@ import android.graphics.Rect
 import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.view.postDelayed
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
@@ -16,12 +16,11 @@ import com.benyq.guochat.app.SharedViewModel
 import com.benyq.guochat.function.media.MediaRecordController
 import com.benyq.guochat.function.other.GlideEngine
 import com.benyq.guochat.function.permissionX.PermissionX
-import com.benyq.guochat.getViewModel
 import com.benyq.guochat.local.entity.ChatRecordEntity
 import com.benyq.guochat.model.bean.ChatListBean
 import com.benyq.guochat.model.vm.ChatDetailViewModel
 import com.benyq.guochat.model.vm.StateEvent
-import com.benyq.guochat.ui.base.LifecycleActivity
+import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.chats.video.PictureVideoActivity
 import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.ext.*
@@ -203,10 +202,19 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
     override fun dataObserver() {
         with(viewModelGet()) {
             mChatRecordData.observe(this@ChatDetailActivity, Observer {
-                //根据item总高度显示区分 stackFromEnd 会出现问题，所以目前先靠估算吧
-                val layoutManager = rvChatRecord.layoutManager as LinearLayoutManager
-                layoutManager.stackFromEnd = it.size > 5
-                mAdapter.setNewInstance(it.toMutableList())
+                if (mAdapter.data.size > 0) {
+                    mAdapter.addData(it)
+                }else {
+                    rvChatRecord.invisible()
+                    //根据item总高度显示区分 stackFromEnd 会出现问题，所以目前先靠估算吧
+                    val layoutManager = rvChatRecord.layoutManager as LinearLayoutManager
+                    mAdapter.setNewInstance(it.toMutableList())
+                    rvChatRecord.postDelayed(50){
+                        layoutManager.stackFromEnd = isFullScreen(layoutManager)
+                        rvChatRecord.alpha = 1f
+                        rvChatRecord.visible()
+                    }
+                }
             })
             mSendMessageData.observe(this@ChatDetailActivity, Observer {
 
@@ -339,6 +347,11 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
         val right = left + v.width
         return (event.x > left && event.x < right
                 && event.y > top && event.y < bottom)
+    }
+
+    private fun isFullScreen(llm: LinearLayoutManager): Boolean {
+        return (llm.findLastCompletelyVisibleItemPosition() + 1) != mAdapter.itemCount ||
+                llm.findFirstCompletelyVisibleItemPosition() != 0
     }
 
     private fun addChatData(data: ChatRecordEntity) {

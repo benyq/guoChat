@@ -9,10 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
-import com.benyq.guochat.getViewModel
 import com.benyq.guochat.model.vm.PictureVideoViewModel
 import com.benyq.guochat.model.vm.StateEvent
-import com.benyq.guochat.ui.base.BaseActivity
+import com.benyq.mvvm.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

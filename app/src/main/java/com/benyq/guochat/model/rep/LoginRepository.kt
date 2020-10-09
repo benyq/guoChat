@@ -1,14 +1,10 @@
 package com.benyq.guochat.model.rep
 
-import com.benyq.guochat.app.JSON
 import com.benyq.guochat.mapOfToBodyJson
 import com.benyq.guochat.model.bean.ChatResponse
 import com.benyq.guochat.model.net.ApiService
-import com.benyq.guochat.model.net.ServiceFactory
-import com.benyq.mvvm.ext.loge
 import com.benyq.mvvm.mvvm.BaseRepository
 import kotlinx.coroutines.delay
-import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 /**

@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.benyq.guochat.R
 import com.benyq.guochat.setTextStyleSelectState
-import com.benyq.guochat.ui.base.BaseActivity
+import com.benyq.mvvm.ui.base.BaseActivity
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_community.*

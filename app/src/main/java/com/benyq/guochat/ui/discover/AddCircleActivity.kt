@@ -6,11 +6,10 @@ import androidx.lifecycle.Observer
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.function.other.GlideEngine
-import com.benyq.guochat.getViewModel
 import com.benyq.guochat.model.vm.AddCircleViewModel
-import com.benyq.guochat.ui.base.LifecycleActivity
+import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.common.CommonBottomDialog
-import com.benyq.mvvm.ext.loge
+import com.benyq.mvvm.ext.getViewModel
 import com.benyq.mvvm.ext.textTrim
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
@@ -18,7 +17,6 @@ import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_circle.*
-import javax.inject.Inject
 
 /**
  * @author benyq

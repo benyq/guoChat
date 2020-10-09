@@ -11,7 +11,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.model.vm.AddCircleViewModel
-import com.benyq.guochat.ui.base.BaseDialogFragment
+import com.benyq.mvvm.ui.base.BaseDialogFragment
 import com.benyq.mvvm.ext.getScreenHeight
 import com.benyq.mvvm.ext.getScreenWidth
 import kotlinx.android.synthetic.main.dialog_circle_photo_view_pager.*

@@ -4,13 +4,13 @@ import android.app.Activity
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
-import com.benyq.guochat.getViewModel
 import com.benyq.guochat.model.bean.RegisterBean
 import com.benyq.guochat.model.vm.LoginViewModel
 import com.benyq.guochat.ui.MainActivity
-import com.benyq.guochat.ui.base.LifecycleActivity
+import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.ext.Toasts
+import com.benyq.mvvm.ext.getViewModel
 import com.benyq.mvvm.ext.goToActivity
 import com.benyq.mvvm.ext.textTrim
 import com.benyq.mvvm.response.SharedType

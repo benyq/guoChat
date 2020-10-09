@@ -21,7 +21,7 @@ class FriendCircleViewModel @ViewModelInject constructor(private val mRepository
     fun queryFriendCircles() {
         quickLaunch<List<FriendCircleBean>> {
             onError { Toasts.show("请求失败") }
-            onSuccess { mFriendCircleData.value = it }
+            onSuccess { mFriendCircleData.value = it!!.toMutableList().apply { addAll(it) } }
             request { mRepository.queryFriendCircles() }
         }
     }

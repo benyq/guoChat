@@ -7,14 +7,13 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.benyq.guochat.R
 import com.benyq.guochat.function.openeye.IntentDataHolder
-import com.benyq.guochat.getViewModel
+import com.benyq.mvvm.ext.getViewModel
 import com.benyq.guochat.model.bean.openeye.CommunityRecommend
 import com.benyq.guochat.model.vm.OpenEyeUgcDetailViewModel
 import com.benyq.guochat.overScrollNever
-import com.benyq.guochat.ui.base.LifecycleActivity
+import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.mvvm.ext.goToActivity
 import com.gyf.immersionbar.ktx.immersionBar
-import com.shuyu.gsyvideoplayer.GSYVideoManager
 import com.shuyu.gsyvideoplayer.cache.CacheFactory
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_eye_ugc_detail.*
