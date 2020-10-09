@@ -38,7 +38,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    api 'androidx.constraintlayout:constraintlayout:2.0.1'
+    api 'androidx.constraintlayout:constraintlayout:2.0.2'
     api 'androidx.legacy:legacy-support-v4:1.0.0'
     api 'androidx.appcompat:appcompat:1.2.0'
     api 'com.google.android.material:material:1.2.1'
@@ -48,7 +48,7 @@ dependencies {
     androidTestApi 'androidx.test.espresso:espresso-core:3.3.0'
 
     api 'androidx.appcompat:appcompat:1.2.0'
-    api 'androidx.core:core-ktx:1.3.1'
+    api 'androidx.core:core-ktx:1.3.2'
 
     api 'me.jessyan:autosize:1.1.2'
 
@@ -66,12 +66,12 @@ dependencies {
 
     //viewmodel
     api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha07"
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-beta01"
     api 'androidx.lifecycle:lifecycle-common-java8:2.2.0'
     api 'androidx.fragment:fragment-ktx:1.2.5'
-    api 'androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.0-alpha07'
-    api 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha07'
-    api 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha07'
+    api 'androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.0-beta01'
+    api 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-beta01'
+    api 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-beta01'
 
     kapt 'com.github.bumptech.glide:glide:4.11.0'
     kapt 'com.github.bumptech.glide:compiler:4.11.0'

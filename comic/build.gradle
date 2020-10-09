@@ -43,8 +43,6 @@ dependencies {
 
     //Hilt Dagger2简化版
     implementation "com.google.dagger:hilt-android:$hilt_version"
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
     //Hilt-JetPack
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecircle_version"

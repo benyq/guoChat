@@ -34,7 +34,6 @@ class BookDetailActivity : LifecycleActivity<BookDetailViewModel>() {
 
     override fun initImmersionBar() {
         ImmersionBar.with(this)
-            .titleBar(R.id.acToolbar)
             .autoDarkModeEnable(true, 0.2f)
             .init()
     }

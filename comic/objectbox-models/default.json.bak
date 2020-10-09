@@ -17,7 +17,9 @@
         {
           "id": "2:660503296510750896",
           "name": "comicId",
-          "type": 9
+          "indexId": "1:5493963290325027669",
+          "type": 9,
+          "flags": 2080
         },
         {
           "id": "3:7724207895836721924",
@@ -35,7 +37,7 @@
     }
   ],
   "lastEntityId": "1:7742743941475578884",
-  "lastIndexId": "0:0",
+  "lastIndexId": "1:5493963290325027669",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

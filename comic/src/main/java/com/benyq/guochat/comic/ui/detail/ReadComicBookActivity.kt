@@ -65,15 +65,6 @@ class ReadComicBookActivity : LifecycleActivity<ReadComicBookViewModel>() {
 
         hideMenu()
 
-        runOnUiThreadDelayed(3000) {
-            switchTAndBMenu()
-        }
-        runOnUiThreadDelayed(6000) {
-            switchTAndBMenu()
-        }
-        runOnUiThreadDelayed(9000) {
-            switchTAndBMenu()
-        }
     }
 
     override fun dataObserver() {
