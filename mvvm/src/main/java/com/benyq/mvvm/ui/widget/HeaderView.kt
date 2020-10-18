@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.widget.RelativeLayout
+import androidx.annotation.DrawableRes
 import androidx.core.graphics.drawable.DrawableCompat
 import com.benyq.mvvm.DrawableBuilder
 import com.benyq.mvvm.R
@@ -51,7 +52,7 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
     private var mMenuText: String
     private var mMenuBtnShow: Boolean
     private val headerViewBg: Drawable?
-    private val mToolbarMenuSrc: Drawable
+    private var mToolbarMenuSrc: Drawable
     private val mToolbarBackIcon: Drawable
 
     private val mBgMenuBtn: Drawable
@@ -144,6 +145,25 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
 
     fun setToolbarTitle(title: String?) {
         toolbarTitle.text = title
+    }
+
+    fun setMenuSrc(@DrawableRes resId: Int) {
+        mToolbarMenuSrc = context.getDrawableRef(resId) ?: mToolbarMenuSrc
+        if (toolbarTypeDark == mToolbarType) {
+            toolbarMenu.setImageDrawable(
+                tintDrawable(
+                    mToolbarMenuSrc,
+                    ColorStateList.valueOf(Color.WHITE)
+                )
+            )
+        } else {
+            toolbarMenu.setImageDrawable(
+                tintDrawable(
+                    mToolbarMenuSrc,
+                    ColorStateList.valueOf(Color.BLACK)
+                )
+            )
+        }
     }
 
     fun setHeaderViewMode(mode: Int) {

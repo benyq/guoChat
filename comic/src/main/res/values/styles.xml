@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <style name="comic_exist_chapter_menu_anim_style">
+        <item name="android:windowEnterAnimation">@anim/comic_slide_left_in</item>
+        <item name="android:windowExitAnimation">@anim/comic_slide_left_out</item>
+    </style>
 </resources>

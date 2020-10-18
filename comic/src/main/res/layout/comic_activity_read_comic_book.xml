@@ -7,7 +7,7 @@
     android:background="@color/darkgrey"
     tools:context=".ui.detail.ReadComicBookActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.benyq.guochat.comic.ui.TouchRecyclerView
         android:id="@+id/rvBookContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,20 +26,57 @@
         android:padding="10dp"
         android:layout_gravity="bottom">
 
-        <SeekBar
-            android:id="@+id/sbPages"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/llController"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvLastChapter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingStart="7dp"
+                android:paddingEnd="7dp"
+                android:textSize="13sp"
+                android:text="@string/comic_last_chapter"
+                android:textColor="@color/white"
+                android:background="@drawable/comic_selector_btn_chapter"/>
+
+            <SeekBar
+                android:id="@+id/sbPages"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"/>
+
+            <TextView
+                android:id="@+id/tvNextChapter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/comic_next_chapter"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingStart="7dp"
+                android:paddingEnd="7dp"
+                android:textSize="13sp"
+                android:textColor="@color/white"
+                android:background="@drawable/comic_selector_btn_chapter"/>
+
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="5dp"
-            app:layout_constraintTop_toBottomOf="@id/sbPages"
+            app:layout_constraintTop_toBottomOf="@id/llController"
             app:layout_constraintStart_toStartOf="parent">
 
             <LinearLayout
@@ -51,17 +88,16 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="40dp"
+                    android:layout_width="35dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/comic_ic_menu" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
                     android:gravity="center"
                     android:text="@string/comic_book_chapter"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
             </LinearLayout>
 
@@ -75,7 +111,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="40dp"
+                    android:layout_width="35dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/comic_ic_brightness" />
 
@@ -83,10 +119,9 @@
                     android:id="@+id/tvBrightness"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
                     android:gravity="center"
-                    android:text="@string/comic_book_chapter"
-                    android:textSize="14sp" />
+                    android:text="@string/comic_brightness"
+                    android:textSize="13sp" />
 
             </LinearLayout>
 
@@ -99,7 +134,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="40dp"
+                    android:layout_width="35dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/comic_ic_module" />
 
@@ -107,10 +142,9 @@
                     android:id="@+id/tvSwitchModel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
                     android:gravity="center"
-                    android:text="@string/comic_book_chapter"
-                    android:textSize="14sp" />
+                    android:text="@string/comic_switch_model_horizontal"
+                    android:textSize="13sp" />
 
             </LinearLayout>
 

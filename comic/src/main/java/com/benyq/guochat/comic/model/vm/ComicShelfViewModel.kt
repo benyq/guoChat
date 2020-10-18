@@ -1,6 +1,8 @@
 package com.benyq.guochat.comic.model.vm
 
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.MutableLiveData
+import com.benyq.guochat.comic.local.BookShelfTable
 import com.benyq.guochat.comic.model.repository.ComicShelfRepository
 import com.benyq.mvvm.mvvm.BaseViewModel
 
@@ -11,4 +13,15 @@ import com.benyq.mvvm.mvvm.BaseViewModel
  * @note
  */
 class ComicShelfViewModel @ViewModelInject constructor(private val repository: ComicShelfRepository): BaseViewModel(){
+
+    val comicShelfBookResult = MutableLiveData<List<BookShelfTable>>()
+
+    fun getShelfBook() {
+        quickLaunch<List<BookShelfTable>> {
+
+            onSuccess { comicShelfBookResult.value = it }
+
+            request { repository.getShelfBook() }
+        }
+    }
 }

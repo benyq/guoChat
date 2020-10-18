@@ -2,8 +2,10 @@ package com.benyq.guochat.comic.model.vm
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import com.benyq.guochat.comic.local.BookShelfTable
 import com.benyq.guochat.comic.model.bean.ComicDetailResponse
 import com.benyq.guochat.comic.model.repository.BookDetailRepository
+import com.benyq.mvvm.ext.Toasts
 import com.benyq.mvvm.mvvm.BaseViewModel
 
 /**
@@ -12,9 +14,14 @@ import com.benyq.mvvm.mvvm.BaseViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
-class BookDetailViewModel @ViewModelInject constructor(private val repository: BookDetailRepository): BaseViewModel(){
+class BookDetailViewModel @ViewModelInject constructor(private val repository: BookDetailRepository) :
+    BaseViewModel() {
 
     val bookDetailResult = MutableLiveData<UiState<ComicDetailResponse>>()
+    val bookShelfResult = MutableLiveData<BookShelfTable>()
+
+    // true 加入书架
+    val addOrRemoveResult = MutableLiveData<Boolean>()
 
     fun getComicDetail(comicId: String) {
         quickLaunch<ComicDetailResponse> {
@@ -22,6 +29,58 @@ class BookDetailViewModel @ViewModelInject constructor(private val repository: B
             onSuccess { bookDetailResult.value = UiState(isSuccess = it) }
 
             request { repository.getComicDetail(comicId) }
+        }
+    }
+
+    fun searchBookShelf(comicId: String) {
+        quickLaunch<BookShelfTable> {
+
+            onSuccess { bookShelfResult.value = it }
+
+            onError { }
+
+            request { repository.searchBookShelf(comicId) }
+        }
+    }
+
+    fun addBookToShelf(comicId: String, comicName: String, coverUrl: String, chapterSize: Int) {
+        quickLaunch<BookShelfTable> {
+            onSuccess {
+                bookShelfResult.value = it
+                addOrRemoveResult.value = true
+            }
+            onError {
+                Toasts.show("加入书架失败${it.message}")
+            }
+            request { repository.addBookToShelf(comicId, comicName, coverUrl, chapterSize) }
+        }
+    }
+
+    fun removeBookFromShelf(comicId: String) {
+        quickLaunch<Boolean> {
+
+            onSuccess {
+                addOrRemoveResult.value = false
+            }
+            onError {
+                Toasts.show("移除书架失败${it.message}")
+            }
+            request { repository.removeBookFromShelf(comicId) }
+        }
+    }
+
+    fun updateBookShelf(comicId: String, position: Int, chapterSize: Int) {
+        quickLaunch<Boolean> {
+            onSuccess { _ ->
+                val comicBook = bookShelfResult.value
+                comicBook?.let {
+                    it.chapterSize = chapterSize
+                    it.readChapterPosition = position
+                    bookShelfResult.value = it
+                }
+            }
+            onError { }
+            request { repository.updateBookShelf(comicId, position, chapterSize) }
         }
     }
 }

@@ -21,6 +21,7 @@ object ComicObjectBox {
     private lateinit var boxStore: BoxStore
 
     val searchHistoryBox: Box<SearchHistoryRecord> by lazy { boxStore.boxFor() }
+    val bookShelfBox: Box<BookShelfTable> by lazy { boxStore.boxFor() }
 
     fun init(context: Context) {
         boxStore = MyObjectBox.builder()

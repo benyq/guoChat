@@ -248,7 +248,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
 
     override fun finish() {
         super.finish()
-        overridePendingTransition(0, R.anim.slide_right_out)
+        overridePendingTransition(0, R.anim.comic_slide_left_out)
     }
 
     override fun onClick(v: View?) {

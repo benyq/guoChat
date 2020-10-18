@@ -2,6 +2,7 @@ package com.benyq.guochat.ui.discover
 
 import android.Manifest
 import com.benyq.guochat.R
+import com.benyq.guochat.comic.ComicActivity
 import com.benyq.guochat.function.permissionX.PermissionX
 import com.benyq.guochat.function.zxing.android.CaptureActivity
 import com.benyq.mvvm.ui.base.BaseFragment
@@ -44,7 +45,7 @@ class DiscoverFragment : BaseFragment() {
         }
 
         ifComic.setOnClickListener {
-
+            goToActivity<ComicActivity>()
         }
     }
 }

@@ -1,7 +1,7 @@
 <resources>
     <string name="comic_comic">漫画</string>
 
-    <string name="comic_shelf_title">憨批的收藏 （%d）</string>
+    <string name="comic_shelf_title">憨批的收藏</string>
     <string name="comic_sort_by_update_time">按更新排序</string>
     <string name="comic_arrange">整理</string>
     <string name="comic_search_book">搜索</string>
@@ -18,5 +18,8 @@
 
     <string name="comic_switch_model_horizontal">水平模式</string>
     <string name="comic_switch_model_vertical">卷轴模式</string>
+
+    <string name="comic_last_chapter">上一回</string>
+    <string name="comic_next_chapter">下一回</string>
 
 </resources>

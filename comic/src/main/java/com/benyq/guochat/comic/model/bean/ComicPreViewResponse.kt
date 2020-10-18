@@ -29,6 +29,7 @@ data class ImageListBean(
     val totalTucao: String,
     val type: String,
     val webp: String,
+    var currentIndex: Int = 0,
     val width: Int = 0
 )
 

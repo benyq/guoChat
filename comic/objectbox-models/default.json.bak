@@ -34,10 +34,53 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "2:6159428897398088111",
+      "lastPropertyId": "6:7158127512067472143",
+      "name": "BookShelfTable",
+      "properties": [
+        {
+          "id": "1:3190385882954022900",
+          "name": "comicId",
+          "indexId": "2:8632254733632504769",
+          "type": 9,
+          "flags": 2080
+        },
+        {
+          "id": "2:7498862594753376829",
+          "name": "comicName",
+          "type": 9
+        },
+        {
+          "id": "3:8225032177918015718",
+          "name": "coverUrl",
+          "type": 9
+        },
+        {
+          "id": "4:506043009874808275",
+          "name": "readChapterPosition",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "5:2684766574998142775",
+          "name": "chapterSize",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "6:7158127512067472143",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "1:7742743941475578884",
-  "lastIndexId": "1:5493963290325027669",
+  "lastEntityId": "2:6159428897398088111",
+  "lastIndexId": "2:8632254733632504769",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

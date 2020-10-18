@@ -11,5 +11,4 @@ object ComicIntentExtra {
 
     const val chapterId = "chapterId"
     const val chapterPosition = "chapterPosition"
-    const val chapterList = "chapterList"
 }

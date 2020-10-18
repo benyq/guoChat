@@ -38,19 +38,18 @@ class SplashActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
             window.attributes = lp
         }
-        goToActivity<ComicActivity>()
-//        lifecycleScope.launch(Dispatchers.IO) {
-//            delay(1000)
-//            withContext(Dispatchers.Main) {
-//                //这边要判断，是否开启指纹登录
-//                if (FingerprintVerifyManager.canAuthenticate(this@SplashActivity) && ChatLocalStorage.personConfig.fingerprintLogin) {
-//                    goToActivity<FingerLoginActivity>(exitAnim = R.anim.normal_out)
-//                } else {
-//                    goToActivity<LoginActivity>(exitAnim = R.anim.normal_out)
-//                }
-//                finish()
-//            }
-//        }
+        lifecycleScope.launch(Dispatchers.IO) {
+            delay(1000)
+            withContext(Dispatchers.Main) {
+                //这边要判断，是否开启指纹登录
+                if (FingerprintVerifyManager.canAuthenticate(this@SplashActivity) && ChatLocalStorage.personConfig.fingerprintLogin) {
+                    goToActivity<FingerLoginActivity>(exitAnim = R.anim.normal_out)
+                } else {
+                    goToActivity<LoginActivity>(exitAnim = R.anim.normal_out)
+                }
+                finish()
+            }
+        }
     }
 
     private fun avoidLaunchHereAgain(): Boolean {

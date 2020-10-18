@@ -10,7 +10,7 @@ import com.benyq.mvvm.MMKVValue
  */
 object ComicLocalStorage {
 
-    val isPreviewHorizontalModel by MMKVValue("preview_horizontal_model", false)
+    var isPreviewHorizontalModel by MMKVValue("preview_horizontal_model", false)
 
 
 }
