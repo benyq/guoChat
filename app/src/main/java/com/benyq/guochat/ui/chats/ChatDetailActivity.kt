@@ -319,7 +319,6 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
         //两种情况 etContent 和 tvSend 不隐藏
         val et = checkView(etContent, event)
         val tv = checkView(tvSend, event) && tvSend.visibility == View.VISIBLE
-        loge("et $et tv$tv")
         return !et && !tv
     }
 
@@ -350,6 +349,9 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
     }
 
     private fun isFullScreen(llm: LinearLayoutManager): Boolean {
+        if (mAdapter.itemCount == 0) {
+            return false
+        }
         return (llm.findLastCompletelyVisibleItemPosition() + 1) != mAdapter.itemCount ||
                 llm.findFirstCompletelyVisibleItemPosition() != 0
     }
