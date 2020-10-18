@@ -41,7 +41,7 @@
     <string name="logout">退出</string>
     <string name="project_url">项目网址</string>
     <string name="brief_introduction">简介</string>
-    <string name="brief_introduction_content">这是一个练手的仿微信UI的聊天APP，项目架构是MVVM+Kotlin。该项目会连天模块会实现文字、语音、图片以及小视频</string>
+    <string name="brief_introduction_content">这是一个练手的仿微信UI的聊天APP，项目架构是MVVM+Kotlin。该项目聊天模块会实现文字、语音、图片以及小视频</string>
     <string name="calling_card_qr_note">扫一扫上面的二维码图案，加我果聊</string>
     <string name="contract_permission">朋友权限</string>
     <string name="guo_chat_circle">果聊圈</string>
