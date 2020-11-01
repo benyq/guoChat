@@ -10,10 +10,16 @@
         android:layout_height="48dp"
         android:orientation="horizontal"
         android:gravity="center"
-        android:paddingStart="15dp"
         android:paddingEnd="15dp"
         android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:src="@drawable/ic_arrow_left_dark"/>
 
         <TextView
             android:id="@+id/tvSearchBook"

@@ -16,12 +16,10 @@
 
 package com.benyq.guochat.ui.openeye
 
-import android.app.Activity
 import android.content.Context
 import com.benyq.guochat.R
-import com.benyq.guochat.ui.common.WebViewActivity
+import com.benyq.mvvm.ui.WebViewActivity
 import com.benyq.mvvm.ext.Toasts
-import com.benyq.mvvm.ext.loge
 import java.net.URLDecoder
 
 /**

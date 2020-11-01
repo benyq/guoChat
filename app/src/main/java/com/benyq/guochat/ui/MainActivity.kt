@@ -19,7 +19,7 @@ import com.benyq.guochat.local.ChatObjectBox
 import com.benyq.guochat.model.vm.MainViewModel
 import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.chats.ChatFragment
-import com.benyq.guochat.ui.common.WebViewActivity
+import com.benyq.mvvm.ui.WebViewActivity
 import com.benyq.guochat.ui.contracts.AddContractActivity
 import com.benyq.guochat.ui.contracts.ContractsFragment
 import com.benyq.guochat.ui.discover.DiscoverFragment

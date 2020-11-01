@@ -77,7 +77,7 @@ class AvatarActivity : LifecycleActivity<PersonalInfoViewModel>() {
 
     override fun finish() {
         super.finish()
-        overridePendingTransition(0, R.anim.comic_slide_left_out)
+        overridePendingTransition(0, R.anim.slide_right_out)
     }
 
     private fun showBottomDialog() {

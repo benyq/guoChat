@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".ui.common.WebViewActivity">
+    tools:context="com.benyq.mvvm.ui.WebViewActivity">
 
     <com.benyq.mvvm.ui.widget.HeaderView
         android:id="@+id/headerView"

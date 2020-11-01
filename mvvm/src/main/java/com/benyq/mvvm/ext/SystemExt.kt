@@ -51,16 +51,12 @@ fun Context.versionName(): String {
 }
 
 private val handler = Handler(Looper.getMainLooper())
-fun runOnUiThread(block: () -> Unit) {
+fun runOnUiThread(duration: Long = 0L, block: () -> Unit) {
     if (Looper.myLooper() == Looper.getMainLooper()) {
         block()
     } else {
-        handler.post(block)
+        handler.postDelayed(block, duration)
     }
-}
-
-fun runOnUiThreadDelayed(duration: Long = 0L, block: () -> Unit) {
-    handler.postDelayed(block, duration)
 }
 
 fun Context.isConnected(): Boolean {

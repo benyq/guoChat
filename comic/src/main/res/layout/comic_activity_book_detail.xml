@@ -73,6 +73,7 @@
                     android:gravity="center"
                     android:text="@string/comic_read_immediately"
                     android:textColor="@color/white"
+                    android:textSize="13sp"
                     android:background="@drawable/comic_book_detail_read"
                     app:layout_constraintBottom_toBottomOf="@+id/cardView"
                     app:layout_constraintEnd_toEndOf="parent"

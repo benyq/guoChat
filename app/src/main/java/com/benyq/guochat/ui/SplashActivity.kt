@@ -38,6 +38,7 @@ class SplashActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
             window.attributes = lp
         }
+//        goToActivity<TestActivity>()
         lifecycleScope.launch(Dispatchers.IO) {
             delay(1000)
             withContext(Dispatchers.Main) {

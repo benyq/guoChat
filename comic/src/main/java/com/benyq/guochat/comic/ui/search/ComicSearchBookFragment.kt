@@ -189,7 +189,7 @@ class ComicSearchBookFragment : LifecycleFragment<ComicSearchBookViewModel>() {
      * 先移除Fragment，并将Fragment从堆栈弹出。
      */
     private fun removeFragment(activity: Activity, fragment: Fragment) {
-        runOnUiThreadDelayed(200) {
+        runOnUiThread(200) {
             (activity as BaseActivity).initImmersionBar()
         }
         (activity as FragmentActivity).supportFragmentManager.run {

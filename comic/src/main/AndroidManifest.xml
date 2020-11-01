@@ -5,11 +5,11 @@
     <application>
         <activity
             android:name=".ui.detail.ReadComicBookActivity"
-            android:theme="@style/AppThemeNotTranslucent" />
+            android:theme="@style/AppTheme" />
         <activity android:name=".ui.detail.BookDetailActivity" />
         <activity
             android:name=".ComicActivity"
-            android:theme="@style/AppThemeNotTranslucent" />
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

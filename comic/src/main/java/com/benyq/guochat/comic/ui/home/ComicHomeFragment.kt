@@ -1,6 +1,5 @@
 package com.benyq.guochat.comic.ui.home
 
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.comic.R
 import com.benyq.guochat.comic.model.vm.ComicHomeViewModel
@@ -31,6 +30,9 @@ class ComicHomeFragment : LifecycleFragment<ComicHomeViewModel>(){
         rvComicList.adapter = mAdapter
         tvSearchBook.setOnClickListener {
             ComicSearchBookFragment.switchFragment(requireActivity())
+        }
+        ivBack.setOnClickListener {
+            requireActivity().finish()
         }
     }
 

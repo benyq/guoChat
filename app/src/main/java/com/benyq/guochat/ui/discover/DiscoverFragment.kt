@@ -1,6 +1,8 @@
 package com.benyq.guochat.ui.discover
 
 import android.Manifest
+import android.content.Intent
+import android.net.Uri
 import com.benyq.guochat.R
 import com.benyq.guochat.comic.ComicActivity
 import com.benyq.guochat.function.permissionX.PermissionX
@@ -9,6 +11,7 @@ import com.benyq.mvvm.ui.base.BaseFragment
 import com.benyq.guochat.ui.openeye.OpenEyeCommunityActivity
 import com.benyq.mvvm.ext.goToActivity
 import com.benyq.mvvm.ext.toast
+import com.benyq.mvvm.ui.PicturePuzzleConfirmDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_discover.*
 
@@ -45,7 +48,9 @@ class DiscoverFragment : BaseFragment() {
         }
 
         ifComic.setOnClickListener {
-            goToActivity<ComicActivity>()
+            PicturePuzzleConfirmDialog.newInstance("https://www.bing.com/th?id=OIP.kN6_heZkbrUFPDoaUUeaGQHaE-&w=137&h=94&c=8&rs=1&qlt=90&dpr=1.25&pid=3.1&rm=2") {
+                goToActivity<ComicActivity>()
+            }.show(childFragmentManager)
         }
     }
 }

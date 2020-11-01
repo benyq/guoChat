@@ -26,6 +26,7 @@ class ChatImageActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_chat_image
 
     override fun initView() {
+        isSupportSwipeBack = false
         val imgPath: String? = intent.getStringExtra(IntentExtra.imgPath)
         if (imgPath.isNullOrEmpty()) {
             Handler().postDelayed({
