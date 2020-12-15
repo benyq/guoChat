@@ -7,6 +7,6 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".ui.TestActivity">
+    tools:context=".study.TestActivity">
 
 </LinearLayout>

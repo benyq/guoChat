@@ -69,7 +69,6 @@
     <string name="photo_count">%1$d/%2$d</string>
 
 
-
     <string name="msg_camera_framework_bug">Sorry, the Android camera encountered a problem. You may need to restart the device.</string>
     <string name="button_ok">OK</string>
     <string name="viewfinderview_status_text1">将二维码/条码放入取景框内</string>

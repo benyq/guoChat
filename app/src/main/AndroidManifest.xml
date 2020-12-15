@@ -24,9 +24,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.openeye.OpenEyeUgcDetailActivity"
+        <activity android:name=".study.GLSurfaceCameraActivity"></activity>
+        <activity
+            android:name=".ui.openeye.OpenEyeUgcDetailActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.openeye.OpenEyeCommunityActivity" />
         <activity android:name=".ui.login.FingerLoginActivity" />
         <activity android:name=".ui.contracts.ContractIdCardActivity" />
@@ -37,7 +39,7 @@
         <activity android:name=".ui.contracts.ContractNickActivity" />
         <activity android:name=".ui.discover.FriendCircleActivity" />
         <activity android:name=".ui.contracts.ContractDetailActivity" />
-        <activity android:name=".ui.TestActivity" />
+        <activity android:name=".study.TestActivity" />
         <activity android:name=".ui.settings.AboutAppActivity" />
         <activity android:name=".ui.settings.SettingsActivity" />
         <activity android:name=".ui.me.PersonalInfoEditActivity" />
@@ -46,11 +48,10 @@
         <activity
             android:name=".ui.chats.ChatVideoActivity"
             android:theme="@style/AppThemeNotTranslucent" />
+        <activity android:name=".ui.chats.ChatImageActivity" />
         <activity
-            android:name=".ui.chats.ChatImageActivity" />
-        <activity android:name=".ui.chats.video.PictureVideoActivity"
+            android:name=".ui.chats.video.PictureVideoActivity"
             android:theme="@style/AppThemeNotTranslucent" />
-
         <activity android:name=".ui.contracts.CallingCardActivity" />
         <activity android:name=".ui.contracts.AddContractActivity" />
         <activity android:name=".ui.login.RegisterActivity" />
@@ -69,9 +70,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity"
-            android:screenOrientation="sensor"/>
-
+        <activity
+            android:name=".ui.MainActivity"
+            android:screenOrientation="sensor" />
         <activity android:name=".function.zxing.android.CaptureActivity" />
 
         <service android:name=".function.music.PlayMusicService" />
@@ -81,17 +82,13 @@
             android:value="360" /> <!-- 1600 -->
         <meta-data
             android:name="design_height_in_dp"
-            android:value="640" />
-
-        <!-- 允许绘制到华为刘海屏机型的刘海区域 -->
+            android:value="640" /> <!-- 允许绘制到华为刘海屏机型的刘海区域 -->
         <meta-data
             android:name="android.notch_support"
-            android:value="true" />
-        <!-- 允许绘制到小米刘海屏机型的刘海区域 -->
+            android:value="true" /> <!-- 允许绘制到小米刘海屏机型的刘海区域 -->
         <meta-data
             android:name="notch.config"
-            android:value="portrait" />
-        <!--允许绘制到oppo、vivo刘海屏机型的刘海区域 -->
+            android:value="portrait" /> <!-- 允许绘制到oppo、vivo刘海屏机型的刘海区域 -->
         <meta-data
             android:name="android.max_aspect"
             android:value="2.8" />
