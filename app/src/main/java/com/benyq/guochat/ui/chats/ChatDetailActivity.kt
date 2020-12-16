@@ -20,6 +20,7 @@ import com.benyq.guochat.local.entity.ChatRecordEntity
 import com.benyq.guochat.model.bean.ChatListBean
 import com.benyq.guochat.model.vm.ChatDetailViewModel
 import com.benyq.guochat.model.vm.StateEvent
+import com.benyq.guochat.study.TestActivity
 import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.chats.video.PictureVideoActivity
 import com.benyq.mvvm.SmartJump
@@ -99,7 +100,6 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
     override fun getLayoutId() = R.layout.activity_chat_detail
 
     override fun initView() {
-        isSupportSwipeBack = true
         mChatListBean = intent.getParcelableExtra(IntentExtra.fromToId)!!
         rootLayout.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
             if (oldBottom != -1 && oldBottom > bottom) {
@@ -177,10 +177,10 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
             val chatRecord = mAdapter.data[position]
             when (view.id) {
                 R.id.ivContent -> {
-                    goToActivity<ChatImageActivity>(IntentExtra.imgPath to chatRecord.imgUrl, enterAnim = R.anim.alpha_scale_in)
+                    goToActivity<ChatImageActivity>(IntentExtra.imgPath to chatRecord.imgUrl, enterAnim = R.anim.alpha_scale_in, exitAnim = R.anim.anim_stay)
                 }
                 R.id.flVideo -> {
-                    goToActivity<ChatVideoActivity>(IntentExtra.videoPath to chatRecord.videoPath, enterAnim = R.anim.alpha_scale_in)
+                    goToActivity<ChatVideoActivity>(IntentExtra.videoPath to chatRecord.videoPath, enterAnim = R.anim.alpha_scale_in, exitAnim = R.anim.anim_stay)
                 }
             }
         }
@@ -244,11 +244,6 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
             flBottom.gone()
         }.translationY(0f).setDuration(duration).start()
 
-    }
-
-    override fun finish() {
-        overridePendingTransition(0, R.anim.comic_slide_left_out)
-        super.finish()
     }
 
     override fun onClick(v: View?) {

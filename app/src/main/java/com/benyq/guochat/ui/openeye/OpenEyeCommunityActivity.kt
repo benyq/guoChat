@@ -21,7 +21,6 @@ class OpenEyeCommunityActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_community
 
     override fun initView() {
-        isSupportSwipeBack = false
         val titleArray = arrayOf("推荐", "日报")
         viewPagerCommunity.adapter =
             object : FragmentStatePagerAdapter(supportFragmentManager) {

@@ -6,15 +6,18 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.addListener
 import androidx.lifecycle.ViewModelProvider
 import com.benyq.mvvm.R
+import com.benyq.mvvm.ext.fromP
 import com.benyq.mvvm.ext.getScreenWidth
 import com.benyq.mvvm.ext.loge
 import com.benyq.mvvm.ui.NormalProgressDialogManager
+import com.gyf.immersionbar.ktx.hideStatusBar
 import com.gyf.immersionbar.ktx.immersionBar
 import kotlin.math.abs
 
@@ -31,7 +34,6 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
      * 有些场景可能不需要隐藏输入法
      */
     var hideKeyboard = true
-    var isSupportSwipeBack = true
 
     /**
      * 是否有ViewModel
@@ -42,6 +44,11 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initWidows()
+        setContentView(getLayoutId())
+        initBefore()
+        initView()
+        initListener()
         if (!isLifeCircle) {
             initData()
         }
@@ -58,13 +65,18 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         if (isImmersionBarEnabled()) {
             initImmersionBar()
         }
+        if (isFullScreen()) {
+            hideSystemUI()
+        }
     }
 
     open fun initData() {}
 
     override fun finish() {
         super.finish()
-        overridePendingTransition(0, R.anim.slide_right_out)
+        //enterAnim 与 exitAnim在不同时期对应不同的Activity
+        //这时候exitAnim是当前Activity
+        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out)
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
@@ -78,7 +90,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
             //这是为了隐藏ChatDetailActivity中的View加的
             hideView(ev)
         }
-        return swipeBackAction(ev) || super.dispatchTouchEvent(ev)
+        return super.dispatchTouchEvent(ev)
     }
 
     open fun isShouldHideInput(v: View?, event: MotionEvent): Boolean {
@@ -114,95 +126,39 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
 
     open fun initImmersionBar() {
         immersionBar {
-            fitsSystemWindows(true)
-            statusBarColor(R.color.darkgrey)
+            fitsSystemWindows(!isFullScreen())
+            statusBarColor(if (isFullScreen()) R.color.black else R.color.darkgrey)
             statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
         }
     }
 
+    open fun isFullScreen() = false
 
-    private var touchX = 0f
-    private var touchY = 0f
-    private var touchOriginX = 0f
-    private var scrolling = false
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus && isFullScreen()) hideSystemUI()
+    }
 
-    /**
-     * 开启右移退出后，水平的方向的事件都被拦截
-     */
-    private fun swipeBackAction(ev: MotionEvent?): Boolean {
-        if (!isSupportSwipeBack) {
-            return isSupportSwipeBack
-        }
+    private fun hideSystemUI() {
+        // Enables regular immersive mode.
+        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
+        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
+                // Set the content to appear under the system bars so that the
+                // content doesn't resize when the system bars hide and show.
+                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                // Hide the nav bar and status bar
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN)
+    }
 
-        when (ev?.action) {
-            MotionEvent.ACTION_DOWN -> {
-                touchX = ev.x
-                touchY = ev.y
-                touchOriginX = ev.x
-            }
-            MotionEvent.ACTION_MOVE -> {
-                //拦截水平方向的移动
-                val moveX = -(ev.x - touchX).toInt()
-                val moveY = -(ev.y - touchY).toInt()
-
-                //0 - 0.15 * getScreenWidth() 范围内允许右滑
-                val maxTouchX = 0.15 * getScreenWidth()
-
-                if ((abs(ViewConfiguration.get(this).scaledTouchSlop) > abs(moveX) && !scrolling) || touchOriginX > maxTouchX) {
-                    return false
-                }
-                touchX = ev.x
-                touchY = ev.y
-                if (abs(moveY) > abs(moveX) && !scrolling) {
-                    return false
-                }
-                scrolling = true
-                loge("MotionEvent.ACTION_MOVE   moveX $moveX  touchOriginX $touchOriginX")
-                if (ev.x - touchOriginX >= 0) {
-                    window.decorView.scrollBy(moveX, 0)
-                } else {
-                    window.decorView.scrollTo(0, 0)
-                }
-                return true
-            }
-            MotionEvent.ACTION_UP -> {
-                //偏移量
-                val moveX = ev.x - touchOriginX
-                loge(
-                    "MotionEvent.ACTION_UP   moveX $moveX  touchOriginX $touchOriginX  --- ${ViewConfiguration.get(
-                        this
-                    ).scaledTouchSlop}"
-                )
-                touchX = 0f
-                touchOriginX = 0f
-
-                if (abs(ViewConfiguration.get(this).scaledTouchSlop) < abs(moveX) && scrolling) {
-                    //水平方向存在滑动
-                    if (moveX > 0.4 * getScreenWidth()) {
-                        //finish
-                        val valueObjectAnimator = ValueAnimator.ofFloat(moveX - getScreenWidth())
-                            .setDuration(200)
-                        valueObjectAnimator.addUpdateListener {
-                            val x = it.animatedValue as Float
-                            loge("valueObjectAnimator $x")
-                            window.decorView.scrollBy(x.toInt(), 0)
-                        }
-                        valueObjectAnimator.addListener(onEnd = {
-                            finish()
-                        })
-                        valueObjectAnimator.start()
-                    } else {
-                        //rollBack
-                        window.decorView.scrollTo(0, 0)
-                    }
-                    scrolling = false
-                    return true
-                } else {
-                    window.decorView.scrollTo(0, 0)
-                    scrolling = false
-                }
-            }
-        }
-        return false
+    // Shows the system bars by removing all the flags
+// except for the ones that make the content appear under the system bars.
+    private fun showSystemUI() {
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
     }
 }

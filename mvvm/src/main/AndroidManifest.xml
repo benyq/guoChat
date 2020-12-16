@@ -3,10 +3,6 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application>
-        <provider
-            android:name=".ApplicationContextProvider"
-            android:authorities="${applicationId}.kt-armor-init-provider"
-            android:exported="false"/>
 
         <activity android:name=".ui.WebViewActivity" >
             <intent-filter>

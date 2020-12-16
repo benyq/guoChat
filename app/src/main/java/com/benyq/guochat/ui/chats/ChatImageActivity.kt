@@ -1,9 +1,11 @@
 package com.benyq.guochat.ui.chats
 
 import android.os.Handler
+import android.view.View
 import android.view.WindowManager
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
+import com.benyq.mvvm.ext.fromP
 import com.benyq.mvvm.ui.base.BaseActivity
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_chat_image.*
@@ -16,17 +18,11 @@ import kotlinx.android.synthetic.main.activity_chat_image.*
  */
 class ChatImageActivity : BaseActivity() {
 
-    override fun initWidows() {
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
-    }
+    override fun isFullScreen() = true
 
     override fun getLayoutId() = R.layout.activity_chat_image
 
     override fun initView() {
-        isSupportSwipeBack = false
         val imgPath: String? = intent.getStringExtra(IntentExtra.imgPath)
         if (imgPath.isNullOrEmpty()) {
             Handler().postDelayed({
@@ -34,6 +30,13 @@ class ChatImageActivity : BaseActivity() {
             }, 500)
         }
         Glide.with(this).load(imgPath).into(ivContent)
+
+        if (fromP()) {
+            val lp = window.attributes
+            lp.layoutInDisplayCutoutMode =
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+            window.attributes = lp
+        }
     }
 
     override fun initListener() {
@@ -44,7 +47,7 @@ class ChatImageActivity : BaseActivity() {
 
     override fun finish() {
         super.finish()
-        overridePendingTransition(R.anim.alpha_scale_in, R.anim.alpha_scale_out)
+        overridePendingTransition(R.anim.anim_stay, R.anim.alpha_scale_out)
     }
 
 }

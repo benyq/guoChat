@@ -10,6 +10,7 @@ import com.benyq.guochat.comic.ComicActivity
 import com.benyq.guochat.function.fingerprint.FingerprintVerifyManager
 import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.study.GLSurfaceCameraActivity
+import com.benyq.guochat.study.TestActivity
 import com.benyq.guochat.ui.login.FingerLoginActivity
 import com.benyq.guochat.ui.login.LoginActivity
 import com.benyq.mvvm.ext.fromP
@@ -39,19 +40,19 @@ class SplashActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
             window.attributes = lp
         }
-        goToActivity<GLSurfaceCameraActivity>()
-//        lifecycleScope.launch(Dispatchers.IO) {
-//            delay(1000)
-//            withContext(Dispatchers.Main) {
-//                //这边要判断，是否开启指纹登录
-//                if (FingerprintVerifyManager.canAuthenticate(this@SplashActivity) && ChatLocalStorage.personConfig.fingerprintLogin) {
-//                    goToActivity<FingerLoginActivity>(exitAnim = R.anim.normal_out)
-//                } else {
-//                    goToActivity<LoginActivity>(exitAnim = R.anim.normal_out)
-//                }
-//                finish()
-//            }
-//        }
+//        goToActivity<TestActivity>()
+        lifecycleScope.launch(Dispatchers.IO) {
+            delay(1000)
+            withContext(Dispatchers.Main) {
+                //这边要判断，是否开启指纹登录
+                if (FingerprintVerifyManager.canAuthenticate(this@SplashActivity) && ChatLocalStorage.personConfig.fingerprintLogin) {
+                    goToActivity<FingerLoginActivity>(exitAnim = R.anim.normal_out)
+                } else {
+                    goToActivity<LoginActivity>(exitAnim = R.anim.normal_out)
+                }
+                finish()
+            }
+        }
     }
 
     private fun avoidLaunchHereAgain(): Boolean {

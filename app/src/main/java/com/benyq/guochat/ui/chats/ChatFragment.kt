@@ -1,5 +1,6 @@
 package com.benyq.guochat.ui.chats
 
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,10 +55,9 @@ class ChatFragment : LifecycleFragment<ChatViewModel>() {
         refreshLayout.setRefreshHeader(WaterDropHeader(mContext))
 
         getAppViewModelProvider().get(SharedViewModel::class.java).chatChange.observe(
-            viewLifecycleOwner,
-            Observer {
-                initData()
-            })
+            viewLifecycleOwner){
+            initData()
+        }
     }
 
     override fun initListener() {

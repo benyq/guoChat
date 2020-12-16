@@ -37,7 +37,6 @@ class ComicActivity : LifecycleActivity<ComicViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        isSupportSwipeBack = false
         bottomNavigationBar.selectTab(viewModelGet().mCurrentIndex)
     }
 

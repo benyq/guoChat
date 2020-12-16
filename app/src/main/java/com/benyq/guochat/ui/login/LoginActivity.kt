@@ -30,10 +30,6 @@ class LoginActivity : LifecycleActivity<LoginViewModel>() {
 
     override fun getLayoutId() = R.layout.activity_login
 
-    override fun initView() {
-        isSupportSwipeBack = false
-    }
-
     override fun initListener() {
         super.initListener()
         btnLogin.setOnClickListener {

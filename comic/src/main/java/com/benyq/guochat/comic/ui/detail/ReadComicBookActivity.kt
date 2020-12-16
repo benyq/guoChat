@@ -60,7 +60,6 @@ class ReadComicBookActivity : LifecycleActivity<ReadComicBookViewModel>() {
     override fun initVM(): ReadComicBookViewModel = getViewModel()
 
     override fun initView() {
-        isSupportSwipeBack = false
         mComicId = intent.getStringExtra(ComicIntentExtra.comicId) ?: ""
         mCurrentPosition = intent.getIntExtra(ComicIntentExtra.chapterPosition, -1)
 
@@ -164,6 +163,7 @@ class ReadComicBookActivity : LifecycleActivity<ReadComicBookViewModel>() {
     override fun dataObserver() {
         with(viewModelGet()) {
             previewResult.observe(this@ReadComicBookActivity) {
+                loge("dataObserver previewResult")
                 if (it.isLoading) {
                     showLoading("")
                 } else {

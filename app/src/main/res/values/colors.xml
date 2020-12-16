@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-
     <!-- 象牙色 -->
     <color name="ivory">#fffff0</color>
-
 
 
     <color name="yellow">#ffff00</color>

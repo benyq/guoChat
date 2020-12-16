@@ -47,7 +47,6 @@ class MainActivity : LifecycleActivity<MainViewModel>() {
         super.onCreate(savedInstanceState)
         ChatObjectBox.testAddChatFromTo()
         PlayerController.setContext(this)
-        isSupportSwipeBack = false
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             private var tapTime = 0L

@@ -11,5 +11,4 @@ interface IActivity: IView {
 
     fun initWidows() {}
 
-    fun initArgs(extras: Bundle?): Boolean = true
 }

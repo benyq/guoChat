@@ -57,7 +57,6 @@ class OpenEyeUgcDetailActivity : LifecycleActivity<OpenEyeUgcDetailViewModel>() 
 
     override fun initView() {
         super.initView()
-        isSupportSwipeBack = false
 
         viewPager.overScrollNever()
         viewPager.orientation = ViewPager2.ORIENTATION_VERTICAL

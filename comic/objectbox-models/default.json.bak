@@ -37,7 +37,7 @@
     },
     {
       "id": "2:6159428897398088111",
-      "lastPropertyId": "6:7158127512067472143",
+      "lastPropertyId": "7:8334543298659770744",
       "name": "BookShelfTable",
       "properties": [
         {
@@ -74,6 +74,12 @@
           "name": "id",
           "type": 6,
           "flags": 1
+        },
+        {
+          "id": "7:8334543298659770744",
+          "name": "readTime",
+          "type": 6,
+          "flags": 4
         }
       ],
       "relations": []

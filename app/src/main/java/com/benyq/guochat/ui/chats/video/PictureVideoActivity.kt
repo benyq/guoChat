@@ -12,6 +12,7 @@ import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.model.vm.PictureVideoViewModel
 import com.benyq.guochat.model.vm.StateEvent
 import com.benyq.mvvm.ui.base.BaseActivity
+import com.gyf.immersionbar.ktx.immersionBar
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -25,17 +26,9 @@ class PictureVideoActivity : BaseActivity() {
 
     private val pictureVideoViewModel: PictureVideoViewModel by viewModels()
 
-    override fun initWidows() {
-        isSupportSwipeBack = false
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
-
-    }
+    override fun isFullScreen() = false
 
     override fun getLayoutId() = R.layout.activity_picture_video
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +37,14 @@ class PictureVideoActivity : BaseActivity() {
             supportFragmentManager.beginTransaction()
                 .add(R.id.flContainer, PictureVideoFragment(), "PictureVideoFragment")
                 .commit()
+        }
+    }
+
+    override fun initImmersionBar() {
+        immersionBar {
+            fitsSystemWindows(true)
+            statusBarColor(R.color.black)
+            statusBarDarkFont(false, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
         }
     }
 
