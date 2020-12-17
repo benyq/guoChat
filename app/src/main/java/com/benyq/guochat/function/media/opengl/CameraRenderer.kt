@@ -1,8 +1,7 @@
-package com.benyq.guochat.study
+package com.benyq.guochat.function.media.opengl
 
 import android.app.Activity
-import android.graphics.ImageFormat
-import android.graphics.SurfaceTexture
+import android.graphics.*
 import android.hardware.Camera
 import android.opengl.GLES11Ext
 import android.opengl.GLES20
@@ -11,6 +10,21 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.os.Process
 import android.util.Log
+import androidx.annotation.NonNull
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import com.benyq.guochat.app.IMG_PATH
+import com.benyq.guochat.app.chatImgPath
+import com.benyq.guochat.function.media.opengl.core.GlUtil
+import com.benyq.guochat.function.media.rotate
+import com.benyq.guochat.function.media.toByteArray
+import com.benyq.mvvm.ext.Toasts
+import com.benyq.mvvm.ext.loge
+import com.benyq.mvvm.ext.tryCatch
+import okio.buffer
+import okio.sink
+import java.io.ByteArrayOutputStream
+import java.io.File
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -20,29 +34,40 @@ import javax.microedition.khronos.opengles.GL10
  * @e-mail 1520063035@qq.com
  * @note
  */
-class CameraRenderer(private val mActivity: Activity, private val mGlSurfaceView: GLSurfaceView) : GLSurfaceView.Renderer,
-    Camera.PreviewCallback {
+class CameraRenderer(private val mActivity: Activity, private val mGlSurfaceView: GLSurfaceView, private val renderListener: OnRendererStatusListener) :
+    GLSurfaceView.Renderer,
+    Camera.PreviewCallback, DefaultLifecycleObserver {
 
     private val TAG = "CameraRenderer"
 
-    private var mBackgroundHandler: Handler ? = null
+    private var mBackgroundHandler: Handler? = null
     private var mCamera: Camera? = null
     private var mCameraFacing: Int = Camera.CameraInfo.CAMERA_FACING_FRONT
 
-    private var mCameraWidth = 1280
-    private var mCameraHeight = 720
+    var mCameraWidth = 1920
+    var mCameraHeight = 1080
 
     private var mViewWidth = 0
     private var mViewHeight = 0
 
-    private lateinit var mMvpMatrix : FloatArray
+    private lateinit var mMvpMatrix: FloatArray
     private var mCameraTexId = 0
     private lateinit var mPreviewCallbackBufferArray: ByteArray
     private var mSurfaceTexture: SurfaceTexture? = null
     private var mCameraNv21Byte: ByteArray? = null
     private lateinit var mProgramTextureOES: ProgramTextureOES
-    private val mTexMatrix: FloatArray = floatArrayOf(0.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f)
+    private val mTexMatrix: FloatArray = floatArrayOf(
+        0.0f, -1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 1.0f)
 
+    private var onPictureCapturedAction: ((String) -> Unit)? = null
+    private var onVideoCapturedAction: ((String, Int) -> Unit)? = null
+    private var mCameraOrientation = 270
+    private var isTakingPic = false
+
+    private var imgDir: String = mActivity.chatImgPath()
 
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
         mProgramTextureOES = ProgramTextureOES()
@@ -52,6 +77,7 @@ class CameraRenderer(private val mActivity: Activity, private val mGlSurfaceView
             openCamera()
             startPreview()
         }
+        renderListener.onSurfaceCreated()
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
@@ -66,6 +92,7 @@ class CameraRenderer(private val mActivity: Activity, private val mGlSurfaceView
         }
         mViewWidth = width
         mViewHeight = height
+        renderListener.onSurfaceChanged(width, height)
     }
 
     override fun onDrawFrame(gl: GL10?) {
@@ -76,11 +103,12 @@ class CameraRenderer(private val mActivity: Activity, private val mGlSurfaceView
         mSurfaceTexture?.updateTexImage()
         mSurfaceTexture?.getTransformMatrix(mTexMatrix)
         mProgramTextureOES.drawFrame(mCameraTexId, mTexMatrix, mMvpMatrix)
+        renderListener.onDrawFrame(mCameraNv21Byte, mCameraTexId, mCameraWidth, mCameraHeight, mMvpMatrix, mTexMatrix, mSurfaceTexture!!.timestamp)
         mGlSurfaceView.requestRender()
     }
 
 
-    fun onResume() {
+    override fun onResume(@NonNull owner: LifecycleOwner) {
         startBackgroundThread()
         mBackgroundHandler?.post {
             openCamera()
@@ -89,11 +117,33 @@ class CameraRenderer(private val mActivity: Activity, private val mGlSurfaceView
         mGlSurfaceView.onResume()
     }
 
-    fun onPause() {
+    override fun onPause(@NonNull owner: LifecycleOwner) {
         mGlSurfaceView.onPause()
         mBackgroundHandler?.post {
             closeCamera()
         }
+        stopBackgroundHandler()
+    }
+
+    fun switchCamera() {
+        mBackgroundHandler?.run {
+            mCameraFacing = Camera.CameraInfo.CAMERA_FACING_FRONT - mCameraFacing
+            closeCamera()
+            openCamera()
+            startPreview()
+        }
+    }
+
+    fun setPictureCapturedAction(action: (String) -> Unit) {
+        onPictureCapturedAction = action
+    }
+
+    fun setVideoCapturedAction(action: (String, Int) -> Unit) {
+        onVideoCapturedAction = action
+    }
+
+    fun takePic() {
+        isTakingPic = true
     }
 
     private fun startBackgroundThread() {
@@ -117,6 +167,8 @@ class CameraRenderer(private val mActivity: Activity, private val mGlSurfaceView
                 throw RuntimeException("no camera")
             }
             CameraUtils.setCameraDisplayOrientation(mActivity, mCameraFacing, mCamera)
+            mCameraOrientation =
+                if (mCameraFacing == Camera.CameraInfo.CAMERA_FACING_FRONT) 270 else 90
             val parameters = mCamera!!.parameters
             CameraUtils.setFocusModes(parameters)
             CameraUtils.chooseFrameRate(parameters)
@@ -134,7 +186,7 @@ class CameraRenderer(private val mActivity: Activity, private val mGlSurfaceView
                 mCameraWidth.toFloat()
             )
 
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             Log.e(TAG, "openCamera: $e")
         }
     }
@@ -160,7 +212,7 @@ class CameraRenderer(private val mActivity: Activity, private val mGlSurfaceView
             mCamera?.setPreviewTexture(mSurfaceTexture)
             mCamera?.startPreview()
 
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             Log.e(TAG, "cameraStartPreview: $e")
         }
 
@@ -176,14 +228,42 @@ class CameraRenderer(private val mActivity: Activity, private val mGlSurfaceView
                 mCamera = null
             }
 
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             Log.e(TAG, "releaseCamera: ", e)
         }
     }
 
     override fun onPreviewFrame(data: ByteArray?, camera: Camera?) {
+
+        if (isTakingPic) {
+            loge("onPreviewFrame isTakingPic")
+            tryCatch({
+                val temp = System.currentTimeMillis()
+                val picFile = File("$imgDir${temp}.jpg")
+                if (data != null) {
+                    val yuvImage = YuvImage(data, ImageFormat.NV21, mCameraWidth, mCameraHeight, null)
+                    val bos = ByteArrayOutputStream()
+                    yuvImage.compressToJpeg(Rect(0, 0, mCameraWidth, mCameraHeight), 100, bos)
+                    val tmpData = bos.toByteArray()
+                    val rawBitmap = BitmapFactory.decodeByteArray(tmpData, 0, tmpData.size)
+                    val resultBitmap = if (mCameraFacing == Camera.CameraInfo.CAMERA_FACING_FRONT)
+                        rawBitmap.rotate(270f, true)  //前置摄像头旋转270°
+                    else
+                        rawBitmap.rotate(90f)  //后置摄像头旋转90°
+
+                    picFile.sink().buffer().write(resultBitmap.toByteArray()).close()
+                    Toasts.show("图片已保存! 耗时：${System.currentTimeMillis() - temp}    路径：  ${picFile.absolutePath}")
+                    onPictureCapturedAction?.invoke(picFile.absolutePath)
+                }
+            }, {
+                it.printStackTrace()
+            })
+            isTakingPic = false
+        }
+
         mCameraNv21Byte = data
         mCamera?.addCallbackBuffer(data)
         mGlSurfaceView.requestRender()
     }
+
 }

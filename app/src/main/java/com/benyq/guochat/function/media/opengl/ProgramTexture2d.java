@@ -14,13 +14,16 @@
  * limitations under the License.
  */
 
-package com.benyq.guochat.study;
+package com.benyq.guochat.function.media.opengl;
 
-import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
 
+import com.benyq.guochat.function.media.opengl.core.Drawable2d;
+import com.benyq.guochat.function.media.opengl.core.GlUtil;
+import com.benyq.guochat.function.media.opengl.core.Program;
 
-public class ProgramTextureOES extends Program {
+
+public class ProgramTexture2d extends Program {
 
     // Simple vertex shader, used for all programs.
     private static final String VERTEX_SHADER =
@@ -34,13 +37,11 @@ public class ProgramTextureOES extends Program {
                     "    vTextureCoord = (uTexMatrix * aTextureCoord).xy;\n" +
                     "}\n";
 
-    // Simple fragment shader for use with external 2D textures (e.g. what we get from
-    // SurfaceTexture).
-    private static final String FRAGMENT_SHADER_EXT =
-            "#extension GL_OES_EGL_image_external : require\n" +
-                    "precision mediump float;\n" +
+    // Simple fragment shader for use with "normal" 2D textures.
+    private static final String FRAGMENT_SHADER_2D =
+            "precision mediump float;\n" +
                     "varying vec2 vTextureCoord;\n" +
-                    "uniform samplerExternalOES sTexture;\n" +
+                    "uniform sampler2D sTexture;\n" +
                     "void main() {\n" +
                     "    gl_FragColor = texture2D(sTexture, vTextureCoord);\n" +
                     "}\n";
@@ -50,11 +51,8 @@ public class ProgramTextureOES extends Program {
     private int maPositionLoc;
     private int maTextureCoordLoc;
 
-    /**
-     * Prepares the program in the current EGL context.
-     */
-    public ProgramTextureOES() {
-        super(VERTEX_SHADER, FRAGMENT_SHADER_EXT);
+    public ProgramTexture2d() {
+        super(VERTEX_SHADER, FRAGMENT_SHADER_2D);
     }
 
     @Override
@@ -84,7 +82,7 @@ public class ProgramTextureOES extends Program {
 
         // Set the texture.
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-        GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, textureId);
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
 
         // Copy the model / view / projection matrix over.
         GLES20.glUniformMatrix4fv(muMVPMatrixLoc, 1, false, mvpMatrix, 0);
@@ -119,7 +117,7 @@ public class ProgramTextureOES extends Program {
         // Done -- disable vertex array, texture, and program.
         GLES20.glDisableVertexAttribArray(maPositionLoc);
         GLES20.glDisableVertexAttribArray(maTextureCoordLoc);
-        GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, 0);
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
         GLES20.glUseProgram(0);
     }
 

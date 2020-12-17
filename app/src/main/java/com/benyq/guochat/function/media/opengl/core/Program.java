@@ -1,7 +1,9 @@
-package com.benyq.guochat.study;
+package com.benyq.guochat.function.media.opengl.core;
 
-import android.content.Context;
 import android.opengl.GLES20;
+
+import com.benyq.guochat.function.media.opengl.core.Drawable2d;
+import com.benyq.guochat.function.media.opengl.core.GlUtil;
 
 /**
  * Created by tujh on 2018/1/24.

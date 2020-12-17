@@ -20,7 +20,6 @@ import com.benyq.guochat.local.entity.ChatRecordEntity
 import com.benyq.guochat.model.bean.ChatListBean
 import com.benyq.guochat.model.vm.ChatDetailViewModel
 import com.benyq.guochat.model.vm.StateEvent
-import com.benyq.guochat.study.TestActivity
 import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.chats.video.PictureVideoActivity
 import com.benyq.mvvm.SmartJump

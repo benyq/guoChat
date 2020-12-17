@@ -22,6 +22,7 @@ object Toasts {
 
     fun show(message: String) {
         runOnUiThread {
+            loge("onPreviewFrame $message")
             mToast?.apply { setText(message) }?.show()
         }
     }

@@ -5,6 +5,8 @@ import com.google.gson.JsonParser
 import com.google.gson.JsonSyntaxException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * @author benyq
@@ -80,4 +82,9 @@ fun String.isJson(): Boolean {
     }catch (e: JsonSyntaxException){
         false
     }
+}
+
+fun getCurrentDate(): String {
+    val df = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINESE)
+    return df.format(Date())
 }

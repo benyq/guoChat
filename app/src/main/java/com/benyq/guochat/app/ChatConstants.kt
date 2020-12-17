@@ -1,6 +1,8 @@
 package com.benyq.guochat.app
 
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import android.content.Context
+import java.io.File
+
 
 /**
  * @author benyq
@@ -29,3 +31,13 @@ const val GENDER_UNKNOWN = 2
 const val CIRCLE__TYPE_TEXT = 1
 const val CIRCLE__TYPE_IMG = 2
 const val CIRCLE__TYPE_VIDEO = 3
+
+
+fun Context.chatImgPath() : String {
+    return getExternalFilesDir(IMG_PATH)!!.absolutePath + File.separator
+}
+
+fun Context.chatVideoPath(): String {
+    return getExternalFilesDir(VIDEO_PATH)!!.absolutePath + File.separator
+}
+

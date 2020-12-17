@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benyq.guochat.study;
+package com.benyq.guochat.function.media.opengl.core;
 
 import java.nio.FloatBuffer;
 

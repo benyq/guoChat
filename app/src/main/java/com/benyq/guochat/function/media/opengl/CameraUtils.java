@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benyq.guochat.study;
+package com.benyq.guochat.function.media.opengl;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

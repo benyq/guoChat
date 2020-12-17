@@ -13,6 +13,7 @@ import android.os.Looper
 import android.view.Gravity
 import android.view.WindowManager
 import androidx.annotation.FloatRange
+import kotlin.math.log
 
 /**
  * @author benyq

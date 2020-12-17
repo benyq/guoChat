@@ -1,4 +1,4 @@
-package com.benyq.guochat.study
+package com.benyq.guochat.ui
 
 import android.os.Handler
 import android.view.WindowManager

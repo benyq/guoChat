@@ -6,11 +6,8 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
-import com.benyq.guochat.comic.ComicActivity
 import com.benyq.guochat.function.fingerprint.FingerprintVerifyManager
 import com.benyq.guochat.local.ChatLocalStorage
-import com.benyq.guochat.study.GLSurfaceCameraActivity
-import com.benyq.guochat.study.TestActivity
 import com.benyq.guochat.ui.login.FingerLoginActivity
 import com.benyq.guochat.ui.login.LoginActivity
 import com.benyq.mvvm.ext.fromP
