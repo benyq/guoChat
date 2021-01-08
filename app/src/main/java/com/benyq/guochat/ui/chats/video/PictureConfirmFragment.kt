@@ -1,11 +1,15 @@
 package com.benyq.guochat.ui.chats.video
 
+import android.widget.FrameLayout
 import androidx.fragment.app.activityViewModels
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.model.vm.PictureVideoViewModel
+import com.benyq.mvvm.ext.checkFullScreen
+import com.benyq.mvvm.ext.dip2px
 import com.benyq.mvvm.ui.base.BaseFragment
 import com.bumptech.glide.Glide
+import com.gyf.immersionbar.ImmersionBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_picture_confirm.*
 
@@ -30,6 +34,7 @@ class PictureConfirmFragment : BaseFragment() {
 
         Glide.with(this).load(imgPath).into(ivPicture)
 
+        resizeViewMargin()
     }
 
     override fun initListener() {
@@ -41,5 +46,16 @@ class PictureConfirmFragment : BaseFragment() {
             pictureVideoViewModel.finishImg(imgPath)
         }
 
+    }
+
+    private fun resizeViewMargin() {
+
+        if (mContext.checkFullScreen()) {
+            val topMargin = mContext.dip2px(15).toInt() + ImmersionBar.getStatusBarHeight(this)
+
+            val ivCloseParam = ivClose.layoutParams as FrameLayout.LayoutParams
+            ivCloseParam.topMargin = topMargin
+            ivClose.layoutParams = ivCloseParam
+        }
     }
 }

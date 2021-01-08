@@ -12,6 +12,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -21,9 +22,12 @@ import com.benyq.guochat.R;
 import com.benyq.guochat.function.zxing.QRCodeUtil;
 import com.benyq.guochat.function.zxing.camera.CameraManager;
 import com.benyq.guochat.function.zxing.view.ViewfinderView;
+import com.benyq.mvvm.ext.SystemExtKt;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
+import com.gyf.immersionbar.BarHide;
+import com.gyf.immersionbar.ImmersionBar;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -136,7 +140,9 @@ public final class CaptureActivity extends Activity implements
         decodeFormats = null;
         characterSet = null;
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        ImmersionBar.with(this)
+                .hideBar(BarHide.FLAG_HIDE_BAR).init();
+        resizeViewMargin();
     }
 
     @Override
@@ -282,4 +288,15 @@ public final class CaptureActivity extends Activity implements
         }
     }
 
+
+    private void resizeViewMargin() {
+
+        if (SystemExtKt.checkFullScreen(this)) {
+            int topMargin = (int) (SystemExtKt.dip2px(this, 15) + ImmersionBar.getStatusBarHeight(this));
+
+            FrameLayout.LayoutParams ivCloseParam = (FrameLayout.LayoutParams)ivClose.getLayoutParams() ;
+            ivCloseParam.topMargin = topMargin;
+            ivClose.setLayoutParams(ivCloseParam);
+        }
+    }
 }

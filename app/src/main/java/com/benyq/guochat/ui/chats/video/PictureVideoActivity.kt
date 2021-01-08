@@ -12,6 +12,7 @@ import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.model.vm.PictureVideoViewModel
 import com.benyq.guochat.model.vm.StateEvent
 import com.benyq.mvvm.ui.base.BaseActivity
+import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ktx.immersionBar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,10 +43,11 @@ class PictureVideoActivity : BaseActivity() {
 
     override fun initImmersionBar() {
         immersionBar {
-            fitsSystemWindows(true)
-            statusBarColor(R.color.black)
-            statusBarDarkFont(false, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+            hideBar(BarHide.FLAG_HIDE_BAR)
         }
+        // 保持Activity处于唤醒状态
+        val window = window
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
     override fun initView() {
@@ -99,7 +101,7 @@ class PictureVideoActivity : BaseActivity() {
             .commit()
     }
 
-    private fun popBack(path: String, state: Int = StateEvent.STATE_FINISH_IMG, duration : Int = 0) {
+    private fun popBack(path: String, state: Int = StateEvent.STATE_FINISH_IMG, duration: Int = 0) {
         setResult(Activity.RESULT_OK, Intent().apply {
             putExtra(IntentExtra.videoImgPath, path)
             putExtra(IntentExtra.stateEvent, state)

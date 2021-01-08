@@ -2,6 +2,7 @@ package com.benyq.guochat.ui.chats.video
 
 import android.opengl.EGL14
 import android.opengl.GLSurfaceView
+import android.widget.FrameLayout
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
@@ -16,6 +17,7 @@ import com.benyq.guochat.function.media.opengl.core.GlUtil
 import com.benyq.guochat.model.vm.PictureVideoViewModel
 import com.benyq.mvvm.ext.*
 import com.benyq.mvvm.ui.base.BaseFragment
+import com.gyf.immersionbar.ImmersionBar
 import kotlinx.android.synthetic.main.fragment_picture_video.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -67,7 +69,7 @@ class PictureVideoFragment : BaseFragment() {
         glSurfaceView.renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRTY
 
         lifecycle.addObserver(mCameraRenderer)
-
+        resizeViewMargin()
     }
 
     override fun initListener() {
@@ -218,6 +220,21 @@ class PictureVideoFragment : BaseFragment() {
             if (mStartTime == 0L) {
                 mStartTime = timeStamp
             }
+        }
+    }
+
+    private fun resizeViewMargin() {
+
+        if (mContext.checkFullScreen()) {
+            val topMargin = mContext.dip2px(15).toInt() + ImmersionBar.getStatusBarHeight(this)
+
+            val ivCameraChangeParam = ivCameraChange.layoutParams as FrameLayout.LayoutParams
+            ivCameraChangeParam.topMargin = topMargin
+            ivCameraChange.layoutParams = ivCameraChangeParam
+
+            val ivCloseParam = ivClose.layoutParams as FrameLayout.LayoutParams
+            ivCloseParam.topMargin = topMargin
+            ivClose.layoutParams = ivCloseParam
         }
     }
 

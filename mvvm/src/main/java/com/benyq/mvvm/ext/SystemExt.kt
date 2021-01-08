@@ -115,6 +115,29 @@ fun Context.getScreenHeight(): Int {
     return point.y
 }
 
+fun Context.getScreenSize(): Point {
+    val wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    val point = Point()
+    wm.defaultDisplay.getRealSize(point)
+    return point
+}
+
+//判断是否是全面屏
+fun Context.checkFullScreen(): Boolean {
+    val point = getScreenSize()
+    val width: Int
+    val height: Int
+    if (point.x < point.y) {
+        width = point.x
+        height = point.y
+    }else {
+        width = point.y
+        height = point.x
+    }
+    loge("width $width height $height")
+    return height.toFloat() / width > 1.97f
+}
+
 fun Context.isNetWorkConnected(): Boolean {
     val cm: ConnectivityManager? =
         getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

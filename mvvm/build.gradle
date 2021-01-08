@@ -87,4 +87,5 @@ dependencies {
     api 'com.ashokvarma.android:bottom-navigation-bar:2.2.0'
     api 'com.google.android:flexbox:2.0.1'
 
+    //https://github.com/bingoogolapple/BGASwipeBackLayout-Android 优化退出，以后可能会用到
 }
