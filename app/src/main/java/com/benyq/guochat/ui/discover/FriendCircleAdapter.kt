@@ -33,6 +33,8 @@ import kotlinx.android.synthetic.main.item_friend_circle.view.*
 class FriendCircleAdapter :
     BaseQuickAdapter<FriendCircleBean, BaseViewHolder>(R.layout.item_friend_circle) {
 
+    private var mNineItemAction: ((View, List<String>, Int) -> Unit)? = null
+
     init {
         //新版本要放在这!!
         addChildClickViewIds(R.id.ivLike, R.id.ivComments)
@@ -46,7 +48,7 @@ class FriendCircleAdapter :
 
         holder.setText(R.id.tvContent, item.content)
         val nineGridView = holder.getView<NineGridLayout>(R.id.nineGridImages)
-
+        nineGridView.setItemAction(mNineItemAction)
         if (!item.imgList.isNullOrEmpty()) {
             nineGridView.addItems(item.imgList)
             nineGridView.visible()
@@ -104,5 +106,9 @@ class FriendCircleAdapter :
         }
         spannableString.setSpan(clickSpan, 0, spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         return spannableString
+    }
+
+    fun setItemAction(action: ((View, List<String>, Int) -> Unit)?) {
+        mNineItemAction = action
     }
 }

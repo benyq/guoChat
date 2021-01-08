@@ -96,7 +96,4 @@ class ContractDetailActivity : BaseActivity() {
         })
     }
 
-    override fun isFullScreen(): Boolean {
-        return true
-    }
 }

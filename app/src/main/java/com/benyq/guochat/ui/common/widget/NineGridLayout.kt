@@ -158,7 +158,7 @@ class NineGridLayout(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
         }
     }
 
-    fun setItemAction(action: (View, List<String>, Int) -> Unit) {
+    fun setItemAction(action: ((View, List<String>, Int) -> Unit)?) {
         mItemAction = action
     }
 

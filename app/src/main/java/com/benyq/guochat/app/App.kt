@@ -1,6 +1,7 @@
 package com.benyq.guochat.app
 
 import android.util.Log
+import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper
 import com.benyq.guochat.comic.local.ComicObjectBox
 import com.benyq.guochat.function.other.NotificationHelper
 import com.benyq.guochat.local.ChatObjectBox
@@ -44,6 +45,7 @@ class App : BaseApplication(){
         Pinyin.init(null)
         NotificationHelper.init(this)
         injectError()
+        BGASwipeBackHelper.init(this, null)
     }
 
 

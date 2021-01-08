@@ -49,7 +49,7 @@ class ComicSearchBookFragment : LifecycleFragment<ComicSearchBookViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         immersionBar {
-            statusBarColor(com.benyq.mvvm.R.color.darkgrey)
+            statusBarColor(R.color.darkgrey)
             statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
         }
     }

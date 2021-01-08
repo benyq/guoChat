@@ -1,12 +1,15 @@
 package com.benyq.guochat.ui.discover
 
 import android.app.Activity
+import android.app.ActivityOptions
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.StateListDrawable
 import android.graphics.drawable.shapes.OvalShape
+import android.util.Pair
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -21,6 +24,7 @@ import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.bean.CircleComment
 import com.benyq.guochat.model.bean.FriendCircleBean
 import com.benyq.guochat.model.vm.FriendCircleViewModel
+import com.benyq.guochat.ui.common.widget.NineGridLayout
 import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.mvvm.ui.widget.HeaderView
 import com.benyq.guochat.ui.common.widget.satellite_menu.MenuItemView
@@ -29,6 +33,7 @@ import com.benyq.guochat.ui.common.widget.satellite_menu.SatelliteMenuLayout
 import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.ext.getDrawableRef
 import com.benyq.mvvm.ext.getViewModel
+import com.benyq.mvvm.ext.goToActivity
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.gyf.immersionbar.ImmersionBar
@@ -101,6 +106,15 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
 
         rvFriendCircle.layoutManager = LinearLayoutManager(this)
         rvFriendCircle.itemAnimator?.changeDuration = 0
+        mAdapter.setItemAction { view, list, i ->
+            val intent = Intent(this, PhotoPreviewActivity::class.java)
+            intent.putExtra(IntentExtra.circlePhotos, list.toTypedArray())
+            intent.putExtra(IntentExtra.circlePhotosIndex, i)
+            val options = ActivityOptions.makeSceneTransitionAnimation(this,
+                Pair.create(view, getString(R.string.transition_photo)))
+
+            startActivity(intent, options.toBundle())
+        }
         mAdapter.setOnItemChildClickListener { adapter, view, position ->
             val friendCircleBean = mAdapter.data[position]
             if (view.id == R.id.ivLike) {

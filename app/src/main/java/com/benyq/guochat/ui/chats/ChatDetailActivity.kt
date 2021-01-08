@@ -141,6 +141,8 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
         }
     }
 
+    override fun isSupportSwipeBack() = true
+
     override fun initListener() {
         MediaRecordController.setCompleteAction {
             mAdapter.setVoiceStop(it)

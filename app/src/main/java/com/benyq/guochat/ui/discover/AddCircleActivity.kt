@@ -7,10 +7,11 @@ import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.function.other.GlideEngine
 import com.benyq.guochat.model.vm.AddCircleViewModel
-import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.common.CommonBottomDialog
+import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.ext.getViewModel
 import com.benyq.mvvm.ext.textTrim
+import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
@@ -49,7 +50,16 @@ class AddCircleActivity : LifecycleActivity<AddCircleViewModel>() {
         }
 
         nineGrid.setItemAction { view, list, position ->
-            CirclePhotoViewPagerFragment.newInstance(position).show(supportFragmentManager)
+            SmartJump.from(this)
+                .startForResult(Intent(this, CirclePhotoViewPagerActivity::class.java).apply {
+                    putExtra(IntentExtra.circlePhotosIndex, position)
+                    putExtra(IntentExtra.circlePhotos, nineGrid.getPhotoUrls().toTypedArray())
+                }, { code, data ->
+                    if (code == Activity.RESULT_OK && data != null) {
+                        val urls = data.getStringArrayExtra(IntentExtra.circlePhotos) ?: emptyArray()
+                        nineGrid.addItems(urls.toMutableList())
+                    }
+                }, exitAnim = R.anim.anim_stay, enterAnim = R.anim.slide_bottom_in)
         }
         nineGrid.setAddAction {
             showSelectPhotoBottomDialog()

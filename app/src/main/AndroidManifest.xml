@@ -20,10 +20,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.discover.PhotoPreviewActivity"></activity>
         <activity
             android:name=".ui.openeye.OpenEyeUgcDetailActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
@@ -31,6 +33,7 @@
         <activity android:name=".ui.openeye.OpenEyeCommunityActivity" />
         <activity android:name=".ui.login.FingerLoginActivity" />
         <activity android:name=".ui.contracts.ContractIdCardActivity" />
+        <activity android:name=".ui.discover.CirclePhotoViewPagerActivity" />
         <activity android:name=".ui.discover.AddCircleActivity" />
 
         <service android:name=".function.message.MessageService" />
@@ -38,7 +41,7 @@
         <activity android:name=".ui.contracts.ContractNickActivity" />
         <activity android:name=".ui.discover.FriendCircleActivity" />
         <activity android:name=".ui.contracts.ContractDetailActivity" />
-        <activity android:name="com.benyq.guochat.ui.TestActivity" />
+        <activity android:name=".ui.TestActivity" />
         <activity android:name=".ui.settings.AboutAppActivity" />
         <activity android:name=".ui.settings.SettingsActivity" />
         <activity android:name=".ui.me.PersonalInfoEditActivity" />

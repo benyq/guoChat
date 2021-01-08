@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.4.10'
+    ext.kotlin_version = '1.4.21'
     ext.objectboxVersion = '2.7.1'
     ext.hilt_version = '2.28-alpha'
     ext.hilt_lifecircle_version = '1.0.0-alpha02'
@@ -30,4 +30,12 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext{
+    compileSdkVersion = 30
+    buildToolsVersion = "30.0.1"
+    minSdkVersion = 21
+    targetSdkVersion = 30
+}
+
 

@@ -11,10 +11,6 @@ import kotlinx.android.synthetic.main.activity_test.*
 
 class TestActivity : BaseActivity() {
 
-
-    override fun isFullScreen() = true
-
-
     override fun getLayoutId(): Int {
         return R.layout.activity_test
     }

@@ -48,5 +48,8 @@ class ContractIdCardActivity : LifecycleActivity<ContractsViewModel>() {
         })
     }
 
+    override fun isSupportSwipeBack() = true
+
+    override fun isOnlyTrackingLeftEdge() = false
 
 }

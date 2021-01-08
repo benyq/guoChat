@@ -8,6 +8,8 @@ import com.benyq.guochat.app.IntentExtra
 import com.benyq.mvvm.ext.fromP
 import com.benyq.mvvm.ui.base.BaseActivity
 import com.bumptech.glide.Glide
+import com.gyf.immersionbar.BarHide
+import com.gyf.immersionbar.ktx.immersionBar
 import kotlinx.android.synthetic.main.activity_chat_image.*
 
 /**
@@ -17,8 +19,6 @@ import kotlinx.android.synthetic.main.activity_chat_image.*
  * @note 展示图片
  */
 class ChatImageActivity : BaseActivity() {
-
-    override fun isFullScreen() = true
 
     override fun getLayoutId() = R.layout.activity_chat_image
 
@@ -48,6 +48,12 @@ class ChatImageActivity : BaseActivity() {
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.anim_stay, R.anim.alpha_scale_out)
+    }
+
+    override fun initImmersionBar() {
+        immersionBar {
+            hideBar(BarHide.FLAG_HIDE_BAR)
+        }
     }
 
 }

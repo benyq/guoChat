@@ -27,8 +27,6 @@ class PictureVideoActivity : BaseActivity() {
 
     private val pictureVideoViewModel: PictureVideoViewModel by viewModels()
 
-    override fun isFullScreen() = false
-
     override fun getLayoutId() = R.layout.activity_picture_video
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,10 +39,10 @@ class PictureVideoActivity : BaseActivity() {
         }
     }
 
+    override fun isHideBar() = true
+
     override fun initImmersionBar() {
-        immersionBar {
-            hideBar(BarHide.FLAG_HIDE_BAR)
-        }
+        super.initImmersionBar()
         // 保持Activity处于唤醒状态
         val window = window
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)

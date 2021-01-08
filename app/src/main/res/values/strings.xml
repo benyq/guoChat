@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">guoChat</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="add_group_chat">发起群聊</string>
     <string name="scan">扫一扫</string>
@@ -77,4 +75,5 @@
 
     <string name="save_video_too_short">视频太短啦！</string>
 
+    <string name="transition_photo" translatable="false">transition_photo</string>
 </resources>
