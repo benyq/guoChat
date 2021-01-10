@@ -2,8 +2,11 @@ package com.benyq.guochat.ui.chats
 
 import android.Manifest
 import android.app.Activity
+import android.app.ActivityOptions
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Handler
+import android.util.Pair
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.view.postDelayed
@@ -20,6 +23,7 @@ import com.benyq.guochat.local.entity.ChatRecordEntity
 import com.benyq.guochat.model.bean.ChatListBean
 import com.benyq.guochat.model.vm.ChatDetailViewModel
 import com.benyq.guochat.model.vm.StateEvent
+import com.benyq.guochat.ui.PhotoPreviewActivity
 import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.chats.video.PictureVideoActivity
 import com.benyq.mvvm.SmartJump
@@ -178,7 +182,19 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
             val chatRecord = mAdapter.data[position]
             when (view.id) {
                 R.id.ivContent -> {
-                    goToActivity<ChatImageActivity>(IntentExtra.imgPath to chatRecord.imgUrl, enterAnim = R.anim.alpha_scale_in, exitAnim = R.anim.anim_stay)
+                    val photoList = mAdapter.data.filter {
+                        it.imgUrl.isNotEmpty()
+                    }.map { it.imgUrl }
+                    val index = photoList.indexOfLast {
+                        it == chatRecord.imgUrl
+                    }
+                    val intent = Intent(this, PhotoPreviewActivity::class.java)
+                    intent.putExtra(IntentExtra.circlePhotos, photoList.toTypedArray())
+                    intent.putExtra(IntentExtra.circlePhotosIndex, index)
+                    val options = ActivityOptions.makeSceneTransitionAnimation(this,
+                        Pair.create(view, getString(R.string.transition_photo)))
+
+                    startActivity(intent, options.toBundle())
                 }
                 R.id.flVideo -> {
                     goToActivity<ChatVideoActivity>(IntentExtra.videoPath to chatRecord.videoPath, enterAnim = R.anim.alpha_scale_in, exitAnim = R.anim.anim_stay)

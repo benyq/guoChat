@@ -4,17 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.discover.PhotoPreviewActivity">
+    tools:context=".ui.PhotoPreviewActivity">
 
     <androidx.viewpager2.widget.ViewPager2
+        android:visibility="invisible"
         android:id="@+id/photoPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/black"/>
 
     <ImageView
-        android:id="@+id/ivCirclePhoto"
+        android:id="@+id/ivPhoto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/black"
         android:transitionName="@string/transition_photo"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

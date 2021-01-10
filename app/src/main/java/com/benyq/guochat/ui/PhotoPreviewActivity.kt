@@ -1,10 +1,13 @@
-package com.benyq.guochat.ui.discover
+package com.benyq.guochat.ui
 
 import android.view.View
+import androidx.core.transition.addListener
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
+import com.benyq.guochat.ui.discover.CirclePhotoAdapter
+import com.benyq.mvvm.ext.visible
 import com.benyq.mvvm.ui.base.BaseActivity
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_photo_preview.*
@@ -45,6 +48,14 @@ class PhotoPreviewActivity : BaseActivity() {
 
         photoPager.setCurrentItem(photoUrlsIndex, false)
 
-        Glide.with(this).load(photoUrls[photoUrlsIndex]).into(ivCirclePhoto)
+        Glide.with(this).load(photoUrls[photoUrlsIndex]).into(ivPhoto)
+
+        val sharedElementEnterTransition = window.sharedElementEnterTransition
+        sharedElementEnterTransition.duration = 150
+        sharedElementEnterTransition.addListener(onEnd = {
+            photoPager.visible()
+            photoPager.bringToFront()
+        })
     }
+
 }

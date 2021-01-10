@@ -45,7 +45,8 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:layout_marginStart="15dp"/>
+                android:layout_marginStart="15dp"
+                android:transitionName="@string/transition_photo"/>
 
             <LinearLayout
                 android:id="@+id/llVoice"

@@ -25,7 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.discover.PhotoPreviewActivity"></activity>
+        <activity android:name=".ui.PhotoPreviewActivity"
+            android:theme="@style/Picture.Theme.Translucent"/>
         <activity
             android:name=".ui.openeye.OpenEyeUgcDetailActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
