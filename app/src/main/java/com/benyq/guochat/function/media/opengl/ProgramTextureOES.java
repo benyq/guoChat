@@ -16,6 +16,7 @@
 
 package com.benyq.guochat.function.media.opengl;
 
+import android.opengl.EGL14;
 import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
 
@@ -91,7 +92,7 @@ public class ProgramTextureOES extends Program {
 
         // Copy the model / view / projection matrix over.
         GLES20.glUniformMatrix4fv(muMVPMatrixLoc, 1, false, mvpMatrix, 0);
-        GlUtil.checkGlError("glUniformMatrix4fv 1");
+        GlUtil.checkGlError("glUniformMatrix4fv 1 glcontext " + EGL14.eglGetCurrentContext());
 
         // Copy the texture transformation matrix over.
         GLES20.glUniformMatrix4fv(muTexMatrixLoc, 1, false, texMatrix, 0);

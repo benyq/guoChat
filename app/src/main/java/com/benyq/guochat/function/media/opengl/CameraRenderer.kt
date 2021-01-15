@@ -13,7 +13,6 @@ import android.util.Log
 import androidx.annotation.NonNull
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.benyq.guochat.app.IMG_PATH
 import com.benyq.guochat.app.chatImgPath
 import com.benyq.guochat.function.media.opengl.core.GlUtil
 import com.benyq.guochat.function.media.rotate
@@ -34,7 +33,7 @@ import javax.microedition.khronos.opengles.GL10
  * @e-mail 1520063035@qq.com
  * @note
  */
-class CameraRenderer(private val mActivity: Activity, private val mGlSurfaceView: GLSurfaceView, private val renderListener: OnRendererStatusListener) :
+class CameraRenderer(private val mActivity: Activity, private val mGlSurfaceView: GLSurfaceView, private val renderListener: OnRendererStatusListener?) :
     GLSurfaceView.Renderer,
     Camera.PreviewCallback, DefaultLifecycleObserver {
 
@@ -77,7 +76,7 @@ class CameraRenderer(private val mActivity: Activity, private val mGlSurfaceView
             openCamera()
             startPreview()
         }
-        renderListener.onSurfaceCreated()
+        renderListener?.onSurfaceCreated()
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
@@ -92,7 +91,7 @@ class CameraRenderer(private val mActivity: Activity, private val mGlSurfaceView
         }
         mViewWidth = width
         mViewHeight = height
-        renderListener.onSurfaceChanged(width, height)
+        renderListener?.onSurfaceChanged(width, height)
     }
 
     override fun onDrawFrame(gl: GL10?) {
@@ -103,7 +102,7 @@ class CameraRenderer(private val mActivity: Activity, private val mGlSurfaceView
         mSurfaceTexture?.updateTexImage()
         mSurfaceTexture?.getTransformMatrix(mTexMatrix)
         mProgramTextureOES.drawFrame(mCameraTexId, mTexMatrix, mMvpMatrix)
-        renderListener.onDrawFrame(mCameraNv21Byte, mCameraTexId, mCameraWidth, mCameraHeight, mMvpMatrix, mTexMatrix, mSurfaceTexture!!.timestamp)
+        renderListener?.onDrawFrame(mCameraNv21Byte, mCameraTexId, mCameraWidth, mCameraHeight, mMvpMatrix, mTexMatrix, mSurfaceTexture!!.timestamp)
         mGlSurfaceView.requestRender()
     }
 

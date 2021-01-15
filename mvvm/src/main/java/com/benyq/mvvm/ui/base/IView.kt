@@ -7,7 +7,7 @@ package com.benyq.mvvm.ui.base
  */
 interface IView {
 
-    fun getLayoutId(): Int
+    fun getLayoutId(): Int = 0
 
     fun initBefore() {}
 

@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
 import com.benyq.guochat.function.fingerprint.FingerprintVerifyManager
 import com.benyq.guochat.local.ChatLocalStorage
+import com.benyq.guochat.test.TestActivity
 import com.benyq.guochat.ui.login.FingerLoginActivity
 import com.benyq.guochat.ui.login.LoginActivity
 import com.benyq.mvvm.ext.fromP
@@ -30,26 +31,22 @@ class SplashActivity : AppCompatActivity() {
         if (avoidLaunchHereAgain()) {
             return
         }
-        //在全面屏手机上拉升开屏页图片
-        if (fromP()) {
-            val lp = window.attributes
-            lp.layoutInDisplayCutoutMode =
-                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
-            window.attributes = lp
+        immersionBar {
+            hideBar(BarHide.FLAG_HIDE_BAR)
         }
-//        goToActivity<TestActivity>()
-        lifecycleScope.launch(Dispatchers.IO) {
-            delay(1000)
-            withContext(Dispatchers.Main) {
-                //这边要判断，是否开启指纹登录
-                if (FingerprintVerifyManager.canAuthenticate(this@SplashActivity) && ChatLocalStorage.personConfig.fingerprintLogin) {
-                    goToActivity<FingerLoginActivity>(exitAnim = R.anim.normal_out)
-                } else {
-                    goToActivity<LoginActivity>(exitAnim = R.anim.normal_out)
-                }
-                finish()
-            }
-        }
+        goToActivity<TestActivity>()
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            delay(1000)
+//            withContext(Dispatchers.Main) {
+//                //这边要判断，是否开启指纹登录
+//                if (FingerprintVerifyManager.canAuthenticate(this@SplashActivity) && ChatLocalStorage.personConfig.fingerprintLogin) {
+//                    goToActivity<FingerLoginActivity>(exitAnim = R.anim.normal_out)
+//                } else {
+//                    goToActivity<LoginActivity>(exitAnim = R.anim.normal_out)
+//                }
+//                finish()
+//            }
+//        }
     }
 
     private fun avoidLaunchHereAgain(): Boolean {

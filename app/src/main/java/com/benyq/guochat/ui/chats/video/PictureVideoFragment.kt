@@ -2,6 +2,7 @@ package com.benyq.guochat.ui.chats.video
 
 import android.opengl.EGL14
 import android.opengl.GLSurfaceView
+import android.util.Log
 import android.widget.FrameLayout
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -58,7 +59,16 @@ class PictureVideoFragment : BaseFragment() {
                     texMatrix: FloatArray?,
                     timeStamp: Long
                 ) {
-                    sendRecordingData(cameraTexId, GlUtil.IDENTITY_MATRIX, texMatrix, timeStamp / 1000000)
+                    Log.e(
+                        "benyq",
+                        "glcontext onDrawFrame: ${EGL14.eglGetCurrentContext()}"
+                    )
+                    sendRecordingData(
+                        cameraTexId,
+                        GlUtil.IDENTITY_MATRIX,
+                        texMatrix,
+                        timeStamp / 1000000
+                    )
                 }
             }).apply {
             setPictureCapturedAction {
@@ -126,7 +136,6 @@ class PictureVideoFragment : BaseFragment() {
                         videoEncoder.setEglContext(EGL14.eglGetCurrentContext())
                         synchronized(mRecordLock) { mVideoEncoder = videoEncoder }
                     })
-//                runOnUiThread(Runnable { mTakePicBtn.setSecond(0) })
                 }
                 mStartRecordTime = System.currentTimeMillis()
             }

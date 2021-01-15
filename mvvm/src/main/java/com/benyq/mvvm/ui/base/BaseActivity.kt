@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper
 import com.benyq.mvvm.R
-import com.benyq.mvvm.ext.provideBinding
 import com.benyq.mvvm.ui.NormalProgressDialogManager
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ktx.immersionBar
@@ -42,13 +41,15 @@ abstract class BaseActivity : AppCompatActivity(), IActivity, BGASwipeBackHelper
 
     protected lateinit var mSwipeBackHelper: BGASwipeBackHelper
 
-    protected lateinit var mBinding: ViewBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         initSwipeBackFinish()
         super.onCreate(savedInstanceState)
         initWidows()
-        setContentView(getLayoutId())
+        if (getLayoutId() == 0) {
+            setContentView(getLayoutView())
+        }else {
+            setContentView(getLayoutId())
+        }
         initBefore()
         initView()
         initListener()
@@ -76,6 +77,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity, BGASwipeBackHelper
     }
 
     open fun initData() {}
+    open fun getLayoutView(): View?  = null
 
     override fun finish() {
         super.finish()

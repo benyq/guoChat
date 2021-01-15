@@ -8,7 +8,8 @@ import android.opengl.EGLContext;
 import android.opengl.GLES20;
 import android.util.Log;
 import android.view.Surface;
-import com.benyq.guochat.function.media.opengl.ProgramTexture2d;
+
+import com.benyq.guochat.function.media.opengl.ProgramTextureOES;
 import com.benyq.guochat.function.media.opengl.core.GlUtil;
 
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class MediaVideoEncoder extends MediaEncoder {
     private RenderHandler mRenderHandler;
     private Surface mSurface;
 
-    private ProgramTexture2d program;
+    private ProgramTextureOES program;
     private int[] mFboTex;
     private int[] mFboId;
     private int[] mViewPort = new int[4];
@@ -164,7 +165,7 @@ public class MediaVideoEncoder extends MediaEncoder {
         mFboTex = new int[1];
         mFboId = new int[1];
         GlUtil.createFrameBuffers(mFboTex, mFboId, mWidth, mHeight);
-        program = new ProgramTexture2d();
+        program = new ProgramTextureOES();
         mRenderHandler.setEglContext(sharedContext, mSurface, mFboTex[0]);
     }
 

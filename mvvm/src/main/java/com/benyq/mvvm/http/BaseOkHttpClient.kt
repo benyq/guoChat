@@ -1,6 +1,5 @@
 package com.benyq.mvvm.http
 
-import com.benyq.mvvm.Setting
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit

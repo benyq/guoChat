@@ -1,6 +1,6 @@
 package com.benyq.mvvm.response
 
-import com.benyq.mvvm.Setting
+import com.benyq.mvvm.http.Setting
 import com.benyq.mvvm.ext.Toasts
 
 /**

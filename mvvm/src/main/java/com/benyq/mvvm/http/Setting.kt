@@ -1,4 +1,4 @@
-package com.benyq.mvvm
+package com.benyq.mvvm.http
 
 /**
  * @author benyq
@@ -23,9 +23,5 @@ object Setting {
     const val MESSAGE_EMPTY = "message is null"
 
     const val DATA_EMPTY = "data is null"
-
-    const val ACTIVITY_CACHE_SIZE = 100
-    const val FRAGMENT_CACHE_SIZE = 100
-
 
 }

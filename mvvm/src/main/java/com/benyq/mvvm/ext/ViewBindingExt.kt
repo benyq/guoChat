@@ -19,10 +19,6 @@ import kotlin.reflect.KProperty
  * @note
  */
 
-inline fun <reified VB : ViewBinding> Activity.provideBinding(): VB {
-    return inflateBinding<VB>(layoutInflater).apply { setContentView(root) }
-}
-
 inline fun <reified VB : ViewBinding> Activity.binding() = lazy {
     inflateBinding<VB>(layoutInflater).apply { setContentView(root) }
 }

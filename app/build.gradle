@@ -47,7 +47,7 @@ android {
         experimental = true
     }
 
-    viewBinding.enabled = false
+    viewBinding.enabled = true
 }
 
 dependencies {
