@@ -34,10 +34,10 @@ enum class VideoFrameRate(val fps: Int) {
     FRAME_RATE_FPS_30(30)
 }
 
-enum class VideoFormat {
-
-    NV21,
-    TEXTURE_OES,
-    TEXTURE_2D
+enum class VideoFilter(type: Int) {
+    NORMAL_FILTER(1),
+    BLACK_WHITE_Filter(2),
+    COLD_COLOR_TONE_FILTER(3),
+    WARM_COLOR_TONE_FILTER(4)
 
 }

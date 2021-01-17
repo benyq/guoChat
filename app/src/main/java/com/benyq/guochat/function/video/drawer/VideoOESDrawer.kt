@@ -1,43 +1,24 @@
-package com.benyq.guochat.function.video.filter
+package com.benyq.guochat.function.video.drawer
 
+import android.media.effect.EffectFactory
 import android.opengl.GLES11Ext
 import android.opengl.GLES20
-import android.opengl.Matrix
 import com.benyq.guochat.function.video.OpenGLTools
-import com.benyq.mvvm.ext.loge
-import java.util.*
 
 /**
- * @author benyqYe
- * date 2021/1/15
- * e-mail 1520063035@qq.com
- * description 具体渲染的，画出正常画面
+ * @author benyq
+ * @time 2021/1/16
+ * @e-mail 1520063035@qq.com
+ * @note
  */
+class VideoOESDrawer : BaseDrawer(){
 
-class OESFilter : BaseFilter(){
+    //透明句柄
+    private var mAlphaHandle = -1
+    private var mAlpha = 1f
 
-    // 半透值接收者
-    private var mAlphaHandle: Int = -1
-    private var mAlpha: Float = 1f
-
-
-    override fun getLocations() {
-
-        mVertexPosHandle = GLES20.glGetAttribLocation(mProgram, "aPosition")
-
-        mTexturePosHandle = GLES20.glGetAttribLocation(mProgram, "aCoordinate")
-
-        mVertexMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMatrix")
-        OpenGLTools.checkLocation(mVertexMatrixHandle, "uMatrix")
-
-        mTextureHandle = GLES20.glGetUniformLocation(mProgram, "uTexture")
-
-        mTexMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uTexMatrix")
-        OpenGLTools.checkLocation(mTexMatrixHandle, "uTexMatrix")
-
-        mAlphaHandle = GLES20.glGetAttribLocation(mProgram, "alpha")
-
-    }
+    private var mFilterTypeHandle = -1
+    private var mFilterType = 1
 
     override fun getVertexShader(): String {
         return "attribute vec4 aPosition;" +
@@ -63,34 +44,74 @@ class OESFilter : BaseFilter(){
                 "varying float inAlpha;" +
                 "void main() {" +
                 "  vec4 color = texture2D(uTexture, vCoordinate);" +
-                "  gl_FragColor = vec4(color.r, color.g, color.b, inAlpha) + vec4(0.2, 0.2, 0.0, 0.0);" +
+                "  gl_FragColor = vec4(color.r, color.g, color.b, inAlpha);" +
                 "}"
     }
 
-    override fun draw() {
-        super.draw()
+
+    override fun getVertexCoors() = floatArrayOf(
+        -1f, -1f,
+        1f, -1f,
+        -1f, 1f,
+        1f, 1f
+    )
+
+    override fun getTextureCoors() = floatArrayOf(
+        0f, 0f,
+        1f, 0f,
+        0f, 1f,
+        1f, 1f
+    )
+
+    override fun getLocations() {
+
+        mVertexPosHandle = GLES20.glGetAttribLocation(mProgram, "aPosition")
+
+        mTexturePosHandle = GLES20.glGetAttribLocation(mProgram, "aCoordinate")
+
+        mVertexMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMatrix")
+        OpenGLTools.checkLocation(mVertexMatrixHandle, "uMatrix")
+
+        mTextureHandle = GLES20.glGetUniformLocation(mProgram, "uTexture")
+
+        mTexMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uTexMatrix")
+        OpenGLTools.checkLocation(mTexMatrixHandle, "uTexMatrix")
+
+        mAlphaHandle = GLES20.glGetAttribLocation(mProgram, "alpha")
+        mFilterTypeHandle = GLES20.glGetUniformLocation(mProgram, "inFilterType")
+    }
+
+    override fun drawFrame(textureId: Int, texMatrix: FloatArray?, mvpMatrix: FloatArray?) {
+        super.drawFrame(textureId, texMatrix, mvpMatrix)
+
+        GLES20.glUseProgram(mProgram)
         //激活指定纹理单元
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
         //绑定纹理ID到纹理单元
-        GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, mTextureId)
+        GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, textureId)
         //将激活的纹理单元传递到着色器里面
         GLES20.glUniform1i(mTextureHandle, 0)
 
         //启用顶点的句柄
         GLES20.glEnableVertexAttribArray(mVertexPosHandle)
         GLES20.glEnableVertexAttribArray(mTexturePosHandle)
-        GLES20.glUniformMatrix4fv(mVertexMatrixHandle, 1, false, mMVPMatrix, 0)
-        GLES20.glUniformMatrix4fv(mTexMatrixHandle, 1, false, mTexMatrix, 0)
+        GLES20.glUniformMatrix4fv(mVertexMatrixHandle, 1, false, mvpMatrix, 0)
+        GLES20.glUniformMatrix4fv(mTexMatrixHandle, 1, false, texMatrix, 0)
         OpenGLTools.checkGlError("glUniformMatrix4fv mTexMatrixHandle")
         //设置着色器参数， 第二个参数表示一个顶点包含的数据数量，这里为xy，所以为2
         GLES20.glVertexAttribPointer(mVertexPosHandle, 2, GLES20.GL_FLOAT, false, 0, mVertexBuffer)
         GLES20.glVertexAttribPointer(mTexturePosHandle, 2, GLES20.GL_FLOAT, false, 0, mTextureBuffer)
         GLES20.glVertexAttrib1f(mAlphaHandle, mAlpha)
+        GLES20.glUniform1i(mFilterTypeHandle, mFilterType)
 
         //开始绘制
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
 
         GLES20.glUseProgram(0)
+
+    }
+
+    override fun release() {
 
     }
 

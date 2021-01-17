@@ -1,9 +1,7 @@
 package com.benyq.guochat.test
 
-import android.opengl.GLSurfaceView
 import android.widget.FrameLayout
 import com.benyq.guochat.databinding.ActivityTestBinding
-import com.benyq.guochat.function.media.opengl.CameraRenderer
 import com.benyq.guochat.function.video.CaptureController
 import com.benyq.mvvm.ext.binding
 import com.benyq.mvvm.ext.checkFullScreen
@@ -22,6 +20,7 @@ class TestActivity : BaseActivity() {
 
     override fun initView() {
         lifecycle.addObserver(mCaptureController)
+        resizeViewMargin()
     }
 
     override fun initListener() {

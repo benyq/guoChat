@@ -43,7 +43,7 @@ class CaptureController(
     private var mViewWidth = 0
     private var mViewHeight = 0
 
-    private var mCaptureRenderer: CaptureRenderer = CaptureRenderer()
+    private var mCaptureRenderer: CaptureRenderer = CaptureRenderer(mActivity)
     private lateinit var mPreviewCallbackBufferArray: ByteArray
     private var mSurfaceTexture: SurfaceTexture? = null
 

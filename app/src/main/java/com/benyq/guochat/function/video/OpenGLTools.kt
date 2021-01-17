@@ -6,10 +6,18 @@ import android.opengl.GLUtils
 import android.opengl.Matrix
 import android.util.Log
 import com.benyq.guochat.function.media.opengl.core.GlUtil
+import java.util.*
 
 object OpenGLTools {
 
     private const val TAG = "OpenGLTools"
+
+    var IDENTITY_MATRIX: FloatArray = FloatArray(16)
+
+    init{
+        Matrix.setIdentityM(IDENTITY_MATRIX, 0)
+    }
+
 
     //创建 Program
     fun createProgram(vertexSource: String, fragmentSource: String): Int {
@@ -186,6 +194,9 @@ object OpenGLTools {
         }
     }
 
+    fun provideIdentityMatrix(): FloatArray {
+        return Arrays.copyOf(IDENTITY_MATRIX, IDENTITY_MATRIX.size)
+    }
 
     private fun loadShader(shaderType: Int, source: String): Int {
         var shader = GLES20.glCreateShader(shaderType)
