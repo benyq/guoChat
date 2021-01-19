@@ -18,7 +18,7 @@ class BitmapDrawer(bitmap: Bitmap) : BaseDrawer() {
     private var scale = 1f
 
     //纹理ID
-    private var mTextureId: Int = -1
+     var mTextureId: Int = -1
 
     init {
         mBitmapWidth = bitmap.width.toFloat()
@@ -107,13 +107,17 @@ class BitmapDrawer(bitmap: Bitmap) : BaseDrawer() {
     }
 
     override fun release() {
-
+        GLES20.glDisableVertexAttribArray(mVertexPosHandle)
+        GLES20.glDisableVertexAttribArray(mTexturePosHandle)
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)
+        GLES20.glDeleteTextures(1, intArrayOf(mTextureId), 0)
+        GLES20.glDeleteProgram(mProgram)
     }
 
     fun setViewPoint(width: Int, height: Int) {
         mViewWidth = width.toFloat()
         mViewHeight = height.toFloat()
-        scale = 0.5f
+        scale = 1f
         Matrix.scaleM(mMvpMatrix, 0, scale * mBitmapWidth / mViewWidth, scale * mBitmapHeight / mViewHeight, 1f)
     }
 

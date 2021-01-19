@@ -198,6 +198,10 @@ object OpenGLTools {
         return Arrays.copyOf(IDENTITY_MATRIX, IDENTITY_MATRIX.size)
     }
 
+    fun deleteTexture() {
+
+    }
+
     private fun loadShader(shaderType: Int, source: String): Int {
         var shader = GLES20.glCreateShader(shaderType)
         checkGlError("glCreateShader type=$shaderType")

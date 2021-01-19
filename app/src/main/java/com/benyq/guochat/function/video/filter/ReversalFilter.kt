@@ -13,7 +13,7 @@ import java.nio.FloatBuffer
  * @e-mail 1520063035@qq.com
  * @note
  */
-class GrayFilter : BaseFilter(){
+class ReversalFilter : BaseFilter(){
 
     override fun getLocations() {
         mVertexPosHandle = GLES20.glGetAttribLocation(mProgram, "aPosition")
@@ -74,13 +74,66 @@ class GrayFilter : BaseFilter(){
         return "precision mediump float;" +
                 //从Java传递进入来的纹理单元
                 "uniform sampler2D uTexture;" +
+                "float mosaicSize = 0.03;"+
                 //从顶点着色器传递进来的纹理坐标
                 "varying vec2 vCoordinate;" +
                 "void main() {" +
-                //根据纹理坐标，从纹理单元中取色
-                "  vec4 color = texture2D(uTexture, vCoordinate);" +
-                " float gray = (color.r + color.g + color.b)/3.0;"+
-                "  gl_FragColor = vec4(gray, gray, gray, 1);" +
+                "    const float TR = 0.866025;\n" +
+                "    const float PI6 = 0.523599;\n" +
+                "    float x = vCoordinate.x;\n" +
+                "    float y = vCoordinate.y;\n" +
+                "    int wx = int(x/(1.5 * mosaicSize));\n" +
+                "    int wy = int(y/(TR * mosaicSize));\n" +
+                "    vec2 v1, v2, vn;\n" +
+                "    if (wx / 2 * 2 == wx) {\n" +
+                "        if (wy/2 * 2 == wy) {\n" +
+                "            v1 = vec2(mosaicSize * 1.5 * float(wx), mosaicSize * TR * float(wy));\n" +
+                "            v2 = vec2(mosaicSize * 1.5 * float(wx + 1), mosaicSize * TR * float(wy + 1));\n" +
+                "        } else {\n" +
+                "            v1 = vec2(mosaicSize * 1.5 * float(wx), mosaicSize * TR * float(wy + 1));\n" +
+                "            v2 = vec2(mosaicSize * 1.5 * float(wx + 1), mosaicSize * TR * float(wy));\n" +
+                "        }\n" +
+                "    } else {\n" +
+                "        if (wy/2 * 2 == wy) {\n" +
+                "            v1 = vec2(mosaicSize * 1.5 * float(wx), mosaicSize * TR * float(wy + 1));\n" +
+                "            v2 = vec2(mosaicSize * 1.5 * float(wx+1), mosaicSize * TR * float(wy));\n" +
+                "        } else {\n" +
+                "            v1 = vec2(mosaicSize * 1.5 * float(wx), mosaicSize * TR * float(wy));\n" +
+                "            v2 = vec2(mosaicSize * 1.5 * float(wx + 1), mosaicSize * TR * float(wy+1));\n" +
+                "        }\n" +
+                "    }\n" +
+                "    float s1 = sqrt(pow(v1.x - x, 2.0) + pow(v1.y - y, 2.0));\n" +
+                "    float s2 = sqrt(pow(v2.x - x, 2.0) + pow(v2.y - y, 2.0));\n" +
+                "    if (s1 < s2) {\n" +
+                "        vn = v1;\n" +
+                "    } else {\n" +
+                "        vn = v2;\n" +
+                "    }\n" +
+                "    \n" +
+                "    vec4 mid = texture2D(uTexture, vn);\n" +
+                "    float a = atan((x - vn.x)/(y - vn.y));\n" +
+                "    vec2 area1 = vec2(vn.x, vn.y - mosaicSize * TR / 2.0);\n" +
+                "    vec2 area2 = vec2(vn.x + mosaicSize / 2.0, vn.y - mosaicSize * TR / 2.0);\n" +
+                "    vec2 area3 = vec2(vn.x + mosaicSize / 2.0, vn.y + mosaicSize * TR / 2.0);\n" +
+                "    vec2 area4 = vec2(vn.x, vn.y + mosaicSize * TR / 2.0);\n" +
+                "    vec2 area5 = vec2(vn.x - mosaicSize / 2.0, vn.y + mosaicSize * TR / 2.0);\n" +
+                "    vec2 area6 = vec2(vn.x - mosaicSize / 2.0, vn.y - mosaicSize * TR / 2.0);\n" +
+                "    \n" +
+                "    if (a >= PI6 && a < PI6 * 3.0) {\n" +
+                "        vn = area1;\n" +
+                "    } else if (a >= PI6 * 3.0 && a < PI6 * 5.0) {\n" +
+                "        vn = area2;\n" +
+                "    } else if ((a >= PI6 * 5.0 && a <= PI6 * 6.0) || (a < -PI6 * 5.0 && a > -PI6 * 6.0)) {\n" +
+                "        vn = area3;\n" +
+                "    } else if (a < -PI6 * 3.0 && a >= -PI6 * 5.0) {\n" +
+                "        vn = area4;\n" +
+                "    } else if(a <= -PI6 && a> -PI6 * 3.0) {\n" +
+                "        vn = area5;\n" +
+                "    } else if (a > -PI6 && a < PI6) {\n" +
+                "        vn = area6;\n" +
+                "    }\n" +
+                "    vec4 color = texture2D(uTexture, vn);\n" +
+                "    gl_FragColor = color;\n" +
                 "}"
     }
 

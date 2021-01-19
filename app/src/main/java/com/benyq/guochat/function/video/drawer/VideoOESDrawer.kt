@@ -111,8 +111,41 @@ class VideoOESDrawer : BaseDrawer(){
 
     }
 
-    override fun release() {
+     fun drawFrame2D(textureId: Int, texMatrix: FloatArray?, mvpMatrix: FloatArray?) {
+        super.drawFrame(textureId, texMatrix, mvpMatrix)
 
+        GLES20.glUseProgram(mProgram)
+        //激活指定纹理单元
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
+        //绑定纹理ID到纹理单元
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId)
+        //将激活的纹理单元传递到着色器里面
+        GLES20.glUniform1i(mTextureHandle, 0)
+
+        //启用顶点的句柄
+        GLES20.glEnableVertexAttribArray(mVertexPosHandle)
+        GLES20.glEnableVertexAttribArray(mTexturePosHandle)
+        GLES20.glUniformMatrix4fv(mVertexMatrixHandle, 1, false, mvpMatrix, 0)
+        GLES20.glUniformMatrix4fv(mTexMatrixHandle, 1, false, texMatrix, 0)
+        OpenGLTools.checkGlError("glUniformMatrix4fv mTexMatrixHandle")
+        //设置着色器参数， 第二个参数表示一个顶点包含的数据数量，这里为xy，所以为2
+        GLES20.glVertexAttribPointer(mVertexPosHandle, 2, GLES20.GL_FLOAT, false, 0, mVertexBuffer)
+        GLES20.glVertexAttribPointer(mTexturePosHandle, 2, GLES20.GL_FLOAT, false, 0, mTextureBuffer)
+        GLES20.glVertexAttrib1f(mAlphaHandle, mAlpha)
+        GLES20.glUniform1i(mFilterTypeHandle, mFilterType)
+
+        //开始绘制
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
+
+        GLES20.glUseProgram(0)
+
+    }
+
+    override fun release() {
+        GLES20.glDisableVertexAttribArray(mVertexPosHandle)
+        GLES20.glDisableVertexAttribArray(mTexturePosHandle)
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)
+        GLES20.glDeleteProgram(mProgram)
     }
 
 }
