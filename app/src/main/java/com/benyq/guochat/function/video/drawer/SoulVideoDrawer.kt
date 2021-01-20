@@ -5,7 +5,7 @@ import android.opengl.GLES11
 import android.opengl.GLES11Ext
 import android.opengl.GLES20
 import android.opengl.Matrix
-import com.benyq.guochat.function.video.OpenGLTool
+import com.benyq.guochat.function.video.OpenGLTools
 import com.benyq.guochat.function.video.filter.GrayFilter
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -260,15 +260,15 @@ class SoulVideoDrawer {
     private fun updateFBO() {
         if (mSoulTextureId == -1) {
             // 创建FBO纹理
-            mSoulTextureId = OpenGLTool.createFBOTexture(mVideoWidth, mVideoHeight)
+            mSoulTextureId = OpenGLTools.createFBOTexture(mVideoWidth, mVideoHeight)
         }
         if (mSoulFrameBuffer == -1) {
-            mSoulFrameBuffer = OpenGLTool.createFrameBuffer()
+            mSoulFrameBuffer = OpenGLTools.createFrameBuffer()
         }
         if (System.currentTimeMillis() - mModifyTime > 500) {
             mModifyTime = System.currentTimeMillis()
             // 绑定FBO
-            OpenGLTool.bindFBO(mSoulFrameBuffer, mSoulTextureId)
+            OpenGLTools.bindFBO(mSoulFrameBuffer, mSoulTextureId)
             // 配置FBO窗口
             configFboViewport()
             // 激活默认的纹理
@@ -278,7 +278,7 @@ class SoulVideoDrawer {
             // 绘制到FBO
             doDraw()
             // 解绑FBO
-            OpenGLTool.unbindFBO()
+            OpenGLTools.unbindFBO()
             // 恢复默认绘制窗口
             configDefViewport()
         }
@@ -372,7 +372,7 @@ class SoulVideoDrawer {
         val texts = IntArray(1)
         texts[0] = mSoulTextureId
 
-        OpenGLTool.deleteFBO(fbs, texts)
+        OpenGLTools.deleteFBO(fbs, texts)
     }
 
     private fun getVertexShader(): String {

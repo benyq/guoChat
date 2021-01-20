@@ -37,4 +37,12 @@
         android:layout_marginTop="15dp"
         android:src="@drawable/ic_camera_exchange" />
 
+    <Button
+        android:id="@+id/btnAddFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        android:text="加滤镜"/>
+
 </FrameLayout>

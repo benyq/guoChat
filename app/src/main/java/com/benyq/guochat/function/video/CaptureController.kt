@@ -15,6 +15,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.benyq.guochat.function.media.opengl.CameraUtils
 import com.benyq.guochat.function.media.opengl.OnRendererStatusListener
 import com.benyq.guochat.function.media.opengl.core.GlUtil
+import com.benyq.guochat.function.video.filter.BaseFilter
 import java.util.*
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -139,6 +140,18 @@ class CaptureController(
 
         mCamera?.addCallbackBuffer(data)
         mGlSurfaceView.requestRender()
+    }
+
+    fun updateFilter(filter: BaseFilter?) {
+        mGlSurfaceView.queueEvent {
+            mCaptureRenderer.updateFilter(filter)
+        }
+    }
+
+    fun removeFilter() {
+        mGlSurfaceView.queueEvent {
+            mCaptureRenderer.removeFilter()
+        }
     }
 
     private fun startBackgroundThread() {

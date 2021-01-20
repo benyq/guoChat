@@ -8,11 +8,10 @@ import android.opengl.GLSurfaceView
 import com.benyq.guochat.R
 import com.benyq.guochat.function.media.opengl.OnRendererStatusListener
 import com.benyq.guochat.function.video.drawer.BitmapDrawer
-import com.benyq.guochat.function.video.drawer.SoulVideoDrawer
-import com.benyq.guochat.function.video.drawer.TriangleDrawer
-import com.benyq.guochat.function.video.drawer.VideoOESDrawer
-import com.benyq.guochat.function.video.filter.GrayFilter
-import com.benyq.guochat.function.video.filter.ReversalFilter
+import com.benyq.guochat.function.video.drawer.CameraDrawer
+import com.benyq.guochat.function.video.filter.BaseFilter
+import com.benyq.guochat.function.video.filter.MosaicFilter
+import com.benyq.guochat.function.video.filter.NoFilter
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -25,13 +24,15 @@ import javax.microedition.khronos.opengles.GL10
 
 class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
 
-    private lateinit var mDrawer: VideoOESDrawer
-    private lateinit var mVideoDrawer: SoulVideoDrawer
+    private lateinit var mDrawer: CameraDrawer
     private lateinit var bitmapDrawer: BitmapDrawer
-    private lateinit var mGrayFilter: GrayFilter
-    private lateinit var mReversalFilter: ReversalFilter
     private lateinit var mFrameBuffer: FrameBuffer
-    private lateinit var mFrameBuffer2: FrameBuffer
+    //将图像显示到屏幕的滤镜
+    private lateinit var mShowFilter: NoFilter
+    //有效滤镜
+    private lateinit var mMosaicFilter: MosaicFilter
+    private val mFilterList : MutableList<BaseFilter> = mutableListOf()
+
 
     private var mMvpMatrix: FloatArray = FloatArray(16){0f}
     private var mTexMatrix: FloatArray = floatArrayOf(
@@ -42,43 +43,32 @@ class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
     )
 
     var mGLStatusListener: OnRendererStatusListener? = null
-    private var mTextureId = -1
-    private var mSoulTextureId = -1
-
-    private var mSoulFrameBuffer = -1
-
+    private var mCameraTextureId = -1
+    private var mFilterTextureId = -1
+    private var mViewWidth: Int = 0
+    private var mViewHeight: Int = 0
 
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
         GLES20.glClearColor(0f, 0f, 0f, 0f)
         //开启混合，即半透明
         GLES20.glEnable(GLES20.GL_BLEND)
         GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA)
-        mTextureId = OpenGLTools.createTextureObject(GLES11Ext.GL_TEXTURE_EXTERNAL_OES)
-        mDrawer = VideoOESDrawer()
-//        mVideoDrawer = SoulVideoDrawer()
-//        mVideoDrawer.setTextureID(mTextureId)
-        mGrayFilter = GrayFilter()
-        mReversalFilter = ReversalFilter()
+        mCameraTextureId = OpenGLTools.createTextureObject(GLES11Ext.GL_TEXTURE_EXTERNAL_OES)
+        mDrawer = CameraDrawer()
+        mShowFilter = NoFilter()
+
         bitmapDrawer = BitmapDrawer(BitmapFactory.decodeResource(context.resources, R.drawable.ic_app_logo))
         mGLStatusListener?.onSurfaceCreated()
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
         GLES20.glViewport(0, 0, width, height)
+        mViewWidth = width
+        mViewHeight = height
         bitmapDrawer.setViewPoint(width, height)
-//        mGrayFilter.setTextureSize(mTextureId, width, height)
         mGLStatusListener?.onSurfaceChanged(width, height)
         mFrameBuffer = FrameBuffer(width, height)
-        mFrameBuffer2 = FrameBuffer(width, height)
-//        if (mSoulTextureId == -1) {
-//            mSoulTextureId = OpenGLTool.createFBOTexture(width, height)
-//        }
-//
-//        if (mSoulFrameBuffer == -1) {
-//            mSoulFrameBuffer = OpenGLTool.createFrameBuffer()
-//        }
 
-//        mVideoDrawer.setVideoSize(width, height)
     }
 
 
@@ -91,28 +81,17 @@ class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
         // 清屏，否则会有画面残留
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT or GLES20.GL_DEPTH_BUFFER_BIT)
 
-//        mGrayFilter.bind()
-//        mDrawer.drawFrame(mTextureId, mTexMatrix, mMvpMatrix)
-//        mGrayFilter.draw()
-//        mGrayFilter.unbind()
-
-
         mFrameBuffer.bind()//FBO 之前出错是因为 纹理格式不一致导致的
-//        OpenGLTool.bindFBO(mSoulFrameBuffer, mSoulTextureId) //openGL 纹理坐标原点在左下角，使用fbo时纹理会垂直镜像翻转，需要自己再翻转回来
-        mDrawer.drawFrame(mTextureId, mTexMatrix, mMvpMatrix)
-//        OpenGLTool.unbindFBO()
+        mDrawer.drawFrame(mCameraTextureId, mTexMatrix, mMvpMatrix)
         mFrameBuffer.unbind()
+        mFilterTextureId = mFrameBuffer.texture
 
-//        mDrawer.drawFrame2D(mSoulTextureId, mTexMatrix, mMvpMatrix)
+        mFilterList.forEach {
+            it.draw(mFilterTextureId)
+            mFilterTextureId = it.getTextureId()
+        }
 
-
-        mFrameBuffer2.bind()
-        mGrayFilter.setTextureId(mFrameBuffer.texture)
-        mGrayFilter.draw()
-        mFrameBuffer2.unbind()
-
-        mReversalFilter.setTextureId(mFrameBuffer2.texture)
-        mReversalFilter.draw()
+        mShowFilter.draw(mFilterTextureId)
 
         bitmapDrawer.drawFrame()
 
@@ -121,11 +100,11 @@ class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
 
 
     fun onSurfaceDestroy() {
-        GLES20.glDeleteTextures(2, intArrayOf(mTextureId, mSoulTextureId), 0)
+        GLES20.glDeleteTextures(1, intArrayOf(mCameraTextureId), 0)
         mDrawer.release()
     }
 
-    fun getTextureId() = mTextureId
+    fun getTextureId() = mCameraTextureId
 
     fun setMVPMatrix(matrix: FloatArray) {
         mMvpMatrix = matrix
@@ -133,5 +112,19 @@ class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
 
     fun setTexMatrix(matrix: FloatArray) {
         mTexMatrix = matrix
+    }
+
+    fun updateFilter(filter: BaseFilter?) {
+        filter?.let {
+            it.setSize(mViewWidth, mViewHeight)
+            mFilterList.add(it)
+        }
+    }
+
+    fun removeFilter() {
+        mFilterList.forEach {
+            it.release()
+        }
+        mFilterList.clear()
     }
 }

@@ -11,26 +11,14 @@ import android.opengl.GLES20
 
 class FrameBuffer(val width: Int, val height: Int) {
 
-    val texture: Int
-    private val fboId: Int
+    val texture: Int = OpenGLTools.createFBOTexture(width, height)
+    private val fboId: Int = OpenGLTools.createFrameBuffer()
 
     init {
-        val fbos = intArrayOf(1)
-        GLES20.glGenFramebuffers(1, fbos, 0)
-        fboId = fbos[0]
 
         GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fboId)
 
-        texture = OpenGLTools.createFBOTexture(width, height)
-
         GLES20.glFramebufferTexture2D(GLES20.GL_FRAMEBUFFER, GLES20.GL_COLOR_ATTACHMENT0, GLES20.GL_TEXTURE_2D, texture, 0)
-
-
-//        val rbo = intArrayOf(1)
-//        GLES20.glGenRenderbuffers(GLES20.GL_RENDERBUFFER, rbo, 0)
-//        GLES20.glBindRenderbuffer(GLES20.GL_RENDERBUFFER, rbo[0])
-//        GLES20.glRenderbufferStorage(GLES20.GL_RENDERBUFFER, GLES20.GL_DEPTH_ATTACHMENT, width, height)
-//        GLES20.glFramebufferRenderbuffer(GLES20.GL_RENDERBUFFER, GLES20.GL_DEPTH_ATTACHMENT, GLES20.GL_RENDERBUFFER, rbo[0])
 
         GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0)
 
@@ -42,5 +30,9 @@ class FrameBuffer(val width: Int, val height: Int) {
 
     fun unbind() {
         GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0)
+    }
+
+    fun delete() {
+        OpenGLTools.deleteFBO(intArrayOf(fboId), intArrayOf(texture))
     }
 }

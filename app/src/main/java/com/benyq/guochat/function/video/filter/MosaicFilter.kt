@@ -11,9 +11,11 @@ import java.nio.FloatBuffer
  * @author benyq
  * @time 2021/1/16
  * @e-mail 1520063035@qq.com
- * @note
+ * @note 三角形马赛克滤镜
+ * shader来源
+ * https://juejin.cn/post/6844903889569841160
  */
-class ReversalFilter : BaseFilter(){
+class MosaicFilter : BaseFilter(){
 
     override fun getLocations() {
         mVertexPosHandle = GLES20.glGetAttribLocation(mProgram, "aPosition")
@@ -21,41 +23,6 @@ class ReversalFilter : BaseFilter(){
 
         mTextureHandle = GLES20.glGetUniformLocation(mProgram, "uTexture")
 
-    }
-
-     fun getVertexCoors() = floatArrayOf(
-        -1f, -1f,
-        1f, -1f,
-        -1f, 1f,
-        1f, 1f
-    )
-
-     fun getTextureCoors() = floatArrayOf(
-        0f, 1f,
-        1f, 1f,
-        0f, 0f,
-        1f, 0f
-    )
-
-    fun createProgram() {
-        if (mProgram > 0) {
-            return
-        }
-
-        mProgram = OpenGLTools.createProgram(getVertexShader(), getFragmentShader())
-        getLocations()
-
-        val bb = ByteBuffer.allocateDirect(getVertexCoors().size * 4)
-        bb.order(ByteOrder.nativeOrder())
-        mVertexBuffer = bb.asFloatBuffer()
-        mVertexBuffer?.put(getVertexCoors())
-        mVertexBuffer?.position(0)
-
-        val cc = ByteBuffer.allocateDirect(getTextureCoors().size * 4)
-        cc.order(ByteOrder.nativeOrder())
-        mTextureBuffer = cc.asFloatBuffer()
-        mTextureBuffer?.put(getTextureCoors())
-        mTextureBuffer?.position(0)
     }
 
     override fun getVertexShader(): String {
@@ -137,17 +104,13 @@ class ReversalFilter : BaseFilter(){
                 "}"
     }
 
-    private var fboId: Int = 0
-
-    override fun draw() {
-//        super.draw()
-        createProgram()
+    override fun onDraw(textureId: Int) {
 
         GLES20.glUseProgram(mProgram)
         //激活指定纹理单元
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
         //绑定纹理ID到纹理单元
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId)
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId)
         //将激活的纹理单元传递到着色器里面
         GLES20.glUniform1i(mTextureHandle, 0)
 
@@ -164,21 +127,7 @@ class ReversalFilter : BaseFilter(){
 
         GLES20.glUseProgram(0)
 
+        mFrameBuffer?.unbind()
     }
 
-    fun setTextureId(textureId: Int) {
-
-        mTextureId = textureId
-
-    }
-
-    fun bind() {
-        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fboId)
-    }
-
-    fun unbind() {
-        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0)
-    }
-
-    fun getTextureId() = mTextureId
 }

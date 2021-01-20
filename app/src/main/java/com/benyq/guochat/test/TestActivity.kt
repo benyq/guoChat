@@ -3,6 +3,8 @@ package com.benyq.guochat.test
 import android.widget.FrameLayout
 import com.benyq.guochat.databinding.ActivityTestBinding
 import com.benyq.guochat.function.video.CaptureController
+import com.benyq.guochat.function.video.filter.FilterFactory
+import com.benyq.guochat.function.video.filter.FilterType
 import com.benyq.mvvm.ext.binding
 import com.benyq.mvvm.ext.checkFullScreen
 import com.benyq.mvvm.ext.dip2px
@@ -23,6 +25,7 @@ class TestActivity : BaseActivity() {
         resizeViewMargin()
     }
 
+    var hasFilter = false
     override fun initListener() {
         mBinding.captureView.setPictureAction {
 
@@ -36,6 +39,16 @@ class TestActivity : BaseActivity() {
 
         mBinding.ivCameraChange.setOnClickListener {
             mCaptureController.switchCamera()
+        }
+
+        mBinding.btnAddFilter.setOnClickListener {
+            if (!hasFilter) {
+                mCaptureController.updateFilter(FilterFactory.createFilter(FilterType.FILTER_BLACK_WHITE))
+                mCaptureController.updateFilter(FilterFactory.createFilter(FilterType.FILTER_MOSAIC))
+            }else {
+                mCaptureController.removeFilter()
+            }
+            hasFilter = !hasFilter
         }
     }
 

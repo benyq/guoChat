@@ -1,19 +1,19 @@
 package com.benyq.guochat.function.video.filter
 
 import android.opengl.GLES20
-import com.benyq.guochat.function.video.FrameBuffer
-import com.benyq.guochat.function.video.OpenGLTools
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
-import java.nio.FloatBuffer
 
 /**
- * @author benyq
- * @time 2021/1/16
- * @e-mail 1520063035@qq.com
- * @note 灰度滤镜，黑白滤镜
+ * @author benyqYe
+ * date 2021/1/19
+ * e-mail 1520063035@qq.com
+ * description 所有滤镜都处理好之后，直接渲染的滤镜
  */
-class GrayFilter : BaseFilter(){
+
+class NoFilter : BaseFilter(){
+
+    init {
+        enableFrameBuffer = false
+    }
 
     override fun getLocations() {
         mVertexPosHandle = GLES20.glGetAttribLocation(mProgram, "aPosition")
@@ -44,8 +44,7 @@ class GrayFilter : BaseFilter(){
                 "void main() {" +
                 //根据纹理坐标，从纹理单元中取色
                 "  vec4 color = texture2D(uTexture, vCoordinate);" +
-                " float gray = (color.r + color.g + color.b)/3.0;"+
-                "  gl_FragColor = vec4(gray, gray, gray, 1);" +
+                "  gl_FragColor = color;" +
                 "}"
     }
 
@@ -71,7 +70,5 @@ class GrayFilter : BaseFilter(){
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
 
         GLES20.glUseProgram(0)
-
     }
-
 }
