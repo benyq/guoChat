@@ -6,13 +6,13 @@ import android.opengl.EGL14
 import android.opengl.GLES20
 import android.util.Log
 import android.widget.FrameLayout
-import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
 import com.benyq.guochat.app.chatImgPath
 import com.benyq.guochat.app.chatVideoPath
 import com.benyq.guochat.databinding.ActivityTestBinding
 import com.benyq.guochat.function.video.CaptureController
 import com.benyq.guochat.function.video.OpenGLTools
+import com.benyq.guochat.function.video.drawer.VideoDrawer
 import com.benyq.guochat.function.video.encoder.MediaAudioEncoder
 import com.benyq.guochat.function.video.encoder.MediaEncoder
 import com.benyq.guochat.function.video.encoder.MediaMuxerWrapper
@@ -23,8 +23,6 @@ import com.benyq.guochat.function.video.listener.OnDrawFrameListener
 import com.benyq.mvvm.ext.*
 import com.benyq.mvvm.ui.base.BaseActivity
 import com.gyf.immersionbar.ImmersionBar
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
 import java.nio.ByteBuffer
@@ -88,7 +86,7 @@ class TestActivity : BaseActivity() {
                     texMatrix,
                     timeStamp
                 )
-                saveImg(cameraTexId, cameraHeight, cameraWidth, mvpMatrix, texMatrix)
+                saveImg(cameraTexId, 1440, 2560, mvpMatrix, OpenGLTools.provideIdentityMatrix())
             }
         })
     }
@@ -217,24 +215,70 @@ class TestActivity : BaseActivity() {
     }
 
     private var takePic = false
-    private fun saveImg(textureId: Int, width: Int, height: Int, mvpMatrix: FloatArray?, texMatrix: FloatArray?) {
+    private fun saveImg(
+        textureId: Int,
+        width: Int,
+        height: Int,
+        mvpMatrix: FloatArray?,
+        texMatrix: FloatArray?
+    ) {
 
         if (!takePic) {
             return
         }
         val start = System.currentTimeMillis()
+
+        val textures = IntArray(1)
+        GLES20.glGenTextures(1, textures, 0)
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0])
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
+        GLES20.glTexImage2D(
+            GLES20.GL_TEXTURE_2D,
+            0,
+            GLES20.GL_RGBA,
+            width,
+            height,
+            0,
+            GLES20.GL_RGBA,
+            GLES20.GL_UNSIGNED_BYTE,
+            null
+        )
+        val frameBuffers = IntArray(1)
+        GLES20.glGenFramebuffers(1, frameBuffers, 0)
+        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, frameBuffers[0])
+        GLES20.glFramebufferTexture2D(
+            GLES20.GL_FRAMEBUFFER, GLES20.GL_COLOR_ATTACHMENT0, GLES20.GL_TEXTURE_2D,
+            textures[0], 0
+        )
+        val viewport = IntArray(4)
+        GLES20.glGetIntegerv(GLES20.GL_VIEWPORT, viewport, 0)
+        GLES20.glViewport(0, 0, width, height)
+        GLES20.glClearColor(0f, 0f, 0f, 0f)
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
+
+        val videoDrawer = VideoDrawer()
+        videoDrawer.drawFrame(textureId, texMatrix, mvpMatrix)
+        videoDrawer.release()
+
         val buffer = ByteBuffer.allocateDirect(width * height * 4)
         buffer.order(ByteOrder.LITTLE_ENDIAN)
         GLES20.glFinish()
         GLES20.glReadPixels(0, 0, width, height, GL10.GL_RGBA, GL10.GL_UNSIGNED_BYTE, buffer)
         buffer.rewind()
+        GLES20.glViewport(viewport[0], viewport[1], viewport[2], viewport[3])
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, GLES20.GL_NONE)
+        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, GLES20.GL_NONE)
+        GLES20.glDeleteTextures(1, textures, 0)
+        GLES20.glDeleteFramebuffers(1, frameBuffers, 0)
+
+
         val bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         bmp.copyPixelsFromBuffer(buffer)
         val matrix = Matrix()
-        matrix.preScale(1f, -1f)
+        matrix.preScale(1f, 1f)
         val finalBmp = Bitmap.createBitmap(bmp, 0, 0, bmp.width, bmp.height, matrix, false)
         bmp.recycle()
-        File(chatImgPath(), getCurrentDate()+".jpg").outputStream().use {
+        File(chatImgPath(), getCurrentDate() + ".jpg").outputStream().use {
             finalBmp.compress(Bitmap.CompressFormat.JPEG, 100, it)
         }
         loge("takepic ${System.currentTimeMillis() - start}")
