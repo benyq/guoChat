@@ -1,4 +1,4 @@
-package com.benyq.guochat.function.media.encoder;
+package com.benyq.guochat.function.video.encoder;
 
 import android.media.AudioFormat;
 import android.media.AudioRecord;
@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 public class MediaAudioEncoder extends MediaEncoder {
-    private static final String TAG = MediaAudioEncoder.class.getSimpleName();
+    private static final String TAG = "MediaAudioEncoder";
     private static final boolean DEBUG = false;
 
     private static final String MIME_TYPE = "audio/mp4a-latm";

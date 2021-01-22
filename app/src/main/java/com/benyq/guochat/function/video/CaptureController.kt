@@ -12,11 +12,9 @@ import android.os.Process
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.benyq.guochat.function.media.opengl.CameraUtils
-import com.benyq.guochat.function.media.opengl.OnRendererStatusListener
-import com.benyq.guochat.function.media.opengl.core.GlUtil
 import com.benyq.guochat.function.video.filter.BaseFilter
-import java.util.*
+import com.benyq.guochat.function.video.listener.OnDrawFrameListener
+import com.benyq.guochat.function.video.listener.OnRendererStatusListener
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
@@ -63,6 +61,8 @@ class CaptureController(
         Matrix.setIdentityM(mMvpMatrix, 0)
     }
 
+    private var mOnDrawFrameListener: OnDrawFrameListener? = null
+
     private val onRendererStatusListener: OnRendererStatusListener =
         object : OnRendererStatusListener {
             override fun onSurfaceCreated() {
@@ -76,20 +76,18 @@ class CaptureController(
             }
 
             override fun onDrawFrame(
-                cameraNv21Byte: ByteArray?,
                 cameraTexId: Int,
-                cameraWidth: Int,
-                cameraHeight: Int,
                 mvpMatrix: FloatArray?,
                 texMatrix: FloatArray?,
-                timeStamp: Long
             ) {
+                mGlSurfaceView.requestRender()
                 mSurfaceTexture?.updateTexImage()
                 mSurfaceTexture?.getTransformMatrix(mTexMatrix)
 
                 mCaptureRenderer.setTexMatrix(mTexMatrix)
                 mCaptureRenderer.setMVPMatrix(mMvpMatrix)
-                mGlSurfaceView.requestRender()
+
+                mOnDrawFrameListener?.onDrawFrame(cameraTexId, mCameraWidth, mCameraHeight, mvpMatrix, texMatrix, mSurfaceTexture?.timestamp ?: 0 / 1000000)
             }
 
             override fun onSurfaceChanged(viewWidth: Int, viewHeight: Int) {
@@ -152,6 +150,10 @@ class CaptureController(
         mGlSurfaceView.queueEvent {
             mCaptureRenderer.removeFilter()
         }
+    }
+
+    fun setOnDrawFrameListener(listener: OnDrawFrameListener) {
+        mOnDrawFrameListener = listener
     }
 
     private fun startBackgroundThread() {
@@ -248,10 +250,7 @@ class CaptureController(
     private fun confirmMvpMatrix() {
         if (mViewWidth > 0 && mViewHeight > 0 && mCameraWidth > 0 && mCameraHeight > 0) {
             mMvpMatrix = OpenGLTools.changeMvpMatrixCrop(
-                Arrays.copyOf(
-                    GlUtil.IDENTITY_MATRIX,
-                    GlUtil.IDENTITY_MATRIX.size
-                ),
+                OpenGLTools.provideIdentityMatrix(),
                 mViewWidth.toFloat(),
                 mViewHeight.toFloat(),
                 mCameraHeight.toFloat(),

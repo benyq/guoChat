@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benyq.guochat.function.media.opengl;
+package com.benyq.guochat.function.video;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

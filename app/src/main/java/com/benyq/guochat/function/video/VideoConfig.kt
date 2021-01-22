@@ -9,8 +9,10 @@ package com.benyq.guochat.function.video
 
 class VideoConfig {
 
-    //分辨率
-    private var videoResolution: VideoResolution = VideoResolution.VIDEO_720P
+    //预览分辨率
+    private var previewVideoResolution: VideoResolution = VideoResolution.VIDEO_1080
+    //保存分辨率
+    private var saveVideoResolution: VideoResolution = VideoResolution.VIDEO_480
     //帧率
     private var frameRate: VideoFrameRate = VideoFrameRate.FRAME_RATE_FPS_30
     //默认前置相机
@@ -34,10 +36,3 @@ enum class VideoFrameRate(val fps: Int) {
     FRAME_RATE_FPS_30(30)
 }
 
-enum class VideoFilter(type: Int) {
-    NORMAL_FILTER(1),
-    BLACK_WHITE_Filter(2),
-    COLD_COLOR_TONE_FILTER(3),
-    WARM_COLOR_TONE_FILTER(4)
-
-}

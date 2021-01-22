@@ -123,7 +123,7 @@ fun Context.getScreenSize(): Point {
 }
 
 //判断是否是全面屏
-fun Context.checkFullScreen(): Boolean {
+fun Context.checkFullScreenPhone(): Boolean {
     val point = getScreenSize()
     val width: Int
     val height: Int

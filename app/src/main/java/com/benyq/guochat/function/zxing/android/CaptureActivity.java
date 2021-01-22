@@ -291,7 +291,7 @@ public final class CaptureActivity extends Activity implements
 
     private void resizeViewMargin() {
 
-        if (SystemExtKt.checkFullScreen(this)) {
+        if (SystemExtKt.checkFullScreenPhone(this)) {
             int topMargin = (int) (SystemExtKt.dip2px(this, 15) + ImmersionBar.getStatusBarHeight(this));
 
             FrameLayout.LayoutParams ivCloseParam = (FrameLayout.LayoutParams)ivClose.getLayoutParams() ;

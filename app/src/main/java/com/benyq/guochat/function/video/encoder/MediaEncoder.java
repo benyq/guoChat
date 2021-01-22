@@ -1,4 +1,4 @@
-package com.benyq.guochat.function.media.encoder;
+package com.benyq.guochat.function.video.encoder;
 
 import android.media.MediaCodec;
 import android.media.MediaFormat;
@@ -12,7 +12,7 @@ import java.nio.ByteBuffer;
  * see https://github.com/saki4510t/AudioVideoRecordingSample
  */
 public abstract class MediaEncoder implements Runnable {
-    private static final String TAG = MediaEncoder.class.getSimpleName();
+    private static final String TAG = "MediaEncoder";
     private static final boolean DEBUG = false;
 
     private static final int TIMEOUT_USEC = 10000;    // 10[msec]

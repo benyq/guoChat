@@ -1,4 +1,4 @@
-package com.benyq.guochat.function.media.encoder;
+package com.benyq.guochat.function.video.encoder;
 
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
@@ -9,13 +9,15 @@ import android.opengl.GLES20;
 import android.util.Log;
 import android.view.Surface;
 
-import com.benyq.guochat.function.media.opengl.ProgramTextureOES;
-import com.benyq.guochat.function.media.opengl.core.GlUtil;
+
+import com.benyq.guochat.function.video.OpenGLTools;
+import com.benyq.guochat.function.video.drawer.CameraDrawer;
+import com.benyq.guochat.function.video.drawer.VideoDrawer;
 
 import java.io.IOException;
 
 public class MediaVideoEncoder extends MediaEncoder {
-    private static final String TAG = MediaVideoEncoder.class.getSimpleName();
+    private static final String TAG = "MediaVideoEncoder";
     private static final boolean DEBUG = false;
 
     private static final String MIME_TYPE = "video/avc";
@@ -41,7 +43,7 @@ public class MediaVideoEncoder extends MediaEncoder {
     private RenderHandler mRenderHandler;
     private Surface mSurface;
 
-    private ProgramTextureOES program;
+    private VideoDrawer program;
     private int[] mFboTex;
     private int[] mFboId;
     private int[] mViewPort = new int[4];
@@ -156,7 +158,8 @@ public class MediaVideoEncoder extends MediaEncoder {
         }
         boolean result;
         if (result = super.frameAvailableSoon()) {
-            mRenderHandler.draw(mFboTex[0], GlUtil.IDENTITY_MATRIX, GlUtil.IDENTITY_MATRIX);
+            mRenderHandler.draw(mFboTex[0], texMatrix, OpenGLTools.INSTANCE.provideIdentityMatrix());
+//            mRenderHandler.draw(mFboTex[0], OpenGLTools.INSTANCE.provideIdentityMatrix(), OpenGLTools.INSTANCE.provideIdentityMatrix());
         }
         return result;
     }
@@ -164,8 +167,8 @@ public class MediaVideoEncoder extends MediaEncoder {
     public void setEglContext(final EGLContext sharedContext) {
         mFboTex = new int[1];
         mFboId = new int[1];
-        GlUtil.createFrameBuffers(mFboTex, mFboId, mWidth, mHeight);
-        program = new ProgramTextureOES();
+        OpenGLTools.INSTANCE.createFrameBuffers(mFboTex, mFboId, mWidth, mHeight);
+        program = new VideoDrawer();
         mRenderHandler.setEglContext(sharedContext, mSurface, mFboTex[0]);
     }
 
@@ -189,11 +192,10 @@ public class MediaVideoEncoder extends MediaEncoder {
             mRenderHandler.release();
             mRenderHandler = null;
         }
-        GlUtil.deleteFrameBuffers(mFboId);
+        OpenGLTools.INSTANCE.deleteFBO(mFboId, mFboTex);
         if (mFboId != null) {
             mFboId[0] = -1;
         }
-        GlUtil.deleteTextures(mFboTex);
         if (mFboTex != null) {
             mFboTex[0] = -1;
         }

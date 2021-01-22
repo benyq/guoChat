@@ -1,21 +1,19 @@
 package com.benyq.guochat.function.video.drawer
 
-import android.media.effect.EffectFactory
 import android.opengl.GLES11Ext
 import android.opengl.GLES20
+import android.opengl.Matrix
 import com.benyq.guochat.function.video.OpenGLTools
 
 /**
- * @author benyq
- * @time 2021/1/16
- * @e-mail 1520063035@qq.com
- * @note 主要用于渲染相机数据
+ * @author benyqYe
+ * date 2021/1/22
+ * e-mail 1520063035@qq.com
+ * description 录制视频是的渲染
  */
-class CameraDrawer : BaseDrawer(){
 
-    //透明句柄
-    private var mAlphaHandle = -1
-    private var mAlpha = 1f
+class VideoDrawer : BaseDrawer(){
+
 
     override fun getVertexShader(): String {
         return "attribute vec4 aPosition;" +
@@ -23,25 +21,19 @@ class CameraDrawer : BaseDrawer(){
                 "uniform mat4 uTexMatrix;" +
                 "attribute vec4 aCoordinate;" +
                 "varying vec2 vCoordinate;" +
-                "attribute float alpha;" +
-                "varying float inAlpha;" +
                 "void  main() {" +
                 "  gl_Position = uMatrix * aPosition;" +
                 "   vCoordinate = (uTexMatrix * aCoordinate).xy;" +
-                "    inAlpha = alpha;" +
                 "}"
     }
 
     override fun getFragmentShader(): String {
         //一定要加换行"\n"，否则会和下一行的precision混在一起，导致编译出错
-        return "#extension GL_OES_EGL_image_external : require\n" +
-                "precision mediump float;" +
+        return "precision mediump float;" +
                 "varying vec2 vCoordinate;" +
-                "uniform samplerExternalOES uTexture;" +
-                "varying float inAlpha;" +
+                "uniform sampler2D uTexture;" +
                 "void main() {" +
-                "  vec4 color = texture2D(uTexture, vCoordinate);" +
-                "  gl_FragColor = vec4(color.r, color.g, color.b, inAlpha);" +
+                "  gl_FragColor = texture2D(uTexture, vCoordinate);" +
                 "}"
     }
 
@@ -54,14 +46,14 @@ class CameraDrawer : BaseDrawer(){
     )
 
     override fun getTextureCoors() = floatArrayOf(
-        0f, 0f,
-        1f, 0f,
         0f, 1f,
-        1f, 1f
+        1f, 1f,
+        0f, 0f,
+        1f, 0f
     )
 
-    override fun getLocations() {
 
+    override fun getLocations() {
         mVertexPosHandle = GLES20.glGetAttribLocation(mProgram, "aPosition")
 
         mTexturePosHandle = GLES20.glGetAttribLocation(mProgram, "aCoordinate")
@@ -73,8 +65,13 @@ class CameraDrawer : BaseDrawer(){
 
         mTexMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uTexMatrix")
         OpenGLTools.checkLocation(mTexMatrixHandle, "uTexMatrix")
+    }
 
-        mAlphaHandle = GLES20.glGetAttribLocation(mProgram, "alpha")
+    override fun release() {
+        GLES20.glDisableVertexAttribArray(mVertexPosHandle)
+        GLES20.glDisableVertexAttribArray(mTexturePosHandle)
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)
+        GLES20.glDeleteProgram(mProgram)
     }
 
     override fun drawFrame(textureId: Int, texMatrix: FloatArray?, mvpMatrix: FloatArray?) {
@@ -84,7 +81,7 @@ class CameraDrawer : BaseDrawer(){
         //激活指定纹理单元
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
         //绑定纹理ID到纹理单元
-        GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, textureId)
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId)
         //将激活的纹理单元传递到着色器里面
         GLES20.glUniform1i(mTextureHandle, 0)
 
@@ -96,7 +93,6 @@ class CameraDrawer : BaseDrawer(){
         //设置着色器参数， 第二个参数表示一个顶点包含的数据数量，这里为xy，所以为2
         GLES20.glVertexAttribPointer(mVertexPosHandle, 2, GLES20.GL_FLOAT, false, 0, mVertexBuffer)
         GLES20.glVertexAttribPointer(mTexturePosHandle, 2, GLES20.GL_FLOAT, false, 0, mTextureBuffer)
-        GLES20.glVertexAttrib1f(mAlphaHandle, mAlpha)
 
         //开始绘制
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
@@ -104,12 +100,4 @@ class CameraDrawer : BaseDrawer(){
         GLES20.glUseProgram(0)
 
     }
-
-    override fun release() {
-        GLES20.glDisableVertexAttribArray(mVertexPosHandle)
-        GLES20.glDisableVertexAttribArray(mTexturePosHandle)
-        GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, 0)
-        GLES20.glDeleteProgram(mProgram)
-    }
-
 }

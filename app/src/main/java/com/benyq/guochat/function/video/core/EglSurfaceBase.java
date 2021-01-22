@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benyq.guochat.function.media.opengl.core;
+package com.benyq.guochat.function.video.core;
 
 import android.graphics.Bitmap;
 import android.opengl.EGL14;

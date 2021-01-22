@@ -6,12 +6,11 @@ import android.opengl.GLES11Ext
 import android.opengl.GLES20
 import android.opengl.GLSurfaceView
 import com.benyq.guochat.R
-import com.benyq.guochat.function.media.opengl.OnRendererStatusListener
 import com.benyq.guochat.function.video.drawer.BitmapDrawer
 import com.benyq.guochat.function.video.drawer.CameraDrawer
 import com.benyq.guochat.function.video.filter.BaseFilter
-import com.benyq.guochat.function.video.filter.MosaicFilter
 import com.benyq.guochat.function.video.filter.NoFilter
+import com.benyq.guochat.function.video.listener.OnRendererStatusListener
 import com.benyq.mvvm.ext.loge
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
@@ -31,8 +30,6 @@ class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
     private lateinit var mFrameBuffer: FrameBuffer
     //将图像显示到屏幕的滤镜
     private lateinit var mShowFilter: NoFilter
-    //有效滤镜
-    private lateinit var mMosaicFilter: MosaicFilter
     private val mFilterList : MutableList<BaseFilter> = mutableListOf()
 
 
@@ -95,10 +92,9 @@ class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
         }
 
         mShowFilter.draw(mFilterTextureId)
-        loge("render time ${System.currentTimeMillis() - start}")
         bitmapDrawer.drawFrame()
 
-        mGLStatusListener?.onDrawFrame(null, 1, 0, 0, null, null, 0)
+        mGLStatusListener?.onDrawFrame(mFilterTextureId, mMvpMatrix, mTexMatrix)
     }
 
 

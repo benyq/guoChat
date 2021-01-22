@@ -1,4 +1,4 @@
-package com.benyq.guochat.function.media.encoder;
+package com.benyq.guochat.function.video.encoder;
 
 import android.media.MediaCodec;
 import android.media.MediaFormat;
@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 public class MediaMuxerWrapper {
-    private static final String TAG = MediaMuxerWrapper.class.getSimpleName();
+    private static final String TAG = "MediaMuxerWrapper";
     private static final boolean DEBUG = false;
 
     private String mOutputPath;

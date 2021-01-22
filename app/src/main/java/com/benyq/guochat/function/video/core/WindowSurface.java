@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benyq.guochat.function.media.opengl.core;
+package com.benyq.guochat.function.video.core;
 
 import android.graphics.SurfaceTexture;
 import android.view.Surface;

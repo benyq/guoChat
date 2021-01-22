@@ -5,8 +5,6 @@ import android.opengl.GLES20
 import android.opengl.GLUtils
 import android.opengl.Matrix
 import android.util.Log
-import com.benyq.guochat.function.media.opengl.core.GlUtil
-import java.util.*
 
 object OpenGLTools {
 
@@ -39,7 +37,7 @@ object OpenGLTools {
         val linkStatus = IntArray(1)
         GLES20.glGetProgramiv(program, GLES20.GL_LINK_STATUS, linkStatus, 0)
         if (linkStatus[0] != GLES20.GL_TRUE) {
-            Log.e(GlUtil.TAG, "Could not link program: ${GLES20.glGetProgramInfoLog(program)}")
+            Log.e(TAG, "Could not link program: ${GLES20.glGetProgramInfoLog(program)}")
             GLES20.glDeleteProgram(program)
             program = 0
         }
@@ -110,13 +108,31 @@ object OpenGLTools {
         val textures = IntArray(1)
         GLES20.glGenTextures(1, textures, 0)
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0])
-        GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, width, height,
-            0, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE, null)
-        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST.toFloat())
-        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,GLES20.GL_LINEAR.toFloat())
-        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S,GLES20.GL_CLAMP_TO_EDGE.toFloat())
-        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T,GLES20.GL_CLAMP_TO_EDGE.toFloat())
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D,0)
+        GLES20.glTexImage2D(
+            GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, width, height,
+            0, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE, null
+        )
+        GLES20.glTexParameterf(
+            GLES20.GL_TEXTURE_2D,
+            GLES20.GL_TEXTURE_MIN_FILTER,
+            GLES20.GL_NEAREST.toFloat()
+        )
+        GLES20.glTexParameterf(
+            GLES20.GL_TEXTURE_2D,
+            GLES20.GL_TEXTURE_MAG_FILTER,
+            GLES20.GL_LINEAR.toFloat()
+        )
+        GLES20.glTexParameterf(
+            GLES20.GL_TEXTURE_2D,
+            GLES20.GL_TEXTURE_WRAP_S,
+            GLES20.GL_CLAMP_TO_EDGE.toFloat()
+        )
+        GLES20.glTexParameterf(
+            GLES20.GL_TEXTURE_2D,
+            GLES20.GL_TEXTURE_WRAP_T,
+            GLES20.GL_CLAMP_TO_EDGE.toFloat()
+        )
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)
         return textures[0]
     }
 
@@ -128,8 +144,10 @@ object OpenGLTools {
 
     fun bindFBO(fb: Int, textureId: Int) {
         GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fb)
-        GLES20.glFramebufferTexture2D(GLES20.GL_FRAMEBUFFER, GLES20.GL_COLOR_ATTACHMENT0,
-            GLES20.GL_TEXTURE_2D, textureId, 0)
+        GLES20.glFramebufferTexture2D(
+            GLES20.GL_FRAMEBUFFER, GLES20.GL_COLOR_ATTACHMENT0,
+            GLES20.GL_TEXTURE_2D, textureId, 0
+        )
     }
 
     fun unbindFBO() {
@@ -138,7 +156,54 @@ object OpenGLTools {
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)
     }
 
-    fun deleteFBO(frame: IntArray, texture:IntArray) {
+    fun createFrameBuffers(fboTex: IntArray, fboId: IntArray, width: Int, height: Int) {
+        //generate fbo id
+        GLES20.glGenFramebuffers(fboId.size, fboId, 0)
+        //generate texture
+        GLES20.glGenTextures(fboTex.size, fboTex, 0)
+        //Bind Frame buffer
+        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fboId[0])
+        //Bind texture
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, fboTex[0])
+        //Define texture parameters
+        GLES20.glTexImage2D(
+            GLES20.GL_TEXTURE_2D,
+            0,
+            GLES20.GL_RGBA,
+            width,
+            height,
+            0,
+            GLES20.GL_RGBA,
+            GLES20.GL_UNSIGNED_BYTE,
+            null
+        )
+        GLES20.glTexParameteri(
+            GLES20.GL_TEXTURE_2D,
+            GLES20.GL_TEXTURE_WRAP_S,
+            GLES20.GL_CLAMP_TO_EDGE
+        )
+        GLES20.glTexParameteri(
+            GLES20.GL_TEXTURE_2D,
+            GLES20.GL_TEXTURE_WRAP_T,
+            GLES20.GL_CLAMP_TO_EDGE
+        )
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR)
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR)
+        //Attach texture FBO color attachment
+        GLES20.glFramebufferTexture2D(
+            GLES20.GL_FRAMEBUFFER, GLES20.GL_COLOR_ATTACHMENT0, GLES20.GL_TEXTURE_2D,
+            fboTex[0], 0
+        )
+        // check status
+        if (GLES20.glCheckFramebufferStatus(GLES20.GL_FRAMEBUFFER) != GLES20.GL_FRAMEBUFFER_COMPLETE) {
+            Log.e(TAG, "createFrameBuffers: glCheckFramebufferStatus status != GL_FRAMEBUFFER_COMPLETE")
+        }
+        //we are done, reset
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, GLES20.GL_NONE)
+        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, GLES20.GL_NONE)
+    }
+
+    fun deleteFBO(frame: IntArray, texture: IntArray) {
         //删除Render Buffer
         GLES20.glBindRenderbuffer(GLES20.GL_RENDERBUFFER, GLES20.GL_NONE)
 //        GLES20.glDeleteRenderbuffers(1, fRender, 0)
@@ -206,7 +271,7 @@ object OpenGLTools {
     }
 
     fun provideIdentityMatrix(): FloatArray {
-        return Arrays.copyOf(IDENTITY_MATRIX, IDENTITY_MATRIX.size)
+        return IDENTITY_MATRIX.copyOf(IDENTITY_MATRIX.size)
     }
 
     fun deleteTexture() {

@@ -1,4 +1,4 @@
-package com.benyq.guochat.function.media.encoder;
+package com.benyq.guochat.function.video.encoder;
 
 import android.opengl.EGLContext;
 import android.opengl.GLES20;
@@ -7,16 +7,15 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
 
-import com.benyq.guochat.function.media.opengl.ProgramTextureOES;
-import com.benyq.guochat.function.media.opengl.core.EglCore;
-import com.benyq.guochat.function.media.opengl.core.Program;
-import com.benyq.guochat.function.media.opengl.core.WindowSurface;
+import com.benyq.guochat.function.video.core.EglCore;
+import com.benyq.guochat.function.video.core.WindowSurface;
+import com.benyq.guochat.function.video.drawer.VideoDrawer;
 
 import java.util.Arrays;
 
 
 public final class RenderHandler implements Runnable {
-    private static final String TAG = RenderHandler.class.getSimpleName();
+    private static final String TAG = "RenderHandler";
     private static final boolean DEBUG = false;
 
     private final Object mLock = new Object();
@@ -32,7 +31,7 @@ public final class RenderHandler implements Runnable {
 
     private WindowSurface mInputWindowSurface;
     private EglCore mEglCore;
-    private Program mFullScreen;
+    private VideoDrawer mFullScreen;
 
     public static RenderHandler createHandler(final String name) {
         if (DEBUG)
@@ -147,7 +146,7 @@ public final class RenderHandler implements Runnable {
                     GLES20.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
                     GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
                     mFullScreen.drawFrame(mTexId, mtx, mvp);
-                    Log.e(TAG, "run: mvp " + Arrays.toString(mvp));
+                    Log.e(TAG, "run: mtx " + Arrays.toString(mtx));
                     mInputWindowSurface.swapBuffers();
                 }
             } else {
@@ -176,7 +175,7 @@ public final class RenderHandler implements Runnable {
         mEglCore = new EglCore(mShardContext, EglCore.FLAG_RECORDABLE);
         mInputWindowSurface = new WindowSurface(mEglCore, mSurface, true);
         mInputWindowSurface.makeCurrent();
-        mFullScreen = new ProgramTextureOES();
+        mFullScreen = new VideoDrawer();
         mSurface = null;
         mLock.notifyAll();
     }
