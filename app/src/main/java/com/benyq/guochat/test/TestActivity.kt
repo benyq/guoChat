@@ -43,8 +43,7 @@ class TestActivity : BaseActivity() {
 
         mBinding.btnAddFilter.setOnClickListener {
             if (!hasFilter) {
-                mCaptureController.updateFilter(FilterFactory.createFilter(FilterType.FILTER_BLACK_WHITE))
-                mCaptureController.updateFilter(FilterFactory.createFilter(FilterType.FILTER_MOSAIC))
+                mCaptureController.updateFilter(FilterFactory.createFilter(FilterType.FILTER_CARTOON))
             }else {
                 mCaptureController.removeFilter()
             }

@@ -12,6 +12,7 @@ import com.benyq.guochat.function.video.drawer.CameraDrawer
 import com.benyq.guochat.function.video.filter.BaseFilter
 import com.benyq.guochat.function.video.filter.MosaicFilter
 import com.benyq.guochat.function.video.filter.NoFilter
+import com.benyq.mvvm.ext.loge
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -20,6 +21,7 @@ import javax.microedition.khronos.opengles.GL10
  * date 2021/1/15
  * e-mail 1520063035@qq.com
  * description 这个是实现GLSurfaceView.Renderer
+ * 现在每个滤镜还是单独创建一个FrameBuffer的，以后也许会改吧
  */
 
 class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
@@ -81,6 +83,7 @@ class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
         // 清屏，否则会有画面残留
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT or GLES20.GL_DEPTH_BUFFER_BIT)
 
+        val start = System.currentTimeMillis()
         mFrameBuffer.bind()//FBO 之前出错是因为 纹理格式不一致导致的
         mDrawer.drawFrame(mCameraTextureId, mTexMatrix, mMvpMatrix)
         mFrameBuffer.unbind()
@@ -92,7 +95,7 @@ class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
         }
 
         mShowFilter.draw(mFilterTextureId)
-
+        loge("render time ${System.currentTimeMillis() - start}")
         bitmapDrawer.drawFrame()
 
         mGLStatusListener?.onDrawFrame(null, 1, 0, 0, null, null, 0)

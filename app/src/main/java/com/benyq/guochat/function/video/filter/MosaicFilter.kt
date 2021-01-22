@@ -25,17 +25,6 @@ class MosaicFilter : BaseFilter(){
 
     }
 
-    override fun getVertexShader(): String {
-        return  "attribute vec4 aPosition;" + //顶点坐标
-                "attribute vec2 aCoordinate;" +//纹理坐标
-                //用于传递纹理坐标给片元着色器，命名和片元着色器中的一致
-                "varying vec2 vCoordinate;" +
-                "void main() {" +
-                "  gl_Position = vec4(aPosition.x, -aPosition.y, aPosition.z, 1);" +
-                "  vCoordinate = aCoordinate;" +
-                "}"
-    }
-
     override fun getFragmentShader(): String {
         //配置float精度，使用了float数据一定要配置：lowp(低)/mediump(中)/highp(高)
         return "precision mediump float;" +
@@ -127,7 +116,6 @@ class MosaicFilter : BaseFilter(){
 
         GLES20.glUseProgram(0)
 
-        mFrameBuffer?.unbind()
     }
 
 }

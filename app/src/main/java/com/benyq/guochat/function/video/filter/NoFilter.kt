@@ -23,31 +23,6 @@ class NoFilter : BaseFilter(){
 
     }
 
-    override fun getVertexShader(): String {
-        return  "attribute vec4 aPosition;" + //顶点坐标
-                "attribute vec2 aCoordinate;" +//纹理坐标
-                //用于传递纹理坐标给片元着色器，命名和片元着色器中的一致
-                "varying vec2 vCoordinate;" +
-                "void main() {" +
-                "  gl_Position = vec4(aPosition.x, -aPosition.y, aPosition.z, 1);" +
-                "  vCoordinate = aCoordinate;" +
-                "}"
-    }
-
-    override fun getFragmentShader(): String {
-        //配置float精度，使用了float数据一定要配置：lowp(低)/mediump(中)/highp(高)
-        return "precision mediump float;" +
-                //从Java传递进入来的纹理单元
-                "uniform sampler2D uTexture;" +
-                //从顶点着色器传递进来的纹理坐标
-                "varying vec2 vCoordinate;" +
-                "void main() {" +
-                //根据纹理坐标，从纹理单元中取色
-                "  vec4 color = texture2D(uTexture, vCoordinate);" +
-                "  gl_FragColor = color;" +
-                "}"
-    }
-
     override fun onDraw(textureId: Int) {
 
         GLES20.glUseProgram(mProgram)
