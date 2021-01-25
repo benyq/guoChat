@@ -3,17 +3,16 @@ package com.benyq.guochat.ui.chats
 import android.media.MediaPlayer
 import android.view.View
 import android.view.WindowManager
+import android.widget.FrameLayout
 import android.widget.SeekBar
 import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.calculateTime
+import com.benyq.mvvm.ext.*
 import com.benyq.mvvm.ui.base.BaseActivity
-import com.benyq.mvvm.ext.Toasts
-import com.benyq.mvvm.ext.gone
-import com.benyq.mvvm.ext.loge
-import com.benyq.mvvm.ext.visible
 import com.bumptech.glide.Glide
+import com.gyf.immersionbar.ImmersionBar
 import kotlinx.android.synthetic.main.activity_chat_video.*
 import kotlinx.coroutines.*
 
@@ -30,12 +29,7 @@ class ChatVideoActivity : BaseActivity() {
     private var mVideoPrepared = false
     private lateinit var videoPath: String
 
-    override fun initWidows() {
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
-    }
+    override fun isHideBar() = true
 
     override fun getLayoutId() = R.layout.activity_chat_video
 
@@ -73,6 +67,8 @@ class ChatVideoActivity : BaseActivity() {
             }
             false
         }
+
+        resizeViewMargin()
     }
 
     override fun initListener() {
@@ -166,5 +162,16 @@ class ChatVideoActivity : BaseActivity() {
         Glide.with(this)
             .load(videoPath)
             .placeholder(R.color.black).into(ivFirstFrame)
+    }
+
+    private fun resizeViewMargin() {
+
+        if (checkFullScreenPhone()) {
+            val topMargin = dip2px(15).toInt() + ImmersionBar.getStatusBarHeight(this)
+
+            val ivCloseParam = ivVideoClose.layoutParams as FrameLayout.LayoutParams
+            ivCloseParam.topMargin = topMargin
+            ivVideoClose.layoutParams = ivCloseParam
+        }
     }
 }

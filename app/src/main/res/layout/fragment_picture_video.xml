@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/black">
 
 
@@ -12,26 +13,54 @@
 
     <ImageView
         android:id="@+id/ivClose"
-        android:layout_width="30dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/ic_capture_close" />
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_arrow_down"
+        app:layout_constraintEnd_toStartOf="@id/captureView"
+        app:layout_constraintBottom_toBottomOf="@id/captureView"
+        app:layout_constraintTop_toTopOf="@id/captureView"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <com.benyq.guochat.ui.common.widget.CaptureView
         android:id="@+id/captureView"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_gravity="center_horizontal|bottom" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageView
         android:id="@+id/ivCameraChange"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_gravity="end|top"
         android:layout_marginEnd="15dp"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/ic_camera_exchange" />
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_camera_switch" />
+
+    <ImageView
+        android:id="@+id/ivAddFilters"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_filters"
+        app:layout_constraintTop_toTopOf="@id/captureView"
+        app:layout_constraintBottom_toBottomOf="@id/captureView"
+        app:layout_constraintStart_toEndOf="@id/captureView"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
+        android:id="@+id/rvFilters"
+        android:layout_width="100dp"
+        android:layout_height="300dp"
+        android:layout_marginBottom="20dp"
+        android:padding="5dp"
+        android:background="@drawable/shape_bg_round_white"
+        app:layout_constraintBottom_toTopOf="@id/ivAddFilters"
+        app:layout_constraintStart_toEndOf="@id/captureView"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -51,6 +51,11 @@ class PictureVideoActivity : BaseActivity() {
     override fun initView() {
     }
 
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.anim_stay, R.anim.anim_capture_slide_bottom_out)
+    }
+
     private fun dataObserver() {
         pictureVideoViewModel.mState.observe(this, Observer {
             when (it.state) {

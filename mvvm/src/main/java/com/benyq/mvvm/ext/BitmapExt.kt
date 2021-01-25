@@ -1,4 +1,4 @@
-package com.benyq.guochat.function.media
+package com.benyq.mvvm.ext
 
 import android.graphics.Bitmap
 import android.graphics.Matrix

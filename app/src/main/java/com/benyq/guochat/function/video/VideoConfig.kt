@@ -7,19 +7,16 @@ package com.benyq.guochat.function.video
  * description 相机参数设置
  */
 
-class VideoConfig {
+data class VideoConfig(
 
     //预览分辨率
-    private var previewVideoResolution: VideoResolution = VideoResolution.VIDEO_1080
-    //保存分辨率
-    private var saveVideoResolution: VideoResolution = VideoResolution.VIDEO_480
+    var videoResolution: VideoResolution = VideoResolution.VIDEO_1080,
     //帧率
-    private var frameRate: VideoFrameRate = VideoFrameRate.FRAME_RATE_FPS_30
+    var frameRate: VideoFrameRate = VideoFrameRate.FRAME_RATE_FPS_30,
     //默认前置相机
-    private var frontCamera = true
+    var frontCamera : Boolean = true
 
-
-}
+)
 
 enum class VideoResolution(val width: Int, val height: Int) {
 

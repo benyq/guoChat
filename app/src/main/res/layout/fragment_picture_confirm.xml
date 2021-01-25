@@ -8,12 +8,13 @@
         android:id="@+id/ivPicture"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="fitXY"
         android:src="@color/gray"/>
 
     <ImageView
         android:id="@+id/ivClose"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_margin="15dp"
         android:src="@drawable/ic_picture_cancel" />
 

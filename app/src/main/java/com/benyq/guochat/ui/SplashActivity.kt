@@ -34,19 +34,19 @@ class SplashActivity : AppCompatActivity() {
         immersionBar {
             hideBar(BarHide.FLAG_HIDE_BAR)
         }
-        goToActivity<TestActivity>()
-//        lifecycleScope.launch(Dispatchers.IO) {
-//            delay(1000)
-//            withContext(Dispatchers.Main) {
-//                //这边要判断，是否开启指纹登录
-//                if (FingerprintVerifyManager.canAuthenticate(this@SplashActivity) && ChatLocalStorage.personConfig.fingerprintLogin) {
-//                    goToActivity<FingerLoginActivity>(exitAnim = R.anim.normal_out)
-//                } else {
-//                    goToActivity<LoginActivity>(exitAnim = R.anim.normal_out)
-//                }
-//                finish()
-//            }
-//        }
+//        goToActivity<TestActivity>()
+        lifecycleScope.launch(Dispatchers.IO) {
+            delay(1000)
+            withContext(Dispatchers.Main) {
+                //这边要判断，是否开启指纹登录
+                if (FingerprintVerifyManager.canAuthenticate(this@SplashActivity) && ChatLocalStorage.personConfig.fingerprintLogin) {
+                    goToActivity<FingerLoginActivity>(exitAnim = R.anim.normal_out)
+                } else {
+                    goToActivity<LoginActivity>(exitAnim = R.anim.normal_out)
+                }
+                finish()
+            }
+        }
     }
 
     private fun avoidLaunchHereAgain(): Boolean {

@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.gyf.immersionbar.ImmersionBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_picture_confirm.*
+import java.io.File
 
 /**
  * @author benyq
@@ -39,6 +40,11 @@ class PictureConfirmFragment : BaseFragment() {
 
     override fun initListener() {
         ivClose.setOnClickListener {
+            File(imgPath).run {
+                if (exists()) {
+                    delete()
+                }
+            }
             pictureVideoViewModel.clearTop()
         }
 

@@ -9,7 +9,7 @@ import com.benyq.guochat.function.video.OpenGLTools
  * @author benyqYe
  * date 2021/1/22
  * e-mail 1520063035@qq.com
- * description 录制视频是的渲染
+ * description 录制视频时的渲染
  */
 
 class VideoDrawer : BaseDrawer(){

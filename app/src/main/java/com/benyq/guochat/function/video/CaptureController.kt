@@ -28,7 +28,8 @@ import java.util.concurrent.TimeUnit
 
 class CaptureController(
     private val mActivity: Activity,
-    private val mGlSurfaceView: GLSurfaceView
+    private val mGlSurfaceView: GLSurfaceView,
+    private var mVideoConfig: VideoConfig = VideoConfig()
 ) : DefaultLifecycleObserver, Camera.PreviewCallback {
     private val TAG = "CaptureController"
 
@@ -59,6 +60,10 @@ class CaptureController(
 
     init {
         Matrix.setIdentityM(mMvpMatrix, 0)
+        mCameraWidth = mVideoConfig.videoResolution.width
+        mCameraHeight = mVideoConfig.videoResolution.height
+
+        mCameraFacing = if (mVideoConfig.frontCamera) Camera.CameraInfo.CAMERA_FACING_FRONT else Camera.CameraInfo.CAMERA_FACING_BACK
     }
 
     private var mOnDrawFrameListener: OnDrawFrameListener? = null
@@ -87,7 +92,7 @@ class CaptureController(
                 mCaptureRenderer.setTexMatrix(mTexMatrix)
                 mCaptureRenderer.setMVPMatrix(mMvpMatrix)
 
-                mOnDrawFrameListener?.onDrawFrame(cameraTexId, mCameraWidth, mCameraHeight, mvpMatrix, texMatrix, mSurfaceTexture?.timestamp ?: 0 / 1000000)
+                mOnDrawFrameListener?.onDrawFrame(cameraTexId, mCameraWidth, mCameraHeight, mMvpMatrix, texMatrix, mSurfaceTexture?.timestamp ?: 0 / 1000000)
             }
 
             override fun onSurfaceChanged(viewWidth: Int, viewHeight: Int) {
@@ -140,6 +145,7 @@ class CaptureController(
         mGlSurfaceView.requestRender()
     }
 
+    //这个可以叠加滤镜
     fun updateFilter(filter: BaseFilter?) {
         mGlSurfaceView.queueEvent {
             mCaptureRenderer.updateFilter(filter)
@@ -150,6 +156,12 @@ class CaptureController(
         mGlSurfaceView.queueEvent {
             mCaptureRenderer.removeFilter()
         }
+    }
+
+    //更换滤镜，同时只有一个生效
+    fun switchFilter(filter: BaseFilter?) {
+        removeFilter()
+        updateFilter(filter)
     }
 
     fun setOnDrawFrameListener(listener: OnDrawFrameListener) {
@@ -181,7 +193,7 @@ class CaptureController(
                 if (mCameraFacing == Camera.CameraInfo.CAMERA_FACING_FRONT) 270 else 90
             val parameters = mCamera!!.parameters
             CameraUtils.setFocusModes(parameters)
-            CameraUtils.chooseFrameRate(parameters)
+            CameraUtils.chooseFrameRate(parameters, mVideoConfig.frameRate.fps)
 
             val size = CameraUtils.choosePreviewSize(parameters, mCameraWidth, mCameraHeight)
             mCameraWidth = size[0]

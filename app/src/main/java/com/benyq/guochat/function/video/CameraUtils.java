@@ -47,7 +47,7 @@ import java.util.Map;
 public final class CameraUtils {
     private static final String TAG = CameraUtils.class.getSimpleName();
     public static final int FOCUS_TIME = 2000;
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
 
     /**
      * 是否支持 Camera2
@@ -176,7 +176,7 @@ public final class CameraUtils {
      *
      * @param parameters
      */
-    public static void chooseFrameRate(Camera.Parameters parameters) {
+    public static void chooseFrameRate(Camera.Parameters parameters, int frameRate) {
         List<int[]> supportedPreviewFpsRanges = parameters.getSupportedPreviewFpsRange();
         if (DEBUG) {
             StringBuilder buffer = new StringBuilder();
@@ -192,16 +192,19 @@ public final class CameraUtils {
         }
         // FPS下限小于 7，弱光时能保证足够曝光时间，提高亮度。
         // range 范围跨度越大越好，光源足够时FPS较高，预览更流畅，光源不够时FPS较低，亮度更好。
+        int fps = frameRate * 1000;
         int[] bestFrameRate = supportedPreviewFpsRanges.get(0);
+        int[] minFrameRate = bestFrameRate;
         for (int[] fpsRange : supportedPreviewFpsRanges) {
             int thisMin = fpsRange[Camera.Parameters.PREVIEW_FPS_MIN_INDEX];
             int thisMax = fpsRange[Camera.Parameters.PREVIEW_FPS_MAX_INDEX];
-            if (thisMin < 7000) {
-                continue;
-            }
-            if (thisMin <= 15000 && thisMax - thisMin > bestFrameRate[Camera.Parameters.PREVIEW_FPS_MAX_INDEX]
-                    - bestFrameRate[Camera.Parameters.PREVIEW_FPS_MIN_INDEX]) {
-                bestFrameRate = fpsRange;
+            if (fps >= thisMin && fps <= thisMax) {
+                minFrameRate = fpsRange;
+                int minRange = thisMax - thisMin;
+                int bestRange = bestFrameRate[Camera.Parameters.PREVIEW_FPS_MAX_INDEX] - bestFrameRate[Camera.Parameters.PREVIEW_FPS_MIN_INDEX];
+                if (bestFrameRate[Camera.Parameters.PREVIEW_FPS_MIN_INDEX] <= fps || minRange <= bestRange) {
+                    bestFrameRate = minFrameRate;
+                }
             }
         }
         if (DEBUG) {

@@ -43,7 +43,6 @@ class TestActivity : BaseActivity() {
 
     override fun initView() {
         lifecycle.addObserver(mCaptureController)
-        resizeViewMargin()
     }
 
     var hasFilter = false
@@ -86,28 +85,10 @@ class TestActivity : BaseActivity() {
                     texMatrix,
                     timeStamp
                 )
-                saveImg(cameraTexId, 1440, 2560, mvpMatrix, OpenGLTools.provideIdentityMatrix())
+                saveImg(cameraTexId, cameraHeight, cameraWidth, OpenGLTools.provideIdentityMatrix(), OpenGLTools.provideIdentityMatrix())
             }
         })
     }
-
-
-    private fun resizeViewMargin() {
-
-        if (checkFullScreenPhone()) {
-            val topMargin = dip2px(15).toInt() + ImmersionBar.getStatusBarHeight(this)
-
-            val ivCameraChangeParam =
-                mBinding.ivCameraChange.layoutParams as FrameLayout.LayoutParams
-            ivCameraChangeParam.topMargin = topMargin
-            mBinding.ivCameraChange.layoutParams = ivCameraChangeParam
-
-            val ivCloseParam = mBinding.ivClose.layoutParams as FrameLayout.LayoutParams
-            ivCloseParam.topMargin = topMargin
-            mBinding.ivClose.layoutParams = ivCloseParam
-        }
-    }
-
 
     private var mVideoOutFile: File? = null
     private var mMuxer: MediaMuxerWrapper? = null

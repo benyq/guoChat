@@ -17,6 +17,7 @@ import java.io.File
  * @e-mail 1520063035@qq.com
  * @note 录音管理,包括录音、播放
  * 20200512 新增  这个类还要包括视频的录制
+ * 20210125 视频录制已经由 OpenGL 处理
  */
 object MediaRecordController {
 

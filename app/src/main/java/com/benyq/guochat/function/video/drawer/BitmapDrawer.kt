@@ -107,6 +107,7 @@ class BitmapDrawer(bitmap: Bitmap) : BaseDrawer() {
     }
 
     override fun release() {
+        Matrix.setIdentityM(mMvpMatrix, 0)
         GLES20.glDisableVertexAttribArray(mVertexPosHandle)
         GLES20.glDisableVertexAttribArray(mTexturePosHandle)
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)

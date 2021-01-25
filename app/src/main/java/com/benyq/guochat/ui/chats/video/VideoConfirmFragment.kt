@@ -13,6 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_picture_confirm.btnFinished
 import kotlinx.android.synthetic.main.fragment_picture_confirm.ivClose
 import kotlinx.android.synthetic.main.fragment_video_confirm.*
+import java.io.File
 
 /**
  * @author benyq
@@ -53,6 +54,11 @@ class VideoConfirmFragment : BaseFragment() {
 
     override fun initListener() {
         ivClose.setOnClickListener {
+            File(videoPath).run {
+                if (exists()) {
+                    delete()
+                }
+            }
             videoVideoViewModel.clearTop()
         }
 

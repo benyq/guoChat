@@ -26,7 +26,6 @@ import javax.microedition.khronos.opengles.GL10
 class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
 
     private lateinit var mDrawer: CameraDrawer
-    private lateinit var bitmapDrawer: BitmapDrawer
     private lateinit var mFrameBuffer: FrameBuffer
     //将图像显示到屏幕的滤镜
     private lateinit var mShowFilter: NoFilter
@@ -56,7 +55,6 @@ class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
         mDrawer = CameraDrawer()
         mShowFilter = NoFilter()
 
-        bitmapDrawer = BitmapDrawer(BitmapFactory.decodeResource(context.resources, R.drawable.ic_app_logo))
         mGLStatusListener?.onSurfaceCreated()
     }
 
@@ -64,7 +62,6 @@ class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
         GLES20.glViewport(0, 0, width, height)
         mViewWidth = width
         mViewHeight = height
-        bitmapDrawer.setViewPoint(width, height)
         mGLStatusListener?.onSurfaceChanged(width, height)
         mFrameBuffer = FrameBuffer(width, height)
 
@@ -80,7 +77,6 @@ class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
         // 清屏，否则会有画面残留
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT or GLES20.GL_DEPTH_BUFFER_BIT)
 
-        val start = System.currentTimeMillis()
         mFrameBuffer.bind()//FBO 之前出错是因为 纹理格式不一致导致的
         mDrawer.drawFrame(mCameraTextureId, mTexMatrix, mMvpMatrix)
         mFrameBuffer.unbind()
@@ -92,7 +88,6 @@ class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
         }
 
         mShowFilter.draw(mFilterTextureId)
-        bitmapDrawer.drawFrame()
 
         mGLStatusListener?.onDrawFrame(mFilterTextureId, mMvpMatrix, mTexMatrix)
     }
@@ -100,6 +95,8 @@ class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
 
     fun onSurfaceDestroy() {
         GLES20.glDeleteTextures(1, intArrayOf(mCameraTextureId), 0)
+        removeFilter()
+        mShowFilter.release()
         mDrawer.release()
     }
 

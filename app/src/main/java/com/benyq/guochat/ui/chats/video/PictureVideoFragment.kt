@@ -6,7 +6,10 @@ import android.opengl.EGL14
 import android.opengl.GLES20
 import android.util.Log
 import android.widget.FrameLayout
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.R
 import com.benyq.guochat.app.chatImgPath
 import com.benyq.guochat.app.chatVideoPath
@@ -17,7 +20,11 @@ import com.benyq.guochat.function.video.encoder.MediaAudioEncoder
 import com.benyq.guochat.function.video.encoder.MediaEncoder
 import com.benyq.guochat.function.video.encoder.MediaMuxerWrapper
 import com.benyq.guochat.function.video.encoder.MediaVideoEncoder
+import com.benyq.guochat.function.video.filter.BaseFilter
+import com.benyq.guochat.function.video.filter.FilterFactory
+import com.benyq.guochat.function.video.filter.FilterType
 import com.benyq.guochat.function.video.listener.OnDrawFrameListener
+import com.benyq.guochat.model.bean.VideoFilter
 import com.benyq.guochat.model.vm.PictureVideoViewModel
 import com.benyq.mvvm.ext.*
 import com.benyq.mvvm.ui.base.BaseFragment
@@ -42,6 +49,8 @@ class PictureVideoFragment : BaseFragment() {
 
     private val pictureVideoViewModel: PictureVideoViewModel by activityViewModels()
     private lateinit var mCaptureController: CaptureController
+    private val mFilterAdapter by lazy { FilterAdapter() }
+    private var mCurrentFilter: BaseFilter ? = null
 
     override fun getLayoutId() = R.layout.fragment_picture_video
 
@@ -49,7 +58,17 @@ class PictureVideoFragment : BaseFragment() {
         super.initView()
         mCaptureController = CaptureController(requireActivity(), glSurfaceView)
         lifecycle.addObserver(mCaptureController)
-        resizeViewMargin()
+
+        rvFilters.layoutManager = LinearLayoutManager(mContext)
+        rvFilters.adapter = mFilterAdapter
+        mFilterAdapter.setNewInstance(FilterType.provideFilters())
+        mFilterAdapter.setOnItemClickListener { adapter, view, position ->
+            mFilterAdapter.selectFilter(position)
+
+            mCurrentFilter = FilterFactory.createFilter(mFilterAdapter.data[position].type)
+            mCaptureController.switchFilter(mCurrentFilter)
+        }
+        mFilterAdapter.selectFilter(0)
     }
 
     override fun initListener() {
@@ -75,6 +94,13 @@ class PictureVideoFragment : BaseFragment() {
                 stopRecording()
             }
         }
+        ivAddFilters.setOnClickListener {
+            if (rvFilters.isGone) {
+                rvFilters.visible()
+            }else {
+                rvFilters.gone()
+            }
+        }
 
         mCaptureController.setOnDrawFrameListener(object : OnDrawFrameListener {
             override fun onDrawFrame(
@@ -91,25 +117,9 @@ class PictureVideoFragment : BaseFragment() {
                     texMatrix,
                     timeStamp
                 )
-                saveImg(cameraTexId, cameraHeight, cameraWidth, mvpMatrix, OpenGLTools.provideIdentityMatrix())
+                saveImg(cameraTexId, cameraHeight, cameraWidth, OpenGLTools.provideIdentityMatrix(), OpenGLTools.provideIdentityMatrix())
             }
         })
-    }
-
-
-    private fun resizeViewMargin() {
-
-        if (mContext.checkFullScreenPhone()) {
-            val topMargin = mContext.dip2px(15).toInt() + ImmersionBar.getStatusBarHeight(this)
-
-            val ivCameraChangeParam = ivCameraChange.layoutParams as FrameLayout.LayoutParams
-            ivCameraChangeParam.topMargin = topMargin
-            ivCameraChange.layoutParams = ivCameraChangeParam
-
-            val ivCloseParam = ivClose.layoutParams as FrameLayout.LayoutParams
-            ivCloseParam.topMargin = topMargin
-            ivClose.layoutParams = ivCloseParam
-        }
     }
 
     private var mVideoOutFile: File? = null
@@ -154,6 +164,7 @@ class PictureVideoFragment : BaseFragment() {
                     return
                 }
                 mStartRecordTime = 0
+                Toasts.show(R.string.save_video_success)
                 pictureVideoViewModel.showVideoConfirm(mVideoOutFile!!.absolutePath, duration.toInt())
             }
         }
@@ -283,11 +294,14 @@ class PictureVideoFragment : BaseFragment() {
         matrix.preScale(1f, 1f)
         val finalBmp = Bitmap.createBitmap(bmp, 0, 0, bmp.width, bmp.height, matrix, false)
         bmp.recycle()
-        File(requireActivity().chatImgPath(), getCurrentDate() + ".jpg").outputStream().use {
+        val imgPath = requireActivity().chatImgPath() + getCurrentDate() + ".jpg"
+        File(imgPath).outputStream().use {
             finalBmp.compress(Bitmap.CompressFormat.JPEG, 100, it)
         }
         loge("takepic ${System.currentTimeMillis() - start}")
+        Toasts.show(R.string.save_photo_success)
         takePic = false
+        pictureVideoViewModel.showPictureConfirm(imgPath)
     }
 
 }
