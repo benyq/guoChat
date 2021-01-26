@@ -41,6 +41,7 @@ enum class FilterType(val filterName: String) {
             filters.add(VideoFilter(FILTER_MOSAIC.filterName, FILTER_MOSAIC))
             filters.add(VideoFilter(FILTER_CARTOON.filterName, FILTER_CARTOON))
             filters.add(VideoFilter(FILTER_SOUL.filterName, FILTER_SOUL))
+            filters.add(VideoFilter(FILTER_LUMINANCE_THRESHOLD.filterName, FILTER_LUMINANCE_THRESHOLD))
             filters.add(VideoFilter(FILTER_SKIN_NEEDLING.filterName, FILTER_SKIN_NEEDLING))
             filters.add(VideoFilter(FILTER_ZOOM_1.filterName, FILTER_ZOOM_1))
             return filters

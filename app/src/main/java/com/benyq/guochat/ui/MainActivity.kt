@@ -196,7 +196,7 @@ class MainActivity : LifecycleActivity<MainViewModel>() {
                     if (allGranted) {
                         goToActivity<CaptureActivity>()
                     } else {
-                        toast("权限拒绝")
+                        Toasts.show("权限拒绝")
                     }
                 }
             }

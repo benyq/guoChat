@@ -5,6 +5,7 @@ import android.content.ContentProvider
 import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
+import com.benyq.mvvm.ext.Log
 import com.benyq.mvvm.ext.Toasts
 
 /**
@@ -18,6 +19,7 @@ class ApplicationContextProvider : ContentProvider() {
     override fun onCreate(): Boolean {
         context?.run {
             Toasts.init(this)
+            Log.init()
         }
         return true
     }

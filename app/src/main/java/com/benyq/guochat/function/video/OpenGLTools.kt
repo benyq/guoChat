@@ -156,6 +156,7 @@ object OpenGLTools {
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)
     }
 
+    @JvmStatic
     fun createFrameBuffers(fboTex: IntArray, fboId: IntArray, width: Int, height: Int) {
         //generate fbo id
         GLES20.glGenFramebuffers(fboId.size, fboId, 0)
@@ -203,6 +204,7 @@ object OpenGLTools {
         GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, GLES20.GL_NONE)
     }
 
+    @JvmStatic
     fun deleteFBO(frame: IntArray, texture: IntArray) {
         //删除Render Buffer
         GLES20.glBindRenderbuffer(GLES20.GL_RENDERBUFFER, GLES20.GL_NONE)
@@ -270,6 +272,7 @@ object OpenGLTools {
         }
     }
 
+    @JvmStatic
     fun provideIdentityMatrix(): FloatArray {
         return IDENTITY_MATRIX.copyOf(IDENTITY_MATRIX.size)
     }

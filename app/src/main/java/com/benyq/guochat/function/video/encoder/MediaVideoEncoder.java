@@ -158,8 +158,7 @@ public class MediaVideoEncoder extends MediaEncoder {
         }
         boolean result;
         if (result = super.frameAvailableSoon()) {
-            mRenderHandler.draw(mFboTex[0], texMatrix, OpenGLTools.INSTANCE.provideIdentityMatrix());
-//            mRenderHandler.draw(mFboTex[0], OpenGLTools.INSTANCE.provideIdentityMatrix(), OpenGLTools.INSTANCE.provideIdentityMatrix());
+            mRenderHandler.draw(mFboTex[0], texMatrix, OpenGLTools.provideIdentityMatrix());
         }
         return result;
     }
@@ -167,7 +166,7 @@ public class MediaVideoEncoder extends MediaEncoder {
     public void setEglContext(final EGLContext sharedContext) {
         mFboTex = new int[1];
         mFboId = new int[1];
-        OpenGLTools.INSTANCE.createFrameBuffers(mFboTex, mFboId, mWidth, mHeight);
+        OpenGLTools.createFrameBuffers(mFboTex, mFboId, mWidth, mHeight);
         program = new VideoDrawer();
         mRenderHandler.setEglContext(sharedContext, mSurface, mFboTex[0]);
     }
@@ -192,7 +191,7 @@ public class MediaVideoEncoder extends MediaEncoder {
             mRenderHandler.release();
             mRenderHandler = null;
         }
-        OpenGLTools.INSTANCE.deleteFBO(mFboId, mFboTex);
+        OpenGLTools.deleteFBO(mFboId, mFboTex);
         if (mFboId != null) {
             mFboId[0] = -1;
         }

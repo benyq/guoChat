@@ -13,7 +13,7 @@ import retrofit2.http.*
  * @e-mail 1520063035@qq.com
  * @note
  */
-@BaseUrl("http://111.229.84.254:7070/")
+@BaseUrl("https://www.baidu.com")
 interface ApiService {
 
     /**
@@ -41,4 +41,7 @@ interface ApiService {
     @POST("")
     @FormUrlEncoded
     suspend fun editUserNick(@Field("uid") uid: String, @Field("nick") nick: String): ChatResponse<String>
+
+    @GET("/")
+    suspend fun test(): String
 }

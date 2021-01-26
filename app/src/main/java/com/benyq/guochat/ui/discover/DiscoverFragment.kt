@@ -9,8 +9,8 @@ import com.benyq.guochat.function.permissionX.PermissionX
 import com.benyq.guochat.function.zxing.android.CaptureActivity
 import com.benyq.mvvm.ui.base.BaseFragment
 import com.benyq.guochat.ui.openeye.OpenEyeCommunityActivity
+import com.benyq.mvvm.ext.Toasts
 import com.benyq.mvvm.ext.goToActivity
-import com.benyq.mvvm.ext.toast
 import com.benyq.mvvm.ui.PicturePuzzleConfirmDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_discover.*
@@ -39,7 +39,7 @@ class DiscoverFragment : BaseFragment() {
                 if (allGranted) {
                     goToActivity<CaptureActivity>()
                 } else {
-                    toast("权限拒绝")
+                    Toasts.show("权限拒绝")
                 }
             }
         }

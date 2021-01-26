@@ -85,7 +85,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
                     etContent.gone()
                     tvPressVoice.visible()
                 } else {
-                    toast("没权限")
+                    Toasts.show("没权限")
                 }
             }
 

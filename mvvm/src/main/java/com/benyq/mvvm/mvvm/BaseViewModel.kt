@@ -8,6 +8,7 @@ import com.benyq.mvvm.response.BenyqResponse
 import com.benyq.mvvm.response.SharedData
 import com.benyq.mvvm.response.SharedType
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 
 /**
  * @author benyq
@@ -76,6 +77,20 @@ abstract class BaseViewModel : ViewModel() {
                 } ?: block()?.executeRsp(successRspBlock, errorBlock)
 
             }, errorBlock, finalBlock)
+        }
+
+        fun requestFlow(block: () -> Flow<BenyqResponse<R>>) {
+            viewModelScope.launch(Dispatchers.Main) {
+                block().onStart {
+                    startBlock?.invoke()
+                }.catch { t->
+                    errorBlock?.invoke(t)
+                }.onCompletion {
+                    finalBlock?.invoke()
+                }.collect {
+                    it.execute(successBlock, errorBlock)
+                }
+            }
         }
 
         fun onSuccess(block: (R?) -> Unit) {

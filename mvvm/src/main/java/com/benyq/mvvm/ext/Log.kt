@@ -1,7 +1,6 @@
 package com.benyq.mvvm.ext
 
-import android.util.Log
-import com.socks.klog.BuildConfig
+import com.benyq.mvvm.BuildConfig
 import com.socks.library.KLog
 
 /**
