@@ -165,7 +165,9 @@ class PictureVideoFragment : BaseFragment() {
                 }
                 mStartRecordTime = 0
                 Toasts.show(R.string.save_video_success)
-                pictureVideoViewModel.showVideoConfirm(mVideoOutFile!!.absolutePath, duration.toInt())
+                pictureVideoViewModel.showVideoConfirm(mVideoOutFile!!.absolutePath,
+                    (duration / 1000).toInt()
+                )
             }
         }
     }

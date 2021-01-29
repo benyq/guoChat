@@ -97,9 +97,14 @@ object MediaRecordController {
         val amanager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         val maxVolume = amanager.getStreamMaxVolume(AudioManager.STREAM_ALARM)
         amanager.setStreamVolume(AudioManager.STREAM_ALARM, maxVolume, 0)
-        mPlayer.setAudioAttributes(
-            AudioAttributes.Builder().setLegacyStreamType(AudioManager.STREAM_ALARM).build()
-        )
+        try {
+            mPlayer.setAudioAttributes(
+                AudioAttributes.Builder().setLegacyStreamType(AudioManager.STREAM_ALARM).build()
+            )
+        }catch (e: Exception) {
+            loge("setAudioAttributes error ${e.message}")
+            e.printStackTrace()
+        }
         mPlayer.reset()
         mPlayer.setDataSource(
             voicePath

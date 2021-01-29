@@ -1,5 +1,6 @@
 package com.benyq.mvvm.http
 
+import com.google.gson.stream.JsonReader
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

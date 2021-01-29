@@ -6,18 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".ui.PhotoPreviewActivity">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:visibility="invisible"
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/photoPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/black"/>
-
-    <ImageView
-        android:id="@+id/ivPhoto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/black"
-        android:transitionName="@string/transition_photo"/>
+        android:layout_height="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

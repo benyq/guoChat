@@ -24,6 +24,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.benyq.mvvm.JSON
 import com.benyq.mvvm.ext.dip2px
 import com.benyq.mvvm.ext.fromQ
+import com.benyq.mvvm.ext.loge
 import com.benyq.mvvm.ext.setTextAppearanceCustomer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
@@ -107,6 +108,7 @@ class Singleton(context: Context) {
 
 //计算时间
 fun calculateTime(time: Int): String {
+    loge("video duration $time")
     return if (time > 60) {
         val second = time % 60
         val minute = time / 60

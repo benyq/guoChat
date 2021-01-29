@@ -2,13 +2,17 @@ package com.benyq.guochat.ui.discover
 
 import android.app.Activity
 import android.app.ActivityOptions
+import android.app.SharedElementCallback
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Matrix
+import android.graphics.RectF
 import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.StateListDrawable
 import android.graphics.drawable.shapes.OvalShape
+import android.os.Parcelable
 import android.util.Pair
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +38,6 @@ import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.ext.getDrawableRef
 import com.benyq.mvvm.ext.getViewModel
 import com.bumptech.glide.Glide
-import com.github.iielse.imageviewer.ImageViewerBuilder
 import com.google.android.material.appbar.AppBarLayout
 import com.gyf.immersionbar.ImmersionBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -107,13 +110,6 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
         rvFriendCircle.layoutManager = LinearLayoutManager(this)
         rvFriendCircle.itemAnimator?.changeDuration = 0
         mAdapter.setItemAction { view, list, i ->
-//            val intent = Intent(this, PhotoPreviewActivity::class.java)
-//            intent.putExtra(IntentExtra.circlePhotos, list.toTypedArray())
-//            intent.putExtra(IntentExtra.circlePhotosIndex, i)
-//            val options = ActivityOptions.makeSceneTransitionAnimation(this,
-//                Pair.create(view, getString(R.string.transition_photo)))
-//
-//            startActivity(intent, options.toBundle())
 
         }
         mAdapter.setOnItemChildClickListener { adapter, view, position ->

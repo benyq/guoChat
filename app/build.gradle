@@ -95,6 +95,7 @@ dependencies {
 
     implementation project(':comic')
     implementation project(':mvvm')
+    implementation project(':imageviewer')
 }
 
 apply plugin: 'io.objectbox'

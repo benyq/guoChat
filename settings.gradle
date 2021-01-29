@@ -1,3 +1,4 @@
+include ':imageviewer'
 include ':swipelayout'
 include ':comic'
 rootProject.name='guoChat'

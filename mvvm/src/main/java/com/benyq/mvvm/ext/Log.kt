@@ -17,7 +17,6 @@ object Log {
     }
 }
 
-
 fun loge(obj: Any){
     KLog.e("benyq", obj)
 }
@@ -28,6 +27,10 @@ fun logi(obj: Any){
 
 fun logd(obj: Any){
     KLog.i("benyq", obj)
+}
+
+fun logw(obj: Any){
+    KLog.w("benyq", obj)
 }
 
 fun String.showLog() {

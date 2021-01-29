@@ -85,6 +85,6 @@ dependencies {
     api 'com.ashokvarma.android:bottom-navigation-bar:2.2.0'
     api 'com.google.android:flexbox:2.0.1'
 
-    api 'com.github.iielse:imageviewer:2.1.2'
-    //https://github.com/bingoogolapple/BGASwipeBackLayout-Android 优化退出，以后可能会用到
+    //https://github.com/bingoogolapple/BGASwipeBackLayout-Android 优化退出，以后可能会用到。已经整个module导入
+    api 'com.github.chrisbanes:PhotoView:2.3.0'
 }

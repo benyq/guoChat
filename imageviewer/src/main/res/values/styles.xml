@@ -1,0 +1,22 @@
+<resources>
+
+    <style name="BenyqFullScreenTransparent" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:actionBarStyle">@style/benyq_action_style</item>
+
+        <item name="android:windowActionBarOverlay">true</item>
+        <!-- 背景透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 全屏 -->
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="benyq_action_style" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+</resources>

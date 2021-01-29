@@ -49,7 +49,6 @@
         <activity android:name=".ui.me.AvatarActivity" />
         <activity android:name=".ui.me.PersonalInfoActivity" />
         <activity android:name=".ui.chats.ChatVideoActivity" />
-        <activity android:name=".ui.chats.ChatImageActivity" />
         <activity android:name=".ui.chats.video.PictureVideoActivity" />
         <activity android:name=".ui.contracts.CallingCardActivity" />
         <activity android:name=".ui.contracts.AddContractActivity" />
