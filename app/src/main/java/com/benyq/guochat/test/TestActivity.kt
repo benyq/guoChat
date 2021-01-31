@@ -2,6 +2,7 @@ package com.benyq.guochat.test
 
 import android.widget.ImageView
 import androidx.core.view.children
+import androidx.core.view.postDelayed
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.benyq.guochat.R
@@ -35,10 +36,10 @@ class TestActivity : BaseActivity() {
         mBinding.rvPhoto.adapter = mAdapter
         mAdapter.setNewInstance(
             mutableListOf(
-//                PreviewPhoto(
-//                    "https://cdn.nlark.com/yuque/0/2020/jpeg/252337/1592643441654-assets/web-upload/771e09b0-aaf9-4308-bae0-cd5b3cb98817.jpeg",
-//                    PreviewTypeEnum.IMAGE
-//                ),
+                PreviewPhoto(
+                    "https://cdn.nlark.com/yuque/0/2020/jpeg/252337/1592643441654-assets/web-upload/771e09b0-aaf9-4308-bae0-cd5b3cb98817.jpeg",
+                    PreviewTypeEnum.IMAGE
+                ),
 //                PreviewPhoto(
 //                    "https://cdn.nlark.com/yuque/0/2020/jpeg/252337/1592643441557-assets/web-upload/94ed7774-2bed-4dbe-be54-080c2f8939a1.jpeg",
 //                    PreviewTypeEnum.IMAGE
@@ -47,10 +48,10 @@ class TestActivity : BaseActivity() {
 //                    "https://cdn.nlark.com/yuque/0/2020/jpeg/252337/1592643441632-assets/web-upload/84d01b3f-7f28-4125-b3c7-8e5b5b15c0cb.jpeg",
 //                    PreviewTypeEnum.IMAGE
 //                ),
-                PreviewPhoto(
-                    "https://tva1.sinaimg.cn/large/007S8ZIlly1giy4k2flh3j31c00u0gs8.jpg",
-                    PreviewTypeEnum.IMAGE
-                ),
+//                PreviewPhoto(
+//                    "https://tva1.sinaimg.cn/large/007S8ZIlly1giy4k2flh3j31c00u0gs8.jpg",
+//                    PreviewTypeEnum.IMAGE
+//                ),
 //                PreviewPhoto(
 //                    "https://tva1.sinaimg.cn/large/007S8ZIlly1giy4m99esij30u01hcn1x.jpg",
 //                    PreviewTypeEnum.IMAGE
@@ -63,10 +64,6 @@ class TestActivity : BaseActivity() {
 //                    "https://tva1.sinaimg.cn/large/007S8ZIlly1giy4pi32qcj30qe110gob.jpg",
 //                    PreviewTypeEnum.IMAGE
 //                ),
-//                PreviewPhoto(
-//                    "https://cdn.nlark.com/yuque/0/2020/jpeg/252337/1592643441654-assets/web-upload/771e09b0-aaf9-4308-bae0-cd5b3cb98817.jpeg",
-//                    PreviewTypeEnum.IMAGE
-//                )
             )
         )
     }
@@ -75,7 +72,7 @@ class TestActivity : BaseActivity() {
         mAdapter.setOnItemClickListener { adapter, view, position ->
             ImagePreview
                 .setCacheView(mBinding.rvPhoto.children.toList().map {
-                    it.findViewById(R.id.ivPhoto)
+                    it.findViewById(R.id.ivPhoto) as ImageView
                 })
                 .setData(mAdapter.data)
                 .setCurPosition(position)

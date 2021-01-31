@@ -31,5 +31,19 @@ object AnimBgHelper {
         valueAnimator.start()
     }
 
+    /**
+     * @param startValue 初始透明度，一般是 1f
+     */
+    fun onExit(parent: View, startValue: Float, duration: Long) {
+        val valueAnimator = ValueAnimator()
+        valueAnimator.setDuration(duration)
+            .setFloatValues(startValue, 0f)
+        valueAnimator.addUpdateListener {
+            parent.setBackgroundColor(
+                ColorTool.getColorWithAlpha(Color.BLACK, (it.animatedValue as Float))
+            )
+        }
+        valueAnimator.start()
+    }
 
 }

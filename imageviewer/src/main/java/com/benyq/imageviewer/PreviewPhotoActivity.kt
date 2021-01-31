@@ -1,8 +1,10 @@
 package com.benyq.imageviewer
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
+import com.benyq.mvvm.ext.loge
 import com.benyq.mvvm.ui.base.BaseActivity
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ktx.immersionBar
@@ -30,6 +32,12 @@ class PreviewPhotoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_preview_photo)
 
         initView()
+
+        onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
+                loge("onBackPressedDispatcher PreviewPhotoActivity")
+            }
+        })
     }
 
 

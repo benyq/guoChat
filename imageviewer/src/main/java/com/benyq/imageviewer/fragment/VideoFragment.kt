@@ -1,5 +1,8 @@
 package com.benyq.imageviewer.fragment
 
+import android.transition.Transition
+import android.view.View
+import android.transition.AutoTransition
 import com.benyq.imageviewer.R
 
 /**
@@ -14,5 +17,17 @@ class VideoFragment : BasePreviewFragment() {
     override fun getLayoutId() = R.layout.fragment_video
 
     override fun getFullViewId() = R.id.previewVideoView
+
+    override fun beforeEnterAnim(fullView: View, thumbnailView: View) {
+
+    }
+
+    override fun getTransition(): Transition {
+        return AutoTransition()
+    }
+
+    override fun onEnterTransition(fullView: View, thumbnailView: View) {
+
+    }
 
 }
