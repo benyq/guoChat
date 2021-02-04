@@ -26,6 +26,9 @@ import com.benyq.guochat.model.vm.StateEvent
 import com.benyq.guochat.ui.PhotoPreviewActivity
 import com.benyq.mvvm.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.chats.video.PictureVideoActivity
+import com.benyq.imageviewer.ImagePreview
+import com.benyq.imageviewer.PreviewPhoto
+import com.benyq.imageviewer.PreviewTypeEnum
 import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.ext.*
 import com.gyf.immersionbar.ktx.immersionBar
@@ -117,9 +120,9 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
 
         rvChatRecord.itemAnimator?.run {
             addDuration = 0
-            changeDuration = 0;
-            moveDuration = 0;
-            removeDuration = 0;
+            changeDuration = 0
+            moveDuration = 0
+            removeDuration = 0
         }
 
 
@@ -179,25 +182,34 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
             }
         }
         mAdapter.setOnItemChildClickListener { adapter, view, position ->
-            val chatRecord = mAdapter.data[position]
             when (view.id) {
-                R.id.ivContent -> {
-                    val photoList = mAdapter.data.filter {
-                        it.imgUrl.isNotEmpty()
-                    }.map { it.imgUrl }
-                    val index = photoList.indexOfLast {
-                        it == chatRecord.imgUrl
-                    }
-                    val intent = Intent(this, PhotoPreviewActivity::class.java)
-                    intent.putExtra(IntentExtra.circlePhotos, photoList.toTypedArray())
-                    intent.putExtra(IntentExtra.circlePhotosIndex, index)
-                    val options = ActivityOptions.makeSceneTransitionAnimation(this,
-                        Pair.create(view, getString(R.string.transition_photo)))
+                R.id.ivContent, R.id.flVideo -> {
+                    //妈的，也挺麻烦的
+                    var currentData: PreviewPhoto? = null
 
-                    startActivity(intent, options.toBundle())
-                }
-                R.id.flVideo -> {
-                    goToActivity<ChatVideoActivity>(IntentExtra.videoPath to chatRecord.videoPath, enterAnim = R.anim.alpha_scale_in, exitAnim = R.anim.anim_stay)
+                    val tmpData = mutableListOf<PreviewPhoto>()
+                    val tmpView = mutableListOf<View?>()
+                    val visiblePosition = (rvChatRecord.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                    mAdapter.data.forEachIndexed { index, entity ->
+                        val realIndex = index - visiblePosition
+                        if (entity.chatType == ChatRecordEntity.TYPE_IMG) {
+                            tmpView.add(
+                                rvChatRecord.getChildAt(realIndex)?.findViewById(R.id.ivContent)
+                            )
+                            tmpData.add(PreviewPhoto(entity.imgUrl, PreviewTypeEnum.IMAGE))
+                        }
+                        if (entity.chatType == ChatRecordEntity.TYPE_VIDEO) {
+                            tmpView.add(rvChatRecord.getChildAt(realIndex)?.findViewById(R.id.ivVideo))
+                            tmpData.add(PreviewPhoto(entity.videoPath, PreviewTypeEnum.VIDEO))
+                        }
+                        if (index == position) {
+                            currentData = tmpData.last()
+                        }
+                    }
+                    ImagePreview.setCacheView(tmpView.toList())
+                        .setData(tmpData)
+                        .setCurPosition(tmpData.indexOf(currentData))
+                        .show(this)
                 }
             }
         }

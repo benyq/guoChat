@@ -27,7 +27,7 @@ object ImagePreview {
         return this
     }
 
-    fun setCacheView(view: List<View>): ImagePreview {
+    fun setCacheView(view: List<View?>): ImagePreview {
         Components.cacheView.addAll(view)
         return this
     }

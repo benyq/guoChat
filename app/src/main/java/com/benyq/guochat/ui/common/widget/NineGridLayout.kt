@@ -34,7 +34,7 @@ class NineGridLayout(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
 
     private val rowCount = 3
 
-    private var mItemAction: ((View, List<String>, Int) -> Unit)? = null
+    private var mItemAction: ((List<View>, List<String>, Int) -> Unit)? = null
 
     /**
      * 图片之间间距
@@ -158,7 +158,7 @@ class NineGridLayout(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
         }
     }
 
-    fun setItemAction(action: ((View, List<String>, Int) -> Unit)?) {
+    fun setItemAction(action: ((List<View>, List<String>, Int) -> Unit)?) {
         mItemAction = action
     }
 
@@ -166,7 +166,7 @@ class NineGridLayout(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
         val imageView = ImageView(context)
         imageView.scaleType = ImageView.ScaleType.CENTER_CROP
         imageView.setOnClickListener {
-            mItemAction?.invoke(it, mPhotoUrls, position)
+            mItemAction?.invoke(mPhotoImageViews, mPhotoUrls, position)
         }
         return imageView
     }

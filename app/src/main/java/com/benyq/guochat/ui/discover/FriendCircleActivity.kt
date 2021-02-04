@@ -34,6 +34,9 @@ import com.benyq.mvvm.ui.widget.HeaderView
 import com.benyq.guochat.ui.common.widget.satellite_menu.MenuItemView
 import com.benyq.guochat.ui.common.widget.satellite_menu.OnMenuActionListener
 import com.benyq.guochat.ui.common.widget.satellite_menu.SatelliteMenuLayout
+import com.benyq.imageviewer.ImagePreview
+import com.benyq.imageviewer.PreviewPhoto
+import com.benyq.imageviewer.PreviewTypeEnum
 import com.benyq.mvvm.SmartJump
 import com.benyq.mvvm.ext.getDrawableRef
 import com.benyq.mvvm.ext.getViewModel
@@ -109,8 +112,11 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
 
         rvFriendCircle.layoutManager = LinearLayoutManager(this)
         rvFriendCircle.itemAnimator?.changeDuration = 0
-        mAdapter.setItemAction { view, list, i ->
-
+        mAdapter.setItemAction { views, list, i ->
+            ImagePreview.setCacheView(views)
+                .setData(list.map { PreviewPhoto(it, PreviewTypeEnum.IMAGE) })
+                .setCurPosition(i)
+                .show(this)
         }
         mAdapter.setOnItemChildClickListener { adapter, view, position ->
             val friendCircleBean = mAdapter.data[position]

@@ -13,7 +13,7 @@ internal object Components {
     var isFullScreen = true
     var data: MutableList<PreviewPhoto> = mutableListOf()
     var recyclerview: RecyclerView? = null
-    var cacheView: MutableList<View> = mutableListOf()
+    var cacheView: MutableList<View?> = mutableListOf()
     var curPosition: Int = -1
     var thumbnailViewId: Int = -1
 
@@ -24,7 +24,7 @@ internal object Components {
             return getViewInRecycler(position)?.findViewById(thumbnailViewId)
         }
         if (cacheView.size > position) {
-            return cacheView[position].findViewById(thumbnailViewId)
+            return cacheView[position]
         }
         return null
     }

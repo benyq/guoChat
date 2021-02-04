@@ -33,7 +33,7 @@ import kotlinx.android.synthetic.main.item_friend_circle.view.*
 class FriendCircleAdapter :
     BaseQuickAdapter<FriendCircleBean, BaseViewHolder>(R.layout.item_friend_circle) {
 
-    private var mNineItemAction: ((View, List<String>, Int) -> Unit)? = null
+    private var mNineItemAction: ((List<View>, List<String>, Int) -> Unit)? = null
 
     init {
         //新版本要放在这!!
@@ -108,7 +108,7 @@ class FriendCircleAdapter :
         return spannableString
     }
 
-    fun setItemAction(action: ((View, List<String>, Int) -> Unit)?) {
+    fun setItemAction(action: ((List<View>, List<String>, Int) -> Unit)?) {
         mNineItemAction = action
     }
 }

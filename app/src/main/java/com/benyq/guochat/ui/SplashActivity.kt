@@ -34,7 +34,7 @@ class SplashActivity : AppCompatActivity() {
         immersionBar {
             hideBar(BarHide.FLAG_HIDE_BAR)
         }
-        val test = true
+        val test : Boolean = false
         if (test) {
             goToActivity<TestActivity>()
         }else {

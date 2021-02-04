@@ -285,6 +285,7 @@ public final class CaptureActivity extends Activity implements
             case R.id.ivClose:
                 finish();
                 break;
+            default:
         }
     }
 
