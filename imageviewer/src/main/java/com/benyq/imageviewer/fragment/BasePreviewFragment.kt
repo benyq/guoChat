@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import com.benyq.imageviewer.Components
-import com.benyq.imageviewer.OnAnimatorListener
-import com.benyq.imageviewer.PreviewPhoto
-import com.benyq.imageviewer.PreviewTypeEnum
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.benyq.imageviewer.*
 import com.benyq.imageviewer.anim.AnimBgHelper
 import com.benyq.imageviewer.anim.AnimHelper
 import com.benyq.mvvm.ext.loge
@@ -28,14 +26,16 @@ abstract class BasePreviewFragment : Fragment(), OnAnimatorListener {
         const val KEY_FRAGMENT_PARAMS_POS = "com.benyq.imageviewer.fragment.position"
     }
 
-    lateinit var mData : PreviewPhoto
-    var mPosition : Int = -1
+    lateinit var mData: PreviewPhoto
+    var mPosition: Int = -1
     lateinit var fragmentView: View
-    lateinit var mFullView: View
+
+    protected val mViewModel by lazy { ViewModelProvider(requireActivity()).get(PreviewViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mData = arguments?.getParcelable(KEY_FRAGMENT_PARAMS) ?: PreviewPhoto("", PreviewTypeEnum.IMAGE)
+        mData =
+            arguments?.getParcelable(KEY_FRAGMENT_PARAMS) ?: PreviewPhoto("", PreviewTypeEnum.IMAGE)
         mPosition = arguments?.getInt(KEY_FRAGMENT_PARAMS_POS) ?: -1
     }
 
@@ -51,19 +51,49 @@ abstract class BasePreviewFragment : Fragment(), OnAnimatorListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mFullView = view.findViewById(getFullViewId())
 
-        beforeEnterAnim(mFullView, Components.cacheView[mPosition])
-        AnimHelper.startEnterAnim(fragmentView, mFullView, Components.cacheView[mPosition], 300, this)
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback (true){
-            override fun handleOnBackPressed() {
-                loge("onBackPressedDispatcher BasePreviewFragment mPosition $mPosition   Components.curPosition ${Components.curPosition}")
-                if (mPosition == Components.curPosition) {
-                    AnimHelper.startExitAnim(fragmentView, mFullView, Components.cacheView[mPosition], 300, this@BasePreviewFragment)
+        mViewModel.exitAnimPosition.observe(viewLifecycleOwner) { position ->
+            if (position == mPosition) {
+                if (mViewModel.isExiting) {
+                    return@observe
                 }
+                beforeExitAnim()
+                AnimHelper.startExitAnim(viewLifecycleOwner, fragmentView,
+                    view.findViewById(getFullViewId()),
+                    Components.getView(mPosition),
+                    300, 1f,
+                    this)
             }
-        })
+        }
+
+        beforeEnterAnim(view.findViewById(getFullViewId()), Components.getView(mPosition))
+        if (Components.isLoad) {
+            //已经加载过了
+            AnimBgHelper.onDrag(fragmentView, 1f)
+            AnimHelper.startEnterAnim(
+                fragmentView,
+                view.findViewById(getFullViewId()),
+                Components.getView(mPosition),
+                0,
+                this
+            )
+
+            return
+        }
+
+        AnimHelper.startEnterAnim(
+            fragmentView,
+            view.findViewById(getFullViewId()),
+            Components.getView(mPosition),
+            300,
+            this
+        )
+        Components.isLoad = true
+    }
+
+    override fun onExitAnimEnd() {
+        loge("onExitAnimEnd $this")
+        requireActivity().finish()
     }
 
     open fun setFragmentArguments(data: PreviewPhoto, position: Int): BasePreviewFragment {
@@ -79,5 +109,5 @@ abstract class BasePreviewFragment : Fragment(), OnAnimatorListener {
     //完整的View的id
     abstract fun getFullViewId(): Int
 
-    abstract fun beforeEnterAnim(fullView: View, thumbnailView: View)
+    abstract fun beforeEnterAnim(fullView: View, thumbnailView: View?)
 }

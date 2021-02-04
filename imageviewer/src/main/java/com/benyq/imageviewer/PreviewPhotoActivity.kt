@@ -3,6 +3,7 @@ package com.benyq.imageviewer
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.benyq.mvvm.ext.loge
 import com.benyq.mvvm.ui.base.BaseActivity
@@ -21,10 +22,13 @@ class PreviewPhotoActivity : AppCompatActivity() {
 
     //当前的index
     private var mCurrentIndex = 0
+    private val mViewModel by lazy { ViewModelProvider(this).get(PreviewViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        immersionBar {
-            hideBar(BarHide.FLAG_HIDE_STATUS_BAR)
+        if (Components.isFullScreen) {
+            immersionBar {
+                hideBar(BarHide.FLAG_HIDE_STATUS_BAR)
+            }
         }
         //取消动画
         overridePendingTransition(0, 0)
@@ -33,13 +37,23 @@ class PreviewPhotoActivity : AppCompatActivity() {
 
         initView()
 
-        onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(false) {
+        onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(!mViewModel.isExiting) {
             override fun handleOnBackPressed() {
-                loge("onBackPressedDispatcher PreviewPhotoActivity")
+                //拦截了activity的退出，先执行玩动画再给我走
+                mViewModel.setExitAnimPosition(mCurrentIndex)
+                mViewModel.isExiting = true
             }
         })
+
+        mViewModel.viewerUserInputEnabled.observe(this) {
+            vpPreview.isUserInputEnabled = it
+        }
     }
 
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(0, 0)
+    }
 
     private fun initView() {
         mCurrentIndex = Components.curPosition

@@ -46,4 +46,11 @@ object AnimBgHelper {
         valueAnimator.start()
     }
 
+    fun onDrag(parent: View, fraction: Float) {
+        loge("onDrag fraction $fraction View $parent")
+        parent.setBackgroundColor(
+            ColorTool.getColorWithAlpha(Color.BLACK, fraction)
+        )
+    }
+
 }

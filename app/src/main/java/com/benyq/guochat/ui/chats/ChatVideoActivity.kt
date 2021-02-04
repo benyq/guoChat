@@ -36,7 +36,7 @@ class ChatVideoActivity : BaseActivity() {
     override fun initView() {
         videoPath = intent.getStringExtra(IntentExtra.videoPath) ?: ""
         getFrameAtTime(videoPath)
-
+        videoPath = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
         videoView.setVideoPath(videoPath)
         videoView.setOnPreparedListener {
             tvVideoDuration.text = calculateTime(it.duration / 1000)
