@@ -10,8 +10,9 @@ import com.benyq.mvvm.ext.loge
  * description 颜色处理工具
  */
 
-object ColorTool {
+internal object ColorTool {
 
+    @JvmStatic
     fun getColorWithAlpha(baseColor: Int, alpha: Float): Int {
 
         val alphaColor = 0X00FFFFFF and baseColor

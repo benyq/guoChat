@@ -4,7 +4,7 @@ import androidx.transition.Transition
 import android.view.View
 
 
-interface OnAnimatorListener {
+internal interface OnAnimatorListener {
 
     fun getTransition(): Transition
 

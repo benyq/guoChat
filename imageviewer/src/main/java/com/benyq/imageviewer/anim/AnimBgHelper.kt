@@ -14,7 +14,7 @@ import com.benyq.mvvm.ext.loge
  * description 进入时背景透明度改变。透明 -> 不透明
  */
 
-object AnimBgHelper {
+internal object AnimBgHelper {
 
     /**
      * @param startValue 初始透明度，一般是 0f

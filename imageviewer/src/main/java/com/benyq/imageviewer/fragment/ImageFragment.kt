@@ -18,7 +18,7 @@ import com.bumptech.glide.Glide
  * description 显示 image， 普通与长图
  */
 
-class ImageFragment : BasePreviewFragment() {
+internal class ImageFragment : BasePreviewFragment() {
 
     override fun getLayoutId() = R.layout.fragment_image
 

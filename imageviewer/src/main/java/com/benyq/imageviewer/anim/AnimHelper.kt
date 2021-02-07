@@ -26,7 +26,7 @@ import com.gyf.immersionbar.ImmersionBar
  * description 控制 ImageView动画
  */
 
-object AnimHelper {
+internal object AnimHelper {
 
     /**
      * 1. 先在屏幕原位置放一个大小一样的ImageView，然后进行缩放

@@ -24,7 +24,7 @@ import kotlin.math.min
  * description 显示短视频
  */
 
-class VideoFragment : BasePreviewFragment() {
+internal class VideoFragment : BasePreviewFragment() {
 
     private lateinit var mVideoView: ExoVideoView2
     private lateinit var mIvPreview: ImageView

@@ -14,6 +14,8 @@ import com.benyq.imageviewer.ImagePreview
 import com.benyq.imageviewer.PreviewPhoto
 import com.benyq.imageviewer.PreviewTypeEnum
 import com.benyq.mvvm.ext.binding
+import com.benyq.mvvm.ext.getScreenSize
+import com.benyq.mvvm.ext.logd
 import com.benyq.mvvm.ext.loge
 import com.benyq.mvvm.ui.base.BaseActivity
 import com.chad.library.adapter.base.BaseQuickAdapter

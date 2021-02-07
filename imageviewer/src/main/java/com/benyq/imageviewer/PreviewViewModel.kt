@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel
  * description 传递一些参数
  */
 
-class PreviewViewModel : ViewModel(){
+internal class PreviewViewModel : ViewModel(){
 
     val viewerUserInputEnabled = MutableLiveData<Boolean>()
 

@@ -19,7 +19,7 @@ import com.benyq.mvvm.ext.loge
  * description 预览基类
  */
 
-abstract class BasePreviewFragment : Fragment(), OnAnimatorListener {
+internal abstract class BasePreviewFragment : Fragment(), OnAnimatorListener {
 
     companion object {
         const val KEY_FRAGMENT_PARAMS = "com.benyq.imageviewer.fragment.param"

@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_preview_photo.*
  * description 预览 Activity
  */
 
-class PreviewPhotoActivity : AppCompatActivity() {
+internal class PreviewPhotoActivity : AppCompatActivity() {
 
     //当前的index
     private var mCurrentIndex = 0

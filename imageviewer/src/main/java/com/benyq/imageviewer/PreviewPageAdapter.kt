@@ -8,7 +8,7 @@ import com.benyq.imageviewer.fragment.ImageFragment
 import com.benyq.imageviewer.fragment.VideoFragment
 import com.benyq.mvvm.ext.loge
 
-class PreviewPageAdapter(fg: FragmentManager,
+internal class PreviewPageAdapter(fg: FragmentManager,
                          lifecycle: Lifecycle,
                          private val data: List<PreviewPhoto>?,) : FragmentStateAdapter(fg, lifecycle) {
 
