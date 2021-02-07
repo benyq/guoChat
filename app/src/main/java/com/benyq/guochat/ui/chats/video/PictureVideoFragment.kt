@@ -185,9 +185,13 @@ class PictureVideoFragment : BaseFragment() {
             mMuxer = MediaMuxerWrapper(mVideoOutFile!!.absolutePath)
 
             // for video capturing
-            val videoWidth: Int = mCaptureController.mCameraHeight
-            val videoHeight: Int = mCaptureController.mCameraWidth
-            MediaVideoEncoder(mMuxer, mMediaEncoderListener, 480, 854)
+            var cameraWidth: Int = mCaptureController.mCameraHeight
+            val cameraHeight: Int = mCaptureController.mCameraWidth
+
+            val videoHeight = cameraHeight
+            val videoWidth = (videoHeight.toFloat() / requireActivity().getScreenHeight() * requireActivity().getScreenWidth()).toInt()
+
+            MediaVideoEncoder(mMuxer, mMediaEncoderListener, videoWidth, videoHeight)
             MediaAudioEncoder(mMuxer, mMediaEncoderListener)
             mMuxer?.prepare()
             mMuxer?.startRecording()
@@ -235,8 +239,8 @@ class PictureVideoFragment : BaseFragment() {
     private var takePic = false
     private fun saveImg(
         textureId: Int,
-        width: Int,
-        height: Int,
+        w: Int,
+        h: Int,
         mvpMatrix: FloatArray?,
         texMatrix: FloatArray?
     ) {
@@ -244,6 +248,12 @@ class PictureVideoFragment : BaseFragment() {
         if (!takePic) {
             return
         }
+        val screenWidth = requireActivity().getScreenWidth()
+        val screenHeight = requireActivity().getScreenHeight()
+
+        val height = h
+        val width = (h.toFloat() / screenHeight * screenWidth).toInt()
+
         val start = System.currentTimeMillis()
 
         val textures = IntArray(1)
@@ -275,6 +285,7 @@ class PictureVideoFragment : BaseFragment() {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
 
         val videoDrawer = VideoDrawer()
+        android.opengl.Matrix.scaleM(mvpMatrix, 0, 1f,1f,1f)
         videoDrawer.drawFrame(textureId, texMatrix, mvpMatrix)
         videoDrawer.release()
 

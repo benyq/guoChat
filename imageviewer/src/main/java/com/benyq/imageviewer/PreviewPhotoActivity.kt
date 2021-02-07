@@ -27,7 +27,7 @@ class PreviewPhotoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         if (Components.isFullScreen) {
             immersionBar {
-                hideBar(BarHide.FLAG_HIDE_STATUS_BAR)
+                hideBar(BarHide.FLAG_HIDE_BAR)
             }
         }
         //取消动画
