@@ -1,5 +1,8 @@
-package com.benyq.guochat.function.video.listener
+package com.benyq.guochat.function.video
 
+import android.graphics.Bitmap
+
+//GLSurfaceView渲染监听
 interface OnRendererStatusListener {
     /**
      * Called when surface is created or recreated.
@@ -28,13 +31,17 @@ interface OnRendererStatusListener {
         texMatrix: FloatArray?,
     ) {
     }
+}
 
-    /**
-     * Called when camera changed
-     *
-     * @param cameraFacing      FACE_BACK = 0, FACE_FRONT = 1
-     * @param cameraOrientation
-     */
-    fun onCameraChanged(cameraFacing: Int, cameraOrientation: Int) {}
+//给视频录制提供的接口
+interface OnDrawFrameListener {
 
+    fun onDrawFrame(
+        cameraTexId: Int,
+        cameraWidth: Int,
+        cameraHeight: Int,
+        mvpMatrix: FloatArray?,
+        texMatrix: FloatArray?,
+        timeStamp: Long
+    )
 }
