@@ -1,9 +1,11 @@
 package com.benyq.guochat.function.video
 
 import android.app.Activity
+import android.graphics.Bitmap
 import android.graphics.ImageFormat
 import android.graphics.SurfaceTexture
 import android.hardware.Camera
+import android.opengl.GLES20
 import android.opengl.GLSurfaceView
 import android.opengl.Matrix
 import android.os.Handler
@@ -12,11 +14,17 @@ import android.os.Process
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import com.benyq.guochat.app.chatImgPath
+import com.benyq.guochat.function.video.drawer.VideoDrawer
 import com.benyq.guochat.function.video.filter.BaseFilter
-import com.benyq.guochat.function.video.listener.OnDrawFrameListener
-import com.benyq.guochat.function.video.listener.OnRendererStatusListener
+import com.benyq.mvvm.ext.getCurrentDate
+import com.benyq.mvvm.ext.logw
+import java.io.File
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
+import javax.microedition.khronos.opengles.GL10
 
 /**
  * author benyqYe
@@ -93,6 +101,7 @@ class CaptureController(
                 mCaptureRenderer.setMVPMatrix(mMvpMatrix)
 
                 mOnDrawFrameListener?.onDrawFrame(cameraTexId, mCameraWidth, mCameraHeight, mMvpMatrix, texMatrix, mSurfaceTexture?.timestamp ?: 0 / 1000000)
+                PictureCatcher.takePicture(cameraTexId, mCameraHeight, mCameraWidth, OpenGLTools.provideIdentityMatrix(), OpenGLTools.provideIdentityMatrix(), cameraTexId == Camera.CameraInfo.CAMERA_FACING_FRONT)
             }
 
             override fun onSurfaceChanged(viewWidth: Int, viewHeight: Int) {
@@ -145,6 +154,15 @@ class CaptureController(
         mGlSurfaceView.requestRender()
     }
 
+    fun switchCamera() {
+        mBackgroundHandler?.run {
+            mCameraFacing = Camera.CameraInfo.CAMERA_FACING_FRONT - mCameraFacing
+            closeCamera()
+            openCamera()
+            startPreview()
+        }
+    }
+
     //这个可以叠加滤镜
     fun updateFilter(filter: BaseFilter?) {
         mGlSurfaceView.queueEvent {
@@ -166,6 +184,15 @@ class CaptureController(
 
     fun setOnDrawFrameListener(listener: OnDrawFrameListener) {
         mOnDrawFrameListener = listener
+    }
+
+    /**
+     * @param path 图片路径
+     * @param successListener 图片保存监听
+     * @param errorListener 错误
+     */
+    fun takePicture(path: String, successListener: TakePictureSuccessListener, errorListener: TakePictureErrorListener) {
+        PictureCatcher.setCatchParams(path, successListener, errorListener)
     }
 
     private fun startBackgroundThread() {
@@ -250,15 +277,6 @@ class CaptureController(
         }
     }
 
-    fun switchCamera() {
-        mBackgroundHandler?.run {
-            mCameraFacing = Camera.CameraInfo.CAMERA_FACING_FRONT - mCameraFacing
-            closeCamera()
-            openCamera()
-            startPreview()
-        }
-    }
-
     private fun confirmMvpMatrix() {
         if (mViewWidth > 0 && mViewHeight > 0 && mCameraWidth > 0 && mCameraHeight > 0) {
             mMvpMatrix = OpenGLTools.changeMvpMatrixCrop(
@@ -281,5 +299,7 @@ class CaptureController(
         }
         mCaptureRenderer.onSurfaceDestroy()
     }
+
+
 
 }

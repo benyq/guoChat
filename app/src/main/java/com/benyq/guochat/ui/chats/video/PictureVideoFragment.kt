@@ -5,15 +5,14 @@ import android.graphics.Matrix
 import android.opengl.EGL14
 import android.opengl.GLES20
 import android.util.Log
-import android.widget.FrameLayout
 import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.R
 import com.benyq.guochat.app.chatImgPath
 import com.benyq.guochat.app.chatVideoPath
 import com.benyq.guochat.function.video.CaptureController
+import com.benyq.guochat.function.video.OnDrawFrameListener
 import com.benyq.guochat.function.video.OpenGLTools
 import com.benyq.guochat.function.video.drawer.VideoDrawer
 import com.benyq.guochat.function.video.encoder.MediaAudioEncoder
@@ -23,12 +22,9 @@ import com.benyq.guochat.function.video.encoder.MediaVideoEncoder
 import com.benyq.guochat.function.video.filter.BaseFilter
 import com.benyq.guochat.function.video.filter.FilterFactory
 import com.benyq.guochat.function.video.filter.FilterType
-import com.benyq.guochat.function.video.listener.OnDrawFrameListener
-import com.benyq.guochat.model.bean.VideoFilter
 import com.benyq.guochat.model.vm.PictureVideoViewModel
 import com.benyq.mvvm.ext.*
 import com.benyq.mvvm.ui.base.BaseFragment
-import com.gyf.immersionbar.ImmersionBar
 import kotlinx.android.synthetic.main.fragment_picture_video.*
 import java.io.File
 import java.io.IOException
@@ -117,7 +113,6 @@ class PictureVideoFragment : BaseFragment() {
                     texMatrix,
                     timeStamp
                 )
-                saveImg(cameraTexId, cameraHeight, cameraWidth, OpenGLTools.provideIdentityMatrix(), OpenGLTools.provideIdentityMatrix())
             }
         })
     }
