@@ -24,15 +24,12 @@ import kotlinx.coroutines.withContext
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         immersionBar {
-            hideBar(BarHide.FLAG_HIDE_NAVIGATION_BAR)
+            hideBar(BarHide.FLAG_HIDE_BAR)
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         if (avoidLaunchHereAgain()) {
             return
-        }
-        immersionBar {
-            hideBar(BarHide.FLAG_HIDE_BAR)
         }
         val test : Boolean = false
         if (test) {

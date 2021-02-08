@@ -5,8 +5,10 @@ import androidx.fragment.app.activityViewModels
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.model.vm.PictureVideoViewModel
+import com.benyq.imageviewer.widgets.video.ExoVideoView
 import com.benyq.mvvm.ext.checkFullScreenPhone
 import com.benyq.mvvm.ext.dip2px
+import com.benyq.mvvm.ext.gone
 import com.benyq.mvvm.ui.base.BaseFragment
 import com.gyf.immersionbar.ImmersionBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,13 +40,17 @@ class VideoConfirmFragment : BaseFragment() {
             arguments?.getString(IntentExtra.videoPath, defaultVideoPath) ?: defaultVideoPath
         videoDuration = arguments?.getInt(IntentExtra.videoDuration, 0) ?: 0
 
-        videoView.setVideoPath(videoPath)
-        videoView.setOnCompletionListener {
-            videoView.start()
-        }
-        videoView.setOnPreparedListener {
-            videoView.start()
-        }
+        videoView.setVideoRenderedCallback(object : ExoVideoView.VideoRenderedListener {
+            override fun onRendered(view: ExoVideoView) {
+
+            }
+        })
+        videoView.prepare(videoPath)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        videoView.resume()
     }
 
     override fun onPause() {
@@ -70,7 +76,7 @@ class VideoConfirmFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        videoView.suspend()
+        videoView.release()
     }
 
 

@@ -1,17 +1,12 @@
 package com.benyq.guochat.function.video
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.opengl.GLES11Ext
 import android.opengl.GLES20
 import android.opengl.GLSurfaceView
-import com.benyq.guochat.R
-import com.benyq.guochat.function.video.drawer.BitmapDrawer
 import com.benyq.guochat.function.video.drawer.CameraDrawer
 import com.benyq.guochat.function.video.filter.BaseFilter
 import com.benyq.guochat.function.video.filter.NoFilter
-import com.benyq.guochat.function.video.listener.OnRendererStatusListener
-import com.benyq.mvvm.ext.loge
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 

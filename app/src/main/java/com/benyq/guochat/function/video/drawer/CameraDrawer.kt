@@ -3,6 +3,7 @@ package com.benyq.guochat.function.video.drawer
 import android.media.effect.EffectFactory
 import android.opengl.GLES11Ext
 import android.opengl.GLES20
+import android.opengl.Matrix
 import com.benyq.guochat.function.video.OpenGLTools
 
 /**

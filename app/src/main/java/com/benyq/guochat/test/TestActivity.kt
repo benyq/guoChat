@@ -6,21 +6,22 @@ import android.widget.ImageView
 import androidx.core.view.children
 import androidx.core.view.postDelayed
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.benyq.guochat.R
 import com.benyq.guochat.databinding.ActivityTestBinding
 import com.benyq.guochat.loadImage
+import com.benyq.guochat.ui.chats.video.PictureVideoActivity
 import com.benyq.imageviewer.ImagePreview
 import com.benyq.imageviewer.PreviewPhoto
 import com.benyq.imageviewer.PreviewTypeEnum
-import com.benyq.mvvm.ext.binding
-import com.benyq.mvvm.ext.getScreenSize
-import com.benyq.mvvm.ext.logd
-import com.benyq.mvvm.ext.loge
+import com.benyq.mvvm.ext.*
 import com.benyq.mvvm.ui.base.BaseActivity
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TestActivity : BaseActivity() {
@@ -87,6 +88,10 @@ class TestActivity : BaseActivity() {
 
             )
         )
+        lifecycleScope.launch {
+            delay(2000)
+            goToActivity<PictureVideoActivity>()
+        }
     }
 
     override fun initListener() {

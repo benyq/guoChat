@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
-    <com.benyq.guochat.ui.common.CustomVideoView
+    <com.benyq.imageviewer.widgets.video.ExoVideoView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
     <ImageView
         android:id="@+id/ivClose"

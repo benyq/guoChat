@@ -1,11 +1,9 @@
 package com.benyq.guochat.function.video
 
 import android.app.Activity
-import android.graphics.Bitmap
 import android.graphics.ImageFormat
 import android.graphics.SurfaceTexture
 import android.hardware.Camera
-import android.opengl.GLES20
 import android.opengl.GLSurfaceView
 import android.opengl.Matrix
 import android.os.Handler
@@ -14,17 +12,9 @@ import android.os.Process
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.benyq.guochat.app.chatImgPath
-import com.benyq.guochat.function.video.drawer.VideoDrawer
 import com.benyq.guochat.function.video.filter.BaseFilter
-import com.benyq.mvvm.ext.getCurrentDate
-import com.benyq.mvvm.ext.logw
-import java.io.File
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
-import javax.microedition.khronos.opengles.GL10
 
 /**
  * author benyqYe
@@ -66,12 +56,15 @@ class CaptureController(
     private var mCameraOrientation = 270
     private var mTextureId = 0
 
+    private val lifeCycleSensorManager = LifeCycleSensorManager(mActivity)
+
     init {
         Matrix.setIdentityM(mMvpMatrix, 0)
         mCameraWidth = mVideoConfig.videoResolution.width
         mCameraHeight = mVideoConfig.videoResolution.height
 
         mCameraFacing = if (mVideoConfig.frontCamera) Camera.CameraInfo.CAMERA_FACING_FRONT else Camera.CameraInfo.CAMERA_FACING_BACK
+        VideoPictureCatcher.init(mActivity)
     }
 
     private var mOnDrawFrameListener: OnDrawFrameListener? = null
@@ -100,8 +93,22 @@ class CaptureController(
                 mCaptureRenderer.setTexMatrix(mTexMatrix)
                 mCaptureRenderer.setMVPMatrix(mMvpMatrix)
 
-                mOnDrawFrameListener?.onDrawFrame(cameraTexId, mCameraWidth, mCameraHeight, mMvpMatrix, texMatrix, mSurfaceTexture?.timestamp ?: 0 / 1000000)
-                PictureCatcher.takePicture(cameraTexId, mCameraHeight, mCameraWidth, OpenGLTools.provideIdentityMatrix(), OpenGLTools.provideIdentityMatrix(), cameraTexId == Camera.CameraInfo.CAMERA_FACING_FRONT)
+                VideoPictureCatcher.onDrawFrame()
+
+                VideoPictureCatcher.takePicture(
+                    cameraTexId,
+                    mCameraHeight,
+                    mCameraWidth,
+                    OpenGLTools.provideIdentityMatrix(),
+                    OpenGLTools.provideIdentityMatrix(),
+                    mCameraFacing == Camera.CameraInfo.CAMERA_FACING_FRONT
+                )
+                VideoPictureCatcher.sendRecordingData(
+                    cameraTexId,
+                    OpenGLTools.provideIdentityMatrix(),
+                    texMatrix,
+                    mSurfaceTexture?.timestamp ?: 0 / 1000000
+                )
             }
 
             override fun onSurfaceChanged(viewWidth: Int, viewHeight: Int) {
@@ -119,6 +126,11 @@ class CaptureController(
         mGlSurfaceView.setRenderer(mCaptureRenderer)
         mGlSurfaceView.keepScreenOn = true
         mGlSurfaceView.renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRTY
+    }
+
+    override fun onCreate(owner: LifecycleOwner) {
+        super.onCreate(owner)
+        lifeCycleSensorManager.onCreate()
     }
 
     override fun onResume(owner: LifecycleOwner) {
@@ -146,6 +158,11 @@ class CaptureController(
             // ignored
         }
         mGlSurfaceView.onPause()
+    }
+
+    override fun onDestroy(owner: LifecycleOwner) {
+        super.onDestroy(owner)
+        lifeCycleSensorManager.onDestroy()
     }
 
     override fun onPreviewFrame(data: ByteArray?, camera: Camera?) {
@@ -191,8 +208,22 @@ class CaptureController(
      * @param successListener 图片保存监听
      * @param errorListener 错误
      */
-    fun takePicture(path: String, successListener: TakePictureSuccessListener, errorListener: TakePictureErrorListener) {
-        PictureCatcher.setCatchParams(path, successListener, errorListener)
+    fun takePicture(
+        path: String,
+        successListener: TakePictureSuccessListener,
+        errorListener: TakePictureErrorListener
+    ) {
+        VideoPictureCatcher.setCatchParams(path, successListener, errorListener)
+    }
+
+    //开始录制
+    fun startRecording(videoFileName: String, cameraWidth: Int, cameraHeight: Int, success: VideoRecordSuccessListener,
+                       error: VideoRecordErrorListener) {
+        VideoPictureCatcher.startRecording(videoFileName, cameraWidth, cameraHeight, success, error)
+    }
+
+    fun stopRecording() {
+        VideoPictureCatcher.stopRecording()
     }
 
     private fun startBackgroundThread() {
@@ -299,7 +330,5 @@ class CaptureController(
         }
         mCaptureRenderer.onSurfaceDestroy()
     }
-
-
 
 }

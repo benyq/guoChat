@@ -284,6 +284,7 @@ public final class CaptureActivity extends Activity implements
                 break;
             case R.id.ivClose:
                 finish();
+                overridePendingTransition(R.anim.anim_stay, R.anim.anim_capture_slide_bottom_out);
                 break;
             default:
         }
