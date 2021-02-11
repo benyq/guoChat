@@ -193,6 +193,9 @@ object VideoPictureCatcher {
                 val duration = System.currentTimeMillis() - mStartRecordTime
                 if (duration <= 1000) {
                     Toasts.show(R.string.save_video_too_short)
+                    mVideoOutFile?.delete()?.apply {
+                        mVideoOutFile = null
+                    }
                     return
                 }
                 mStartRecordTime = 0
