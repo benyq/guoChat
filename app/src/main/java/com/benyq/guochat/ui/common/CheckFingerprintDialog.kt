@@ -4,8 +4,8 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
 import com.benyq.guochat.R
-import com.benyq.mvvm.ui.base.BaseDialogFragment
-import com.benyq.mvvm.ext.getScreenWidth
+import com.benyq.module_base.ui.base.BaseDialogFragment
+import com.benyq.module_base.ext.getScreenWidth
 import kotlinx.android.synthetic.main.dialog_check_fingerprint.*
 
 /**

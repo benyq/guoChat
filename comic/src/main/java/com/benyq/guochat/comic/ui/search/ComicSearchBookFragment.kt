@@ -20,9 +20,9 @@ import com.benyq.guochat.comic.ComicIntentExtra
 import com.benyq.guochat.comic.R
 import com.benyq.guochat.comic.model.vm.ComicSearchBookViewModel
 import com.benyq.guochat.comic.ui.detail.BookDetailActivity
-import com.benyq.mvvm.ext.*
-import com.benyq.mvvm.ui.base.BaseActivity
-import com.benyq.mvvm.ui.base.LifecycleFragment
+import com.benyq.module_base.ext.*
+import com.benyq.module_base.ui.base.BaseActivity
+import com.benyq.module_base.ui.base.LifecycleFragment
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.gyf.immersionbar.ktx.immersionBar

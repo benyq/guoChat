@@ -7,7 +7,7 @@ import com.benyq.guochat.comic.model.bean.ComicSearchResponse
 import com.benyq.guochat.comic.model.bean.SearchHotEntity
 import com.benyq.guochat.comic.model.http.ComicApiService
 import com.benyq.guochat.comic.model.http.ComicResponse
-import com.benyq.mvvm.mvvm.BaseRepository
+import com.benyq.module_base.mvvm.BaseRepository
 import javax.inject.Inject
 
 /**

@@ -1,6 +1,6 @@
 package com.benyq.guochat.model.rep
 
-import com.benyq.mvvm.mvvm.BaseRepository
+import com.benyq.module_base.mvvm.BaseRepository
 import javax.inject.Inject
 
 /**

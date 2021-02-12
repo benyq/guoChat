@@ -3,10 +3,10 @@ package com.benyq.guochat.model.rep
 import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.bean.ChatResponse
 import com.benyq.guochat.model.net.ApiService
-import com.benyq.mvvm.STREAM
-import com.benyq.mvvm.TEXT
-import com.benyq.mvvm.ext.loge
-import com.benyq.mvvm.mvvm.BaseRepository
+import com.benyq.module_base.http.STREAM
+import com.benyq.module_base.http.TEXT
+import com.benyq.module_base.ext.loge
+import com.benyq.module_base.mvvm.BaseRepository
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody

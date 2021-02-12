@@ -7,11 +7,11 @@ import com.benyq.guochat.R
 import com.benyq.guochat.comic.ComicActivity
 import com.benyq.guochat.function.permissionX.PermissionX
 import com.benyq.guochat.function.zxing.android.CaptureActivity
-import com.benyq.mvvm.ui.base.BaseFragment
+import com.benyq.module_base.ui.base.BaseFragment
 import com.benyq.guochat.ui.openeye.OpenEyeCommunityActivity
-import com.benyq.mvvm.ext.Toasts
-import com.benyq.mvvm.ext.goToActivity
-import com.benyq.mvvm.ui.PicturePuzzleConfirmDialog
+import com.benyq.module_base.ext.Toasts
+import com.benyq.module_base.ext.goToActivity
+import com.benyq.module_base.ui.PicturePuzzleConfirmDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_discover.*
 

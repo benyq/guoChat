@@ -3,10 +3,10 @@ package com.benyq.guochat.ui.settings
 import com.benyq.guochat.R
 import com.benyq.guochat.function.fingerprint.FingerprintVerifyManager
 import com.benyq.guochat.local.ChatLocalStorage
-import com.benyq.mvvm.ui.base.BaseActivity
+import com.benyq.module_base.ui.base.BaseActivity
 import com.benyq.guochat.ui.common.CheckFingerprintDialog
-import com.benyq.mvvm.ext.goToActivity
-import com.benyq.mvvm.ext.loge
+import com.benyq.module_base.ext.goToActivity
+import com.benyq.module_base.ext.loge
 import kotlinx.android.synthetic.main.activity_settings.*
 
 /**

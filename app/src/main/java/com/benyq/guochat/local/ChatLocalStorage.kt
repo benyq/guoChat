@@ -2,7 +2,7 @@ package com.benyq.guochat.local
 
 import com.benyq.guochat.model.bean.PersonConfig
 import com.benyq.guochat.model.bean.UserBean
-import com.benyq.mvvm.MMKVValue
+import com.benyq.module_base.MMKVValue
 
 /**
  * @author benyq

@@ -8,7 +8,7 @@
     android:background="@color/white"
     tools:context=".ui.discover.DiscoverFragment">
 
-    <com.benyq.mvvm.ui.widget.IconFormLine
+    <com.benyq.module_base.ui.widget.IconFormLine
         android:id="@+id/ifFriendCircle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
 
     <View style="@style/string_horizontal_divider"/>
 
-    <com.benyq.mvvm.ui.widget.IconFormLine
+    <com.benyq.module_base.ui.widget.IconFormLine
         android:id="@+id/ifScan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
 
     <View style="@style/string_horizontal_divider"/>
 
-    <com.benyq.mvvm.ui.widget.IconFormLine
+    <com.benyq.module_base.ui.widget.IconFormLine
         android:id="@+id/ifOpenEye"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
 
     <View style="@style/string_horizontal_divider"/>
 
-    <com.benyq.mvvm.ui.widget.IconFormLine
+    <com.benyq.module_base.ui.widget.IconFormLine
         android:id="@+id/ifComic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

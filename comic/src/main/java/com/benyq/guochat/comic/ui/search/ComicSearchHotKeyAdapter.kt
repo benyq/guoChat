@@ -4,7 +4,7 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import com.benyq.guochat.comic.R
 import com.benyq.guochat.comic.model.bean.HotItemsBean
-import com.benyq.mvvm.DrawableBuilder
+import com.benyq.module_base.DrawableBuilder
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import kotlinx.android.synthetic.main.comic_item_search_hot_key.view.*

@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.comic.local.BookShelfTable
 import com.benyq.guochat.comic.model.bean.ComicDetailResponse
 import com.benyq.guochat.comic.model.repository.BookDetailRepository
-import com.benyq.mvvm.ext.Toasts
-import com.benyq.mvvm.mvvm.BaseViewModel
+import com.benyq.module_base.ext.Toasts
+import com.benyq.module_base.mvvm.BaseViewModel
 
 /**
  * @author benyq

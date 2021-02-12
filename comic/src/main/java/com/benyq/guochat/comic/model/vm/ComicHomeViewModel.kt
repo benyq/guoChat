@@ -4,7 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.comic.model.bean.RecommendEntity
 import com.benyq.guochat.comic.model.repository.ComicHomeRepository
-import com.benyq.mvvm.mvvm.BaseViewModel
+import com.benyq.module_base.mvvm.BaseViewModel
 
 /**
  * @author benyq

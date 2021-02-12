@@ -2,7 +2,7 @@ package com.benyq.guochat.model.net
 
 import com.benyq.guochat.model.bean.ChatResponse
 import com.benyq.guochat.model.bean.UserBean
-import com.benyq.mvvm.annotation.BaseUrl
+import com.benyq.module_base.annotation.BaseUrl
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*

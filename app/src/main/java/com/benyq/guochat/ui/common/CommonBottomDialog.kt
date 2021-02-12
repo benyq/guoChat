@@ -10,11 +10,11 @@ import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.core.view.setPadding
 import com.benyq.guochat.R
-import com.benyq.mvvm.ui.base.BaseDialogFragment
-import com.benyq.mvvm.DrawableBuilder
-import com.benyq.mvvm.ext.dip2px
-import com.benyq.mvvm.ext.getColorRef
-import com.benyq.mvvm.ext.getScreenWidth
+import com.benyq.module_base.ui.base.BaseDialogFragment
+import com.benyq.module_base.DrawableBuilder
+import com.benyq.module_base.ext.dip2px
+import com.benyq.module_base.ext.getColorRef
+import com.benyq.module_base.ext.getScreenWidth
 import kotlinx.android.synthetic.main.dialog_common_bottom_menu.*
 
 /**

@@ -3,7 +3,7 @@ package com.benyq.guochat.function.music
 import android.app.Service
 import android.content.Intent
 import com.benyq.guochat.function.other.NotificationHelper
-import com.benyq.mvvm.ext.loge
+import com.benyq.module_base.ext.loge
 
 /**
  * @author benyq

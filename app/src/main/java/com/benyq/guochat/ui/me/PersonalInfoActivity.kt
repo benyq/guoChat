@@ -3,10 +3,10 @@ package com.benyq.guochat.ui.me
 import com.benyq.guochat.R
 import com.benyq.guochat.loadImage
 import com.benyq.guochat.local.ChatLocalStorage
-import com.benyq.mvvm.ui.base.BaseActivity
+import com.benyq.module_base.ui.base.BaseActivity
 import com.benyq.guochat.ui.contracts.CallingCardActivity
-import com.benyq.mvvm.SmartJump
-import com.benyq.mvvm.ext.goToActivity
+import com.benyq.module_base.SmartJump
+import com.benyq.module_base.ext.goToActivity
 import kotlinx.android.synthetic.main.activity_personal_info.*
 
 /**

@@ -4,7 +4,7 @@ import android.content.Context
 import com.benyq.guochat.app.CHAT_TYPE_CONTRACT
 import com.benyq.guochat.local.entity.*
 import com.benyq.guochat.model.bean.ChatListBean
-import com.benyq.mvvm.ext.logi
+import com.benyq.module_base.ext.logi
 import io.objectbox.Box
 import io.objectbox.BoxStore
 import io.objectbox.android.AndroidObjectBrowser

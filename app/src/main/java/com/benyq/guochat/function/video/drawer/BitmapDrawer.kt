@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import android.opengl.GLES20
 import android.opengl.Matrix
 import com.benyq.guochat.function.video.OpenGLTools
-import com.benyq.mvvm.ext.loge
+import com.benyq.module_base.ext.loge
 
 class BitmapDrawer(bitmap: Bitmap) : BaseDrawer() {
 

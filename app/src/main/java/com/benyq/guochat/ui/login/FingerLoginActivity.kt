@@ -8,10 +8,10 @@ import com.benyq.guochat.function.fingerprint.FingerprintVerifyManager
 import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.vm.LoginViewModel
 import com.benyq.guochat.ui.MainActivity
-import com.benyq.mvvm.DrawableBuilder
-import com.benyq.mvvm.ui.base.LifecycleActivity
+import com.benyq.module_base.DrawableBuilder
+import com.benyq.module_base.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.common.CheckFingerprintDialog
-import com.benyq.mvvm.ext.*
+import com.benyq.module_base.ext.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_finger_login.*
 

@@ -6,7 +6,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.benyq.imageviewer.fragment.ImageFragment
 import com.benyq.imageviewer.fragment.VideoFragment
-import com.benyq.mvvm.ext.loge
+import com.benyq.module_base.ext.loge
 
 internal class PreviewPageAdapter(fg: FragmentManager,
                          lifecycle: Lifecycle,

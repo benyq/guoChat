@@ -1,9 +1,9 @@
 package com.benyq.guochat.ui.settings
 
 import com.benyq.guochat.R
-import com.benyq.mvvm.ui.base.BaseActivity
-import com.benyq.mvvm.ui.WebViewActivity
-import com.benyq.mvvm.ext.versionName
+import com.benyq.module_base.ui.base.BaseActivity
+import com.benyq.module_base.ui.WebViewActivity
+import com.benyq.module_base.ext.versionName
 import kotlinx.android.synthetic.main.activity_about_app.*
 
 /**

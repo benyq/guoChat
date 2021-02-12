@@ -3,10 +3,10 @@ package com.benyq.guochat.ui.chats
 import com.benyq.guochat.R
 import com.benyq.guochat.function.other.DateFormatUtil
 import com.benyq.guochat.model.bean.ChatListBean
-import com.benyq.mvvm.ext.dip2px
-import com.benyq.mvvm.ext.loge
-import com.benyq.mvvm.glide.ProgressInterceptor
-import com.benyq.mvvm.glide.ProgressListener
+import com.benyq.module_base.ext.dip2px
+import com.benyq.module_base.ext.loge
+import com.benyq.module_base.glide.ProgressInterceptor
+import com.benyq.module_base.glide.ProgressListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners

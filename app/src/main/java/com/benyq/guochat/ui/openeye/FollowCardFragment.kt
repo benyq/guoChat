@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.benyq.guochat.*
 import com.benyq.guochat.model.bean.openeye.CommunityRecommend
-import com.benyq.mvvm.ui.base.BaseFragment
-import com.benyq.mvvm.ext.gone
-import com.benyq.mvvm.ext.visible
+import com.benyq.module_base.ui.base.BaseFragment
+import com.benyq.module_base.ext.gone
+import com.benyq.module_base.ext.visible
 import com.github.chrisbanes.photoview.PhotoView
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack

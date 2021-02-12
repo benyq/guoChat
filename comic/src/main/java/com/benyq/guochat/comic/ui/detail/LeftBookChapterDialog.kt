@@ -1,8 +1,8 @@
 package com.benyq.guochat.comic.ui.detail
 
 import com.benyq.guochat.comic.R
-import com.benyq.mvvm.ext.changeSize
-import com.benyq.mvvm.ui.base.BaseDialogFragment
+import com.benyq.module_base.ext.changeSize
+import com.benyq.module_base.ui.base.BaseDialogFragment
 
 /**
  * @author benyq

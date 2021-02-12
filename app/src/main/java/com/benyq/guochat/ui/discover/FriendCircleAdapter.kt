@@ -14,10 +14,10 @@ import com.benyq.guochat.R
 import com.benyq.guochat.model.bean.FriendCircleBean
 import com.benyq.guochat.ui.common.widget.NineGridLayout
 import com.benyq.guochat.ui.common.widget.friend_circle.CircleCommentView
-import com.benyq.mvvm.ext.Toasts
-import com.benyq.mvvm.ext.getColorRef
-import com.benyq.mvvm.ext.gone
-import com.benyq.mvvm.ext.visible
+import com.benyq.module_base.ext.Toasts
+import com.benyq.module_base.ext.getColorRef
+import com.benyq.module_base.ext.gone
+import com.benyq.module_base.ext.visible
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder

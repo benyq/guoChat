@@ -3,11 +3,11 @@ package com.benyq.guochat.ui.me
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
-import com.benyq.mvvm.ext.getViewModel
+import com.benyq.module_base.ext.getViewModel
 import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.vm.PersonalInfoViewModel
-import com.benyq.mvvm.ui.base.LifecycleActivity
-import com.benyq.mvvm.ext.textTrim
+import com.benyq.module_base.ui.base.LifecycleActivity
+import com.benyq.module_base.ext.textTrim
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_personal_info_edit.*
 

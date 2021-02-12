@@ -1,7 +1,7 @@
 package com.benyq.guochat.comic.local
 
 import android.content.Context
-import com.benyq.mvvm.ext.logi
+import com.benyq.module_base.ext.logi
 import io.objectbox.Box
 import io.objectbox.BoxStore
 import io.objectbox.android.AndroidObjectBrowser

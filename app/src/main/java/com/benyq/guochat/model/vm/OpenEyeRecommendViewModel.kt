@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.model.bean.openeye.CommunityRecommend
 import com.benyq.guochat.model.net.OpenEyeService
 import com.benyq.guochat.model.rep.OpenEyeRepository
-import com.benyq.mvvm.mvvm.BaseViewModel
+import com.benyq.module_base.mvvm.BaseViewModel
 
 /**
  * @author benyq

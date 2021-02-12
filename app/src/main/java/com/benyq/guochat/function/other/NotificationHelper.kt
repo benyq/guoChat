@@ -9,7 +9,7 @@ import com.benyq.guochat.R
 import com.benyq.guochat.function.music.PlayMusicService
 import com.benyq.guochat.ui.common.NotificationHandleActivity
 import com.benyq.guochat.ui.function.MusicPlayingActivity
-import com.benyq.mvvm.ext.fromO
+import com.benyq.module_base.ext.fromO
 
 /**
  * @author benyq

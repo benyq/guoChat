@@ -3,7 +3,7 @@ package com.benyq.guochat.ui.common.stateful_loading
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.benyq.guochat.R
-import com.benyq.mvvm.ext.Toasts
+import com.benyq.module_base.ext.Toasts
 import kotlinx.android.synthetic.main.layout_error.view.*
 
 /**

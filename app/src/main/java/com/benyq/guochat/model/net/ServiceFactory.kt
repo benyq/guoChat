@@ -1,9 +1,8 @@
 package com.benyq.guochat.model.net
 
-import com.benyq.mvvm.ext.isJson
-import com.benyq.mvvm.ext.logi
-import com.benyq.mvvm.http.BaseOkHttpClient
-import com.benyq.mvvm.http.RetrofitFactory
+import com.benyq.module_base.ext.isJson
+import com.benyq.module_base.ext.logi
+import com.benyq.module_base.http.RetrofitFactory
 import com.socks.library.KLog
 import dagger.Module
 import dagger.Provides
@@ -34,8 +33,7 @@ object ServiceFactory {
         })
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
-//        BaseOkHttpClient.init(ParamsInterceptor, loggingInterceptor)
-        BaseOkHttpClient.init(loggingInterceptor)
+        RetrofitFactory.init(loggingInterceptor)
     }
 
     @Singleton

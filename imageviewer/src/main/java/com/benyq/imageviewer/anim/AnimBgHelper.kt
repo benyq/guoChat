@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.view.View
 import androidx.core.animation.addListener
 import com.benyq.imageviewer.ColorTool
-import com.benyq.mvvm.ext.loge
+import com.benyq.module_base.ext.loge
 
 /**
  * @author benyqYe

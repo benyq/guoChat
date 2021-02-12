@@ -1,9 +1,8 @@
 package com.benyq.guochat.model.bean
 
-import com.benyq.mvvm.ext.Toasts
-import com.benyq.mvvm.ext.loge
-import com.benyq.mvvm.http.ApiException
-import com.benyq.mvvm.response.BenyqResponse
+import com.benyq.module_base.ext.Toasts
+import com.benyq.module_base.http.ApiException
+import com.benyq.module_base.http.BenyqResponse
 
 /**
  * @author benyq

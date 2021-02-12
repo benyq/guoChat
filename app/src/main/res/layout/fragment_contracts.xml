@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.benyq.mvvm.ui.widget.IconFormLine
+    <com.benyq.module_base.ui.widget.IconFormLine
         android:id="@+id/iconAddContract"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         app:form_title="@string/add_contract"
         app:line_show_arrow="false" />
 
-    <com.benyq.mvvm.ui.widget.IconFormLine
+    <com.benyq.module_base.ui.widget.IconFormLine
         android:id="@+id/iconContractCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

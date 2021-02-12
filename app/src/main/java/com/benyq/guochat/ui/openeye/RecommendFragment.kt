@@ -7,14 +7,13 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.benyq.guochat.R
-import com.benyq.mvvm.ext.getViewModel
+import com.benyq.module_base.ext.getViewModel
 import com.benyq.guochat.model.bean.openeye.CommunityRecommend
 import com.benyq.guochat.model.vm.OpenEyeRecommendViewModel
-import com.benyq.mvvm.ui.base.LifecycleFragment
+import com.benyq.module_base.ui.base.LifecycleFragment
 import com.benyq.guochat.ui.common.openeye.WaterDropHeader
-import com.benyq.mvvm.ext.dip2px
-import com.benyq.mvvm.ext.getScreenWidth
-import com.benyq.mvvm.response.SharedType
+import com.benyq.module_base.ext.dip2px
+import com.benyq.module_base.ext.getScreenWidth
 import com.bumptech.glide.Glide
 import com.scwang.smart.refresh.footer.BallPulseFooter
 import com.youth.banner.adapter.BannerImageAdapter
@@ -96,20 +95,20 @@ class RecommendFragment : LifecycleFragment<OpenEyeRecommendViewModel>(){
                     }
                 })
             })
-            recommendDataResult.observe(viewLifecycleOwner, Observer {
+            recommendDataResult.observe(viewLifecycleOwner) {
                 mAdapter.setList(it)
                 refreshLayout.finishRefresh(500)
-            })
-            recommendDataMoreResult.observe(viewLifecycleOwner, Observer {
+            }
+            recommendDataMoreResult.observe(viewLifecycleOwner) {
                 mAdapter.addData(it)
                 refreshLayout.closeHeaderOrFooter()
-            })
-            mSharedData.observe(viewLifecycleOwner, Observer {
-                if (it.type == SharedType.HIDE_LOADING) {
+            }
+            loadingType.observe(viewLifecycleOwner) {
+                if (it.isLoading) {
                     refreshLayout.finishRefresh()
                     refreshLayout.finishLoadMoreWithNoMoreData()
                 }
-            })
+            }
         }
     }
 

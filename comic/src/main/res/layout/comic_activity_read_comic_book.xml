@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:overScrollMode="never"/>
 
-    <com.benyq.mvvm.ui.widget.HeaderView
+    <com.benyq.module_base.ui.widget.HeaderView
         android:id="@+id/headView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

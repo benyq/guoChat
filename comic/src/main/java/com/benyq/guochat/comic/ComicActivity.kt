@@ -7,8 +7,8 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem
 import com.benyq.guochat.comic.model.vm.ComicViewModel
 import com.benyq.guochat.comic.ui.home.ComicHomeFragment
 import com.benyq.guochat.comic.ui.shelf.ComicShelfFragment
-import com.benyq.mvvm.ext.getViewModel
-import com.benyq.mvvm.ui.base.LifecycleActivity
+import com.benyq.module_base.ext.getViewModel
+import com.benyq.module_base.ui.base.LifecycleActivity
 import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.ktx.immersionBar
 import dagger.hilt.android.AndroidEntryPoint

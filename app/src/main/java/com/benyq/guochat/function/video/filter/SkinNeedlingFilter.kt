@@ -1,7 +1,7 @@
 package com.benyq.guochat.function.video.filter
 
 import android.opengl.GLES20
-import com.benyq.mvvm.ext.loge
+import com.benyq.module_base.ext.loge
 
 class SkinNeedlingFilter : BaseFilter(){
 

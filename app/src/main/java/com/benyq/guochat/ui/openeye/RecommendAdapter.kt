@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment
 import com.benyq.guochat.R
 import com.benyq.guochat.loadImage
 import com.benyq.guochat.model.bean.openeye.CommunityRecommend
-import com.benyq.mvvm.ext.gone
-import com.benyq.mvvm.ext.setDrawable
-import com.benyq.mvvm.ext.visible
+import com.benyq.module_base.ext.gone
+import com.benyq.module_base.ext.setDrawable
+import com.benyq.module_base.ext.visible
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import kotlinx.android.synthetic.main.item_community_columns_card_follow_card_type.view.*

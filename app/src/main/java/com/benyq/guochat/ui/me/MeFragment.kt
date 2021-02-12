@@ -4,10 +4,10 @@ import com.benyq.guochat.R
 import com.benyq.guochat.function.other.NotificationHelper
 import com.benyq.guochat.loadImage
 import com.benyq.guochat.local.ChatLocalStorage
-import com.benyq.mvvm.ui.base.BaseFragment
+import com.benyq.module_base.ui.base.BaseFragment
 import com.benyq.guochat.ui.contracts.CallingCardActivity
 import com.benyq.guochat.ui.settings.SettingsActivity
-import com.benyq.mvvm.ext.goToActivity
+import com.benyq.module_base.ext.goToActivity
 import kotlinx.android.synthetic.main.fragment_me.*
 import kotlinx.coroutines.*
 

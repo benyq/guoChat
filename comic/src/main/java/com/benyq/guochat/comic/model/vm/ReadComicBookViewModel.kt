@@ -6,8 +6,8 @@ import com.benyq.guochat.comic.local.BookShelfTable
 import com.benyq.guochat.comic.model.bean.ComicDetailResponse
 import com.benyq.guochat.comic.model.bean.ComicPreViewResponse
 import com.benyq.guochat.comic.model.repository.BookDetailRepository
-import com.benyq.mvvm.ext.loge
-import com.benyq.mvvm.mvvm.BaseViewModel
+import com.benyq.module_base.ext.loge
+import com.benyq.module_base.mvvm.BaseViewModel
 
 /**
  * @author benyq
@@ -30,7 +30,7 @@ class ReadComicBookViewModel @ViewModelInject constructor(private val repository
 
             onSuccess { previewResult.value = UiState(isSuccess = it) }
 
-            onError { previewResult.value = UiState(isLoading = false, isError = it.message) }
+            onError { previewResult.value = UiState(isLoading = false, isError = it) }
 
             request { repository.comicPreView(chapterId) }
         }

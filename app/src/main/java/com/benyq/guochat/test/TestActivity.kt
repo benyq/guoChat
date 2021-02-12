@@ -15,8 +15,8 @@ import com.benyq.guochat.ui.chats.video.PictureVideoActivity
 import com.benyq.imageviewer.ImagePreview
 import com.benyq.imageviewer.PreviewPhoto
 import com.benyq.imageviewer.PreviewTypeEnum
-import com.benyq.mvvm.ext.*
-import com.benyq.mvvm.ui.base.BaseActivity
+import com.benyq.module_base.ext.*
+import com.benyq.module_base.ui.base.BaseActivity
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import dagger.hilt.android.AndroidEntryPoint

@@ -3,7 +3,7 @@ package com.benyq.guochat.model.rep
 import com.benyq.guochat.mapOfToBodyJson
 import com.benyq.guochat.model.bean.ChatResponse
 import com.benyq.guochat.model.net.ApiService
-import com.benyq.mvvm.mvvm.BaseRepository
+import com.benyq.module_base.mvvm.BaseRepository
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 

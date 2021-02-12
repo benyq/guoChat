@@ -18,8 +18,8 @@ package com.benyq.guochat.ui.openeye
 
 import android.content.Context
 import com.benyq.guochat.R
-import com.benyq.mvvm.ui.WebViewActivity
-import com.benyq.mvvm.ext.Toasts
+import com.benyq.module_base.ui.WebViewActivity
+import com.benyq.module_base.ext.Toasts
 import java.net.URLDecoder
 
 /**

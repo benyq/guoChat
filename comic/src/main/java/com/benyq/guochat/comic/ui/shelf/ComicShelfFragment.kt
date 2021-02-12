@@ -9,11 +9,11 @@ import com.benyq.guochat.comic.R
 import com.benyq.guochat.comic.model.vm.ComicShelfViewModel
 import com.benyq.guochat.comic.ui.detail.ReadComicBookActivity
 import com.benyq.guochat.comic.ui.home.GridItemDecoration
-import com.benyq.mvvm.SmartJump
-import com.benyq.mvvm.ext.dip2px
-import com.benyq.mvvm.ext.getViewModel
-import com.benyq.mvvm.ext.goToActivity
-import com.benyq.mvvm.ui.base.LifecycleFragment
+import com.benyq.module_base.SmartJump
+import com.benyq.module_base.ext.dip2px
+import com.benyq.module_base.ext.getViewModel
+import com.benyq.module_base.ext.goToActivity
+import com.benyq.module_base.ui.base.LifecycleFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.comic_activity_book_detail.*
 import kotlinx.android.synthetic.main.comic_fragment_comic_shelf.*

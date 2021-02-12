@@ -24,13 +24,13 @@ import com.benyq.guochat.model.bean.ChatListBean
 import com.benyq.guochat.model.vm.ChatDetailViewModel
 import com.benyq.guochat.model.vm.StateEvent
 import com.benyq.guochat.ui.PhotoPreviewActivity
-import com.benyq.mvvm.ui.base.LifecycleActivity
+import com.benyq.module_base.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.chats.video.PictureVideoActivity
 import com.benyq.imageviewer.ImagePreview
 import com.benyq.imageviewer.PreviewPhoto
 import com.benyq.imageviewer.PreviewTypeEnum
-import com.benyq.mvvm.SmartJump
-import com.benyq.mvvm.ext.*
+import com.benyq.module_base.SmartJump
+import com.benyq.module_base.ext.*
 import com.gyf.immersionbar.ktx.immersionBar
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType

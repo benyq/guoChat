@@ -6,7 +6,7 @@ import com.benyq.guochat.app.GENDER_FEMALE
 import com.benyq.guochat.app.GENDER_MALE
 import com.benyq.guochat.loadImage
 import com.benyq.guochat.model.bean.ContractSectionBean
-import com.benyq.mvvm.ext.dip2px
+import com.benyq.module_base.ext.dip2px
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 

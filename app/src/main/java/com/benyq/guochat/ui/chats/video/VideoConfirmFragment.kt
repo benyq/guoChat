@@ -6,10 +6,10 @@ import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.model.vm.PictureVideoViewModel
 import com.benyq.imageviewer.widgets.video.ExoVideoView
-import com.benyq.mvvm.ext.checkFullScreenPhone
-import com.benyq.mvvm.ext.dip2px
-import com.benyq.mvvm.ext.gone
-import com.benyq.mvvm.ui.base.BaseFragment
+import com.benyq.module_base.ext.checkFullScreenPhone
+import com.benyq.module_base.ext.dip2px
+import com.benyq.module_base.ext.gone
+import com.benyq.module_base.ui.base.BaseFragment
 import com.gyf.immersionbar.ImmersionBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_picture_confirm.btnFinished

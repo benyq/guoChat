@@ -13,8 +13,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.benyq.guochat.R
 import com.benyq.guochat.model.bean.CircleComment
-import com.benyq.mvvm.ext.Toasts
-import com.benyq.mvvm.ext.getColorRef
+import com.benyq.module_base.ext.Toasts
+import com.benyq.module_base.ext.getColorRef
 
 
 /**

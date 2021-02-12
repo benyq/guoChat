@@ -2,7 +2,7 @@ package com.benyq.guochat.model.net
 
 import com.benyq.guochat.model.bean.ChatResponse
 import com.benyq.guochat.model.bean.openeye.CommunityRecommend
-import com.benyq.mvvm.annotation.BaseUrl
+import com.benyq.module_base.annotation.BaseUrl
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Url

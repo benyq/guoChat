@@ -11,11 +11,11 @@ import com.benyq.guochat.function.video.filter.BaseFilter
 import com.benyq.guochat.function.video.filter.FilterFactory
 import com.benyq.guochat.function.video.filter.FilterType
 import com.benyq.guochat.model.vm.PictureVideoViewModel
-import com.benyq.mvvm.ext.Toasts
-import com.benyq.mvvm.ext.getCurrentDate
-import com.benyq.mvvm.ext.gone
-import com.benyq.mvvm.ext.visible
-import com.benyq.mvvm.ui.base.BaseFragment
+import com.benyq.module_base.ext.Toasts
+import com.benyq.module_base.ext.getCurrentDate
+import com.benyq.module_base.ext.gone
+import com.benyq.module_base.ext.visible
+import com.benyq.module_base.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_picture_video.*
 
 /**

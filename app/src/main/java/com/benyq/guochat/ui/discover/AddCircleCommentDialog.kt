@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import com.benyq.guochat.R
-import com.benyq.mvvm.ui.base.BaseDialogFragment
-import com.benyq.mvvm.ext.getScreenWidth
-import com.benyq.mvvm.ext.runOnUiThread
-import com.benyq.mvvm.ext.textTrim
+import com.benyq.module_base.ui.base.BaseDialogFragment
+import com.benyq.module_base.ext.getScreenWidth
+import com.benyq.module_base.ext.runOnUiThread
+import com.benyq.module_base.ext.textTrim
 import kotlinx.android.synthetic.main.dialog_bottom_comment.*
 
 /**

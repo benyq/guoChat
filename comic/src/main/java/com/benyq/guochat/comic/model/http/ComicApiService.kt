@@ -1,7 +1,7 @@
 package com.benyq.guochat.comic.model.http
 
 import com.benyq.guochat.comic.model.bean.*
-import com.benyq.mvvm.annotation.BaseUrl
+import com.benyq.module_base.annotation.BaseUrl
 import retrofit2.http.GET
 import retrofit2.http.Query
 

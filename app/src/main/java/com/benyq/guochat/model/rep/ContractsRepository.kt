@@ -3,7 +3,7 @@ package com.benyq.guochat.model.rep
 import com.benyq.guochat.local.ChatObjectBox
 import com.benyq.guochat.model.bean.ChatResponse
 import com.benyq.guochat.model.bean.ContractSectionBean
-import com.benyq.mvvm.mvvm.BaseRepository
+import com.benyq.module_base.mvvm.BaseRepository
 import com.github.promeg.pinyinhelper.Pinyin
 import javax.inject.Inject
 

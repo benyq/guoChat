@@ -5,9 +5,9 @@ import androidx.fragment.app.activityViewModels
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.model.vm.PictureVideoViewModel
-import com.benyq.mvvm.ext.checkFullScreenPhone
-import com.benyq.mvvm.ext.dip2px
-import com.benyq.mvvm.ui.base.BaseFragment
+import com.benyq.module_base.ext.checkFullScreenPhone
+import com.benyq.module_base.ext.dip2px
+import com.benyq.module_base.ui.base.BaseFragment
 import com.bumptech.glide.Glide
 import com.gyf.immersionbar.ImmersionBar
 import dagger.hilt.android.AndroidEntryPoint

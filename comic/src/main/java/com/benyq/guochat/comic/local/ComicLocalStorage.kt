@@ -1,6 +1,6 @@
 package com.benyq.guochat.comic.local
 
-import com.benyq.mvvm.MMKVValue
+import com.benyq.module_base.MMKVValue
 
 /**
  * @author benyq

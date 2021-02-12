@@ -8,10 +8,10 @@ import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.function.other.GlideEngine
 import com.benyq.guochat.model.vm.AddCircleViewModel
 import com.benyq.guochat.ui.common.CommonBottomDialog
-import com.benyq.mvvm.SmartJump
-import com.benyq.mvvm.ext.getViewModel
-import com.benyq.mvvm.ext.textTrim
-import com.benyq.mvvm.ui.base.LifecycleActivity
+import com.benyq.module_base.SmartJump
+import com.benyq.module_base.ext.getViewModel
+import com.benyq.module_base.ext.textTrim
+import com.benyq.module_base.ui.base.LifecycleActivity
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia

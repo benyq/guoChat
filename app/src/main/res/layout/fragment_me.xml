@@ -70,21 +70,21 @@
 
     <View style="@style/string_horizontal_divider"/>
 
-    <com.benyq.mvvm.ui.widget.IconFormLine
+    <com.benyq.module_base.ui.widget.IconFormLine
         android:id="@+id/ifPersonalInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:form_title="个人信息"
         app:form_icon="@drawable/ic_personal_info"/>
 
-    <com.benyq.mvvm.ui.widget.IconFormLine
+    <com.benyq.module_base.ui.widget.IconFormLine
         android:id="@+id/ifSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:form_title="设置"
         app:form_icon="@drawable/ic_settings"/>
 
-    <com.benyq.mvvm.ui.widget.IconFormLine
+    <com.benyq.module_base.ui.widget.IconFormLine
         android:id="@+id/ifNotificationTest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

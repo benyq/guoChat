@@ -9,10 +9,10 @@ import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.app.SharedViewModel
 import com.benyq.guochat.model.bean.ChatListBean
 import com.benyq.guochat.model.vm.ChatViewModel
-import com.benyq.mvvm.ui.base.LifecycleFragment
+import com.benyq.module_base.ui.base.LifecycleFragment
 import com.benyq.guochat.ui.common.openeye.WaterDropHeader
-import com.benyq.mvvm.ext.getViewModel
-import com.benyq.mvvm.ext.goToActivity
+import com.benyq.module_base.ext.getViewModel
+import com.benyq.module_base.ext.goToActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_chat.*
 

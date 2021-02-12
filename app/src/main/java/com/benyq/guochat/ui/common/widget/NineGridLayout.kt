@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import com.benyq.guochat.R
-import com.benyq.mvvm.ext.dip2px
-import com.benyq.mvvm.ext.loge
+import com.benyq.module_base.ext.dip2px
+import com.benyq.module_base.ext.loge
 import com.bumptech.glide.Glide
 import kotlin.math.min
 

@@ -11,12 +11,12 @@ import com.benyq.guochat.loadImage
 import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.local.ChatObjectBox
 import com.benyq.guochat.local.entity.ContractEntity
-import com.benyq.mvvm.ui.base.BaseActivity
+import com.benyq.module_base.ui.base.BaseActivity
 import com.benyq.guochat.ui.chats.ChatDetailActivity
 import com.benyq.guochat.ui.common.CommonBottomDialog
-import com.benyq.mvvm.SmartJump
-import com.benyq.mvvm.ext.Toasts
-import com.benyq.mvvm.ext.goToActivity
+import com.benyq.module_base.SmartJump
+import com.benyq.module_base.ext.Toasts
+import com.benyq.module_base.ext.goToActivity
 import kotlinx.android.synthetic.main.activity_contract_detail.*
 
 /**

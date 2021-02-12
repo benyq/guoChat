@@ -10,7 +10,7 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.benyq.mvvm.ext.dip2px
+import com.benyq.module_base.ext.dip2px
 
 /**
  * @author benyq

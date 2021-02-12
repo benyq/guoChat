@@ -2,8 +2,8 @@ package com.benyq.guochat.test
 
 import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.model.bean.ChatResponse
-import com.benyq.mvvm.ext.loge
-import com.benyq.mvvm.mvvm.BaseViewModel
+import com.benyq.module_base.ext.loge
+import com.benyq.module_base.mvvm.BaseViewModel
 import kotlinx.coroutines.flow.*
 
 class TestViewModel : BaseViewModel() {

@@ -13,10 +13,10 @@ import com.benyq.guochat.comic.R
 import com.benyq.guochat.comic.local.ComicLocalStorage
 import com.benyq.guochat.comic.model.bean.Chapter
 import com.benyq.guochat.comic.model.vm.ReadComicBookViewModel
-import com.benyq.mvvm.ext.Toasts
-import com.benyq.mvvm.ext.getViewModel
-import com.benyq.mvvm.ext.loge
-import com.benyq.mvvm.ui.base.LifecycleActivity
+import com.benyq.module_base.ext.Toasts
+import com.benyq.module_base.ext.getViewModel
+import com.benyq.module_base.ext.loge
+import com.benyq.module_base.ui.base.LifecycleActivity
 import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.ktx.immersionBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -177,7 +177,7 @@ class ReadComicBookActivity : LifecycleActivity<ReadComicBookViewModel>() {
                     sbPages.max = image_list.size - 1
                     sbPages.progress = 0
                 }
-                it?.isError?.run {
+                it?.isError?.message?.run {
                     Toasts.show(this)
                 }
             }

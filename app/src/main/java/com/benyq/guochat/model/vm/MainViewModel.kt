@@ -4,7 +4,7 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import com.benyq.guochat.model.rep.MainRepository
-import com.benyq.mvvm.mvvm.BaseViewModel
+import com.benyq.module_base.mvvm.BaseViewModel
 
 /**
  * @author benyq

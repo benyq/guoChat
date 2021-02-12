@@ -6,9 +6,9 @@ import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import com.benyq.guochat.comic.R
 import com.benyq.guochat.comic.model.bean.ImageListBean
-import com.benyq.mvvm.ext.getScreenWidth
-import com.benyq.mvvm.ext.gone
-import com.benyq.mvvm.ext.visible
+import com.benyq.module_base.ext.getScreenWidth
+import com.benyq.module_base.ext.gone
+import com.benyq.module_base.ext.visible
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions

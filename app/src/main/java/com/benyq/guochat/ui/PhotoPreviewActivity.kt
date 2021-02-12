@@ -8,7 +8,7 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
-import com.benyq.mvvm.ui.base.BaseActivity
+import com.benyq.module_base.ui.base.BaseActivity
 import com.bumptech.glide.Glide
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ktx.immersionBar

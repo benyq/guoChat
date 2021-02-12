@@ -4,7 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.comic.local.BookShelfTable
 import com.benyq.guochat.comic.model.repository.ComicShelfRepository
-import com.benyq.mvvm.mvvm.BaseViewModel
+import com.benyq.module_base.mvvm.BaseViewModel
 
 /**
  * @author benyq

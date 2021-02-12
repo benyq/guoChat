@@ -2,9 +2,9 @@ package com.benyq.guochat.ui.chats
 
 import android.view.MotionEvent
 import com.benyq.guochat.R
-import com.benyq.mvvm.ui.base.BaseDialogFragment
-import com.benyq.mvvm.DrawableBuilder
-import com.benyq.mvvm.ext.*
+import com.benyq.module_base.ui.base.BaseDialogFragment
+import com.benyq.module_base.DrawableBuilder
+import com.benyq.module_base.ext.*
 import kotlinx.android.synthetic.main.fragment_voice_record.*
 
 /**

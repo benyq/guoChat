@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
-import com.benyq.mvvm.ui.base.BaseActivity
+import com.benyq.module_base.ui.base.BaseActivity
 import com.gyf.immersionbar.ktx.immersionBar
 import kotlinx.android.synthetic.main.activity_circle_photo_view_pager.*
 

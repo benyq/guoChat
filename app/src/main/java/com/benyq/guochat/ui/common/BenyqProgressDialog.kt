@@ -4,8 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import com.benyq.guochat.R
-import com.benyq.mvvm.DrawableBuilder
-import com.benyq.mvvm.ext.gone
+import com.benyq.module_base.DrawableBuilder
+import com.benyq.module_base.ext.gone
 import kotlinx.android.synthetic.main.progress_dialog.*
 
 /**

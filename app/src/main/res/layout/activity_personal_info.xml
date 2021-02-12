@@ -8,7 +8,7 @@
     android:background="@color/white"
     tools:context=".ui.me.PersonalInfoActivity">
 
-    <com.benyq.mvvm.ui.widget.HeaderView
+    <com.benyq.module_base.ui.widget.HeaderView
         android:id="@+id/headerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,21 +69,21 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <com.benyq.mvvm.ui.widget.IconFormLine
+    <com.benyq.module_base.ui.widget.IconFormLine
         android:id="@+id/ifNickName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:form_title="@string/nick_name"/>
 
 
-    <com.benyq.mvvm.ui.widget.IconFormLine
+    <com.benyq.module_base.ui.widget.IconFormLine
         android:id="@+id/ifChatNo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:form_title="@string/guo_chat_no"
         app:line_show_arrow="false" />
 
-    <com.benyq.mvvm.ui.widget.IconFormLine
+    <com.benyq.module_base.ui.widget.IconFormLine
         android:id="@+id/ifCallCardQR"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

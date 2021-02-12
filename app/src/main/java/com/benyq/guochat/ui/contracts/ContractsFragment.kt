@@ -5,9 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.model.vm.ContractsViewModel
-import com.benyq.mvvm.ext.getViewModel
-import com.benyq.mvvm.ui.base.LifecycleFragment
-import com.benyq.mvvm.ext.goToActivity
+import com.benyq.module_base.ext.getViewModel
+import com.benyq.module_base.ui.base.LifecycleFragment
+import com.benyq.module_base.ext.goToActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_contracts.*
 

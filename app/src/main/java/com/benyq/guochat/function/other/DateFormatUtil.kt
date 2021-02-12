@@ -1,6 +1,6 @@
 package com.benyq.guochat.function.other
 
-import com.benyq.mvvm.ext.loge
+import com.benyq.module_base.ext.loge
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*

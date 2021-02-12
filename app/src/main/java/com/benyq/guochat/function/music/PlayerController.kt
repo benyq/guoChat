@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.calculateTime
-import com.benyq.mvvm.ext.Toasts
-import com.benyq.mvvm.ext.isConnected
-import com.benyq.mvvm.ext.loge
+import com.benyq.module_base.ext.Toasts
+import com.benyq.module_base.ext.isConnected
+import com.benyq.module_base.ext.loge
 import kotlin.properties.Delegates
 
 /**

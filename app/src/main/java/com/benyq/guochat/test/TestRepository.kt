@@ -3,7 +3,7 @@ package com.benyq.guochat.test
 import com.benyq.guochat.model.bean.ChatResponse
 import com.benyq.guochat.model.net.ApiService
 import com.benyq.guochat.model.net.ServiceFactory
-import com.benyq.mvvm.http.ApiException
+import com.benyq.module_base.http.ApiException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject

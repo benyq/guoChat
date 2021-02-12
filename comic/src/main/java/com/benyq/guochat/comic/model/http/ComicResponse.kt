@@ -1,8 +1,8 @@
 package com.benyq.guochat.comic.model.http
 
-import com.benyq.mvvm.ext.Toasts
-import com.benyq.mvvm.http.ApiException
-import com.benyq.mvvm.response.BenyqResponse
+import com.benyq.module_base.ext.Toasts
+import com.benyq.module_base.http.ApiException
+import com.benyq.module_base.http.BenyqResponse
 import com.google.gson.annotations.SerializedName
 
 /**

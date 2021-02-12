@@ -4,8 +4,8 @@ import com.benyq.guochat.R
 import com.benyq.guochat.function.zxing.encode.CodeEncodingCreator
 import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.bean.UserBean
-import com.benyq.mvvm.ext.dip2px
-import com.benyq.mvvm.ui.base.BaseActivity
+import com.benyq.module_base.ext.dip2px
+import com.benyq.module_base.ui.base.BaseActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import kotlinx.android.synthetic.main.activity_calling_card.*

@@ -17,14 +17,14 @@ import com.benyq.guochat.function.permissionX.PermissionX
 import com.benyq.guochat.function.zxing.android.CaptureActivity
 import com.benyq.guochat.local.ChatObjectBox
 import com.benyq.guochat.model.vm.MainViewModel
-import com.benyq.mvvm.ui.base.LifecycleActivity
+import com.benyq.module_base.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.chats.ChatFragment
-import com.benyq.mvvm.ui.WebViewActivity
+import com.benyq.module_base.ui.WebViewActivity
 import com.benyq.guochat.ui.contracts.AddContractActivity
 import com.benyq.guochat.ui.contracts.ContractsFragment
 import com.benyq.guochat.ui.discover.DiscoverFragment
 import com.benyq.guochat.ui.me.MeFragment
-import com.benyq.mvvm.ext.*
+import com.benyq.module_base.ext.*
 import com.gyf.immersionbar.ktx.immersionBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*

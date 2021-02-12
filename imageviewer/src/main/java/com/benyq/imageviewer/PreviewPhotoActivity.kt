@@ -5,8 +5,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
-import com.benyq.mvvm.ext.loge
-import com.benyq.mvvm.ui.base.BaseActivity
+import com.benyq.module_base.ext.loge
+import com.benyq.module_base.ui.base.BaseActivity
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ktx.immersionBar
 import kotlinx.android.synthetic.main.activity_preview_photo.*

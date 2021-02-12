@@ -12,7 +12,7 @@ import com.benyq.guochat.function.video.encoder.MediaAudioEncoder
 import com.benyq.guochat.function.video.encoder.MediaEncoder
 import com.benyq.guochat.function.video.encoder.MediaMuxerWrapper
 import com.benyq.guochat.function.video.encoder.MediaVideoEncoder
-import com.benyq.mvvm.ext.*
+import com.benyq.module_base.ext.*
 import kotlinx.android.synthetic.main.fragment_picture_video.*
 import okio.buffer
 import okio.sink

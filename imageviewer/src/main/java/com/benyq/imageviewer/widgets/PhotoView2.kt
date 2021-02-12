@@ -7,7 +7,7 @@ import android.view.ViewConfiguration
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import com.benyq.imageviewer.PreviewViewModel
-import com.benyq.mvvm.ext.loge
+import com.benyq.module_base.ext.loge
 import com.github.chrisbanes.photoview.PhotoView
 import kotlin.math.abs
 import kotlin.math.max

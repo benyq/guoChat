@@ -7,13 +7,12 @@ import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.model.bean.RegisterBean
 import com.benyq.guochat.model.vm.LoginViewModel
 import com.benyq.guochat.ui.MainActivity
-import com.benyq.mvvm.ui.base.LifecycleActivity
-import com.benyq.mvvm.SmartJump
-import com.benyq.mvvm.ext.Toasts
-import com.benyq.mvvm.ext.getViewModel
-import com.benyq.mvvm.ext.goToActivity
-import com.benyq.mvvm.ext.textTrim
-import com.benyq.mvvm.response.SharedType
+import com.benyq.module_base.ui.base.LifecycleActivity
+import com.benyq.module_base.SmartJump
+import com.benyq.module_base.ext.Toasts
+import com.benyq.module_base.ext.getViewModel
+import com.benyq.module_base.ext.goToActivity
+import com.benyq.module_base.ext.textTrim
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -63,17 +62,17 @@ class LoginActivity : LifecycleActivity<LoginViewModel>() {
 
     override fun dataObserver() {
         with(viewModelGet()) {
-            mLoginResult.observe(this@LoginActivity, Observer {
+            mLoginResult.observe(this@LoginActivity){
                 goToActivity<MainActivity>(exitAnim = R.anim.normal_out)
                 finish()
-            })
-            mSharedData.observe(this@LoginActivity, Observer {
-                if (it.type == SharedType.SHOW_LOADING) {
-                    showLoading(it.msg)
-                } else if (it.type == SharedType.HIDE_LOADING) {
+            }
+            loadingType.observe(this@LoginActivity){
+                if (it.isLoading) {
+                    showLoading(it.isSuccess)
+                } else {
                     hideLoading()
                 }
-            })
+            }
         }
     }
 }

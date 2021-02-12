@@ -3,7 +3,7 @@ package com.benyq.guochat.ui.contracts
 import android.widget.ImageView
 import com.benyq.guochat.R
 import com.benyq.guochat.model.bean.ContractSectionBean
-import com.benyq.mvvm.ext.dip2px
+import com.benyq.module_base.ext.dip2px
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions

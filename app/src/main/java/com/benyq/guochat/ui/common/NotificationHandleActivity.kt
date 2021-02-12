@@ -3,7 +3,7 @@ package com.benyq.guochat.ui.common
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.benyq.guochat.R
-import com.benyq.mvvm.ext.loge
+import com.benyq.module_base.ext.loge
 
 /**
  * @author benyq

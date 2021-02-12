@@ -9,11 +9,11 @@ import com.benyq.guochat.loadImage
 import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.vm.PersonalInfoViewModel
 import com.benyq.guochat.saveImg
-import com.benyq.mvvm.ui.base.LifecycleActivity
+import com.benyq.module_base.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.common.CommonBottomDialog
-import com.benyq.mvvm.ext.Toasts
-import com.benyq.mvvm.ext.getViewModel
-import com.benyq.mvvm.ext.loge
+import com.benyq.module_base.ext.Toasts
+import com.benyq.module_base.ext.getViewModel
+import com.benyq.module_base.ext.loge
 import com.bumptech.glide.Glide
 import com.gyf.immersionbar.ktx.immersionBar
 import com.luck.picture.lib.PictureSelector

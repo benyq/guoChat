@@ -22,7 +22,7 @@ import com.benyq.guochat.R;
 import com.benyq.guochat.function.zxing.QRCodeUtil;
 import com.benyq.guochat.function.zxing.camera.CameraManager;
 import com.benyq.guochat.function.zxing.view.ViewfinderView;
-import com.benyq.mvvm.ext.SystemExtKt;
+import com.benyq.module_base.ext.SystemExtKt;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;

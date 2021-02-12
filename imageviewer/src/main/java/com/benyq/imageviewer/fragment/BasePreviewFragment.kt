@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.benyq.imageviewer.*
 import com.benyq.imageviewer.anim.AnimBgHelper
 import com.benyq.imageviewer.anim.AnimHelper
-import com.benyq.mvvm.ext.loge
+import com.benyq.module_base.ext.loge
 
 /**
  * @author benyqYe

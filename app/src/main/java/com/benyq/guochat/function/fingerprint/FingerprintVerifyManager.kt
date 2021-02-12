@@ -2,7 +2,7 @@ package com.benyq.guochat.function.fingerprint
 
 import android.content.Context
 import androidx.core.hardware.fingerprint.FingerprintManagerCompat
-import com.benyq.mvvm.ext.fromM
+import com.benyq.module_base.ext.fromM
 
 /**
  * @author benyq

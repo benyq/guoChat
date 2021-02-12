@@ -7,7 +7,7 @@ import com.benyq.guochat.comic.local.SearchHistoryRecord
 import com.benyq.guochat.comic.model.bean.ComicSearchResponse
 import com.benyq.guochat.comic.model.bean.SearchHotEntity
 import com.benyq.guochat.comic.model.repository.ComicSearchBookRepository
-import com.benyq.mvvm.mvvm.BaseViewModel
+import com.benyq.module_base.mvvm.BaseViewModel
 
 /**
  * @author benyq
@@ -75,7 +75,7 @@ class ComicSearchBookViewModel @ViewModelInject constructor(private val reposito
                 currentPage = (it?.page ?: 1) + 1
             }
 
-            onError { comicSearchResult.value = UiState(isError = it.message) }
+            onError { comicSearchResult.value = UiState(isError = it) }
 
             request { repository.comicSearch(text, page) }
         }

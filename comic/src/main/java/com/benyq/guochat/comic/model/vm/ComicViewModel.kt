@@ -1,7 +1,7 @@
 package com.benyq.guochat.comic.model.vm
 
 import androidx.hilt.lifecycle.ViewModelInject
-import com.benyq.mvvm.mvvm.BaseViewModel
+import com.benyq.module_base.mvvm.BaseViewModel
 
 /**
  * @author benyq

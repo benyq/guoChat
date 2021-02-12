@@ -9,8 +9,8 @@ import com.benyq.guochat.comic.ComicIntentExtra
 import com.benyq.guochat.comic.R
 import com.benyq.guochat.comic.model.bean.RecommendEntity
 import com.benyq.guochat.comic.ui.detail.BookDetailActivity
-import com.benyq.mvvm.ext.dip2px
-import com.benyq.mvvm.ext.goToActivity
+import com.benyq.module_base.ext.dip2px
+import com.benyq.module_base.ext.goToActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners

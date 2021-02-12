@@ -15,9 +15,9 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import com.benyq.mvvm.ext.dip2px
-import com.benyq.mvvm.ext.getColorRef
-import com.benyq.mvvm.ext.loge
+import com.benyq.module_base.ext.dip2px
+import com.benyq.module_base.ext.getColorRef
+import com.benyq.module_base.ext.loge
 import com.facebook.rebound.Spring
 import com.facebook.rebound.SpringSystem
 import com.tumblr.backboard.Actor

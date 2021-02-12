@@ -36,7 +36,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation project(':mvvm')
+    implementation project(':module_base')
 
     //Hilt Dagger2简化版
     implementation "com.google.dagger:hilt-android:$hilt_version"

@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".ui.contracts.CallingCardActivity">
 
-    <com.benyq.mvvm.ui.widget.HeaderView
+    <com.benyq.module_base.ui.widget.HeaderView
         android:id="@+id/headerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

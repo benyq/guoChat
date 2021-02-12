@@ -5,7 +5,7 @@ import android.view.animation.AnimationUtils
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
 import com.benyq.guochat.function.music.PlayerController
-import com.benyq.mvvm.ui.base.BaseActivity
+import com.benyq.module_base.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_music_playing.*
 
 /**

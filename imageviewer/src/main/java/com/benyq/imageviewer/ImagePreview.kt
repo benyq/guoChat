@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.benyq.mvvm.ext.loge
-import com.benyq.mvvm.ext.logw
+import com.benyq.module_base.ext.loge
+import com.benyq.module_base.ext.logw
 
 /**
  * @author benyqYe

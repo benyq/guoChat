@@ -9,7 +9,7 @@ import android.os.Handler
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import com.benyq.mvvm.ext.dip2px
+import com.benyq.module_base.ext.dip2px
 
 /**
  * @author benyq

@@ -4,8 +4,8 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.model.bean.FriendCircleBean
 import com.benyq.guochat.model.rep.FriendCircleRepository
-import com.benyq.mvvm.ext.Toasts
-import com.benyq.mvvm.mvvm.BaseViewModel
+import com.benyq.module_base.ext.Toasts
+import com.benyq.module_base.mvvm.BaseViewModel
 
 /**
  * @author benyq

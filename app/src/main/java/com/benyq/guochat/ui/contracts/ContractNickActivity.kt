@@ -3,8 +3,8 @@ package com.benyq.guochat.ui.contracts
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.local.entity.ContractEntity
-import com.benyq.mvvm.ui.base.BaseActivity
-import com.benyq.mvvm.ext.textTrim
+import com.benyq.module_base.ui.base.BaseActivity
+import com.benyq.module_base.ext.textTrim
 import kotlinx.android.synthetic.main.activity_contract_nick.*
 
 /**

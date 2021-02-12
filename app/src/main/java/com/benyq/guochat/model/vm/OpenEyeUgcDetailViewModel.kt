@@ -3,7 +3,7 @@ package com.benyq.guochat.model.vm
 import androidx.hilt.lifecycle.ViewModelInject
 import com.benyq.guochat.model.bean.openeye.CommunityRecommend
 import com.benyq.guochat.model.rep.OpenEyeRepository
-import com.benyq.mvvm.mvvm.BaseViewModel
+import com.benyq.module_base.mvvm.BaseViewModel
 
 /**
  * @author benyq

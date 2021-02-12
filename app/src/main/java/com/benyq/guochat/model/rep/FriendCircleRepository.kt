@@ -4,7 +4,7 @@ import com.benyq.guochat.app.CIRCLE__TYPE_TEXT
 import com.benyq.guochat.model.bean.ChatResponse
 import com.benyq.guochat.model.bean.CircleComment
 import com.benyq.guochat.model.bean.FriendCircleBean
-import com.benyq.mvvm.mvvm.BaseRepository
+import com.benyq.module_base.mvvm.BaseRepository
 import javax.inject.Inject
 
 /**

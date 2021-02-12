@@ -11,9 +11,9 @@ import com.benyq.guochat.comic.model.bean.Comic
 import com.benyq.guochat.comic.model.vm.BookDetailViewModel
 import com.benyq.guochat.comic.ui.home.GridItemDecoration
 import com.benyq.guochat.comic.ui.home.loadImage
-import com.benyq.mvvm.SmartJump
-import com.benyq.mvvm.ext.*
-import com.benyq.mvvm.ui.base.LifecycleActivity
+import com.benyq.module_base.SmartJump
+import com.benyq.module_base.ext.*
+import com.benyq.module_base.ui.base.LifecycleActivity
 import com.google.android.material.appbar.AppBarLayout
 import com.gyf.immersionbar.ImmersionBar
 import dagger.hilt.android.AndroidEntryPoint
