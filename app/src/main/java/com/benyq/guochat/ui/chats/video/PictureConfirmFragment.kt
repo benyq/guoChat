@@ -4,6 +4,7 @@ import android.widget.FrameLayout
 import androidx.fragment.app.activityViewModels
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
+import com.benyq.guochat.databinding.FragmentPictureConfirmBinding
 import com.benyq.guochat.model.vm.PictureVideoViewModel
 import com.benyq.module_base.ext.checkFullScreenPhone
 import com.benyq.module_base.ext.dip2px
@@ -11,7 +12,6 @@ import com.benyq.module_base.ui.base.BaseFragment
 import com.bumptech.glide.Glide
 import com.gyf.immersionbar.ImmersionBar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_picture_confirm.*
 import java.io.File
 
 /**
@@ -21,25 +21,25 @@ import java.io.File
  * @note 拍完照片之后确认
  */
 @AndroidEntryPoint
-class PictureConfirmFragment : BaseFragment() {
+class PictureConfirmFragment : BaseFragment<FragmentPictureConfirmBinding>() {
 
     private val pictureVideoViewModel: PictureVideoViewModel by activityViewModels()
 
     private lateinit var imgPath: String
 
-    override fun getLayoutId() = R.layout.fragment_picture_confirm
+    override fun provideViewBinding() = FragmentPictureConfirmBinding.inflate(layoutInflater)
 
     override fun initView() {
         val defaultImgPath = ""
         imgPath = arguments?.getString(IntentExtra.imgPath, defaultImgPath) ?: defaultImgPath
 
-        Glide.with(this).load(imgPath).into(ivPicture)
+        Glide.with(this).load(imgPath).into(binding.ivPicture)
 
         resizeViewMargin()
     }
 
     override fun initListener() {
-        ivClose.setOnClickListener {
+        binding.ivClose.setOnClickListener {
             File(imgPath).run {
                 if (exists()) {
                     delete()
@@ -48,7 +48,7 @@ class PictureConfirmFragment : BaseFragment() {
             pictureVideoViewModel.clearTop()
         }
 
-        btnFinished.setOnClickListener {
+        binding.btnFinished.setOnClickListener {
             pictureVideoViewModel.finishImg(imgPath)
         }
 
@@ -59,9 +59,9 @@ class PictureConfirmFragment : BaseFragment() {
         if (mContext.checkFullScreenPhone()) {
             val topMargin = mContext.dip2px(15).toInt() + ImmersionBar.getStatusBarHeight(this)
 
-            val ivCloseParam = ivClose.layoutParams as FrameLayout.LayoutParams
+            val ivCloseParam = binding.ivClose.layoutParams as FrameLayout.LayoutParams
             ivCloseParam.topMargin = topMargin
-            ivClose.layoutParams = ivCloseParam
+            binding.ivClose.layoutParams = ivCloseParam
         }
     }
 }

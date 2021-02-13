@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.R
 import com.benyq.guochat.app.chatImgPath
 import com.benyq.guochat.app.chatVideoPath
+import com.benyq.guochat.databinding.FragmentPictureVideoBinding
 import com.benyq.guochat.function.video.CaptureController
 import com.benyq.guochat.function.video.filter.BaseFilter
 import com.benyq.guochat.function.video.filter.FilterFactory
@@ -16,7 +17,6 @@ import com.benyq.module_base.ext.getCurrentDate
 import com.benyq.module_base.ext.gone
 import com.benyq.module_base.ext.visible
 import com.benyq.module_base.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_picture_video.*
 
 /**
  * @author benyq
@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_picture_video.*
  * @e-mail 1520063035@qq.com
  * @note
  */
-class PictureVideoFragment : BaseFragment() {
+class PictureVideoFragment : BaseFragment<FragmentPictureVideoBinding>() {
 
     private val TAG = "PictureVideoFragment"
 
@@ -33,15 +33,15 @@ class PictureVideoFragment : BaseFragment() {
     private val mFilterAdapter by lazy { FilterAdapter() }
     private var mCurrentFilter: BaseFilter? = null
 
-    override fun getLayoutId() = R.layout.fragment_picture_video
+    override fun provideViewBinding() = FragmentPictureVideoBinding.inflate(layoutInflater)
 
     override fun initView() {
         super.initView()
-        mCaptureController = CaptureController(requireActivity(), glSurfaceView)
+        mCaptureController = CaptureController(requireActivity(), binding.glSurfaceView)
         lifecycle.addObserver(mCaptureController)
 
-        rvFilters.layoutManager = LinearLayoutManager(mContext)
-        rvFilters.adapter = mFilterAdapter
+        binding.rvFilters.layoutManager = LinearLayoutManager(mContext)
+        binding.rvFilters.adapter = mFilterAdapter
         mFilterAdapter.setNewInstance(FilterType.provideFilters())
         mFilterAdapter.setOnItemClickListener { adapter, view, position ->
             mFilterAdapter.selectFilter(position)
@@ -54,15 +54,15 @@ class PictureVideoFragment : BaseFragment() {
 
     override fun initListener() {
 
-        ivClose.setOnClickListener {
+        binding.ivClose.setOnClickListener {
             pictureVideoViewModel.clearAll()
         }
 
-        ivCameraChange.setOnClickListener {
+        binding.ivCameraChange.setOnClickListener {
             mCaptureController.switchCamera()
         }
 
-        with(captureView) {
+        with(binding.captureView) {
             setPictureAction {
                 val imgPath = requireActivity().chatImgPath() + getCurrentDate() + ".jpg"
                 mCaptureController.takePicture(imgPath, { bitmap, path ->
@@ -89,14 +89,13 @@ class PictureVideoFragment : BaseFragment() {
                 mCaptureController.stopRecording()
             }
         }
-        ivAddFilters.setOnClickListener {
-            if (rvFilters.isGone) {
-                rvFilters.visible()
+        binding.ivAddFilters.setOnClickListener {
+            if (binding.rvFilters.isGone) {
+                binding.rvFilters.visible()
             } else {
-                rvFilters.gone()
+                binding.rvFilters.gone()
             }
         }
 
     }
-
 }

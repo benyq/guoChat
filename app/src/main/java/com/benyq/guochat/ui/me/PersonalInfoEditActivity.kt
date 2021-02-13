@@ -2,14 +2,13 @@ package com.benyq.guochat.ui.me
 
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
-import com.benyq.guochat.R
-import com.benyq.module_base.ext.getViewModel
+import com.benyq.guochat.databinding.ActivityPersonalInfoEditBinding
 import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.vm.PersonalInfoViewModel
-import com.benyq.module_base.ui.base.LifecycleActivity
+import com.benyq.module_base.ext.getViewModel
 import com.benyq.module_base.ext.textTrim
+import com.benyq.module_base.ui.base.LifecycleActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_personal_info_edit.*
 
 /**
  * @author benyq
@@ -18,32 +17,32 @@ import kotlinx.android.synthetic.main.activity_personal_info_edit.*
  * @note  修改信息，目前只有昵称
  */
 @AndroidEntryPoint
-class PersonalInfoEditActivity : LifecycleActivity<PersonalInfoViewModel>() {
+class PersonalInfoEditActivity : LifecycleActivity<PersonalInfoViewModel, ActivityPersonalInfoEditBinding>() {
 
     override fun initVM(): PersonalInfoViewModel = getViewModel()
 
     private var oldValue = "更改名字"
 
-    override fun getLayoutId() = R.layout.activity_personal_info_edit
+    override fun provideViewBinding() = ActivityPersonalInfoEditBinding.inflate(layoutInflater)
 
     override fun initView() {
-        headerView.setToolbarTitle("更改名字")
-        headerView.setMenuBtnEnable(false)
-        etContent.setText(oldValue)
+        binding.headerView.setToolbarTitle("更改名字")
+        binding.headerView.setMenuBtnEnable(false)
+        binding.etContent.setText(oldValue)
     }
 
     override fun initListener() {
-        headerView.setBackAction { finish() }
-        headerView.setMenuBtnAction {
-            val value = etContent.textTrim()
+        binding.headerView.setBackAction { finish() }
+        binding.headerView.setMenuBtnAction {
+            val value = binding.etContent.textTrim()
             viewModelGet().editUserNick(value)
         }
 
-        etContent.addTextChangedListener {
+        binding.etContent.addTextChangedListener {
             if (it?.toString() == oldValue) {
-                headerView.setMenuBtnEnable(false)
-            }else {
-                headerView.setMenuBtnEnable(true)
+                binding.headerView.setMenuBtnEnable(false)
+            } else {
+                binding.headerView.setMenuBtnEnable(true)
             }
         }
     }

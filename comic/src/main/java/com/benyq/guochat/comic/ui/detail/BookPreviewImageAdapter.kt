@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import android.widget.TextView
 import com.benyq.guochat.comic.R
 import com.benyq.guochat.comic.model.bean.ImageListBean
 import com.benyq.module_base.ext.getScreenWidth
@@ -17,7 +18,6 @@ import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import kotlinx.android.synthetic.main.comic_item_book_preview_image.view.*
 import kotlin.math.roundToInt
 
 /**
@@ -30,14 +30,16 @@ class BookPreviewImageAdapter :
     BaseQuickAdapter<ImageListBean, BaseViewHolder>(R.layout.comic_item_book_preview_image) {
 
     override fun convert(holder: BaseViewHolder, item: ImageListBean) {
-        val image = holder.itemView.ivCover
+        val image = holder.getView<ImageView>(R.id.ivCover)
         val height = context.getScreenWidth()
             .toFloat() * item.height / if (item.width != 0) item.width else 1
         val layoutParam = image.layoutParams
         layoutParam.height = height.roundToInt()
         image.layoutParams = layoutParam
 
-        holder.itemView.tvPosition.run {
+        val tvPosition: TextView = holder.getView(R.id.tvPosition)
+        val ivCover: ImageView = holder.getView(R.id.ivCover)
+        tvPosition.run {
             text = holder.layoutPosition.toString()
             visible()
         }
@@ -47,8 +49,8 @@ class BookPreviewImageAdapter :
             }
 
             override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                holder.itemView.tvPosition.gone()
-                holder.itemView.ivCover.setImageBitmap(resource)
+                tvPosition.gone()
+                ivCover.setImageBitmap(resource)
             }
 
             override fun onResourceLoading(placeholder: Drawable?) {
@@ -65,7 +67,8 @@ class BookPreviewImageAdapter :
 
     override fun onViewRecycled(holder: BaseViewHolder) {
         super.onViewRecycled(holder)
-        Glide.with(context).clear(holder.itemView.ivCover)
+        val ivCover: ImageView = holder.getView(R.id.ivCover)
+        Glide.with(context).clear(ivCover)
     }
 
     private fun loadImage(

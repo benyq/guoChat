@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewbinding.ViewBinding
 
 /**
  * @author benyq
@@ -14,10 +15,13 @@ import androidx.lifecycle.ViewModelProvider
  * @e-mail 1520063035@qq.com
  * @note 所有fragment的基类
  */
-abstract class BaseFragment : Fragment(), IFragment{
+abstract class BaseFragment<VB: ViewBinding> : Fragment(), IFragment{
 
     lateinit var mContext : Context
     private lateinit var appViewModelProvider: ViewModelProvider
+
+    private var _binding: VB? = null
+    protected val binding get() = _binding!!
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -29,7 +33,8 @@ abstract class BaseFragment : Fragment(), IFragment{
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(getLayoutId(), container, false)
+        _binding = provideViewBinding()
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,6 +42,11 @@ abstract class BaseFragment : Fragment(), IFragment{
         initBefore()
         initView()
         initListener()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     open fun getAppViewModelProvider(): ViewModelProvider {
@@ -47,4 +57,6 @@ abstract class BaseFragment : Fragment(), IFragment{
     }
 
     open fun initData() {}
+
+    abstract fun provideViewBinding(): VB
 }

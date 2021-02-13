@@ -4,8 +4,8 @@ import android.os.Environment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.R
+import com.benyq.guochat.databinding.ActivityAvatarBinding
 import com.benyq.guochat.function.other.GlideEngine
-import com.benyq.guochat.loadImage
 import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.vm.PersonalInfoViewModel
 import com.benyq.guochat.saveImg
@@ -13,6 +13,7 @@ import com.benyq.module_base.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.common.CommonBottomDialog
 import com.benyq.module_base.ext.Toasts
 import com.benyq.module_base.ext.getViewModel
+import com.benyq.module_base.ext.loadImage
 import com.benyq.module_base.ext.loge
 import com.bumptech.glide.Glide
 import com.gyf.immersionbar.ktx.immersionBar
@@ -21,7 +22,6 @@ import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_avatar.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -34,7 +34,7 @@ import java.io.File
  * @note 头像显示与修改
  */
 @AndroidEntryPoint
-class AvatarActivity : LifecycleActivity<PersonalInfoViewModel>() {
+class AvatarActivity : LifecycleActivity<PersonalInfoViewModel, ActivityAvatarBinding>() {
 
     override fun initVM(): PersonalInfoViewModel = getViewModel()
 
@@ -47,21 +47,21 @@ class AvatarActivity : LifecycleActivity<PersonalInfoViewModel>() {
         }
     }
 
-    override fun getLayoutId() = R.layout.activity_avatar
+    override fun provideViewBinding() = ActivityAvatarBinding.inflate(layoutInflater)
 
     override fun initView() {
         //从本地缓存中取出user信息
         //Glide加载头像
         ChatLocalStorage.userAccount.run {
-            ivAvatar.loadImage(avatarUrl, 0)
+            binding.ivAvatar.loadImage(avatarUrl, 0)
         }
     }
 
     override fun initListener() {
-        headerView.setBackAction {
+        binding.headerView.setBackAction {
             finish()
         }
-        headerView.setMenuAction {
+        binding.headerView.setMenuAction {
             showBottomDialog()
         }
     }

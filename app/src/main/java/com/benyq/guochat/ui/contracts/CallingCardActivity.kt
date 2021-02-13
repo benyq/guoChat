@@ -1,6 +1,7 @@
 package com.benyq.guochat.ui.contracts
 
 import com.benyq.guochat.R
+import com.benyq.guochat.databinding.ActivityCallingCardBinding
 import com.benyq.guochat.function.zxing.encode.CodeEncodingCreator
 import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.bean.UserBean
@@ -8,7 +9,6 @@ import com.benyq.module_base.ext.dip2px
 import com.benyq.module_base.ui.base.BaseActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import kotlinx.android.synthetic.main.activity_calling_card.*
 import kotlinx.coroutines.*
 
 /**
@@ -18,11 +18,11 @@ import kotlinx.coroutines.*
  * @note 二维码名片
  *  预想的是根据传入的果聊号生成名片信息
  */
-class CallingCardActivity : BaseActivity() {
+class CallingCardActivity : BaseActivity<ActivityCallingCardBinding>() {
 
     private val mLoadIconJob: Job = Job()
 
-    override fun getLayoutId() = R.layout.activity_calling_card
+    override fun provideViewBinding() = ActivityCallingCardBinding.inflate(layoutInflater)
 
     private lateinit var mUserBean: UserBean
 
@@ -30,15 +30,15 @@ class CallingCardActivity : BaseActivity() {
         mUserBean = ChatLocalStorage.userAccount
         Glide.with(this).load(mUserBean.avatarUrl)
             .transform(RoundedCorners(dip2px(10).toInt()))
-            .into(ivAvatar)
+            .into(binding.ivAvatar)
 
-        tvContractName.text = mUserBean.nickName
+        binding.tvContractName.text = mUserBean.nickName
         createCallingCardQr("1234")
 
     }
 
     override fun initListener() {
-        headerView.setBackAction { finish() }
+        binding.headerView.setBackAction { finish() }
     }
 
     private fun createCallingCardQr(chatNo: String) {
@@ -54,7 +54,7 @@ class CallingCardActivity : BaseActivity() {
                     .submit(150, 150)
                     .get()
             }
-            ivCallingQr.setImageBitmap(CodeEncodingCreator.createQRCode(content, 300, 300, bitmap))
+            binding.ivCallingQr.setImageBitmap(CodeEncodingCreator.createQRCode(content, 300, 300, bitmap))
         }
 
     }

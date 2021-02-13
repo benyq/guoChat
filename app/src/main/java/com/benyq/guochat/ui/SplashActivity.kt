@@ -11,7 +11,6 @@ import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.test.TestActivity
 import com.benyq.guochat.ui.login.FingerLoginActivity
 import com.benyq.guochat.ui.login.LoginActivity
-import com.benyq.module_base.ext.fromP
 import com.benyq.module_base.ext.goToActivity
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ktx.immersionBar

@@ -10,12 +10,12 @@ import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.core.view.setPadding
 import com.benyq.guochat.R
+import com.benyq.guochat.databinding.DialogCommonBottomMenuBinding
 import com.benyq.module_base.ui.base.BaseDialogFragment
 import com.benyq.module_base.DrawableBuilder
 import com.benyq.module_base.ext.dip2px
 import com.benyq.module_base.ext.getColorRef
 import com.benyq.module_base.ext.getScreenWidth
-import kotlinx.android.synthetic.main.dialog_common_bottom_menu.*
 
 /**
  * @author benyq
@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.dialog_common_bottom_menu.*
  * @e-mail 1520063035@qq.com
  * @note 通用底部弹出MenuDialog
  */
-class CommonBottomDialog : BaseDialogFragment() {
+class CommonBottomDialog : BaseDialogFragment<DialogCommonBottomMenuBinding>() {
 
     companion object {
         private const val titleKey = "titleKey"
@@ -42,10 +42,10 @@ class CommonBottomDialog : BaseDialogFragment() {
         mTitles = arguments?.getStringArray(titleKey) ?: arrayOf()
     }
 
-    override fun getLayoutId() = R.layout.dialog_common_bottom_menu
+    override fun provideViewBinding() = DialogCommonBottomMenuBinding.inflate(layoutInflater)
 
     override fun initView() {
-        llAvatarMenu.background = DrawableBuilder(mContext)
+        binding.llAvatarMenu.background = DrawableBuilder(mContext)
             .cornerRadii(FloatArray(8){0f}.apply {
                 set(0, mContext.dip2px(10))
                 set(1, mContext.dip2px(10))
@@ -54,7 +54,7 @@ class CommonBottomDialog : BaseDialogFragment() {
             })
             .fill(Color.WHITE)
             .build()
-        tvCancel.setOnClickListener { dismiss() }
+        binding.tvCancel.setOnClickListener { dismiss() }
         mTitles.forEachIndexed { index, s ->
             val textView = TextView(mContext)
             textView.gravity = Gravity.CENTER
@@ -70,7 +70,7 @@ class CommonBottomDialog : BaseDialogFragment() {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
-            llContainer.addView(textView, layoutParams)
+            binding.llContainer.addView(textView, layoutParams)
             if (index != mTitles.size - 1) {
                 val view = View(mContext)
                 val viewParams = LinearLayout.LayoutParams(
@@ -78,7 +78,7 @@ class CommonBottomDialog : BaseDialogFragment() {
                     mContext.dip2px(0.3f).toInt()
                 )
                 view.setBackgroundResource(R.color.gray)
-                llContainer.addView(view, viewParams)
+                binding.llContainer.addView(view, viewParams)
             }
         }
     }

@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -29,6 +29,7 @@ android {
         jvmTarget = "1.8"
     }
 
+    viewBinding.enabled = true
 }
 
 dependencies {
@@ -87,4 +88,13 @@ dependencies {
 
     //https://github.com/bingoogolapple/BGASwipeBackLayout-Android 优化退出，以后可能会用到。已经整个module导入
     api 'com.github.chrisbanes:PhotoView:2.3.0'
+
+    //https://github.com/youth5201314/banner
+    api 'com.youth.banner:banner:2.1.0'
+    api 'com.shuyu:GSYVideoPlayer:7.1.6'
+
+    //下拉刷新 https://github.com/scwang90/SmartRefreshLayout
+    api 'com.scwang.smart:refresh-layout-kernel:2.0.1'
+    api 'com.scwang.smart:refresh-header-material:2.0.1'
+    api 'com.scwang.smart:refresh-footer-ball:2.0.1' //球脉冲加载
 }

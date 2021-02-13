@@ -6,14 +6,13 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import com.benyq.module_base.R
+import com.benyq.module_base.databinding.DialogPicturePuzzleConfirmBinding
 import com.benyq.module_base.ext.Toasts
 import com.benyq.module_base.ext.runOnUiThread
 import com.benyq.module_base.ui.base.BaseDialogFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import kotlinx.android.synthetic.main.dialog_picture_puzzle_confirm.*
 
 /**
  * @author benyq
@@ -21,7 +20,7 @@ import kotlinx.android.synthetic.main.dialog_picture_puzzle_confirm.*
  * @e-mail 1520063035@qq.com
  * @note 拼图确认dialog
  */
-class PicturePuzzleConfirmDialog : BaseDialogFragment() {
+class PicturePuzzleConfirmDialog : BaseDialogFragment<DialogPicturePuzzleConfirmBinding>() {
 
     companion object {
         private const val IMG_URL = "imgUrl"
@@ -35,10 +34,10 @@ class PicturePuzzleConfirmDialog : BaseDialogFragment() {
 
     private var mSuccessAction: (()->Unit)? = null
 
-    override fun getLayoutId() = R.layout.dialog_picture_puzzle_confirm
+    override fun provideViewBinding() = DialogPicturePuzzleConfirmBinding.inflate(layoutInflater)
 
     override fun initView() {
-        ppView.setResultAction { bool, time ->
+        binding.ppView.setResultAction { bool, time ->
             if (bool) {
                 Toasts.show("快如闪电, 只用时${time}秒")
                 runOnUiThread(200) {
@@ -70,7 +69,7 @@ class PicturePuzzleConfirmDialog : BaseDialogFragment() {
         Glide.with(mContext).asBitmap().load(imgUrl)
             .into(object : CustomTarget<Bitmap>() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    ppView.setBitmap(resource)
+                    binding.ppView.setBitmap(resource)
                 }
 
                 override fun onLoadCleared(placeholder: Drawable?) {

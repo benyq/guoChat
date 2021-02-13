@@ -3,12 +3,14 @@ package com.benyq.module_base.ui.widget
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.benyq.module_base.R
+import com.benyq.module_base.databinding.LayoutCommonToolbarBinding
+import com.benyq.module_base.databinding.ViewIconFormLineBinding
 import com.benyq.module_base.ext.gone
-import kotlinx.android.synthetic.main.view_icon_form_line.view.*
 
 /**
  * @author benyq
@@ -38,8 +40,10 @@ class IconFormLine(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
 
     private var hint: String? = ""
 
+    private var binding: ViewIconFormLineBinding = ViewIconFormLineBinding.inflate(
+        LayoutInflater.from(context), this, true)
+
     init {
-        View.inflate(context, R.layout.view_icon_form_line, this)
         orientation = VERTICAL
         isClickable = true
 
@@ -76,38 +80,38 @@ class IconFormLine(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
     }
 
     private fun initView() {
-        tvTitle.text = title
-        tvContent.text = content
-        tvContent.hint = hint
-        viewLine.visibility = if (showDivide) View.VISIBLE else View.GONE
-        ivLineArrow.visibility = if (showLineArrow) View.VISIBLE else View.GONE
-        tvTitle.setTextColor(lineTitleColor)
-        tvContent.setTextColor(lineContentColor)
+        binding.tvTitle.text = title
+        binding.tvContent.text = content
+        binding.tvContent.hint = hint
+        binding.viewLine.visibility = if (showDivide) View.VISIBLE else View.GONE
+        binding.ivLineArrow.visibility = if (showLineArrow) View.VISIBLE else View.GONE
+        binding.tvTitle.setTextColor(lineTitleColor)
+        binding.tvContent.setTextColor(lineContentColor)
         if (imgRes != imgResNone) {
-            ivImg.background = formIconBg
-            ivImg.setImageResource(imgRes)
+            binding.ivImg.background = formIconBg
+            binding.ivImg.setImageResource(imgRes)
         }else {
-            ivImg.gone()
+            binding.ivImg.gone()
         }
     }
 
 
     fun setTitle(title: String) {
-        tvTitle.text = title
+        binding.tvTitle.text = title
     }
 
     fun setContent(content: String) {
-        tvContent.text = content
-        tvContent.setTextColor(ContextCompat.getColor(context, R.color.color3C4044))
+        binding.tvContent.text = content
+        binding.tvContent.setTextColor(ContextCompat.getColor(context, R.color.color3C4044))
     }
 
     fun setRedContent(content: String) {
-        tvContent.text = content
-        tvContent.setTextColor(ContextCompat.getColor(context, R.color.red))
+        binding.tvContent.text = content
+        binding.tvContent.setTextColor(ContextCompat.getColor(context, R.color.red))
     }
 
     fun getContent(): String {
-        return tvContent.text.toString().trim()
+        return binding.tvContent.text.toString().trim()
     }
 
 }

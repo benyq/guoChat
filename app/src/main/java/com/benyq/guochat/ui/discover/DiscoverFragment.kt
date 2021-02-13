@@ -1,19 +1,17 @@
 package com.benyq.guochat.ui.discover
 
 import android.Manifest
-import android.content.Intent
-import android.net.Uri
 import com.benyq.guochat.R
 import com.benyq.guochat.comic.ComicActivity
+import com.benyq.guochat.databinding.FragmentDiscoverBinding
 import com.benyq.guochat.function.permissionX.PermissionX
 import com.benyq.guochat.function.zxing.android.CaptureActivity
 import com.benyq.module_base.ui.base.BaseFragment
-import com.benyq.guochat.ui.openeye.OpenEyeCommunityActivity
 import com.benyq.module_base.ext.Toasts
 import com.benyq.module_base.ext.goToActivity
 import com.benyq.module_base.ui.PicturePuzzleConfirmDialog
+import com.benyq.module_openeye.OpenEyeCommunityActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_discover.*
 
 /**
  * @author benyq
@@ -22,16 +20,16 @@ import kotlinx.android.synthetic.main.fragment_discover.*
  * @note
  */
 @AndroidEntryPoint
-class DiscoverFragment : BaseFragment() {
+class DiscoverFragment : BaseFragment<FragmentDiscoverBinding>() {
 
-    override fun getLayoutId() = R.layout.fragment_discover
+    override fun provideViewBinding() = FragmentDiscoverBinding.inflate(layoutInflater)
 
     override fun initListener() {
-        ifFriendCircle.setOnClickListener {
+        binding.ifFriendCircle.setOnClickListener {
             goToActivity<FriendCircleActivity>()
 //            NotificationHelper.showMessageNotification(mContext)
         }
-        ifScan.setOnClickListener {
+        binding.ifScan.setOnClickListener {
             PermissionX.request(
                 requireActivity(),
                 Manifest.permission.CAMERA
@@ -43,11 +41,11 @@ class DiscoverFragment : BaseFragment() {
                 }
             }
         }
-        ifOpenEye.setOnClickListener {
+        binding.ifOpenEye.setOnClickListener {
             goToActivity<OpenEyeCommunityActivity>()
         }
 
-        ifComic.setOnClickListener {
+        binding.ifComic.setOnClickListener {
             PicturePuzzleConfirmDialog.newInstance("https://www.bing.com/th?id=OIP.kN6_heZkbrUFPDoaUUeaGQHaE-&w=137&h=94&c=8&rs=1&qlt=90&dpr=1.25&pid=3.1&rm=2") {
                 goToActivity<ComicActivity>()
             }.show(childFragmentManager)

@@ -4,9 +4,9 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
+import com.benyq.guochat.databinding.ActivityMusicPlayingBinding
 import com.benyq.guochat.function.music.PlayerController
 import com.benyq.module_base.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_music_playing.*
 
 /**
  * @author benyq
@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_music_playing.*
  * @e-mail 1520063035@qq.com
  * @note 单纯就是音乐播放展示的
  */
-class MusicPlayingActivity : BaseActivity() {
+class MusicPlayingActivity : BaseActivity<ActivityMusicPlayingBinding>() {
 
     private val albumRotate: Animation by lazy {
         AnimationUtils.loadAnimation(
@@ -23,23 +23,23 @@ class MusicPlayingActivity : BaseActivity() {
         )
     }
 
-    override fun getLayoutId() = R.layout.activity_music_playing
+    override fun provideViewBinding() = ActivityMusicPlayingBinding.inflate(layoutInflater)
 
     override fun initView() {
         PlayerController.mPauseLiveData.observe(this, Observer {
             if (it) {
-                ivPlayToggle.setImageResource(R.drawable.ic_remote_view_pause)
-                ivPlayingAlbum.clearAnimation()
+                binding.ivPlayToggle.setImageResource(R.drawable.ic_remote_view_pause)
+                binding.ivPlayingAlbum.clearAnimation()
             } else {
-                ivPlayToggle.setImageResource(R.drawable.ic_remote_view_play)
-                ivPlayingAlbum.startAnimation(albumRotate)
+                binding.ivPlayToggle.setImageResource(R.drawable.ic_remote_view_play)
+                binding.ivPlayingAlbum.startAnimation(albumRotate)
             }
         })
     }
 
     override fun initListener() {
-        headerView.setBackAction { finish() }
-        btnPlayToggle.setOnClickListener {
+        binding.headerView.setBackAction { finish() }
+        binding.btnPlayToggle.setOnClickListener {
             PlayerController.togglePlay()
         }
 

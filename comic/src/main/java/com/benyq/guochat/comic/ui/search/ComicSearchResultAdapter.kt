@@ -1,13 +1,14 @@
 package com.benyq.guochat.comic.ui.search
 
 import android.annotation.SuppressLint
+import android.widget.ImageView
+import android.widget.TextView
 import com.benyq.guochat.comic.R
 import com.benyq.guochat.comic.model.bean.ComicSearchResponse
-import com.benyq.guochat.comic.ui.home.loadImage
+import com.benyq.module_base.ext.loadImage
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import kotlinx.android.synthetic.main.comic_item_search_result.view.*
 
 /**
  * @author benyq
@@ -20,10 +21,10 @@ class ComicSearchResultAdapter : BaseQuickAdapter<ComicSearchResponse.ComicsBean
 
     @SuppressLint("SetTextI18n")
     override fun convert(holder: BaseViewHolder, item: ComicSearchResponse.ComicsBean) {
-        holder.itemView.tvBookName.text = item.name
-        holder.itemView.tvAuthor.text = item.author
-        holder.itemView.tvDesContent.text = item.description
-        holder.itemView.tvChapter.text = "共:${item.passChapterNum}"
-        holder.itemView.ivBookCover.loadImage(item.cover, round = 0)
+        holder.getView<TextView>(R.id.tvBookName).text = item.name
+        holder.getView<TextView>(R.id.tvAuthor).text = item.author
+        holder.getView<TextView>(R.id.tvDesContent).text = item.description
+        holder.getView<TextView>(R.id.tvChapter).text = "共:${item.passChapterNum}"
+        holder.getView<ImageView>(R.id.ivBookCover).loadImage(item.cover, round = 0)
     }
 }

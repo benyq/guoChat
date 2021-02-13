@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.benyq.guochat.comic.ComicIntentExtra
 import com.benyq.guochat.comic.R
+import com.benyq.guochat.comic.databinding.ComicActivityReadComicBookBinding
 import com.benyq.guochat.comic.local.ComicLocalStorage
 import com.benyq.guochat.comic.model.bean.Chapter
 import com.benyq.guochat.comic.model.vm.ReadComicBookViewModel
@@ -20,8 +21,6 @@ import com.benyq.module_base.ui.base.LifecycleActivity
 import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.ktx.immersionBar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.comic_activity_read_comic_book.*
-import kotlin.properties.Delegates
 
 /**
  * @author benyq
@@ -30,7 +29,7 @@ import kotlin.properties.Delegates
  * @note 阅读界面
  */
 @AndroidEntryPoint
-class ReadComicBookActivity : LifecycleActivity<ReadComicBookViewModel>() {
+class ReadComicBookActivity : LifecycleActivity<ReadComicBookViewModel, ComicActivityReadComicBookBinding>() {
 
     private var isPreviewHorizontal: Boolean = ComicLocalStorage.isPreviewHorizontalModel
 
@@ -55,7 +54,7 @@ class ReadComicBookActivity : LifecycleActivity<ReadComicBookViewModel>() {
         )
     }
 
-    override fun getLayoutId() = R.layout.comic_activity_read_comic_book
+    override fun provideViewBinding() = ComicActivityReadComicBookBinding.inflate(layoutInflater)
 
     override fun initVM(): ReadComicBookViewModel = getViewModel()
 
@@ -63,19 +62,19 @@ class ReadComicBookActivity : LifecycleActivity<ReadComicBookViewModel>() {
         mComicId = intent.getStringExtra(ComicIntentExtra.comicId) ?: ""
         mCurrentPosition = intent.getIntExtra(ComicIntentExtra.chapterPosition, -1)
 
-        headView.setBackAction { finish() }
+        binding.headView.setBackAction { finish() }
 
         //默认竖直方向
         val orientation = if (isPreviewHorizontal) {
-            tvSwitchModel.text = getString(R.string.comic_switch_model_horizontal)
+            binding.tvSwitchModel.text = getString(R.string.comic_switch_model_horizontal)
             RecyclerView.HORIZONTAL
         }else {
-            tvSwitchModel.text = getString(R.string.comic_switch_model_vertical)
+            binding.tvSwitchModel.text = getString(R.string.comic_switch_model_vertical)
             RecyclerView.VERTICAL
         }
-        rvBookContent.layoutManager = LinearLayoutManager(this, orientation, false)
-        rvBookContent.adapter = mAdapter
-        rvBookContent.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+        binding.rvBookContent.layoutManager = LinearLayoutManager(this, orientation, false)
+        binding.rvBookContent.adapter = mAdapter
+        binding.rvBookContent.addOnScrollListener(object: RecyclerView.OnScrollListener(){
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
@@ -84,38 +83,38 @@ class ReadComicBookActivity : LifecycleActivity<ReadComicBookViewModel>() {
                         linearLayoutManager.findFirstVisibleItemPosition()
 
                     mAdapter.getItem(findFirstVisibleItemPosition).also {
-                        sbPages.progress = it.currentIndex - 1
+                        binding.sbPages.progress = it.currentIndex - 1
                     }
                 }
             }
         })
-        rvBookContent.setTouchCallback {
+        binding.rvBookContent.setTouchCallback {
             switchTAndBMenu()
         }
 
-        llChapter.setOnClickListener {
+        binding.llChapter.setOnClickListener {
             LeftBookChapterDialog.newInstance().show(supportFragmentManager)
         }
 
-        llBrightness.setOnClickListener {
+        binding.llBrightness.setOnClickListener {
 
         }
 
-        llSwitchModel.setOnClickListener {
+        binding.llSwitchModel.setOnClickListener {
             isPreviewHorizontal = !isPreviewHorizontal
             ComicLocalStorage.isPreviewHorizontalModel = isPreviewHorizontal
-            tvSwitchModel
+            binding.tvSwitchModel
             if (isPreviewHorizontal) {
-                (rvBookContent.layoutManager as LinearLayoutManager).orientation = RecyclerView.HORIZONTAL
-                tvSwitchModel.text = getString(R.string.comic_switch_model_horizontal)
+                (binding.rvBookContent.layoutManager as LinearLayoutManager).orientation = RecyclerView.HORIZONTAL
+                binding.tvSwitchModel.text = getString(R.string.comic_switch_model_horizontal)
             }else {
-                (rvBookContent.layoutManager as LinearLayoutManager).orientation = RecyclerView.VERTICAL
-                tvSwitchModel.text = getString(R.string.comic_switch_model_vertical)
+                (binding.rvBookContent.layoutManager as LinearLayoutManager).orientation = RecyclerView.VERTICAL
+                binding.tvSwitchModel.text = getString(R.string.comic_switch_model_vertical)
             }
             Toasts.show("有些漫画应该是不支持修改的，嘿嘿")
         }
 
-        tvLastChapter.setOnClickListener {
+        binding.tvLastChapter.setOnClickListener {
             if (mCurrentPosition == 0) {
                 Toasts.show("已经是第一回了，别点了")
                 return@setOnClickListener
@@ -124,7 +123,7 @@ class ReadComicBookActivity : LifecycleActivity<ReadComicBookViewModel>() {
             loadNewChapter()
         }
 
-        tvNextChapter.setOnClickListener {
+        binding.tvNextChapter.setOnClickListener {
             if (mCurrentPosition == mChapterList.size - 1) {
                 Toasts.show("已经是最后一回了，有底线的")
                 return@setOnClickListener
@@ -132,7 +131,7 @@ class ReadComicBookActivity : LifecycleActivity<ReadComicBookViewModel>() {
             mCurrentPosition ++
             loadNewChapter()
         }
-        sbPages.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+        binding.sbPages.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
             }
 
@@ -140,7 +139,7 @@ class ReadComicBookActivity : LifecycleActivity<ReadComicBookViewModel>() {
             }
 
             override fun onStopTrackingTouch(p0: SeekBar?) {
-                rvBookContent.scrollToPosition(sbPages.progress)
+                binding.rvBookContent.scrollToPosition(binding.sbPages.progress)
             }
 
         })
@@ -174,8 +173,8 @@ class ReadComicBookActivity : LifecycleActivity<ReadComicBookViewModel>() {
                         imageListBean.currentIndex = index + 1
                     }
                     mAdapter.setList(image_list)
-                    sbPages.max = image_list.size - 1
-                    sbPages.progress = 0
+                    binding.sbPages.max = image_list.size - 1
+                    binding.sbPages.progress = 0
                 }
                 it?.isError?.message?.run {
                     Toasts.show(this)
@@ -186,7 +185,7 @@ class ReadComicBookActivity : LifecycleActivity<ReadComicBookViewModel>() {
                     mChapterList = chapterList
 
                     if (mCurrentPosition != -1) {
-                        headView.setToolbarTitle(mChapterList[mCurrentPosition].name)
+                        binding.headView.setToolbarTitle(mChapterList[mCurrentPosition].name)
                         mChapterId = mChapterList[mCurrentPosition].chapter_id
                         viewModelGet().comicPreView(mChapterId)
                     }
@@ -202,7 +201,7 @@ class ReadComicBookActivity : LifecycleActivity<ReadComicBookViewModel>() {
     }
 
     private fun loadNewChapter() {
-        headView.setToolbarTitle( mChapterList[mCurrentPosition].name)
+        binding.headView.setToolbarTitle( mChapterList[mCurrentPosition].name)
         mChapterId = mChapterList[mCurrentPosition].chapter_id
         viewModelGet().updateBookShelf(mComicId, mCurrentPosition, mChapterList.size)
         mAdapter.setList(null)
@@ -210,24 +209,24 @@ class ReadComicBookActivity : LifecycleActivity<ReadComicBookViewModel>() {
     }
 
     private fun switchTAndBMenu() {
-        if (clBottom.translationY != 0f) {
+        if (binding.clBottom.translationY != 0f) {
             window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-            headView.animate().translationY(ImmersionBar.getStatusBarHeight(this).toFloat())
+            binding.headView.animate().translationY(ImmersionBar.getStatusBarHeight(this).toFloat())
                 .setDuration(300).start()
-            clBottom.animate().translationY(0f).setDuration(300).start()
+            binding.clBottom.animate().translationY(0f).setDuration(300).start()
         } else {
             window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-            headView.animate().translationY(-headView.height.toFloat()).setDuration(300).start()
-            clBottom.animate().translationY(clBottom.height.toFloat()).setDuration(300).start()
+            binding.headView.animate().translationY(-binding.headView.height.toFloat()).setDuration(300).start()
+            binding.clBottom.animate().translationY(binding.clBottom.height.toFloat()).setDuration(300).start()
         }
     }
 
     private fun hideMenu() {
-        calculateViewMeasure(headView)
-        calculateViewMeasure(clBottom)
+        calculateViewMeasure(binding.headView)
+        calculateViewMeasure(binding.clBottom)
 
-        headView.translationY = -headView.measuredHeight.toFloat()
-        clBottom.translationY = clBottom.measuredHeight.toFloat()
+        binding.headView.translationY = -binding.headView.measuredHeight.toFloat()
+        binding.clBottom.translationY = binding.clBottom.measuredHeight.toFloat()
 
     }
 

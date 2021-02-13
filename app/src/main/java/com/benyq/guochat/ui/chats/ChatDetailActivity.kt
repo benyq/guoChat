@@ -2,11 +2,8 @@ package com.benyq.guochat.ui.chats
 
 import android.Manifest
 import android.app.Activity
-import android.app.ActivityOptions
-import android.content.Intent
 import android.graphics.Rect
 import android.os.Handler
-import android.util.Pair
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.view.postDelayed
@@ -16,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.app.SharedViewModel
+import com.benyq.guochat.databinding.ActivityChatDetailBinding
 import com.benyq.guochat.function.media.MediaRecordController
 import com.benyq.guochat.function.other.GlideEngine
 import com.benyq.guochat.function.permissionX.PermissionX
@@ -23,21 +21,19 @@ import com.benyq.guochat.local.entity.ChatRecordEntity
 import com.benyq.guochat.model.bean.ChatListBean
 import com.benyq.guochat.model.vm.ChatDetailViewModel
 import com.benyq.guochat.model.vm.StateEvent
-import com.benyq.guochat.ui.PhotoPreviewActivity
-import com.benyq.module_base.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.chats.video.PictureVideoActivity
 import com.benyq.imageviewer.ImagePreview
 import com.benyq.imageviewer.PreviewPhoto
 import com.benyq.imageviewer.PreviewTypeEnum
 import com.benyq.module_base.SmartJump
 import com.benyq.module_base.ext.*
+import com.benyq.module_base.ui.base.LifecycleActivity
 import com.gyf.immersionbar.ktx.immersionBar
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_chat_detail.*
 import kotlin.properties.Delegates
 
 
@@ -48,7 +44,8 @@ import kotlin.properties.Delegates
  * @note 与联系人的聊天界面
  */
 @AndroidEntryPoint
-class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClickListener {
+class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDetailBinding>(),
+    View.OnClickListener {
 
     private val TYPE_TEXT = 0
     private val TYPE_VOICE = 1
@@ -84,18 +81,18 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             ) { granted, permissions ->
                 if (granted) {
-                    ivTextVoice.setImageResource(R.drawable.ic_voice)
-                    etContent.gone()
-                    tvPressVoice.visible()
+                    binding.ivTextVoice.setImageResource(R.drawable.ic_voice)
+                    binding.etContent.gone()
+                    binding.tvPressVoice.visible()
                 } else {
                     Toasts.show("没权限")
                 }
             }
 
         } else if (new == TYPE_TEXT) {
-            ivTextVoice.setImageResource(R.drawable.ic_keyboard)
-            etContent.visible()
-            tvPressVoice.gone()
+            binding.ivTextVoice.setImageResource(R.drawable.ic_keyboard)
+            binding.etContent.visible()
+            binding.tvPressVoice.gone()
         }
     })
 
@@ -103,22 +100,22 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
 
     override fun initVM(): ChatDetailViewModel = getViewModel()
 
-    override fun getLayoutId() = R.layout.activity_chat_detail
+    override fun provideViewBinding() = ActivityChatDetailBinding.inflate(layoutInflater)
 
     override fun initView() {
         mChatListBean = intent.getParcelableExtra(IntentExtra.fromToId)!!
-        rootLayout.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+        binding.rootLayout.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
             if (oldBottom != -1 && oldBottom > bottom) {
                 if (mAdapter.data.isNotEmpty()) {
-                    rvChatRecord.scrollToPosition(mAdapter.data.size - 1)
+                    binding.rvChatRecord.scrollToPosition(mAdapter.data.size - 1)
                 }
             }
         }
-        rvChatRecord.layoutManager = LinearLayoutManager(this)
+        binding.rvChatRecord.layoutManager = LinearLayoutManager(this)
 
-        rvChatRecord.adapter = mAdapter
+        binding.rvChatRecord.adapter = mAdapter
 
-        rvChatRecord.itemAnimator?.run {
+        binding.rvChatRecord.itemAnimator?.run {
             addDuration = 0
             changeDuration = 0
             moveDuration = 0
@@ -126,13 +123,13 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
         }
 
 
-        headerView.setBackAction {
+        binding.headerView.setBackAction {
             finish()
         }
-        headerView.setMenuAction {
+        binding.headerView.setMenuAction {
 
         }
-        headerView.setToolbarTitle(mChatListBean.contractName)
+        binding.headerView.setToolbarTitle(mChatListBean.contractName)
         mAdapter.notifyDataSetChanged()
     }
 
@@ -154,24 +151,24 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
         MediaRecordController.setCompleteAction {
             mAdapter.setVoiceStop(it)
         }
-        etContent.setOnFocusChangeListener { v, hasFocus ->
+        binding.etContent.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus) {
                 hideFunctionMenu(10)
             }
         }
-        etContent.addTextChangedListener {
-            tvSend.visibility = if (it.isNullOrEmpty()) View.GONE else View.VISIBLE
+        binding.etContent.addTextChangedListener {
+            binding.tvSend.visibility = if (it.isNullOrEmpty()) View.GONE else View.VISIBLE
         }
 
-        ivTextVoice.setOnClickListener(this)
-        rootLayout.setOnClickListener(this)
-        etContent.setOnClickListener(this)
-        tvSend.setOnClickListener(this)
-        ivMoreFunction.setOnClickListener(this)
+        binding.ivTextVoice.setOnClickListener(this)
+        binding.rootLayout.setOnClickListener(this)
+        binding.etContent.setOnClickListener(this)
+        binding.tvSend.setOnClickListener(this)
+        binding.ivMoreFunction.setOnClickListener(this)
 
-        llAlbum.setOnClickListener(this)
-        llCapture.setOnClickListener(this)
-        llContracts.setOnClickListener(this)
+        binding.llAlbum.setOnClickListener(this)
+        binding.llCapture.setOnClickListener(this)
+        binding.llContracts.setOnClickListener(this)
 
         mAdapter.setOnItemClickListener { adapter, view, position ->
             val data = mAdapter.data[position]
@@ -189,17 +186,20 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
 
                     val tmpData = mutableListOf<PreviewPhoto>()
                     val tmpView = mutableListOf<View?>()
-                    val visiblePosition = (rvChatRecord.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                    val visiblePosition =
+                        (binding.rvChatRecord.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
                     mAdapter.data.forEachIndexed { index, entity ->
                         val realIndex = index - visiblePosition
                         if (entity.chatType == ChatRecordEntity.TYPE_IMG) {
                             tmpView.add(
-                                rvChatRecord.getChildAt(realIndex)?.findViewById(R.id.ivContent)
+                                binding.rvChatRecord.getChildAt(realIndex)?.findViewById(R.id.ivContent)
                             )
                             tmpData.add(PreviewPhoto(entity.imgUrl, PreviewTypeEnum.IMAGE))
                         }
                         if (entity.chatType == ChatRecordEntity.TYPE_VIDEO) {
-                            tmpView.add(rvChatRecord.getChildAt(realIndex)?.findViewById(R.id.ivVideo))
+                            tmpView.add(
+                                binding.rvChatRecord.getChildAt(realIndex)?.findViewById(R.id.ivVideo)
+                            )
                             tmpData.add(PreviewPhoto(entity.videoPath, PreviewTypeEnum.VIDEO))
                         }
                         if (index == position) {
@@ -213,7 +213,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
                 }
             }
         }
-        tvPressVoice.setOnLongClickListener {
+        binding.tvPressVoice.setOnLongClickListener {
             val location = Rect()
             it.getGlobalVisibleRect(location)
             val y = (location.top + location.bottom) / 2
@@ -233,15 +233,15 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
             mChatRecordData.observe(this@ChatDetailActivity, Observer {
                 if (mAdapter.data.size > 0) {
                     mAdapter.addData(it)
-                }else {
-                    rvChatRecord.invisible()
+                } else {
+                    binding.rvChatRecord.invisible()
                     //根据item总高度显示区分 stackFromEnd 会出现问题，所以目前先靠估算吧
-                    val layoutManager = rvChatRecord.layoutManager as LinearLayoutManager
+                    val layoutManager = binding.rvChatRecord.layoutManager as LinearLayoutManager
                     mAdapter.setNewInstance(it.toMutableList())
-                    rvChatRecord.postDelayed(50){
+                    binding.rvChatRecord.postDelayed(50) {
                         layoutManager.stackFromEnd = isFullScreen(layoutManager)
-                        rvChatRecord.alpha = 1f
-                        rvChatRecord.visible()
+                        binding.rvChatRecord.alpha = 1f
+                        binding.rvChatRecord.visible()
                     }
                 }
             })
@@ -259,18 +259,18 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
     }
 
     private fun showFunctionMenu(duration: Long = 300) {
-        llBottom.animate().translationY(-flBottom.height.toFloat()).setDuration(duration).start()
-        flBottom.animate().withStartAction {
-            flBottom.visible()
-        }.translationY(-flBottom.height.toFloat()).setDuration(duration).start()
+        binding.llBottom.animate().translationY(-binding.flBottom.height.toFloat()).setDuration(duration).start()
+        binding.flBottom.animate().withStartAction {
+            binding.flBottom.visible()
+        }.translationY(-binding.flBottom.height.toFloat()).setDuration(duration).start()
 
     }
 
     private fun hideFunctionMenu(duration: Long = 300) {
-        llBottom.animate().translationY(0f).setDuration(duration).start()
+        binding.llBottom.animate().translationY(0f).setDuration(duration).start()
 
-        flBottom.animate().withEndAction {
-            flBottom.gone()
+        binding.flBottom.animate().withEndAction {
+            binding.flBottom.gone()
         }.translationY(0f).setDuration(duration).start()
 
     }
@@ -283,7 +283,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
             }
             R.id.tvSend -> {
                 hideFunctionMenu()
-                val content = etContent.textTrim()
+                val content = binding.etContent.textTrim()
                 addChatData(
                     ChatRecordEntity(
                         content = content,
@@ -291,7 +291,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
                         toUid = 2
                     )
                 )
-                etContent.setText("")
+                binding.etContent.setText("")
             }
             R.id.ivMoreFunction -> {
                 showFunctionMenu()
@@ -341,15 +341,15 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
     //v 永远都是EditText
     override fun isShouldHideInput(v: View?, event: MotionEvent): Boolean {
         //两种情况 etContent 和 tvSend 不隐藏
-        val et = checkView(etContent, event)
-        val tv = checkView(tvSend, event) && tvSend.visibility == View.VISIBLE
+        val et = checkView(binding.etContent, event)
+        val tv = checkView(binding.tvSend, event) && binding.tvSend.visibility == View.VISIBLE
         return !et && !tv
     }
 
     override fun hideView(ev: MotionEvent) {
         //两种情况 etContent 和 tvSend 不隐藏
-        val iv = checkView(ivMoreFunction, ev)
-        val fl = checkView(flBottom, ev)
+        val iv = checkView(binding.ivMoreFunction, ev)
+        val fl = checkView(binding.flBottom, ev)
         if (!iv && !fl) {
             hideFunctionMenu()
         }
@@ -383,9 +383,9 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel>(), View.OnClic
     private fun addChatData(data: ChatRecordEntity) {
         data.fromToId = mChatListBean.fromToId
         mAdapter.addData(data)
-        rvChatRecord.smoothScrollToPosition(mAdapter.data.size - 1)
+        binding.rvChatRecord.smoothScrollToPosition(mAdapter.data.size - 1)
         Handler().postDelayed({
-            val mLayoutManager = rvChatRecord.layoutManager as LinearLayoutManager
+            val mLayoutManager = binding.rvChatRecord.layoutManager as LinearLayoutManager
             mLayoutManager.scrollToPositionWithOffset(mAdapter.data.size - 1, 0)
         }, 200)
         viewModelGet().sendChatMessage(data)

@@ -2,10 +2,10 @@ package com.benyq.guochat.ui.chats
 
 import android.view.MotionEvent
 import com.benyq.guochat.R
+import com.benyq.guochat.databinding.FragmentVoiceRecordBinding
 import com.benyq.module_base.ui.base.BaseDialogFragment
 import com.benyq.module_base.DrawableBuilder
 import com.benyq.module_base.ext.*
-import kotlinx.android.synthetic.main.fragment_voice_record.*
 
 /**
  * @author benyq
@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_voice_record.*
  * @note
  */
 
-class VoiceRecordDialog : BaseDialogFragment() {
+class VoiceRecordDialog : BaseDialogFragment<FragmentVoiceRecordBinding>() {
 
     var isShowing = false
     private var mTouchY = -1.0f
@@ -22,10 +22,10 @@ class VoiceRecordDialog : BaseDialogFragment() {
     private var mConfirmAction: (()->Unit)? = null
     private var mCancelAction: (()->Unit)? = null
 
-    override fun getLayoutId() = R.layout.fragment_voice_record
+    override fun provideViewBinding() = FragmentVoiceRecordBinding.inflate(layoutInflater)
 
     override fun initView() {
-        llContainer.background =
+        binding.llContainer.background =
             DrawableBuilder(mContext).fill(mContext.getColorRef(R.color.color3C4044)).corner(10f).build()
     }
 
@@ -69,13 +69,13 @@ class VoiceRecordDialog : BaseDialogFragment() {
         when (ev.action) {
             MotionEvent.ACTION_MOVE -> {
                 if (ev.y <= mContext.dip2px(20) + mTouchY && ev.y >= mTouchY - mContext.dip2px(20)) {
-                    lottieAnimationView.visible()
-                    ivRecordCancel.gone()
-                    tvRecord.setText(R.string.release_finger_send)
+                    binding.lottieAnimationView.visible()
+                    binding.ivRecordCancel.gone()
+                    binding.tvRecord.setText(R.string.release_finger_send)
                 }else {
-                    lottieAnimationView.gone()
-                    ivRecordCancel.visible()
-                    tvRecord.setText(R.string.move_up_cancel)
+                    binding.lottieAnimationView.gone()
+                    binding.ivRecordCancel.visible()
+                    binding.tvRecord.setText(R.string.move_up_cancel)
                 }
             }
             MotionEvent.ACTION_UP -> {

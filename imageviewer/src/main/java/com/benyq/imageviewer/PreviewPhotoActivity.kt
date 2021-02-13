@@ -5,11 +5,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
-import com.benyq.module_base.ext.loge
-import com.benyq.module_base.ui.base.BaseActivity
+import com.benyq.imageviewer.databinding.ActivityPreviewPhotoBinding
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ktx.immersionBar
-import kotlinx.android.synthetic.main.activity_preview_photo.*
 
 /**
  * @author benyqYe
@@ -23,6 +21,7 @@ internal class PreviewPhotoActivity : AppCompatActivity() {
     //当前的index
     private var mCurrentIndex = 0
     private val mViewModel by lazy { ViewModelProvider(this).get(PreviewViewModel::class.java) }
+    private val binding by lazy { ActivityPreviewPhotoBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (Components.isFullScreen) {
@@ -46,7 +45,7 @@ internal class PreviewPhotoActivity : AppCompatActivity() {
         })
 
         mViewModel.viewerUserInputEnabled.observe(this) {
-            vpPreview.isUserInputEnabled = it
+            binding.vpPreview.isUserInputEnabled = it
         }
     }
 
@@ -58,17 +57,19 @@ internal class PreviewPhotoActivity : AppCompatActivity() {
     private fun initView() {
         mCurrentIndex = Components.curPosition
 
-        vpPreview.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        vpPreview.offscreenPageLimit = 1
-        vpPreview.adapter = PreviewPageAdapter(supportFragmentManager, lifecycle, Components.data)
-        vpPreview.setCurrentItem(mCurrentIndex, false)
-        vpPreview.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                mCurrentIndex = position
-                Components.curPosition = position
-            }
-        })
+        binding.vpPreview.apply {
+            orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            offscreenPageLimit = 1
+            adapter = PreviewPageAdapter(supportFragmentManager, lifecycle, Components.data)
+            setCurrentItem(mCurrentIndex, false)
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    mCurrentIndex = position
+                    Components.curPosition = position
+                }
+            })
+        }
     }
 
     override fun onDestroy() {

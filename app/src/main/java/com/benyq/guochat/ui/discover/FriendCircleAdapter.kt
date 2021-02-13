@@ -21,7 +21,6 @@ import com.benyq.module_base.ext.visible
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import kotlinx.android.synthetic.main.item_friend_circle.view.*
 
 
 /**

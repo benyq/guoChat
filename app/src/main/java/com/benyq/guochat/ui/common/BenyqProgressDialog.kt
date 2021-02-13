@@ -4,9 +4,9 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import com.benyq.guochat.R
+import com.benyq.guochat.databinding.ProgressDialogBinding
 import com.benyq.module_base.DrawableBuilder
 import com.benyq.module_base.ext.gone
-import kotlinx.android.synthetic.main.progress_dialog.*
 
 /**
  * @author benyq
@@ -18,15 +18,16 @@ class BenyqProgressDialog(context: Context, val content: String? = "") : AlertDi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.progress_dialog)
-        llContainer.background = DrawableBuilder(context)
+        val binding = ProgressDialogBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.llContainer.background = DrawableBuilder(context)
             .fill("#202020")
             .corner(5f)
             .build()
         if (content.isNullOrEmpty()) {
-            tvLoading.gone()
+            binding.tvLoading.gone()
         }else {
-            tvLoading.text = content
+            binding.tvLoading.text = content
         }
 
     }

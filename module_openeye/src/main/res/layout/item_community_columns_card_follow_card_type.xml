@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/ivBgPicture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:src="@color/black"/>
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:textColor="@color/color3C4044"
+        android:textSize="12sp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/ivBgPicture"/>
+
+    <ImageView
+        android:id="@+id/ivRoundAvatar"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDescription"/>
+
+    <TextView
+        android:id="@+id/tvNickName"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:gravity="center_vertical"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/color3C4044"
+        android:textSize="12sp"
+        android:layout_marginStart="5dp"
+        tools:text="🦀mini"
+        app:layout_constraintEnd_toStartOf="@id/tvCollectionCount"
+        app:layout_constraintBottom_toBottomOf="@id/ivRoundAvatar"
+        app:layout_constraintStart_toEndOf="@id/ivRoundAvatar"
+        app:layout_constraintTop_toTopOf="@id/ivRoundAvatar"/>
+
+    <TextView
+        android:id="@+id/tvCollectionCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/color3C4044"
+        android:textSize="13sp"
+        tools:text="201"
+        android:drawablePadding="6dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivRoundAvatar"
+        tools:drawableEndCompat="@drawable/ic_circle_not_like" />
+
+
+    <TextView
+        android:id="@+id/tvChoiceness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/shape_choiceness_radius_black_2dp_bg"
+        android:paddingStart="10dp"
+        android:paddingTop="3.5dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="3.5dp"
+        android:text="@string/choiceness"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/ivPlay"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_video_play"
+        android:padding="5dp"
+        android:visibility="gone"
+        tools:visibility="invisible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

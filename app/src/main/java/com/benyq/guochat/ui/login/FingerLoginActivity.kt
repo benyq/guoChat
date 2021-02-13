@@ -4,6 +4,7 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
+import com.benyq.guochat.databinding.ActivityFingerLoginBinding
 import com.benyq.guochat.function.fingerprint.FingerprintVerifyManager
 import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.vm.LoginViewModel
@@ -13,7 +14,6 @@ import com.benyq.module_base.ui.base.LifecycleActivity
 import com.benyq.guochat.ui.common.CheckFingerprintDialog
 import com.benyq.module_base.ext.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_finger_login.*
 
 /**
  * @author benyq
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_finger_login.*
  * @note 指纹登陆
  */
 @AndroidEntryPoint
-class FingerLoginActivity : LifecycleActivity<LoginViewModel>() {
+class FingerLoginActivity : LifecycleActivity<LoginViewModel, ActivityFingerLoginBinding>() {
 
     private val mCheckFingerprintDialog by lazy { CheckFingerprintDialog.newInstance() }
 
@@ -30,7 +30,7 @@ class FingerLoginActivity : LifecycleActivity<LoginViewModel>() {
 
     private lateinit var mAlphaAnim: AlphaAnimation
 
-    override fun getLayoutId() = R.layout.activity_finger_login
+    override fun provideViewBinding() = ActivityFingerLoginBinding.inflate(layoutInflater)
 
     override fun initVM(): LoginViewModel = getViewModel()
 
@@ -38,14 +38,14 @@ class FingerLoginActivity : LifecycleActivity<LoginViewModel>() {
         super.initView()
 
         //为ivAvatarFinger 设置背景
-        ivAvatarFinger.background = DrawableBuilder(this)
+        binding.ivAvatarFinger.background = DrawableBuilder(this)
             .circleRadius(dip2px(50))
             .fill(getColorRef(R.color.color_3fa9a9a9))
             .build()
 
 
         val phoneNumber = ChatLocalStorage.phoneNumber
-        tvUserAccount.text = if (phoneNumber.length == 11) {
+        binding.tvUserAccount.text = if (phoneNumber.length == 11) {
             phoneNumber.substring(0, 3) + "****" + phoneNumber.substring(7)
         }else {
             phoneNumber
@@ -56,7 +56,7 @@ class FingerLoginActivity : LifecycleActivity<LoginViewModel>() {
         mAlphaAnim.duration = 3000L
         mAlphaAnim.repeatCount = -1
         mAlphaAnim.repeatMode = Animation.REVERSE
-        ivFingerprint.startAnimation(mAlphaAnim)
+        binding.ivFingerprint.startAnimation(mAlphaAnim)
 
         initFingerprintManager()
         mFingerprintManager.authenticate()
@@ -66,11 +66,11 @@ class FingerLoginActivity : LifecycleActivity<LoginViewModel>() {
 
     override fun initListener() {
         super.initListener()
-        llFingerPrintLogin.setOnClickListener {
+        binding.llFingerPrintLogin.setOnClickListener {
             //指纹登陆
             mCheckFingerprintDialog.show(supportFragmentManager)
         }
-        tvSwitchLoginPwd.setOnClickListener {
+        binding.tvSwitchLoginPwd.setOnClickListener {
             goToActivity<LoginActivity>()
             finish()
         }
@@ -86,7 +86,7 @@ class FingerLoginActivity : LifecycleActivity<LoginViewModel>() {
     override fun onDestroy() {
         super.onDestroy()
 //        mAlphaAnim.cancel()
-        ivFingerprint.clearAnimation()
+        binding.ivFingerprint.clearAnimation()
         mFingerprintManager.closeAuthenticate()
     }
 

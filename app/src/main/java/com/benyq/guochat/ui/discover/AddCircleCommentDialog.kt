@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import com.benyq.guochat.R
+import com.benyq.guochat.databinding.DialogBottomCommentBinding
 import com.benyq.module_base.ui.base.BaseDialogFragment
 import com.benyq.module_base.ext.getScreenWidth
 import com.benyq.module_base.ext.runOnUiThread
 import com.benyq.module_base.ext.textTrim
-import kotlinx.android.synthetic.main.dialog_bottom_comment.*
 
 /**
  * @author benyq
@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.dialog_bottom_comment.*
  * @e-mail 1520063035@qq.com
  * @note  底部评论界面
  */
-class AddCircleCommentDialog : BaseDialogFragment(){
+class AddCircleCommentDialog : BaseDialogFragment<DialogBottomCommentBinding>(){
 
     companion object {
         fun newInstance(): AddCircleCommentDialog{
@@ -30,12 +30,12 @@ class AddCircleCommentDialog : BaseDialogFragment(){
 
     private var mConfirmAction: ((String)->Unit) ? = null
 
-    override fun getLayoutId() = R.layout.dialog_bottom_comment
+    override fun provideViewBinding() = DialogBottomCommentBinding.inflate(layoutInflater)
 
     override fun initView() {
-        etContent.requestFocus()
-        tvSend.setOnClickListener {
-            val content = etContent.textTrim()
+        binding.etContent.requestFocus()
+        binding.tvSend.setOnClickListener {
+            val content = binding.etContent.textTrim()
             mConfirmAction?.invoke(content)
             dismiss()
         }
@@ -58,7 +58,7 @@ class AddCircleCommentDialog : BaseDialogFragment(){
     override fun onResume() {
         super.onResume()
         runOnUiThread{
-            val inManager: InputMethodManager= etContent.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val inManager: InputMethodManager= binding.etContent.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS)
         }
     }

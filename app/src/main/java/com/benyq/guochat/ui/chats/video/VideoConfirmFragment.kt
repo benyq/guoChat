@@ -4,6 +4,7 @@ import android.widget.FrameLayout
 import androidx.fragment.app.activityViewModels
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
+import com.benyq.guochat.databinding.FragmentVideoConfirmBinding
 import com.benyq.guochat.model.vm.PictureVideoViewModel
 import com.benyq.imageviewer.widgets.video.ExoVideoView
 import com.benyq.module_base.ext.checkFullScreenPhone
@@ -12,9 +13,6 @@ import com.benyq.module_base.ext.gone
 import com.benyq.module_base.ui.base.BaseFragment
 import com.gyf.immersionbar.ImmersionBar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_picture_confirm.btnFinished
-import kotlinx.android.synthetic.main.fragment_picture_confirm.ivClose
-import kotlinx.android.synthetic.main.fragment_video_confirm.*
 import java.io.File
 
 /**
@@ -24,14 +22,14 @@ import java.io.File
  * @note
  */
 @AndroidEntryPoint
-class VideoConfirmFragment : BaseFragment() {
+class VideoConfirmFragment : BaseFragment<FragmentVideoConfirmBinding>() {
 
     private val videoVideoViewModel: PictureVideoViewModel by activityViewModels()
 
     private lateinit var videoPath: String
     private var videoDuration: Int = 0
 
-    override fun getLayoutId() = R.layout.fragment_video_confirm
+    override fun provideViewBinding() = FragmentVideoConfirmBinding.inflate(layoutInflater)
 
     override fun initView() {
         resizeViewMargin()
@@ -40,26 +38,26 @@ class VideoConfirmFragment : BaseFragment() {
             arguments?.getString(IntentExtra.videoPath, defaultVideoPath) ?: defaultVideoPath
         videoDuration = arguments?.getInt(IntentExtra.videoDuration, 0) ?: 0
 
-        videoView.setVideoRenderedCallback(object : ExoVideoView.VideoRenderedListener {
+        binding.videoView.setVideoRenderedCallback(object : ExoVideoView.VideoRenderedListener {
             override fun onRendered(view: ExoVideoView) {
 
             }
         })
-        videoView.prepare(videoPath)
+        binding.videoView.prepare(videoPath)
     }
 
     override fun onResume() {
         super.onResume()
-        videoView.resume()
+        binding.videoView.resume()
     }
 
     override fun onPause() {
         super.onPause()
-        videoView.pause()
+        binding.videoView.pause()
     }
 
     override fun initListener() {
-        ivClose.setOnClickListener {
+        binding.ivClose.setOnClickListener {
             File(videoPath).run {
                 if (exists()) {
                     delete()
@@ -68,7 +66,7 @@ class VideoConfirmFragment : BaseFragment() {
             videoVideoViewModel.clearTop()
         }
 
-        btnFinished.setOnClickListener {
+        binding.btnFinished.setOnClickListener {
             videoVideoViewModel.finishVideo(videoPath, videoDuration)
         }
 
@@ -76,7 +74,7 @@ class VideoConfirmFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        videoView.release()
+        binding.videoView.release()
     }
 
 
@@ -85,9 +83,9 @@ class VideoConfirmFragment : BaseFragment() {
         if (mContext.checkFullScreenPhone()) {
             val topMargin = mContext.dip2px(15).toInt() + ImmersionBar.getStatusBarHeight(this)
 
-            val ivCloseParam = ivClose.layoutParams as FrameLayout.LayoutParams
+            val ivCloseParam = binding.ivClose.layoutParams as FrameLayout.LayoutParams
             ivCloseParam.topMargin = topMargin
-            ivClose.layoutParams = ivCloseParam
+            binding.ivClose.layoutParams = ivCloseParam
         }
     }
 }

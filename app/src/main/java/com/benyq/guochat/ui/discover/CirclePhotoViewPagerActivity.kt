@@ -2,16 +2,14 @@ package com.benyq.guochat.ui.discover
 
 import android.app.Activity
 import android.content.Intent
-import android.opengl.Matrix
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
+import com.benyq.guochat.databinding.ActivityCirclePhotoViewPagerBinding
 import com.benyq.module_base.ui.base.BaseActivity
-import com.gyf.immersionbar.ktx.immersionBar
-import kotlinx.android.synthetic.main.activity_circle_photo_view_pager.*
 
 
 /**
@@ -20,21 +18,21 @@ import kotlinx.android.synthetic.main.activity_circle_photo_view_pager.*
  * @e-mail 1520063035@qq.com
  * @note
  */
-class CirclePhotoViewPagerActivity : BaseActivity() {
+class CirclePhotoViewPagerActivity : BaseActivity<ActivityCirclePhotoViewPagerBinding>() {
 
     private val mAdapter = CirclePhotoAdapter()
 
-    override fun getLayoutId() = R.layout.activity_circle_photo_view_pager
+    override fun provideViewBinding() = ActivityCirclePhotoViewPagerBinding.inflate(layoutInflater)
 
     override fun initView() {
-        headerView.run {
+        binding.headerView.run {
             setBackAction {
                 returnPhotoData()
             }
             setMenuAction {
-                mAdapter.removeAt(viewPager.currentItem)
+                mAdapter.removeAt(binding.viewPager.currentItem)
                 if (mAdapter.data.isNotEmpty()) {
-                    headerView.setToolbarTitle("${viewPager.currentItem + 1} / ${mAdapter.data.size}")
+                    binding.headerView.setToolbarTitle("${binding.viewPager.currentItem + 1} / ${mAdapter.data.size}")
                 }else {
                     returnPhotoData()
                 }
@@ -44,25 +42,25 @@ class CirclePhotoViewPagerActivity : BaseActivity() {
         val photoUrls = intent.getStringArrayExtra(IntentExtra.circlePhotos) ?: emptyArray()
         val photoUrlsIndex = intent.getIntExtra(IntentExtra.circlePhotosIndex, 0)
 
-        val child: View = viewPager.getChildAt(0)
+        val child: View = binding.viewPager.getChildAt(0)
         (child as? RecyclerView)?.overScrollMode = View.OVER_SCROLL_NEVER
 
-        viewPager.adapter = mAdapter
-        viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        binding.viewPager.adapter = mAdapter
+        binding.viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         mAdapter.setNewInstance(photoUrls.toMutableList())
 
-        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 if (mAdapter.data.isEmpty()) {
-                    headerView.setToolbarTitle("0 / 0")
+                    binding.headerView.setToolbarTitle("0 / 0")
                 }else {
-                    headerView.setToolbarTitle("${position + 1} / ${mAdapter.data.size}")
+                    binding.headerView.setToolbarTitle("${position + 1} / ${mAdapter.data.size}")
                 }
             }
         })
 
-        viewPager.setCurrentItem(photoUrlsIndex, false)
+        binding.viewPager.setCurrentItem(photoUrlsIndex, false)
 
         onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

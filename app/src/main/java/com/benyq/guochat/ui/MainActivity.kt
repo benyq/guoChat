@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
 import com.benyq.guochat.R
+import com.benyq.guochat.databinding.ActivityMainBinding
 import com.benyq.guochat.function.music.PlayerController
 import com.benyq.guochat.function.permissionX.PermissionX
 import com.benyq.guochat.function.zxing.android.CaptureActivity
@@ -27,10 +28,9 @@ import com.benyq.guochat.ui.me.MeFragment
 import com.benyq.module_base.ext.*
 import com.gyf.immersionbar.ktx.immersionBar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 
 @AndroidEntryPoint
-class MainActivity : LifecycleActivity<MainViewModel>() {
+class MainActivity : LifecycleActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun initVM(): MainViewModel = getViewModel()
 
@@ -41,7 +41,7 @@ class MainActivity : LifecycleActivity<MainViewModel>() {
      */
     private val mMoreFunctionPop by lazy { createMorePopWindow() }
 
-    override fun getLayoutId() = R.layout.activity_main
+    override fun provideViewBinding() = ActivityMainBinding.inflate(layoutInflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +60,7 @@ class MainActivity : LifecycleActivity<MainViewModel>() {
             }
         })
 
-        bottomNavigationBar.selectTab(viewModelGet().mCurrentIndex)
+        binding.bottomNavigationBar.selectTab(viewModelGet().mCurrentIndex)
     }
 
     override fun initImmersionBar() {
@@ -74,7 +74,7 @@ class MainActivity : LifecycleActivity<MainViewModel>() {
     }
 
     override fun initView() {
-        bottomNavigationBar
+        binding.bottomNavigationBar
             .addItem(BottomNavigationItem(R.drawable.ic_chat, titleArray[0]))
             .addItem(BottomNavigationItem(R.drawable.ic_contracts, titleArray[1]))
             .addItem(BottomNavigationItem(R.drawable.ic_discover, titleArray[2]))
@@ -87,7 +87,7 @@ class MainActivity : LifecycleActivity<MainViewModel>() {
     }
 
     override fun initListener() {
-        bottomNavigationBar.setTabSelectedListener(object :
+        binding.bottomNavigationBar.setTabSelectedListener(object :
             BottomNavigationBar.OnTabSelectedListener {
             override fun onTabReselected(position: Int) {
 
@@ -103,9 +103,9 @@ class MainActivity : LifecycleActivity<MainViewModel>() {
         })
 
 
-        toolbarAdd.setOnClickListener {
+        binding.toolbarAdd.setOnClickListener {
             val widthX = getScreenWidth() - mMoreFunctionPop.contentView.measuredWidth - 10
-            mMoreFunctionPop.showAsDropDown(toolbar, widthX, 10)
+            mMoreFunctionPop.showAsDropDown(binding.toolbar, widthX, 10)
         }
 
     }
@@ -120,7 +120,7 @@ class MainActivity : LifecycleActivity<MainViewModel>() {
     }
 
     private fun switchTab(position: Int) {
-        toolbarTitle.text = titleArray[position]
+        binding.toolbarTitle.text = titleArray[position]
         hideFragment()
         changeTab(position)
         viewModelGet().mCurrentIndex = position

@@ -2,12 +2,14 @@ package com.benyq.module_base.ui.widget
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Switch
 import androidx.core.content.ContextCompat
 import com.benyq.module_base.R
-import kotlinx.android.synthetic.main.view_switch_line.view.*
+import com.benyq.module_base.databinding.ViewPicturePuzzleBinding
+import com.benyq.module_base.databinding.ViewSwitchLineBinding
 
 /**
  * @author benyq
@@ -29,8 +31,10 @@ class SwitchFormLine(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
 
     constructor(context: Context) : this(context, null)
 
+    private var binding: ViewSwitchLineBinding = ViewSwitchLineBinding.inflate(
+        LayoutInflater.from(context), this, true)
+
     init {
-        View.inflate(context, R.layout.view_switch_line, this)
         orientation = VERTICAL
         isClickable = true
 
@@ -54,12 +58,12 @@ class SwitchFormLine(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
     }
 
     private fun initView() {
-        tvTitle.text = title
-        viewLine.visibility = if (showDivide) View.VISIBLE else View.GONE
-        tvTitle.setTextColor(lineTitleColor)
-        swContent.isChecked = isChecked
+        binding.tvTitle.text = title
+        binding.viewLine.visibility = if (showDivide) View.VISIBLE else View.GONE
+        binding.tvTitle.setTextColor(lineTitleColor)
+        binding.swContent.isChecked = isChecked
 
-        swContent.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.swContent.setOnCheckedChangeListener { buttonView, isChecked ->
             mOnCheckedAction?.invoke(buttonView, isChecked)
         }
     }
@@ -67,12 +71,12 @@ class SwitchFormLine(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
 
     fun setChecked(checked: Boolean){
         isChecked = checked
-        swContent.isChecked = checked
+        binding.swContent.isChecked = checked
     }
 
-    fun isChecked() = swContent.isChecked
+    fun isChecked() = binding.swContent.isChecked
 
-    fun getSwitchButton(): Switch = swContent
+    fun getSwitchButton(): Switch = binding.swContent
 
     fun setOnCheckChangedAction(listener: (View, Boolean)->Unit){
         mOnCheckedAction = listener

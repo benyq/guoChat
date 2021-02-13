@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewbinding.ViewBinding
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper
 import com.benyq.module_base.R
 import com.benyq.module_base.ui.NormalProgressDialogManager
@@ -21,7 +22,7 @@ import com.gyf.immersionbar.ktx.immersionBar
  * @e-mail 1520063035@qq.com
  * @note 所有Activity基类
  */
-abstract class BaseActivity : AppCompatActivity(), IActivity, BGASwipeBackHelper.Delegate {
+abstract class BaseActivity<VB: ViewBinding> : AppCompatActivity(), IActivity, BGASwipeBackHelper.Delegate {
 
     /**
      * 有些场景可能不需要隐藏输入法
@@ -37,15 +38,14 @@ abstract class BaseActivity : AppCompatActivity(), IActivity, BGASwipeBackHelper
 
     protected lateinit var mSwipeBackHelper: BGASwipeBackHelper
 
+    protected lateinit var binding: VB
+
     override fun onCreate(savedInstanceState: Bundle?) {
         initSwipeBackFinish()
         super.onCreate(savedInstanceState)
         initWidows()
-        if (getLayoutId() == 0) {
-            setContentView(getLayoutView())
-        }else {
-            setContentView(getLayoutId())
-        }
+        binding = provideViewBinding()
+        setContentView(binding.root)
         initBefore()
         initView()
         initListener()
@@ -73,7 +73,6 @@ abstract class BaseActivity : AppCompatActivity(), IActivity, BGASwipeBackHelper
     }
 
     open fun initData() {}
-    open fun getLayoutView(): View?  = null
 
     override fun finish() {
         super.finish()
@@ -199,5 +198,6 @@ abstract class BaseActivity : AppCompatActivity(), IActivity, BGASwipeBackHelper
         }
     }
 
-    open fun isSupportViewBinding() = false
+    abstract fun provideViewBinding(): VB
+
 }

@@ -55,18 +55,4 @@
         <item name="android:activityCloseExitAnimation">@anim/comic_slide_left_out</item>
     </style>
 
-
-    <style name="tab_style_bold">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/color_2a2a2a</item>
-    </style>
-
-    <style name="tab_style_normal">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@color/color3C4044</item>
-    </style>
-
-
 </resources>

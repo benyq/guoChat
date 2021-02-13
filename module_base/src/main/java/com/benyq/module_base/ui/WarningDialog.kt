@@ -7,10 +7,10 @@ import android.os.Looper
 import android.view.Gravity
 import android.view.View
 import com.benyq.module_base.R
+import com.benyq.module_base.databinding.ViewWarningDialogBinding
 import com.benyq.module_base.ext.getScreenWidth
 import com.benyq.module_base.ext.gone
 import com.benyq.module_base.ext.visible
-import kotlinx.android.synthetic.main.view_warning_dialog.view.*
 
 /**
  * @author benyq
@@ -48,12 +48,12 @@ object WarningDialog {
             it
         } ?: Dialog(context, R.style.dialog_style)
 
-        val view =
-            View.inflate(context, R.layout.view_warning_dialog, null)
+
 
         dialog?.run {
-            setContentView(view)
-            initView(view, count)
+            val binding = ViewWarningDialogBinding.inflate(layoutInflater)
+            setContentView(binding.root)
+            initView(binding, count)
             setCancelable(mCancelable)
             window?.let {
                 val lp = it.attributes
@@ -133,64 +133,64 @@ object WarningDialog {
         }
     }
 
-    private fun initView(view: View, count: Int) {
-        view.tvTitle.text = title
+    private fun initView(binding: ViewWarningDialogBinding, count: Int) {
+        binding.tvTitle.text = title
         if (titleVisible) {
-            view.tvTitle.visible()
+            binding.tvTitle.visible()
         } else {
-            view.tvTitle.gone()
+            binding.tvTitle.gone()
         }
-        view.tvContent.text = content
-        view.tvOperate.text =
+        binding.tvContent.text = content
+        binding.tvOperate.text =
             operateText
         when (count) {
             0 -> {
-                view.llOperateDouble.gone()
-                view.llOperateSingle.gone()
+                binding.llOperateDouble.gone()
+                binding.llOperateSingle.gone()
             }
             1 -> {
-                view.llOperateDouble.gone()
-                view.llOperateSingle.visible()
-                view.tvConfirmCenter.text =
+                binding.llOperateDouble.gone()
+                binding.llOperateSingle.visible()
+                binding.tvConfirmCenter.text =
                     confirmText
-                view.tvConfirmCenter.setOnClickListener {
+                binding.tvConfirmCenter.setOnClickListener {
                     hide()
                     confirmAction?.invoke()
                 }
             }
             2 -> {
-                view.llOperateDouble.visible()
-                view.llOperateSingle.gone()
-                view.tvOperate.gone()
-                view.tvConfirmRight.text =
+                binding.llOperateDouble.visible()
+                binding.llOperateSingle.gone()
+                binding.tvOperate.gone()
+                binding.tvConfirmRight.text =
                     confirmText
-                view.tvCancelLeft.text =
+                binding.tvCancelLeft.text =
                     cancelText
-                view.tvConfirmRight.setOnClickListener {
+                binding.tvConfirmRight.setOnClickListener {
                     hide()
                     sureAction?.invoke()
                 }
-                view.tvCancelLeft.setOnClickListener {
+                binding.tvCancelLeft.setOnClickListener {
                     hide()
                     cancelAction?.invoke()
                 }
             }
             3 -> {
-                view.llOperateDouble.visible()
-                view.llOperateSingle.gone()
-                view.tvConfirmRight.text =
+                binding.llOperateDouble.visible()
+                binding.llOperateSingle.gone()
+                binding.tvConfirmRight.text =
                     confirmText
-                view.tvCancelLeft.text =
+                binding.tvCancelLeft.text =
                     cancelText
-                view.tvConfirmRight.setOnClickListener {
+                binding.tvConfirmRight.setOnClickListener {
                     hide()
                     sureAction?.invoke()
                 }
-                view.tvCancelLeft.setOnClickListener {
+                binding.tvCancelLeft.setOnClickListener {
                     hide()
                     cancelAction?.invoke()
                 }
-                view.tvOperate.setOnClickListener {
+                binding.tvOperate.setOnClickListener {
                     hide()
                     operateAction?.invoke()
                 }

@@ -1,21 +1,18 @@
 package com.benyq.guochat.test
 
-import android.media.MediaMetadataRetriever
 import android.os.Environment
 import android.widget.ImageView
-import androidx.core.view.children
-import androidx.core.view.postDelayed
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.benyq.guochat.R
 import com.benyq.guochat.databinding.ActivityTestBinding
-import com.benyq.guochat.loadImage
 import com.benyq.guochat.ui.chats.video.PictureVideoActivity
 import com.benyq.imageviewer.ImagePreview
 import com.benyq.imageviewer.PreviewPhoto
 import com.benyq.imageviewer.PreviewTypeEnum
-import com.benyq.module_base.ext.*
+import com.benyq.module_base.ext.goToActivity
+import com.benyq.module_base.ext.loadImage
 import com.benyq.module_base.ui.base.BaseActivity
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -24,16 +21,18 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class TestActivity : BaseActivity() {
+class TestActivity : BaseActivity<ActivityTestBinding>() {
 
     private val TAG = "TestActivity"
     private lateinit var mViewModel: TestViewModel
 
-    private val mBinding: ActivityTestBinding by binding()
+    private val mBinding: ActivityTestBinding by lazy {
+        ActivityTestBinding.inflate(layoutInflater)
+    }
 
     private val mAdapter by lazy { ImageAdapter() }
 
-    override fun getLayoutView() = mBinding.root
+    override fun provideViewBinding() = ActivityTestBinding.inflate(layoutInflater)
 
     override fun initView() {
         mViewModel = ViewModelProvider(this).get(TestViewModel::class.java)
@@ -86,7 +85,7 @@ class TestActivity : BaseActivity() {
                     PreviewTypeEnum.VIDEO
                 ),
 
-            )
+                )
         )
         lifecycleScope.launch {
             delay(2000)

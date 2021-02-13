@@ -3,10 +3,20 @@ package com.benyq.module_base.ext
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.View
+import android.view.animation.AlphaAnimation
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.StyleRes
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
+import com.benyq.module_base.R
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.google.android.material.tabs.TabLayout
 
 /**
  *
@@ -108,6 +118,64 @@ fun TextView.setDrawable(drawable: Drawable?, iconWidth: Float? = null, iconHeig
         else -> throw NoSuchMethodError()
     }
 }
+
+fun TabLayout.setTextStyleSelectState(position: Int, @StyleRes style: Int) {
+    val title =
+        ((getChildAt(0) as LinearLayout).getChildAt(position) as LinearLayout).getChildAt(
+            1
+        ) as TextView
+    title.setTextAppearanceCustomer(context, style)
+}
+
+fun ViewPager2.overScrollNever() {
+    val child: View = getChildAt(0)
+    (child as? RecyclerView)?.overScrollMode = View.OVER_SCROLL_NEVER
+}
+
+/**
+ * 占位隐藏view，带有渐隐动画效果。
+ *
+ * @param duration 毫秒，动画持续时长，默认500毫秒。
+ */
+fun View?.invisibleAlphaAnimation(duration: Long = 500L) {
+    this?.visibility = View.INVISIBLE
+    this?.startAnimation(AlphaAnimation(1f, 0f).apply {
+        this.duration = duration
+        fillAfter = true
+    })
+}
+
+/**
+ * 显示view，带有渐显动画效果。
+ *
+ * @param duration 毫秒，动画持续时长，默认500毫秒。
+ */
+fun View?.visibleAlphaAnimation(duration: Long = 500L) {
+    this?.visibility = View.VISIBLE
+    this?.startAnimation(AlphaAnimation(0f, 1f).apply {
+        this.duration = duration
+        fillAfter = true
+    })
+}
+
+fun ImageView.loadImage(
+    url: String,
+    round: Int = 10,
+    isCircle: Boolean = false,
+    placeHolder: Int = R.drawable.shape_album_loading_bg
+) {
+    Glide.with(context).load(url)
+        .apply {
+            if (isCircle) {
+                transform(CircleCrop())
+            } else if (round > 0) {
+                transform(RoundedCorners(context.dip2px(round).toInt()))
+                    .placeholder(placeHolder)
+            }
+        }
+        .into(this)
+}
+
 
 /**
  *

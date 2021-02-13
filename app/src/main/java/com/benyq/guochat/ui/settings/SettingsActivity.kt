@@ -1,13 +1,13 @@
 package com.benyq.guochat.ui.settings
 
 import com.benyq.guochat.R
+import com.benyq.guochat.databinding.ActivitySettingsBinding
 import com.benyq.guochat.function.fingerprint.FingerprintVerifyManager
 import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.module_base.ui.base.BaseActivity
 import com.benyq.guochat.ui.common.CheckFingerprintDialog
 import com.benyq.module_base.ext.goToActivity
 import com.benyq.module_base.ext.loge
-import kotlinx.android.synthetic.main.activity_settings.*
 
 /**
  * @author benyq
@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_settings.*
  * @e-mail 1520063035@qq.com
  * @note 总的设置界面
  */
-class SettingsActivity : BaseActivity() {
+class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
 
     private val mCheckFingerprintDialog by lazy { CheckFingerprintDialog.newInstance() }
 
@@ -23,8 +23,7 @@ class SettingsActivity : BaseActivity() {
 
     private val personConfig = ChatLocalStorage.personConfig
 
-
-    override fun getLayoutId() = R.layout.activity_settings
+    override fun provideViewBinding() = ActivitySettingsBinding.inflate(layoutInflater)
 
     override fun initView() {
         super.initView()
@@ -32,23 +31,23 @@ class SettingsActivity : BaseActivity() {
     }
 
     override fun initListener() {
-        headerView.setBackAction { finish() }
+        binding.headerView.setBackAction { finish() }
 
-        ifAboutApp.setOnClickListener {
+        binding.ifAboutApp.setOnClickListener {
             goToActivity<AboutAppActivity>()
         }
 
-        sfFingerprintLogin.setChecked(personConfig.fingerprintLogin)
+        binding.sfFingerprintLogin.setChecked(personConfig.fingerprintLogin)
 
-        sfFingerprintLogin.getSwitchButton().run {
+        binding.sfFingerprintLogin.getSwitchButton().run {
             setOnClickListener {
-                sfFingerprintLogin.getSwitchButton().isChecked = !isChecked
+                binding.sfFingerprintLogin.getSwitchButton().isChecked = !isChecked
                 mCheckFingerprintDialog.show(supportFragmentManager)
                 mFingerprintManager.authenticate()
             }
         }
 
-        tvLogout.setOnClickListener {
+        binding.tvLogout.setOnClickListener {
             //删除数据
 
             //跳转到LoginActivity 或者 FingerLoginActivity
@@ -71,7 +70,7 @@ class SettingsActivity : BaseActivity() {
             loge("识别成功")
             mCheckFingerprintDialog.dismiss()
             personConfig.fingerprintLogin = !personConfig.fingerprintLogin
-            sfFingerprintLogin.setChecked(personConfig.fingerprintLogin)
+            binding.sfFingerprintLogin.setChecked(personConfig.fingerprintLogin)
             mFingerprintManager.closeAuthenticate()
         }, {
             mCheckFingerprintDialog.verifyMessage(it)

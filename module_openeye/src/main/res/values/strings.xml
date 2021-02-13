@@ -1,0 +1,13 @@
+<resources>
+    <string name="open_eye_function">开眼</string>
+    <string name="choiceness">精选</string>
+    <string name="input_keywords_tips">请输入搜索关键字</string>
+    <string name="search_own">搜索视频、作者、用户及标签</string>
+    <string name="currently_not_supported">该功能即将开放，敬请期待</string>
+    <string name="hot_keywords">热搜关键词</string>
+    <string name="private_letter">私信</string>
+    <string name="plus_follow">+关注</string>
+    <string name="favorites">收藏</string>
+    <string name="photo_count">%1$d/%2$d</string>
+
+</resources>

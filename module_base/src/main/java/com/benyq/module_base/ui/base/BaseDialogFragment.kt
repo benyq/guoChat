@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import androidx.viewbinding.ViewBinding
 
 /**
  * @author benyq
@@ -15,9 +16,11 @@ import androidx.fragment.app.FragmentManager
  * @e-mail 1520063035@qq.com
  * @note
  */
-abstract class BaseDialogFragment : DialogFragment(){
+abstract class BaseDialogFragment<VB: ViewBinding> : DialogFragment(){
 
     protected lateinit var mContext: Context
+    private var _binding: VB? = null
+    protected val binding get() = _binding!!
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -29,7 +32,9 @@ abstract class BaseDialogFragment : DialogFragment(){
             requestWindowFeature(Window.FEATURE_NO_TITLE)
             window?.setBackgroundDrawableResource(android.R.color.transparent)
         }
-        return inflater.inflate(getLayoutId(), container, false)
+
+        _binding = provideViewBinding()
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,9 +42,13 @@ abstract class BaseDialogFragment : DialogFragment(){
         initView()
     }
 
-    abstract fun getLayoutId(): Int
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     abstract fun initView()
+    abstract fun provideViewBinding(): VB
 
     open fun show(fragmentManager: FragmentManager) {
         if (!isAdded) {

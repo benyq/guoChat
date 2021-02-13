@@ -1,20 +1,18 @@
 package com.benyq.guochat.ui.chats
 
-import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.app.SharedViewModel
+import com.benyq.guochat.databinding.FragmentChatBinding
 import com.benyq.guochat.model.bean.ChatListBean
 import com.benyq.guochat.model.vm.ChatViewModel
-import com.benyq.module_base.ui.base.LifecycleFragment
-import com.benyq.guochat.ui.common.openeye.WaterDropHeader
 import com.benyq.module_base.ext.getViewModel
 import com.benyq.module_base.ext.goToActivity
+import com.benyq.module_base.ui.base.LifecycleFragment
+import com.benyq.module_base.ui.waterdrop.WaterDropHeader
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_chat.*
 
 /**
  * @author benyq
@@ -23,17 +21,17 @@ import kotlinx.android.synthetic.main.fragment_chat.*
  * @note 聊天列表
  */
 @AndroidEntryPoint
-class ChatFragment : LifecycleFragment<ChatViewModel>() {
+class ChatFragment : LifecycleFragment<ChatViewModel, FragmentChatBinding>() {
 
     private val mChatAdapter = ChatAdapter()
 
     override fun initVM(): ChatViewModel = getViewModel()
 
-    override fun getLayoutId() = R.layout.fragment_chat
+    override fun provideViewBinding() = FragmentChatBinding.inflate(layoutInflater)
 
     override fun initView() {
-        rvChats.layoutManager = LinearLayoutManager(mContext)
-        rvChats.adapter = mChatAdapter
+        binding.rvChats.layoutManager = LinearLayoutManager(mContext)
+        binding.rvChats.adapter = mChatAdapter
         mChatAdapter.setDiffCallback(object : DiffUtil.ItemCallback<ChatListBean>() {
             override fun areItemsTheSame(oldItem: ChatListBean, newItem: ChatListBean): Boolean {
                 return oldItem.fromToId == newItem.fromToId
@@ -52,18 +50,19 @@ class ChatFragment : LifecycleFragment<ChatViewModel>() {
             mChatAdapter.removeAt(position)
             true
         }
-        refreshLayout.setRefreshHeader(WaterDropHeader(mContext))
+        binding.refreshLayout.setRefreshHeader(WaterDropHeader(mContext))
 
         getAppViewModelProvider().get(SharedViewModel::class.java).chatChange.observe(
-            viewLifecycleOwner){
+            viewLifecycleOwner
+        ) {
             initData()
         }
     }
 
     override fun initListener() {
-        refreshLayout.setOnRefreshListener {
+        binding.refreshLayout.setOnRefreshListener {
             initData()
-            refreshLayout.finishRefresh(2000)
+            binding.refreshLayout.finishRefresh(2000)
         }
     }
 

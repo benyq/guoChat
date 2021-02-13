@@ -1,6 +1,7 @@
 package com.benyq.guochat.comic.ui.detail
 
 import com.benyq.guochat.comic.R
+import com.benyq.guochat.comic.databinding.ComicDialogLeftChapterBinding
 import com.benyq.module_base.ext.changeSize
 import com.benyq.module_base.ui.base.BaseDialogFragment
 
@@ -10,7 +11,7 @@ import com.benyq.module_base.ui.base.BaseDialogFragment
  * @e-mail 1520063035@qq.com
  * @note  阅读界面左边目录
  */
-class LeftBookChapterDialog : BaseDialogFragment() {
+class LeftBookChapterDialog : BaseDialogFragment<ComicDialogLeftChapterBinding>() {
 
     companion object {
         fun newInstance() : LeftBookChapterDialog{
@@ -20,7 +21,7 @@ class LeftBookChapterDialog : BaseDialogFragment() {
 
     private val mAdapter = LeftBookChapterAdapter()
 
-    override fun getLayoutId() = R.layout.comic_dialog_left_chapter
+    override fun provideViewBinding() = ComicDialogLeftChapterBinding.inflate(layoutInflater)
 
     override fun initView() {
     }

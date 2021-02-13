@@ -2,8 +2,7 @@ package com.benyq.guochat.test
 
 import com.benyq.guochat.model.bean.ChatResponse
 import com.benyq.guochat.model.net.ApiService
-import com.benyq.guochat.model.net.ServiceFactory
-import com.benyq.module_base.http.ApiException
+import com.benyq.guochat.model.net.ChatServiceFactory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -11,7 +10,7 @@ import javax.inject.Inject
 
 class TestRepository @Inject constructor(){
 
-    private val apiService: ApiService = ServiceFactory.provideApiService()
+    private val apiService: ApiService = ChatServiceFactory.provideApiService()
 
     suspend fun test(): Flow<ChatResponse<Boolean>> {
         return flow {

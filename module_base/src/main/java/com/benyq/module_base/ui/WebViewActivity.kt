@@ -7,10 +7,9 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
-import com.benyq.module_base.R
+import com.benyq.module_base.databinding.ActivityWebViewBinding
 import com.benyq.module_base.ext.fromM
 import com.benyq.module_base.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_web_view.*
 
 /**
  * @author benyq
@@ -19,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_web_view.*
  * @note  访问网页Activity
  */
 
-class WebViewActivity : BaseActivity() {
+class WebViewActivity : BaseActivity<ActivityWebViewBinding>() {
 
     companion object {
         private const val WEB_URL = "webUrl"
@@ -42,13 +41,13 @@ class WebViewActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun getLayoutId() = R.layout.activity_web_view
+    override fun provideViewBinding() = ActivityWebViewBinding.inflate(layoutInflater)
 
     override fun initView() {
         super.initView()
-        headerView.setBackAction { finish() }
+        binding.headerView.setBackAction { finish() }
         mWebView = WebView(this)
-        llContainer.addView(mWebView)
+        binding.llContainer.addView(mWebView)
         initWebView()
 
         mWebView.loadUrl(mWebUrl)
@@ -66,7 +65,7 @@ class WebViewActivity : BaseActivity() {
         mWebView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                headerView.setToolbarTitle(mWebTitle)
+                binding.headerView.setToolbarTitle(mWebTitle)
             }
         }
 
@@ -74,12 +73,12 @@ class WebViewActivity : BaseActivity() {
             override fun onProgressChanged(view: WebView, newProgress: Int) {
                 super.onProgressChanged(view, newProgress)
                 if (newProgress == 100) {
-                    progressBar.progress = 100
-                    progressBar.visibility = View.GONE
+                    binding.progressBar.progress = 100
+                    binding.progressBar.visibility = View.GONE
                 } else {
-                    if (progressBar.visibility == View.GONE) progressBar.visibility = View.VISIBLE
-                    progressBar.progress = newProgress
-                    headerView.setToolbarTitle("正在加载中")
+                    if (binding.progressBar.visibility == View.GONE) binding.progressBar.visibility = View.VISIBLE
+                    binding.progressBar.progress = newProgress
+                    binding.headerView.setToolbarTitle("正在加载中")
                 }
             }
 
@@ -116,4 +115,5 @@ class WebViewActivity : BaseActivity() {
         }
         return super.onKeyDown(keyCode, event)
     }
+
 }

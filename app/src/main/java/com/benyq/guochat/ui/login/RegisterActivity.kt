@@ -5,13 +5,13 @@ import android.content.Intent
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
+import com.benyq.guochat.databinding.ActivityRegisterBinding
 import com.benyq.guochat.model.bean.RegisterBean
 import com.benyq.guochat.model.vm.LoginViewModel
 import com.benyq.module_base.ext.getViewModel
 import com.benyq.module_base.ui.base.LifecycleActivity
 import com.benyq.module_base.ext.textTrim
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_register.*
 
 /**
  * @author benyq
@@ -20,23 +20,23 @@ import kotlinx.android.synthetic.main.activity_register.*
  * @note
  */
 @AndroidEntryPoint
-class RegisterActivity : LifecycleActivity<LoginViewModel>() {
+class RegisterActivity : LifecycleActivity<LoginViewModel, ActivityRegisterBinding>() {
 
     override fun initVM(): LoginViewModel = getViewModel()
 
-    override fun getLayoutId() = R.layout.activity_register
+    override fun provideViewBinding() = ActivityRegisterBinding.inflate(layoutInflater)
 
     override fun initView() {
     }
 
     override fun initListener() {
-        headerView.run {
+        binding.headerView.run {
             setBackAction { finish() }
         }
 
-        btnRegister.setOnClickListener {
-            val userName = etUserName.textTrim()
-            val pwd = etPassword.textTrim()
+        binding.btnRegister.setOnClickListener {
+            val userName = binding.etUserName.textTrim()
+            val pwd = binding.etPassword.textTrim()
             viewModelGet().register(userName, pwd)
         }
     }
@@ -46,7 +46,7 @@ class RegisterActivity : LifecycleActivity<LoginViewModel>() {
             setResult(Activity.RESULT_OK, Intent().apply {
                 putExtra(
                     IntentExtra.registerData,
-                    RegisterBean(etUserName.textTrim(), etPassword.textTrim())
+                    RegisterBean(binding.etUserName.textTrim(), binding.etPassword.textTrim())
                 )
             })
             finish()

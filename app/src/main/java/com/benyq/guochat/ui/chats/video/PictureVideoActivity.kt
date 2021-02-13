@@ -9,11 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
+import com.benyq.guochat.databinding.ActivityPictureVideoBinding
 import com.benyq.guochat.model.vm.PictureVideoViewModel
 import com.benyq.guochat.model.vm.StateEvent
 import com.benyq.module_base.ui.base.BaseActivity
-import com.gyf.immersionbar.BarHide
-import com.gyf.immersionbar.ktx.immersionBar
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -23,11 +22,11 @@ import dagger.hilt.android.AndroidEntryPoint
  * @note 聊天界面 拍照或者摄像宿主
  */
 @AndroidEntryPoint
-class PictureVideoActivity : BaseActivity() {
+class PictureVideoActivity : BaseActivity<ActivityPictureVideoBinding>() {
 
     private val pictureVideoViewModel: PictureVideoViewModel by viewModels()
 
-    override fun getLayoutId() = R.layout.activity_picture_video
+    override fun provideViewBinding() = ActivityPictureVideoBinding.inflate(layoutInflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

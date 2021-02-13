@@ -4,15 +4,14 @@ import android.os.Bundle
 import androidx.fragment.app.FragmentTransaction
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
+import com.benyq.guochat.comic.databinding.ComicActivityComicBinding
 import com.benyq.guochat.comic.model.vm.ComicViewModel
 import com.benyq.guochat.comic.ui.home.ComicHomeFragment
 import com.benyq.guochat.comic.ui.shelf.ComicShelfFragment
 import com.benyq.module_base.ext.getViewModel
 import com.benyq.module_base.ui.base.LifecycleActivity
-import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.ktx.immersionBar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.comic_activity_comic.*
 
 /**
  * @author benyq
@@ -21,7 +20,7 @@ import kotlinx.android.synthetic.main.comic_activity_comic.*
  * @note 漫画模块入口
  */
 @AndroidEntryPoint
-class ComicActivity : LifecycleActivity<ComicViewModel>() {
+class ComicActivity : LifecycleActivity<ComicViewModel, ComicActivityComicBinding>() {
 
     private val TAG = javaClass.simpleName
 
@@ -37,15 +36,15 @@ class ComicActivity : LifecycleActivity<ComicViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bottomNavigationBar.selectTab(viewModelGet().mCurrentIndex)
+        binding.bottomNavigationBar.selectTab(viewModelGet().mCurrentIndex)
     }
 
-    override fun getLayoutId() = R.layout.comic_activity_comic
+    override fun provideViewBinding() = ComicActivityComicBinding.inflate(layoutInflater)
 
     override fun initView() {
         super.initView()
 
-        bottomNavigationBar
+        binding.bottomNavigationBar
             .addItem(BottomNavigationItem(R.drawable.comic_ic_home, "首页"))
             .addItem(BottomNavigationItem(R.drawable.comic_ic_bookshelf, "收藏夹"))
             .setActiveColor(R.color.colorPrimary)
@@ -58,7 +57,7 @@ class ComicActivity : LifecycleActivity<ComicViewModel>() {
     }
 
     override fun dataObserver() {
-        bottomNavigationBar.setTabSelectedListener(object :
+        binding.bottomNavigationBar.setTabSelectedListener(object :
             BottomNavigationBar.OnTabSelectedListener {
             override fun onTabReselected(position: Int) {
 

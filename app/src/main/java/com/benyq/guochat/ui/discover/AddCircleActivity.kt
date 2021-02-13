@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.lifecycle.Observer
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
+import com.benyq.guochat.databinding.ActivityAddCircleBinding
 import com.benyq.guochat.function.other.GlideEngine
 import com.benyq.guochat.model.vm.AddCircleViewModel
 import com.benyq.guochat.ui.common.CommonBottomDialog
@@ -17,7 +18,6 @@ import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_add_circle.*
 
 /**
  * @author benyq
@@ -26,21 +26,21 @@ import kotlinx.android.synthetic.main.activity_add_circle.*
  * @note  发布朋友圈
  */
 @AndroidEntryPoint
-class AddCircleActivity : LifecycleActivity<AddCircleViewModel>() {
+class AddCircleActivity : LifecycleActivity<AddCircleViewModel, ActivityAddCircleBinding>() {
 
     private var mBottomDialog: CommonBottomDialog? = null
 
     override fun initVM(): AddCircleViewModel = getViewModel()
 
-    override fun getLayoutId() = R.layout.activity_add_circle
+    override fun provideViewBinding() = ActivityAddCircleBinding.inflate(layoutInflater)
 
     override fun initView() {
-        headerView.run {
+        binding.headerView.run {
             setBackAction { finish() }
             setMenuBtnAction {
                 //发布
-                val content = etContent.textTrim()
-                val images = nineGrid.getPhotoUrls()
+                val content = binding.etContent.textTrim()
+                val images = binding.nineGrid.getPhotoUrls()
                 val intent = Intent()
                 intent.putExtra(IntentExtra.addCircleContent, content)
                 intent.putExtra(IntentExtra.addCircleImages, images.toTypedArray())
@@ -49,19 +49,19 @@ class AddCircleActivity : LifecycleActivity<AddCircleViewModel>() {
             }
         }
 
-        nineGrid.setItemAction { view, list, position ->
+        binding.nineGrid.setItemAction { view, list, position ->
             SmartJump.from(this)
                 .startForResult(Intent(this, CirclePhotoViewPagerActivity::class.java).apply {
                     putExtra(IntentExtra.circlePhotosIndex, position)
-                    putExtra(IntentExtra.circlePhotos, nineGrid.getPhotoUrls().toTypedArray())
+                    putExtra(IntentExtra.circlePhotos, binding.nineGrid.getPhotoUrls().toTypedArray())
                 }, { code, data ->
                     if (code == Activity.RESULT_OK && data != null) {
                         val urls = data.getStringArrayExtra(IntentExtra.circlePhotos) ?: emptyArray()
-                        nineGrid.addItems(urls.toMutableList())
+                        binding.nineGrid.addItems(urls.toMutableList())
                     }
                 }, exitAnim = R.anim.anim_stay, enterAnim = R.anim.slide_bottom_in)
         }
-        nineGrid.setAddAction {
+        binding.nineGrid.setAddAction {
             showSelectPhotoBottomDialog()
         }
     }
@@ -117,7 +117,7 @@ class AddCircleActivity : LifecycleActivity<AddCircleViewModel>() {
 
     override fun dataObserver() {
         viewModelGet().addCirclePhotoUrlData.observe(this, Observer {
-            nineGrid.addItems(it)
+            binding.nineGrid.addItems(it)
         })
     }
 }

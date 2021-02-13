@@ -1,6 +1,7 @@
 package com.benyq.module_base.ui.base
 
 import android.os.Bundle
+import androidx.viewbinding.ViewBinding
 import com.benyq.module_base.mvvm.BaseViewModel
 
 /**
@@ -9,7 +10,7 @@ import com.benyq.module_base.mvvm.BaseViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
-abstract class LifecycleActivity<VM : BaseViewModel> : BaseActivity() {
+abstract class LifecycleActivity<VM : BaseViewModel, VB: ViewBinding> : BaseActivity<VB>() {
 
     private lateinit var mViewModel: VM
 

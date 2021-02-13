@@ -2,9 +2,9 @@ package com.benyq.guochat.ui.common.stateful_loading
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import com.benyq.guochat.R
 import com.benyq.module_base.ext.Toasts
-import kotlinx.android.synthetic.main.layout_error.view.*
 
 /**
  * @author benyq
@@ -32,7 +32,7 @@ class CommonStateAdapter : Adapter<ViewHolder>(){
 
             }
             ViewType.ERROR -> {
-                holder.rootView.btn_reload.setOnClickListener {
+                holder.getView<TextView>(R.id.btn_reload).setOnClickListener {
                     holder.onReloadListener?.invoke(it)
                 }
             }

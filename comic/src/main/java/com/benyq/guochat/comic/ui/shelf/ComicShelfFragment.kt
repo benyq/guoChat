@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.recyclerview.widget.GridLayoutManager
 import com.benyq.guochat.comic.ComicIntentExtra
 import com.benyq.guochat.comic.R
+import com.benyq.guochat.comic.databinding.ComicFragmentComicShelfBinding
 import com.benyq.guochat.comic.model.vm.ComicShelfViewModel
 import com.benyq.guochat.comic.ui.detail.ReadComicBookActivity
 import com.benyq.guochat.comic.ui.home.GridItemDecoration
@@ -15,8 +16,6 @@ import com.benyq.module_base.ext.getViewModel
 import com.benyq.module_base.ext.goToActivity
 import com.benyq.module_base.ui.base.LifecycleFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.comic_activity_book_detail.*
-import kotlinx.android.synthetic.main.comic_fragment_comic_shelf.*
 
 /**
  * @author benyq
@@ -25,30 +24,30 @@ import kotlinx.android.synthetic.main.comic_fragment_comic_shelf.*
  * @note
  */
 @AndroidEntryPoint
-class ComicShelfFragment : LifecycleFragment<ComicShelfViewModel>(){
+class ComicShelfFragment : LifecycleFragment<ComicShelfViewModel, ComicFragmentComicShelfBinding>(){
 
     private val mAdapter = ComicShelfAdapter()
 
-    override fun getLayoutId() = R.layout.comic_fragment_comic_shelf
+    override fun provideViewBinding() = ComicFragmentComicShelfBinding.inflate(layoutInflater)
 
     override fun initVM(): ComicShelfViewModel = getViewModel()
 
     override fun initView() {
         super.initView()
 
-        rvComicList.layoutManager = GridLayoutManager(mContext, 3)
-        rvComicList.adapter = mAdapter
+        binding.rvComicList.layoutManager = GridLayoutManager(mContext, 3)
+        binding.rvComicList.adapter = mAdapter
         mAdapter.setOnItemClickListener { adapter, view, position ->
             val comicBook = mAdapter.data[position]
             gotoRead(comicBook.comicId, comicBook.readChapterPosition)
         }
         val space = mContext.dip2px(8).toInt()
-        rvComicList.addItemDecoration(GridItemDecoration(space, space, space))
+        binding.rvComicList.addItemDecoration(GridItemDecoration(space, space, space))
 
-        cbSortByUpdate.setOnCheckedChangeListener { _, checked ->
+        binding.cbSortByUpdate.setOnCheckedChangeListener { _, checked ->
             sortBookShelf(checked)
         }
-        ivArrange.setOnClickListener {
+        binding.ivArrange.setOnClickListener {
 
         }
 
@@ -61,7 +60,7 @@ class ComicShelfFragment : LifecycleFragment<ComicShelfViewModel>(){
     @SuppressLint("SetTextI18n")
     override fun dataObserver() {
         mViewModel.comicShelfBookResult.observe(viewLifecycleOwner) {
-            val data = if (cbSortByUpdate.isChecked) {
+            val data = if (binding.cbSortByUpdate.isChecked) {
                 it.sortedBy { bean->
                     bean.id
                 }
@@ -71,7 +70,7 @@ class ComicShelfFragment : LifecycleFragment<ComicShelfViewModel>(){
                 }
             }
             mAdapter.setList(data)
-            tvShelfTitle.text = "${getString(R.string.comic_shelf_title)}(${data.size})"
+            binding.tvShelfTitle.text = "${getString(R.string.comic_shelf_title)}(${data.size})"
         }
     }
 

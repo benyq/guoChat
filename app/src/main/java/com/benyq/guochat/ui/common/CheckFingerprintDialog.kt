@@ -4,9 +4,9 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
 import com.benyq.guochat.R
+import com.benyq.guochat.databinding.DialogCheckFingerprintBinding
 import com.benyq.module_base.ui.base.BaseDialogFragment
 import com.benyq.module_base.ext.getScreenWidth
-import kotlinx.android.synthetic.main.dialog_check_fingerprint.*
 
 /**
  * @author benyq
@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.dialog_check_fingerprint.*
  * @e-mail 1520063035@qq.com
  * @note 指纹识别提示对话框
  */
-class CheckFingerprintDialog : BaseDialogFragment() {
+class CheckFingerprintDialog : BaseDialogFragment<DialogCheckFingerprintBinding>() {
 
     private var shakeAnim: TranslateAnimation? = null
 
@@ -24,7 +24,7 @@ class CheckFingerprintDialog : BaseDialogFragment() {
         }
     }
 
-    override fun getLayoutId() = R.layout.dialog_check_fingerprint
+    override fun provideViewBinding() = DialogCheckFingerprintBinding.inflate(layoutInflater)
 
     override fun initView() {
 
@@ -34,15 +34,15 @@ class CheckFingerprintDialog : BaseDialogFragment() {
             repeatMode = Animation.REVERSE
         }
 
-        tvCancel.setOnClickListener {
-            tvMessage.setText(R.string.please_check_fingerprint)
+        binding.tvCancel.setOnClickListener {
+            binding.tvMessage.setText(R.string.please_check_fingerprint)
             dismiss()
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        tvMessage.clearAnimation()
+        binding.tvMessage.clearAnimation()
     }
 
     override fun onStart() {
@@ -62,10 +62,10 @@ class CheckFingerprintDialog : BaseDialogFragment() {
     fun verifyMessage(message: String) {
         if (dialog?.isShowing == true) {
             if (message.isEmpty()) {
-                tvMessage.setText(R.string.please_try_again)
-                tvMessage.startAnimation(shakeAnim)
+                binding.tvMessage.setText(R.string.please_try_again)
+                binding.tvMessage.startAnimation(shakeAnim)
             } else {
-                tvMessage.text = message
+                binding.tvMessage.text = message
             }
         }
     }

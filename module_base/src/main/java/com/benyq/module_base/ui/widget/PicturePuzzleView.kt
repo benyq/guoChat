@@ -3,13 +3,15 @@ package com.benyq.module_base.ui.widget
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.SeekBar
 import com.benyq.module_base.R
+import com.benyq.module_base.databinding.ViewIconFormLineBinding
+import com.benyq.module_base.databinding.ViewPicturePuzzleBinding
 import com.benyq.module_base.ext.Toasts
 import com.benyq.module_base.ext.loge
-import kotlinx.android.synthetic.main.view_picture_puzzle.view.*
 import java.math.RoundingMode
 
 
@@ -33,12 +35,13 @@ class PicturePuzzleView(context: Context, attrs: AttributeSet?, defStyleAttr: In
     private var mTouchTime = 0L
     private var imgLoaded = false
 
-    init {
-        View.inflate(context, R.layout.view_picture_puzzle, this)
+    private var binding: ViewPicturePuzzleBinding = ViewPicturePuzzleBinding.inflate(
+        LayoutInflater.from(context), this, true)
 
-        sbProgress.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+    init {
+        binding.sbProgress.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                pImage.setMaskRadio(progress.toFloat() / sbProgress.max)
+                binding.pImage.setMaskRadio(progress.toFloat() / binding.sbProgress.max)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -47,10 +50,10 @@ class PicturePuzzleView(context: Context, attrs: AttributeSet?, defStyleAttr: In
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 //判断是否正确
-                val result = pImage.checkResult()
+                val result = binding.pImage.checkResult()
                 val time = (System.currentTimeMillis() - mTouchTime) / 1000f
                 if (!result) {
-                    sbProgress.progress = 0
+                    binding.sbProgress.progress = 0
                 }
                 mResultAction?.invoke(result, time.toBigDecimal().setScale(1, RoundingMode.HALF_UP).toFloat())
             }
@@ -59,8 +62,8 @@ class PicturePuzzleView(context: Context, attrs: AttributeSet?, defStyleAttr: In
     }
 
     fun setBitmap(bitmap: Bitmap) {
-        pImage.setImageBitmap(bitmap)
-        imgLoaded = pImage.prepare()
+        binding.pImage.setImageBitmap(bitmap)
+        imgLoaded = binding.pImage.prepare()
     }
 
     fun setResultAction(action: PuzzleResultAction) {

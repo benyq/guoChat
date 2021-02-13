@@ -1,3 +1,4 @@
+include ':module_openeye'
 include ':imageviewer'
 include ':swipelayout'
 include ':comic'

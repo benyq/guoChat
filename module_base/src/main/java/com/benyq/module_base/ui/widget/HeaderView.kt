@@ -6,15 +6,16 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.RelativeLayout
 import androidx.annotation.DrawableRes
 import androidx.core.graphics.drawable.DrawableCompat
 import com.benyq.module_base.DrawableBuilder
 import com.benyq.module_base.R
+import com.benyq.module_base.databinding.LayoutCommonToolbarBinding
 import com.benyq.module_base.ext.getColorRef
 import com.benyq.module_base.ext.getDrawableRef
-import kotlinx.android.synthetic.main.layout_common_toolbar.view.*
 
 /**
  * @author benyq
@@ -57,8 +58,9 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
 
     private val mBgMenuBtn: Drawable
 
+    private var binding: LayoutCommonToolbarBinding = LayoutCommonToolbarBinding.inflate(LayoutInflater.from(context), this, true)
+
     init {
-        View.inflate(context, R.layout.layout_common_toolbar, this)
         mBgMenuBtn = DrawableBuilder(context)
             .fill(context.getColorRef(R.color.color_3fa9a9a9))
             .corner(5f)
@@ -87,13 +89,13 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
     }
 
     private fun initView() {
-        toolbarTitle.text = mTitle
+        binding.toolbarTitle.text = mTitle
 
-        toolbarBack.visibility = if (mEnableBack) View.VISIBLE else View.INVISIBLE
-        toolbarMenu.visibility = if (mEnableMenu) View.VISIBLE else View.INVISIBLE
-        toolbarMenu.setImageDrawable(mToolbarMenuSrc)
-        toolbarBack.setImageDrawable(mToolbarBackIcon)
-        toolbarTitle.gravity = when (mTitleGravity) {
+        binding.toolbarBack.visibility = if (mEnableBack) View.VISIBLE else View.INVISIBLE
+        binding.toolbarMenu.visibility = if (mEnableMenu) View.VISIBLE else View.INVISIBLE
+        binding.toolbarMenu.setImageDrawable(mToolbarMenuSrc)
+        binding.toolbarBack.setImageDrawable(mToolbarBackIcon)
+        binding.toolbarTitle.gravity = when (mTitleGravity) {
             titleEnd -> {
                 Gravity.END or Gravity.CENTER_VERTICAL
             }
@@ -107,57 +109,57 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
 
         setHeaderViewMode(mToolbarType)
 
-        tvMenu.visibility = if (mMenuBtnShow) View.VISIBLE else View.GONE
-        tvMenu.text = mMenuText
+        binding.tvMenu.visibility = if (mMenuBtnShow) View.VISIBLE else View.GONE
+        binding.tvMenu.text = mMenuText
     }
 
     fun setBackAction(action: View.() -> Unit) {
-        toolbarBack.visibility = View.VISIBLE
-        toolbarBack.setOnClickListener {
+        binding.toolbarBack.visibility = View.VISIBLE
+        binding.toolbarBack.setOnClickListener {
             action.invoke(it)
         }
     }
 
     fun setMenuAction(action: View.() -> Unit) {
-        toolbarMenu.visibility = View.VISIBLE
-        toolbarMenu.setOnClickListener {
+        binding.toolbarMenu.visibility = View.VISIBLE
+        binding.toolbarMenu.setOnClickListener {
             action.invoke(it)
         }
     }
 
     fun setMenuBtnAction(action: View.() -> Unit) {
-        tvMenu.visibility = View.VISIBLE
-        tvMenu.setOnClickListener {
+        binding.tvMenu.visibility = View.VISIBLE
+        binding.tvMenu.setOnClickListener {
             action.invoke(it)
         }
     }
 
     fun setMenuBtnEnable(enabled: Boolean) {
         if (enabled) {
-            tvMenu.setBackgroundResource(R.drawable.button_selector)
-            tvMenu.setTextColor(Color.WHITE)
+            binding.tvMenu.setBackgroundResource(R.drawable.button_selector)
+            binding.tvMenu.setTextColor(Color.WHITE)
         } else {
-            tvMenu.setTextColor(context.getColorRef(R.color.gray))
-            tvMenu.background = mBgMenuBtn
+            binding.tvMenu.setTextColor(context.getColorRef(R.color.gray))
+            binding.tvMenu.background = mBgMenuBtn
         }
-        tvMenu.isEnabled = enabled
+        binding.tvMenu.isEnabled = enabled
     }
 
     fun setToolbarTitle(title: String?) {
-        toolbarTitle.text = title
+        binding.toolbarTitle.text = title
     }
 
     fun setMenuSrc(@DrawableRes resId: Int) {
         mToolbarMenuSrc = context.getDrawableRef(resId) ?: mToolbarMenuSrc
         if (toolbarTypeDark == mToolbarType) {
-            toolbarMenu.setImageDrawable(
+            binding.toolbarMenu.setImageDrawable(
                 tintDrawable(
                     mToolbarMenuSrc,
                     ColorStateList.valueOf(Color.WHITE)
                 )
             )
         } else {
-            toolbarMenu.setImageDrawable(
+            binding.toolbarMenu.setImageDrawable(
                 tintDrawable(
                     mToolbarMenuSrc,
                     ColorStateList.valueOf(Color.BLACK)
@@ -169,16 +171,16 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
     fun setHeaderViewMode(mode: Int) {
         mToolbarType = mode
         if (toolbarTypeDark == mToolbarType) {
-            toolbarTitle.setTextColor(Color.WHITE)
-            toolbar.setBackgroundResource(R.color.color_2a2a2a)
+            binding.toolbarTitle.setTextColor(Color.WHITE)
+            binding.toolbar.setBackgroundResource(R.color.color_2a2a2a)
 
-            toolbarBack.setImageDrawable(
+            binding.toolbarBack.setImageDrawable(
                 tintDrawable(
                     mToolbarBackIcon,
                     ColorStateList.valueOf(Color.WHITE)
                 )
             )
-            toolbarMenu.setImageDrawable(
+            binding.toolbarMenu.setImageDrawable(
                 tintDrawable(
                     mToolbarMenuSrc,
                     ColorStateList.valueOf(Color.WHITE)
@@ -186,16 +188,16 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
             )
 
         } else {
-            toolbarTitle.setTextColor(Color.BLACK)
-            toolbar.setBackgroundResource(R.color.darkgrey)
+            binding.toolbarTitle.setTextColor(Color.BLACK)
+            binding.toolbar.setBackgroundResource(R.color.darkgrey)
 
-            toolbarBack.setImageDrawable(
+            binding.toolbarBack.setImageDrawable(
                 tintDrawable(
                     mToolbarBackIcon,
                     ColorStateList.valueOf(Color.BLACK)
                 )
             )
-            toolbarMenu.setImageDrawable(
+            binding.toolbarMenu.setImageDrawable(
                 tintDrawable(
                     mToolbarMenuSrc,
                     ColorStateList.valueOf(Color.BLACK)
@@ -203,7 +205,7 @@ class HeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
             )
         }
         headerViewBg?.run {
-            toolbar.background = this
+            binding.toolbar.background = this
         }
     }
 

@@ -1,10 +1,12 @@
 package com.benyq.guochat.comic.ui.home
 
+import android.widget.ImageView
+import android.widget.TextView
 import com.benyq.guochat.comic.R
 import com.benyq.guochat.comic.model.bean.RecommendEntity
+import com.benyq.module_base.ext.loadImage
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import kotlinx.android.synthetic.main.comic_item_home_content2.view.*
 
 /**
  * @author benyq
@@ -15,11 +17,11 @@ import kotlinx.android.synthetic.main.comic_item_home_content2.view.*
 class HomeContent2Adapter : BaseQuickAdapter<RecommendEntity.ComicLists.Comic, BaseViewHolder>(R.layout.comic_item_home_content2){
 
     override fun convert(holder: BaseViewHolder, item: RecommendEntity.ComicLists.Comic) {
-        holder.itemView.ivBookCover.loadImage(item.cover, 10)
-        holder.itemView.tvTitle.text = item.name
-        holder.itemView.tvAuthor.text = item.author_name
-        holder.itemView.tvDes.text = item.description
-        holder.itemView.tvSubTitle.text = item.subTitle
+        holder.getView<ImageView>(R.id.ivBookCover).loadImage(item.cover, 10)
+        holder.getView<TextView>(R.id.tvTitle).text = item.name
+        holder.getView<TextView>(R.id.tvAuthor).text = item.author_name
+        holder.getView<TextView>(R.id.tvDes).text = item.description
+        holder.getView<TextView>(R.id.tvSubTitle).text = item.subTitle
 
     }
 }

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.benyq.guochat.comic.ComicIntentExtra
 import com.benyq.guochat.comic.R
+import com.benyq.guochat.comic.databinding.ComicFragmentSearchBookBinding
 import com.benyq.guochat.comic.model.vm.ComicSearchBookViewModel
 import com.benyq.guochat.comic.ui.detail.BookDetailActivity
 import com.benyq.module_base.ext.*
@@ -27,7 +28,6 @@ import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.gyf.immersionbar.ktx.immersionBar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.comic_fragment_search_book.*
 
 /**
  * @author benyq
@@ -36,7 +36,7 @@ import kotlinx.android.synthetic.main.comic_fragment_search_book.*
  * @note
  */
 @AndroidEntryPoint
-class ComicSearchBookFragment : LifecycleFragment<ComicSearchBookViewModel>() {
+class ComicSearchBookFragment : LifecycleFragment<ComicSearchBookViewModel,ComicFragmentSearchBookBinding>() {
 
     private val mHotKeyAdapter = ComicSearchHotKeyAdapter()
     private val mSearchHistoryAdapter = ComicSearchHistoryAdapter()
@@ -44,7 +44,7 @@ class ComicSearchBookFragment : LifecycleFragment<ComicSearchBookViewModel>() {
 
     override fun initVM(): ComicSearchBookViewModel = getViewModel()
 
-    override fun getLayoutId() = R.layout.comic_fragment_search_book
+    override fun provideViewBinding() = ComicFragmentSearchBookBinding.inflate(layoutInflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,14 +61,14 @@ class ComicSearchBookFragment : LifecycleFragment<ComicSearchBookViewModel>() {
             }
         })
 
-        tvCancel.setOnClickListener {
+        binding.tvCancel.setOnClickListener {
             removeFragment(requireActivity(), this)
         }
 
-        rvHotKey.layoutManager = FlexboxLayoutManager(context).apply {
+        binding.rvHotKey.layoutManager = FlexboxLayoutManager(context).apply {
             flexWrap = FlexWrap.WRAP
         }
-        rvHotKey.addItemDecoration(object : RecyclerView.ItemDecoration() {
+        binding.rvHotKey.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(
                 outRect: Rect,
                 view: View,
@@ -79,16 +79,16 @@ class ComicSearchBookFragment : LifecycleFragment<ComicSearchBookViewModel>() {
                 outRect.set(space, space, space, space)
             }
         })
-        rvHotKey.adapter = mHotKeyAdapter
+        binding.rvHotKey.adapter = mHotKeyAdapter
         mHotKeyAdapter.setOnItemClickListener { adapter, view, position ->
             val comic = mHotKeyAdapter.data[position]
             mViewModel.addSearchHistory(comic.comicId, comic.name)
             goToActivity<BookDetailActivity>(ComicIntentExtra.comicId to comic.comicId)
         }
 
-        rvSearchHistory.layoutManager = LinearLayoutManager(mContext)
-        rvSearchHistory.addItemDecoration(DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL))
-        rvSearchHistory.adapter = mSearchHistoryAdapter
+        binding.rvSearchHistory.layoutManager = LinearLayoutManager(mContext)
+        binding.rvSearchHistory.addItemDecoration(DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL))
+        binding.rvSearchHistory.adapter = mSearchHistoryAdapter
         mSearchHistoryAdapter.setOnItemChildClickListener { adapter, view, position ->
             val comic = mSearchHistoryAdapter.data[position]
             mViewModel.deleteHistoryRecord(comic.id, position)
@@ -98,9 +98,9 @@ class ComicSearchBookFragment : LifecycleFragment<ComicSearchBookViewModel>() {
             mViewModel.addSearchHistory(comic.comicId, comic.name)
             goToActivity<BookDetailActivity>(ComicIntentExtra.comicId to comic.comicId)
         }
-        rvSearchResult.layoutManager = LinearLayoutManager(mContext)
-        rvSearchResult.adapter = mSearchResultAdapter
-        rvSearchResult.addItemDecoration(object: RecyclerView.ItemDecoration(){
+        binding.rvSearchResult.layoutManager = LinearLayoutManager(mContext)
+        binding.rvSearchResult.adapter = mSearchResultAdapter
+        binding.rvSearchResult.addItemDecoration(object: RecyclerView.ItemDecoration(){
             override fun getItemOffsets(
                 outRect: Rect,
                 view: View,
@@ -114,21 +114,21 @@ class ComicSearchBookFragment : LifecycleFragment<ComicSearchBookViewModel>() {
             mViewModel.comicSearchMore()
         }
 
-        etQuery.setOnEditorActionListener(object: TextView.OnEditorActionListener{
+        binding.etQuery.setOnEditorActionListener(object: TextView.OnEditorActionListener{
             override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    if (etQuery.text.toString().isEmpty()) {
+                    if (binding.etQuery.text.toString().isEmpty()) {
                         Toasts.show(R.string.comic_input_keywords_tips)
                         return false
                     }
                     showSearchResult()
-                    mViewModel.comicSearch(etQuery.textTrim())
+                    mViewModel.comicSearch(binding.etQuery.textTrim())
                     return true
                 }
                 return true
             }
         })
-        etQuery.addTextChangedListener {
+        binding.etQuery.addTextChangedListener {
             if (it?.toString().isNullOrEmpty()) {
                 hideSearchResult()
             }
@@ -138,7 +138,7 @@ class ComicSearchBookFragment : LifecycleFragment<ComicSearchBookViewModel>() {
     override fun dataObserver() {
         with(mViewModel) {
             searchHotKey.observe(viewLifecycleOwner) {
-                etQuery.hint = it.defaultSearch
+                binding.etQuery.hint = it.defaultSearch
                 mHotKeyAdapter.setList(it.hotItems)
             }
 
@@ -152,7 +152,7 @@ class ComicSearchBookFragment : LifecycleFragment<ComicSearchBookViewModel>() {
 
             comicSearchResult.observe(viewLifecycleOwner) {
                 it.isSuccess?.let { result->
-                    tvSearchResult.text = String.format(getString(R.string.comic_search_info_tip), etQuery.textTrim(), result.comicNum)
+                    binding.tvSearchResult.text = String.format(getString(R.string.comic_search_info_tip), binding.etQuery.textTrim(), result.comicNum)
                     if (mSearchResultAdapter.data.isEmpty()) {
                         mSearchResultAdapter.setList(result.comics)
                     }else {
@@ -190,7 +190,7 @@ class ComicSearchBookFragment : LifecycleFragment<ComicSearchBookViewModel>() {
      */
     private fun removeFragment(activity: Activity, fragment: Fragment) {
         runOnUiThread(200) {
-            (activity as BaseActivity).initImmersionBar()
+            (activity as BaseActivity<*>).initImmersionBar()
         }
         (activity as FragmentActivity).supportFragmentManager.run {
             beginTransaction().remove(fragment).commitAllowingStateLoss()
@@ -199,14 +199,14 @@ class ComicSearchBookFragment : LifecycleFragment<ComicSearchBookViewModel>() {
     }
 
     private fun showSearchResult(){
-        llSearchResult.visible()
+        binding.llSearchResult.visible()
         mSearchResultAdapter.setList(null)
-        nsSearch.gone()
+        binding.nsSearch.gone()
     }
 
     private fun hideSearchResult() {
-        llSearchResult.gone()
-        nsSearch.visible()
+        binding.llSearchResult.gone()
+        binding.nsSearch.visible()
     }
 
     companion object {

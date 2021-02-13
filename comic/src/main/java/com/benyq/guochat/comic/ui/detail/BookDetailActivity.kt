@@ -6,18 +6,17 @@ import android.content.Intent
 import androidx.recyclerview.widget.GridLayoutManager
 import com.benyq.guochat.comic.ComicIntentExtra
 import com.benyq.guochat.comic.R
+import com.benyq.guochat.comic.databinding.ComicActivityBookDetailBinding
 import com.benyq.guochat.comic.local.BookShelfTable
 import com.benyq.guochat.comic.model.bean.Comic
 import com.benyq.guochat.comic.model.vm.BookDetailViewModel
 import com.benyq.guochat.comic.ui.home.GridItemDecoration
-import com.benyq.guochat.comic.ui.home.loadImage
 import com.benyq.module_base.SmartJump
 import com.benyq.module_base.ext.*
 import com.benyq.module_base.ui.base.LifecycleActivity
 import com.google.android.material.appbar.AppBarLayout
 import com.gyf.immersionbar.ImmersionBar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.comic_activity_book_detail.*
 import kotlin.math.abs
 
 /**
@@ -27,7 +26,7 @@ import kotlin.math.abs
  * @note 漫画详情页
  */
 @AndroidEntryPoint
-class BookDetailActivity : LifecycleActivity<BookDetailViewModel>() {
+class BookDetailActivity : LifecycleActivity<BookDetailViewModel, ComicActivityBookDetailBinding>() {
 
     private lateinit var mComicId: String
 
@@ -44,21 +43,21 @@ class BookDetailActivity : LifecycleActivity<BookDetailViewModel>() {
             .init()
     }
 
-    override fun getLayoutId() = R.layout.comic_activity_book_detail
+    override fun provideViewBinding() = ComicActivityBookDetailBinding.inflate(layoutInflater)
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
-        ImmersionBar.setTitleBar(this, acToolbar)
-        acAppBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+        ImmersionBar.setTitleBar(this, binding.acToolbar)
+        binding.acAppBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             val totalScrollRange = appBarLayout.totalScrollRange
             val percent = 1 - (abs(verticalOffset).toFloat() / totalScrollRange)
-            clLayout.alpha = percent
+            binding.clLayout.alpha = percent
         })
 
-        rvBookChapter.layoutManager = GridLayoutManager(this, 2)
-        rvBookChapter.adapter = mChapterAdapter
+        binding.rvBookChapter.layoutManager = GridLayoutManager(this, 2)
+        binding.rvBookChapter.adapter = mChapterAdapter
         val space = dip2px(5).toInt()
-        rvBookChapter.addItemDecoration(GridItemDecoration(space, space, space))
+        binding.rvBookChapter.addItemDecoration(GridItemDecoration(space, space, space))
         mChapterAdapter.setOnItemClickListener { _, _, position ->
             if (!mChapterAdapter.data[position].isRead) {
                 mChapterAdapter.data[position].isRead = true
@@ -68,8 +67,8 @@ class BookDetailActivity : LifecycleActivity<BookDetailViewModel>() {
             gotoRead(mComicId, position)
         }
 
-        headView.setBackAction { finish() }
-        headView.setMenuAction {
+        binding.headView.setBackAction { finish() }
+        binding.headView.setMenuAction {
             //加入书架
             if (this@BookDetailActivity::mBookComic.isInitialized) {
                 if (mBookShelfTable == null) {
@@ -79,11 +78,11 @@ class BookDetailActivity : LifecycleActivity<BookDetailViewModel>() {
                 }
             }
         }
-        btnPreview.setOnClickListener {
+        binding.btnPreview.setOnClickListener {
             if (mBookShelfTable != null) {
                 gotoRead(mBookShelfTable!!.comicId, mBookShelfTable!!.readChapterPosition)
             }else {
-                btnPreview.text = "继续: ${mChapterAdapter.data[0].name}"
+                binding.btnPreview.text = "继续: ${mChapterAdapter.data[0].name}"
                 gotoRead(mComicId, 0)
             }
         }
@@ -96,11 +95,11 @@ class BookDetailActivity : LifecycleActivity<BookDetailViewModel>() {
                 result.isSuccess?.run {
                     loge(comic)
                     mBookComic = comic
-                    tvBookName.text = comic.name
-                    tvAuthor.text = comic.author.name
-                    tvDesContent.text = comic.description
-                    ivCover.loadImage(comic.cover)
-                    ivBg.loadImage(comic.wideCover ?: "")
+                    binding.tvBookName.text = comic.name
+                    binding.tvAuthor.text = comic.author.name
+                    binding.tvDesContent.text = comic.description
+                    binding.ivCover.loadImage(comic.cover)
+                    binding.ivBg.loadImage(comic.wideCover ?: "")
                     mChapterAdapter.setList(chapterList)
 
                     viewModelGet().searchBookShelf(mComicId)
@@ -109,17 +108,17 @@ class BookDetailActivity : LifecycleActivity<BookDetailViewModel>() {
 
             bookShelfResult.observe(this@BookDetailActivity) {
                 mBookShelfTable = it
-                btnPreview.text = "继续: ${mChapterAdapter.data[it.readChapterPosition].name}"
-                headView.setMenuSrc(R.drawable.comic_ic_collected)
+                binding.btnPreview.text = "继续: ${mChapterAdapter.data[it.readChapterPosition].name}"
+                binding.headView.setMenuSrc(R.drawable.comic_ic_collected)
             }
 
             addOrRemoveResult.observe(this@BookDetailActivity) {
                 if (it) {
-                    headView.setMenuSrc(R.drawable.comic_ic_collected)
+                    binding.headView.setMenuSrc(R.drawable.comic_ic_collected)
                 }else {
-                    headView.setMenuSrc(R.drawable.comic_ic_collect)
+                    binding.headView.setMenuSrc(R.drawable.comic_ic_collect)
                     mBookShelfTable = null
-                    btnPreview.setText(R.string.comic_read_immediately)
+                    binding.btnPreview.setText(R.string.comic_read_immediately)
                 }
             }
         }
@@ -141,7 +140,7 @@ class BookDetailActivity : LifecycleActivity<BookDetailViewModel>() {
                 val backComicId = data.getStringExtra(ComicIntentExtra.comicId)
                 val backPosition = data.getIntExtra(ComicIntentExtra.chapterPosition, -1)
                 if (backComicId != null && backPosition != -1) {
-                    btnPreview.text = "继续: ${mChapterAdapter.data[backPosition].name}"
+                    binding.btnPreview.text = "继续: ${mChapterAdapter.data[backPosition].name}"
                 }
             }
         }, enterAnim = 0)

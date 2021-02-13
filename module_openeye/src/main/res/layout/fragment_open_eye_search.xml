@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/darkgrey"
+    tools:context="com.benyq.module_openeye.OpenEyeSearchFragment">
+
+    <LinearLayout
+        android:id="@+id/llSearch"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/etQuery"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="28dp"
+            android:layout_marginStart="13dp"
+            android:paddingStart="7dp"
+            android:paddingEnd="10dp"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="3dp"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:hint="@string/search_own"
+            android:maxLines="1"
+            android:textSize="12sp"
+            android:textColor="@color/color3C4044"
+            android:background="@drawable/shape_search_edit_text_bg"/>
+
+        <TextView
+            android:id="@+id/tvCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:paddingStart="17dp"
+            android:paddingEnd="17dp"
+            android:text="@string/cancel"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSearchResult"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llSearch"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.benyq.guochat.comic.ui.home
 
 import android.content.Context
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,16 +12,10 @@ import com.benyq.guochat.comic.model.bean.RecommendEntity
 import com.benyq.guochat.comic.ui.detail.BookDetailActivity
 import com.benyq.module_base.ext.dip2px
 import com.benyq.module_base.ext.goToActivity
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.benyq.module_base.ext.loadImage
 import com.chad.library.adapter.base.BaseDelegateMultiAdapter
 import com.chad.library.adapter.base.delegate.BaseMultiTypeDelegate
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import kotlinx.android.synthetic.main.comic_item_home_comic_list.view.*
-import kotlinx.android.synthetic.main.comic_item_home_comic_list.view.ivIcon
-import kotlinx.android.synthetic.main.comic_item_home_comic_list.view.tvTitle
-import kotlinx.android.synthetic.main.comic_item_home_content_single.view.*
 
 /**
  * @author benyq
@@ -66,12 +61,15 @@ class ComicHomeAdapter(private val activity: Context) : BaseDelegateMultiAdapter
     }
 
     override fun convert(holder: BaseViewHolder, item: RecommendEntity.ComicLists) {
-        holder.itemView.ivIcon.loadImage(item.titleIconUrl)
-        holder.itemView.tvTitle.text = item.itemTitle
+        val ivIcon : ImageView = holder.getView(R.id.ivIcon)
+        ivIcon.loadImage(item.titleIconUrl)
+        val tvTitle : TextView = holder.getView(R.id.tvTitle)
+        tvTitle.text = item.itemTitle
 
         when (holder.itemViewType) {
             HEAD_LIST -> {
-                holder.itemView.rvComics?.run {
+                val rvComics : RecyclerView = holder.getView(R.id.rvComics)
+                rvComics.run {
                     if (adapter == null || adapter !is HeadListAdapter) {
                         if (itemDecorationCount > 0) {
                             removeItemDecorationAt(0)
@@ -91,7 +89,8 @@ class ComicHomeAdapter(private val activity: Context) : BaseDelegateMultiAdapter
 
             }
             CONTENT_1 -> {
-                holder.itemView.rvComics?.run {
+                val rvComics : RecyclerView = holder.getView(R.id.rvComics)
+                rvComics.run {
                     if (adapter == null || adapter !is HeadListAdapter) {
                         if (itemDecorationCount > 0) {
                             removeItemDecorationAt(0)
@@ -110,7 +109,8 @@ class ComicHomeAdapter(private val activity: Context) : BaseDelegateMultiAdapter
                 }
             }
             CONTENT_2 -> {
-                holder.itemView.rvComics?.run {
+                val rvComics : RecyclerView = holder.getView(R.id.rvComics)
+                rvComics.run {
                     if (adapter == null || adapter !is HeadListAdapter) {
                         if (itemDecorationCount > 0) {
                             removeItemDecorationAt(0)
@@ -130,26 +130,11 @@ class ComicHomeAdapter(private val activity: Context) : BaseDelegateMultiAdapter
 
             }
             SINGLE -> {
-                holder.itemView.ivBookCover.loadImage(item.comics[0].cover)
+                val ivBookCover : ImageView = holder.getView(R.id.ivBookCover)
+                ivBookCover.loadImage(item.comics[0].cover)
             }
             BANNER -> {
             }
         }
     }
-}
-
-fun ImageView.loadImage(
-    url: String,
-    round: Int = 10,
-    isCircle: Boolean = false
-) {
-    Glide.with(context).load(url)
-        .apply {
-            if (isCircle) {
-                transform(CircleCrop())
-            } else if (round > 0) {
-                transform(RoundedCorners(context.dip2px(round).toInt()))
-            }
-        }
-        .into(this)
 }

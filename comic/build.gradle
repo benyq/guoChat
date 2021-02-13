@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'kotlin-kapt'
 
@@ -32,6 +32,8 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    viewBinding.enabled = true
+
 }
 
 dependencies {

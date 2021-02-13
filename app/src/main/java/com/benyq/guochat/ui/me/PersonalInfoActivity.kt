@@ -1,13 +1,13 @@
 package com.benyq.guochat.ui.me
 
 import com.benyq.guochat.R
-import com.benyq.guochat.loadImage
+import com.benyq.guochat.databinding.ActivityPersonalInfoBinding
 import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.module_base.ui.base.BaseActivity
 import com.benyq.guochat.ui.contracts.CallingCardActivity
 import com.benyq.module_base.SmartJump
 import com.benyq.module_base.ext.goToActivity
-import kotlinx.android.synthetic.main.activity_personal_info.*
+import com.benyq.module_base.ext.loadImage
 
 /**
  * @author benyq
@@ -15,30 +15,30 @@ import kotlinx.android.synthetic.main.activity_personal_info.*
  * @e-mail 1520063035@qq.com
  * @note 个人信息
  */
-class PersonalInfoActivity : BaseActivity() {
+class PersonalInfoActivity : BaseActivity<ActivityPersonalInfoBinding>() {
 
-    override fun getLayoutId() = R.layout.activity_personal_info
+    override fun provideViewBinding() = ActivityPersonalInfoBinding.inflate(layoutInflater)
 
     override fun initView() {
         ChatLocalStorage.userAccount.run {
-            ivAvatar.loadImage(avatarUrl)
-            ifNickName.setContent(nickName)
-            ifChatNo.setContent(chatNo)
+            binding.ivAvatar.loadImage(avatarUrl)
+            binding.ifNickName.setContent(nickName)
+            binding.ifChatNo.setContent(chatNo)
         }
     }
 
     override fun initListener() {
 
-        headerView.setBackAction { finish() }
+        binding.headerView.setBackAction { finish() }
 
-        llAvatar.setOnClickListener {
+        binding.llAvatar.setOnClickListener {
             goToActivity<AvatarActivity>()
         }
-        ifNickName.setOnClickListener {
+        binding.ifNickName.setOnClickListener {
             SmartJump.from(this).startActivity(PersonalInfoEditActivity::class.java, R.anim.slide_right_in, R.anim.slide_right_out)
         }
 
-        ifCallCardQR.setOnClickListener {
+        binding.ifCallCardQR.setOnClickListener {
             goToActivity<CallingCardActivity>()
         }
 

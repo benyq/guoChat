@@ -4,12 +4,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
+import com.benyq.guochat.databinding.FragmentContractsBinding
 import com.benyq.guochat.model.vm.ContractsViewModel
 import com.benyq.module_base.ext.getViewModel
 import com.benyq.module_base.ui.base.LifecycleFragment
 import com.benyq.module_base.ext.goToActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_contracts.*
 
 /**
  * @author benyq
@@ -18,17 +18,17 @@ import kotlinx.android.synthetic.main.fragment_contracts.*
  * @note
  */
 @AndroidEntryPoint
-class ContractsFragment : LifecycleFragment<ContractsViewModel>() {
+class ContractsFragment : LifecycleFragment<ContractsViewModel, FragmentContractsBinding>() {
 
     private val mAdapter = ContractsSectionAdapter()
 
     override fun initVM(): ContractsViewModel = getViewModel()
 
-    override fun getLayoutId() = R.layout.fragment_contracts
+    override fun provideViewBinding() = FragmentContractsBinding.inflate(layoutInflater)
 
     override fun initView() {
-        rvContracts.layoutManager = LinearLayoutManager(mContext)
-        rvContracts.adapter = mAdapter
+        binding.rvContracts.layoutManager = LinearLayoutManager(mContext)
+        binding.rvContracts.adapter = mAdapter
         mAdapter.setOnItemClickListener { adapter, view, position ->
             val contractBean = mAdapter.data[position]
             if (!contractBean.isHeader && contractBean.contractEntity != null) {
@@ -38,10 +38,10 @@ class ContractsFragment : LifecycleFragment<ContractsViewModel>() {
     }
 
     override fun initListener() {
-        iconAddContract.setOnClickListener {
+        binding.iconAddContract.setOnClickListener {
             goToActivity<AddContractActivity>()
         }
-        iconContractCard.setOnClickListener {
+        binding.iconContractCard.setOnClickListener {
             goToActivity<ContractIdCardActivity>()
         }
     }

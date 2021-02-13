@@ -1,10 +1,10 @@
 package com.benyq.guochat.comic.ui.search
 
+import android.widget.TextView
 import com.benyq.guochat.comic.R
 import com.benyq.guochat.comic.local.SearchHistoryRecord
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import kotlinx.android.synthetic.main.comic_item_search_history.view.*
 
 /**
  * @author benyq
@@ -19,6 +19,6 @@ class ComicSearchHistoryAdapter : BaseQuickAdapter<SearchHistoryRecord, BaseView
     }
 
     override fun convert(holder: BaseViewHolder, item: SearchHistoryRecord) {
-        holder.itemView.tvTitle.text = item.name
+        holder.getView<TextView>(R.id.tvTitle).text = item.name
     }
 }

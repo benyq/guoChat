@@ -7,7 +7,7 @@ import com.benyq.guochat.R
 import com.benyq.guochat.app.GENDER_FEMALE
 import com.benyq.guochat.app.GENDER_MALE
 import com.benyq.guochat.app.IntentExtra
-import com.benyq.guochat.loadImage
+import com.benyq.guochat.databinding.ActivityContractDetailBinding
 import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.local.ChatObjectBox
 import com.benyq.guochat.local.entity.ContractEntity
@@ -17,7 +17,7 @@ import com.benyq.guochat.ui.common.CommonBottomDialog
 import com.benyq.module_base.SmartJump
 import com.benyq.module_base.ext.Toasts
 import com.benyq.module_base.ext.goToActivity
-import kotlinx.android.synthetic.main.activity_contract_detail.*
+import com.benyq.module_base.ext.loadImage
 
 /**
  * @author benyq
@@ -25,9 +25,9 @@ import kotlinx.android.synthetic.main.activity_contract_detail.*
  * @e-mail 1520063035@qq.com
  * @note 联系人详情
  */
-class ContractDetailActivity : BaseActivity() {
+class ContractDetailActivity : BaseActivity<ActivityContractDetailBinding>() {
 
-    override fun getLayoutId() = R.layout.activity_contract_detail
+    override fun provideViewBinding() = ActivityContractDetailBinding.inflate(layoutInflater)
 
     private var mBottomDialog: CommonBottomDialog? = null
     private lateinit var mContractEntity: ContractEntity
@@ -36,29 +36,29 @@ class ContractDetailActivity : BaseActivity() {
     override fun initView() {
         //根据传过来的联系人信息初始化页面
         mContractEntity = intent.getParcelableExtra(IntentExtra.contractData)!!
-        ivAvatar.loadImage(mContractEntity.avatarUrl)
-        tvNickName.text = mContractEntity.nick
-        tvChatNo.text = "果聊号: ${mContractEntity.contractId}"
+        binding.ivAvatar.loadImage(mContractEntity.avatarUrl)
+        binding.tvNickName.text = mContractEntity.nick
+        binding.tvChatNo.text = "果聊号: ${mContractEntity.contractId}"
         if (mContractEntity.gender == GENDER_FEMALE) {
-            ivGender.setImageResource(R.drawable.ic_gender_female)
+            binding.ivGender.setImageResource(R.drawable.ic_gender_female)
         }else if (mContractEntity.gender == GENDER_MALE) {
-            ivGender.setImageResource(R.drawable.ic_gender_male)
+            binding.ivGender.setImageResource(R.drawable.ic_gender_male)
         }
     }
 
     override fun initListener() {
-        headerView.setBackAction { finish() }
-        headerView.setMenuAction {
+        binding.headerView.setBackAction { finish() }
+        binding.headerView.setMenuAction {
             showBottomDialog()
         }
 
-        ifContractPermission.setOnClickListener {
+        binding.ifContractPermission.setOnClickListener {
 
         }
-        ifGuoChatCircle.setOnClickListener {
+        binding.ifGuoChatCircle.setOnClickListener {
 
         }
-        llSendMessage.setOnClickListener {
+        binding.llSendMessage.setOnClickListener {
             val user = ChatLocalStorage.userAccount
             val bean = ChatObjectBox.findFromToByIds(user.chatId, mContractEntity.id)
             goToActivity<ChatDetailActivity>(IntentExtra.fromToId to bean)

@@ -2,6 +2,7 @@ package com.benyq.module_base.ui.base
 
 import android.os.Bundle
 import android.view.View
+import androidx.viewbinding.ViewBinding
 import com.benyq.module_base.ext.loge
 import com.benyq.module_base.mvvm.BaseViewModel
 
@@ -11,7 +12,7 @@ import com.benyq.module_base.mvvm.BaseViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
-abstract class LifecycleFragment<VM : BaseViewModel> : BaseFragment(){
+abstract class LifecycleFragment<VM : BaseViewModel, VB: ViewBinding> : BaseFragment<VB>(){
 
     lateinit var mViewModel: VM
 

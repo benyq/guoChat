@@ -28,10 +28,10 @@
         <activity android:name=".ui.PhotoPreviewActivity"
             android:theme="@style/Picture.Theme.Translucent"/>
         <activity
-            android:name=".ui.openeye.OpenEyeUgcDetailActivity"
+            android:name="com.benyq.module_openeye.OpenEyeUgcDetailActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.openeye.OpenEyeCommunityActivity" />
+        <activity android:name="com.benyq.module_openeye.OpenEyeCommunityActivity" />
         <activity android:name=".ui.login.FingerLoginActivity" />
         <activity android:name=".ui.contracts.ContractIdCardActivity" />
         <activity android:name=".ui.discover.CirclePhotoViewPagerActivity" />

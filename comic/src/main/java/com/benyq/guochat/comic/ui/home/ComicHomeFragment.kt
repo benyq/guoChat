@@ -2,12 +2,12 @@ package com.benyq.guochat.comic.ui.home
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.comic.R
+import com.benyq.guochat.comic.databinding.ComicFragmentHomeBinding
 import com.benyq.guochat.comic.model.vm.ComicHomeViewModel
 import com.benyq.guochat.comic.ui.search.ComicSearchBookFragment
 import com.benyq.module_base.ext.getViewModel
 import com.benyq.module_base.ui.base.LifecycleFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.comic_fragment_home.*
 
 /**
  * @author benyq
@@ -16,22 +16,21 @@ import kotlinx.android.synthetic.main.comic_fragment_home.*
  * @note
  */
 @AndroidEntryPoint
-class ComicHomeFragment : LifecycleFragment<ComicHomeViewModel>(){
+class ComicHomeFragment : LifecycleFragment<ComicHomeViewModel, ComicFragmentHomeBinding>(){
 
     private val mAdapter by lazy { ComicHomeAdapter(requireActivity()) }
 
-    override fun getLayoutId() = R.layout.comic_fragment_home
-
+    override fun provideViewBinding() = ComicFragmentHomeBinding.inflate(layoutInflater)
 
     override fun initVM(): ComicHomeViewModel  = getViewModel()
 
     override fun initView() {
-        rvComicList.layoutManager = LinearLayoutManager(mContext)
-        rvComicList.adapter = mAdapter
-        tvSearchBook.setOnClickListener {
+        binding.rvComicList.layoutManager = LinearLayoutManager(mContext)
+        binding.rvComicList.adapter = mAdapter
+        binding.tvSearchBook.setOnClickListener {
             ComicSearchBookFragment.switchFragment(requireActivity())
         }
-        ivBack.setOnClickListener {
+        binding.ivBack.setOnClickListener {
             requireActivity().finish()
         }
     }

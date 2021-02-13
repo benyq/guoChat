@@ -1,6 +1,7 @@
 package com.benyq.guochat.comic.ui.detail
 
 import android.graphics.Color
+import android.widget.TextView
 import com.benyq.guochat.comic.R
 import com.benyq.guochat.comic.model.bean.Chapter
 import com.benyq.module_base.DrawableBuilder
@@ -8,7 +9,6 @@ import com.benyq.module_base.ext.dip2px
 import com.benyq.module_base.ext.getColorRef
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import kotlinx.android.synthetic.main.comic_item_book_chapter.view.*
 
 /**
  * @author benyq
@@ -20,8 +20,8 @@ class BookChapterAdapter :
     BaseQuickAdapter<Chapter, BaseViewHolder>(R.layout.comic_item_book_chapter) {
 
     override fun convert(holder: BaseViewHolder, item: Chapter) {
-
-        holder.itemView.tvChapterName?.run {
+        val tvChapterName = holder.getView<TextView>(R.id.tvChapterName)
+        tvChapterName?.run {
             if (item.type == "3") {
                 holder.itemView.isEnabled = false
                 text = context.getString(R.string.comic_no_support_vip_tip)

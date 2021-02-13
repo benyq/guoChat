@@ -1,19 +1,12 @@
 package com.benyq.guochat.ui.discover
 
 import android.app.Activity
-import android.app.ActivityOptions
-import android.app.SharedElementCallback
-import android.content.Intent
 import android.graphics.Color
-import android.graphics.Matrix
-import android.graphics.RectF
 import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.StateListDrawable
 import android.graphics.drawable.shapes.OvalShape
-import android.os.Parcelable
-import android.util.Pair
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -23,12 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.R
 import com.benyq.guochat.app.CIRCLE__TYPE_TEXT
 import com.benyq.guochat.app.IntentExtra
-import com.benyq.guochat.loadImage
+import com.benyq.guochat.databinding.ActivityFriendCircleBinding
 import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.guochat.model.bean.CircleComment
 import com.benyq.guochat.model.bean.FriendCircleBean
 import com.benyq.guochat.model.vm.FriendCircleViewModel
-import com.benyq.guochat.ui.PhotoPreviewActivity
 import com.benyq.module_base.ui.base.LifecycleActivity
 import com.benyq.module_base.ui.widget.HeaderView
 import com.benyq.guochat.ui.common.widget.satellite_menu.MenuItemView
@@ -40,11 +32,11 @@ import com.benyq.imageviewer.PreviewTypeEnum
 import com.benyq.module_base.SmartJump
 import com.benyq.module_base.ext.getDrawableRef
 import com.benyq.module_base.ext.getViewModel
+import com.benyq.module_base.ext.loadImage
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.gyf.immersionbar.ImmersionBar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_friend_circle.*
 import kotlin.math.abs
 
 
@@ -55,7 +47,7 @@ import kotlin.math.abs
  * @note 果聊朋友圈，当前用户的
  */
 @AndroidEntryPoint
-class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
+class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel, ActivityFriendCircleBinding>() {
 
     private val frameDuration = 20
     private lateinit var frameAnim: AnimationDrawable
@@ -89,7 +81,7 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
 
     override fun initVM(): FriendCircleViewModel = getViewModel()
 
-    override fun getLayoutId() = R.layout.activity_friend_circle
+    override fun provideViewBinding() = ActivityFriendCircleBinding.inflate(layoutInflater)
 
     override fun initImmersionBar() {
         ImmersionBar.with(this)
@@ -99,19 +91,19 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
     }
 
     override fun initView() {
-        ImmersionBar.setTitleBar(this, toolbar)
+        ImmersionBar.setTitleBar(this, binding.toolbar)
 
         val user = ChatLocalStorage.userAccount
-        ivAvatar.loadImage(user.avatarUrl)
-        tvNickName.text = user.nickName
+        binding.ivAvatar.loadImage(user.avatarUrl)
+        binding.tvNickName.text = user.nickName
         Glide.with(this)
             .load("https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=11232128,2567744034&fm=26&gp=0.jpg")
-            .centerCrop().into(ivBg)
+            .centerCrop().into(binding.ivBg)
 
         setSatelliteMenu()
 
-        rvFriendCircle.layoutManager = LinearLayoutManager(this)
-        rvFriendCircle.itemAnimator?.changeDuration = 0
+        binding.rvFriendCircle.layoutManager = LinearLayoutManager(this)
+        binding.rvFriendCircle.itemAnimator?.changeDuration = 0
         mAdapter.setItemAction { views, list, i ->
             ImagePreview.setCacheView(views)
                 .setData(list.map { PreviewPhoto(it, PreviewTypeEnum.IMAGE) })
@@ -149,7 +141,7 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
                 }
             }
         }
-        rvFriendCircle.adapter = mAdapter
+        binding.rvFriendCircle.adapter = mAdapter
     }
 
     override fun initData() {
@@ -157,8 +149,8 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
     }
 
     override fun initListener() {
-        headerView.setBackAction { finish() }
-        appBar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
+        binding.headerView.setBackAction { finish() }
+        binding.appBar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             private var offset = 0
             override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
                 val offHeight: Int = (appBarLayout.totalScrollRange * 0.8).toInt()
@@ -167,27 +159,27 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
                 if (offset >= verticalOffset) {
                     //向上
                     if (percentage > 0.8) {
-                        ivAvatar.alpha = 1 - percentage
-                        tvNickName.alpha = 1 - percentage
+                        binding.ivAvatar.alpha = 1 - percentage
+                        binding.tvNickName.alpha = 1 - percentage
                     }
                 } else {
                     //向下
                     if (percentage < 0.8) {
-                        ivAvatar.alpha = 1f
-                        tvNickName.alpha = 1f
+                        binding.ivAvatar.alpha = 1f
+                        binding.tvNickName.alpha = 1f
                     } else {
-                        ivAvatar.alpha = 1 - percentage
-                        tvNickName.alpha = 1 - percentage
+                        binding.ivAvatar.alpha = 1 - percentage
+                        binding.tvNickName.alpha = 1 - percentage
                     }
                 }
                 offset = verticalOffset
                 if (percentage == 1f) {
-                    headerView.setHeaderViewMode(HeaderView.toolbarTypeNormal)
-                    headerView.setToolbarTitle(getString(R.string.guo_chat_circle))
+                    binding.headerView.setHeaderViewMode(HeaderView.toolbarTypeNormal)
+                    binding.headerView.setToolbarTitle(getString(R.string.guo_chat_circle))
                 }
                 if (percentage == 0f) {
-                    headerView.setHeaderViewMode(HeaderView.toolbarTypeDark)
-                    headerView.setToolbarTitle("")
+                    binding.headerView.setHeaderViewMode(HeaderView.toolbarTypeDark)
+                    binding.headerView.setToolbarTitle("")
                 }
                 ImmersionBar.with(this@FriendCircleActivity)
                     .statusBarDarkFont(abs(verticalOffset) >= offHeight, 0.2f).init()
@@ -338,8 +330,8 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel>() {
                                             null
                                         )
                                     )
-                                    appBar.setExpanded(true)
-                                    rvFriendCircle.scrollToPosition(0)
+                                    binding.appBar.setExpanded(true)
+                                    binding.rvFriendCircle.scrollToPosition(0)
                                 }
                             })
                     }

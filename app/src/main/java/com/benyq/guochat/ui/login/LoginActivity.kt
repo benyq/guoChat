@@ -1,9 +1,9 @@
 package com.benyq.guochat.ui.login
 
 import android.app.Activity
-import androidx.lifecycle.Observer
 import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
+import com.benyq.guochat.databinding.ActivityLoginBinding
 import com.benyq.guochat.model.bean.RegisterBean
 import com.benyq.guochat.model.vm.LoginViewModel
 import com.benyq.guochat.ui.MainActivity
@@ -14,7 +14,6 @@ import com.benyq.module_base.ext.getViewModel
 import com.benyq.module_base.ext.goToActivity
 import com.benyq.module_base.ext.textTrim
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_login.*
 
 /**
  * @author benyq
@@ -23,17 +22,17 @@ import kotlinx.android.synthetic.main.activity_login.*
  * @note
  */
 @AndroidEntryPoint
-class LoginActivity : LifecycleActivity<LoginViewModel>() {
+class LoginActivity : LifecycleActivity<LoginViewModel, ActivityLoginBinding>() {
 
     override fun initVM(): LoginViewModel = getViewModel()
 
-    override fun getLayoutId() = R.layout.activity_login
+    override fun provideViewBinding() = ActivityLoginBinding.inflate(layoutInflater)
 
     override fun initListener() {
         super.initListener()
-        btnLogin.setOnClickListener {
-            val username = etUserName.textTrim()
-            val password = etPassword.textTrim()
+        binding.btnLogin.setOnClickListener {
+            val username = binding.etUserName.textTrim()
+            val password = binding.etPassword.textTrim()
             if (username.isEmpty()) {
                 Toasts.show(R.string.username_empty)
                 return@setOnClickListener
@@ -45,15 +44,15 @@ class LoginActivity : LifecycleActivity<LoginViewModel>() {
             viewModelGet().login(username, password)
         }
 
-        btnRegister.setOnClickListener {
+        binding.btnRegister.setOnClickListener {
             SmartJump.from(this).startForResult(RegisterActivity::class.java, { code, data ->
                 if (code == Activity.RESULT_OK && data != null) {
                     val registerData =
                         data.getParcelableExtra<RegisterBean>(IntentExtra.registerData)
                     registerData?.run {
-                        etUserName.setText(userName)
-                        etPassword.setText(registerData.pwd)
-                        btnLogin.performClick()
+                        binding.etUserName.setText(userName)
+                        binding.etPassword.setText(registerData.pwd)
+                        binding.btnLogin.performClick()
                     }
                 }
             })

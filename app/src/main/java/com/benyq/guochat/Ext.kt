@@ -118,24 +118,6 @@ fun calculateTime(time: Int): String {
     }
 }
 
-fun ImageView.loadImage(
-    url: String,
-    round: Int = 10,
-    isCircle: Boolean = false,
-    placeHolder: Int = R.drawable.shape_album_loading_bg
-) {
-    Glide.with(context).load(url)
-        .apply {
-            if (isCircle) {
-                transform(CircleCrop())
-            } else if (round > 0) {
-                transform(RoundedCorners(context.dip2px(round).toInt()))
-                    .placeholder(placeHolder)
-            }
-        }
-        .into(this)
-}
-
 fun <K, V> mapOfToBodyJson(vararg pairs: Pair<K, V>): RequestBody {
     return mapOf(*pairs).toString().toRequestBody(JSON)
 }
@@ -205,45 +187,5 @@ private fun saveImgVersionQ(
         context.contentResolver.update(saveUri, values, null, null)
     }
     return result.isSuccess
-}
-
-
-fun TabLayout.setTextStyleSelectState(position: Int, @StyleRes style: Int) {
-    val title =
-        ((getChildAt(0) as LinearLayout).getChildAt(position) as LinearLayout).getChildAt(
-            1
-        ) as TextView
-    title.setTextAppearanceCustomer(context, style)
-}
-
-fun ViewPager2.overScrollNever() {
-    val child: View = getChildAt(0)
-    (child as? RecyclerView)?.overScrollMode = View.OVER_SCROLL_NEVER
-}
-
-/**
- * 占位隐藏view，带有渐隐动画效果。
- *
- * @param duration 毫秒，动画持续时长，默认500毫秒。
- */
-fun View?.invisibleAlphaAnimation(duration: Long = 500L) {
-    this?.visibility = View.INVISIBLE
-    this?.startAnimation(AlphaAnimation(1f, 0f).apply {
-        this.duration = duration
-        fillAfter = true
-    })
-}
-
-/**
- * 显示view，带有渐显动画效果。
- *
- * @param duration 毫秒，动画持续时长，默认500毫秒。
- */
-fun View?.visibleAlphaAnimation(duration: Long = 500L) {
-    this?.visibility = View.VISIBLE
-    this?.startAnimation(AlphaAnimation(0f, 1f).apply {
-        this.duration = duration
-        fillAfter = true
-    })
 }
 

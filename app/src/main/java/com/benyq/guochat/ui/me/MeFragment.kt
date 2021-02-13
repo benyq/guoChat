@@ -1,14 +1,13 @@
 package com.benyq.guochat.ui.me
 
-import com.benyq.guochat.R
+import com.benyq.guochat.databinding.FragmentMeBinding
 import com.benyq.guochat.function.other.NotificationHelper
-import com.benyq.guochat.loadImage
 import com.benyq.guochat.local.ChatLocalStorage
 import com.benyq.module_base.ui.base.BaseFragment
 import com.benyq.guochat.ui.contracts.CallingCardActivity
 import com.benyq.guochat.ui.settings.SettingsActivity
 import com.benyq.module_base.ext.goToActivity
-import kotlinx.android.synthetic.main.fragment_me.*
+import com.benyq.module_base.ext.loadImage
 import kotlinx.coroutines.*
 
 /**
@@ -17,29 +16,29 @@ import kotlinx.coroutines.*
  * @e-mail 1520063035@qq.com
  * @note
  */
-class MeFragment : BaseFragment() {
+class MeFragment : BaseFragment<FragmentMeBinding>() {
 
     private val mJob = Job()
 
-    override fun getLayoutId() = R.layout.fragment_me
+    override fun provideViewBinding() = FragmentMeBinding.inflate(layoutInflater)
 
     override fun initView() {
     }
 
     override fun initListener() {
-        llChatQr.setOnClickListener {
+        binding.llChatQr.setOnClickListener {
             goToActivity<CallingCardActivity>()
         }
 
-        ifPersonalInfo.setOnClickListener {
+        binding.ifPersonalInfo.setOnClickListener {
             goToActivity<PersonalInfoActivity>()
         }
 
-        ifSettings.setOnClickListener {
+        binding.ifSettings.setOnClickListener {
             goToActivity<SettingsActivity>()
         }
 
-        ifNotificationTest.setOnClickListener {
+        binding.ifNotificationTest.setOnClickListener {
             val launch = CoroutineScope(mJob + Dispatchers.Main)
             var progress = 0
             launch.launch {
@@ -61,9 +60,9 @@ class MeFragment : BaseFragment() {
 
     private fun showUserInfo() {
         ChatLocalStorage.userAccount.run {
-            ivAvatar.loadImage(avatarUrl)
-            tvUserNick.text = nickName
-            tvChatNo.text = chatNo
+            binding.ivAvatar.loadImage(avatarUrl)
+            binding.tvUserNick.text = nickName
+            binding.tvChatNo.text = chatNo
         }
     }
 }

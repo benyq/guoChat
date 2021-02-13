@@ -4,12 +4,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.benyq.guochat.R
+import com.benyq.guochat.databinding.ActivityCOntractIdCardBinding
 import com.benyq.guochat.model.vm.ContractsViewModel
 import com.benyq.module_base.ext.getViewModel
 import com.benyq.module_base.ui.base.LifecycleActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_c_ontract_id_card.*
 
 /**
  * @author benyq
@@ -18,20 +17,20 @@ import kotlinx.android.synthetic.main.activity_c_ontract_id_card.*
  * @note  这是为了尝试SnapHelper写的类
  */
 @AndroidEntryPoint
-class ContractIdCardActivity : LifecycleActivity<ContractsViewModel>() {
+class ContractIdCardActivity : LifecycleActivity<ContractsViewModel, ActivityCOntractIdCardBinding>() {
 
     private val mAdapter = ContractIdCardAdapter()
 
-    override fun getLayoutId() = R.layout.activity_c_ontract_id_card
+    override fun provideViewBinding() = ActivityCOntractIdCardBinding.inflate(layoutInflater)
 
     override fun initVM(): ContractsViewModel = getViewModel()
 
     override fun initView() {
         super.initView()
-        rvContractIdCard.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        rvContractIdCard.adapter = mAdapter
+        binding.rvContractIdCard.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+        binding.rvContractIdCard.adapter = mAdapter
         val snapHelper = PagerSnapHelper()
-        snapHelper.attachToRecyclerView(rvContractIdCard)
+        snapHelper.attachToRecyclerView(binding.rvContractIdCard)
     }
 
     override fun initData() {
