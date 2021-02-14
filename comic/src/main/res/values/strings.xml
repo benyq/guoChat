@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">漫画</string>
     <string name="comic_comic">漫画</string>
 
     <string name="comic_shelf_title">憨批的收藏</string>

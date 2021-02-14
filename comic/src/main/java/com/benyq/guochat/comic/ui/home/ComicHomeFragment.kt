@@ -6,6 +6,7 @@ import com.benyq.guochat.comic.databinding.ComicFragmentHomeBinding
 import com.benyq.guochat.comic.model.vm.ComicHomeViewModel
 import com.benyq.guochat.comic.ui.search.ComicSearchBookFragment
 import com.benyq.module_base.ext.getViewModel
+import com.benyq.module_base.ext.loge
 import com.benyq.module_base.ui.base.LifecycleFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,6 +39,7 @@ class ComicHomeFragment : LifecycleFragment<ComicHomeViewModel, ComicFragmentHom
     override fun dataObserver() {
         with(mViewModel){
             comicList.observe(viewLifecycleOwner, {
+                loge("comicList size ${it.size}")
                 mAdapter.setList(it)
             })
         }

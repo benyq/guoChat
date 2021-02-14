@@ -1,6 +1,5 @@
 package com.benyq.module_base.http
 
-import com.benyq.module_base.http.HttpSetting
 import com.benyq.module_base.annotation.BaseUrl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -18,11 +17,11 @@ import java.util.concurrent.TimeUnit
 object RetrofitFactory {
 
 
-    fun <T> create(clz: Class<T>): T {
+    fun <T> create(clz: Class<T>, retrofitAction: (Retrofit.Builder.()->Unit)? = null): T {
 
         val baseUrl = prepareBaseUrl(clz)
 
-        val retrofit = createRetrofit(baseUrl)
+        val retrofit = createRetrofit(baseUrl, retrofitAction)
 
         return retrofit.create(clz)
     }
@@ -32,10 +31,13 @@ object RetrofitFactory {
         return baseUrlAnnotation?.value ?: throw IllegalArgumentException("base url is null")
     }
 
-    private fun createRetrofit(baseUrl: String): Retrofit {
+    private fun createRetrofit(baseUrl: String, retrofitAction: (Retrofit.Builder.()->Unit)?): Retrofit {
 
         return Retrofit.Builder()
             .baseUrl(baseUrl)
+            .apply {
+                retrofitAction?.invoke(this) ?: addConverterFactory(GsonConverterFactory.create())
+            }
             .addConverterFactory(GsonConverterFactory.create())
             .client(createOkHttp())
             .build()

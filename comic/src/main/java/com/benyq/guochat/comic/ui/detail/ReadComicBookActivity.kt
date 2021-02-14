@@ -56,6 +56,8 @@ class ReadComicBookActivity : LifecycleActivity<ReadComicBookViewModel, ComicAct
 
     override fun provideViewBinding() = ComicActivityReadComicBookBinding.inflate(layoutInflater)
 
+    override fun isSupportSwipeBack() = true
+
     override fun initVM(): ReadComicBookViewModel = getViewModel()
 
     override fun initView() {

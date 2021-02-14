@@ -196,15 +196,13 @@
                 android:background="#797979" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="章节列表"
-                android:textSize="14sp" />
-
-            <View
                 android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:gravity="center_vertical"
+                android:text="章节列表"
+                android:textColor="@color/color3C4044"
+                android:textSize="14sp" />
 
             <ImageView
                 android:id="@+id/ivReverse"

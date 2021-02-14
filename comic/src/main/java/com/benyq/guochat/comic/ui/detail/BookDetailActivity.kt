@@ -43,6 +43,8 @@ class BookDetailActivity : LifecycleActivity<BookDetailViewModel, ComicActivityB
             .init()
     }
 
+    override fun isSupportSwipeBack() = true
+
     override fun provideViewBinding() = ComicActivityBookDetailBinding.inflate(layoutInflater)
 
     @SuppressLint("SetTextI18n")

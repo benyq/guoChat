@@ -166,7 +166,7 @@ abstract class BaseActivity<VB: ViewBinding> : AppCompatActivity(), IActivity, B
 
     override fun isSupportSwipeBack() = false
 
-    open fun isOnlyTrackingLeftEdge() = false
+    open fun isOnlyTrackingLeftEdge() = true
 
     //是否隐藏状态栏与导航栏
     open fun isHideBar() = false

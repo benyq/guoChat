@@ -1,5 +1,6 @@
 package com.benyq.guochat.comic.model.http
 
+import com.benyq.guochat.comic.model.http.fix_gson_converter.FixGsonConverterFactory
 import com.benyq.module_base.ext.isJson
 import com.benyq.module_base.ext.logi
 import com.benyq.module_base.http.RetrofitFactory
@@ -39,6 +40,8 @@ object ComicServiceFactory {
     @Provides
     fun provideApiService(): ComicApiService {
         initClient()
-        return RetrofitFactory.create(ComicApiService::class.java)
+        return RetrofitFactory.create(ComicApiService::class.java) {
+            addConverterFactory(FixGsonConverterFactory.create())
+        }
     }
 }
