@@ -81,9 +81,9 @@ dependencies {
     if (!module_comic.toBoolean()) {
 
     }
-    implementation project(':comic')
+    implementation project(':module_comic')
     implementation project(':module_base')
-    implementation project(':module_openeye')
+//    implementation project(':module_openeye')
     implementation project(':imageviewer')
 }
 

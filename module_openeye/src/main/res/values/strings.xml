@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">开眼</string>
     <string name="open_eye_function">开眼</string>
     <string name="choiceness">精选</string>
     <string name="input_keywords_tips">请输入搜索关键字</string>

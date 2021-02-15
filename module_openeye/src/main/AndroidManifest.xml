@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.benyq.module_openeye">
+    package="com.benyq.guochat.openeye">
+
+    <application>
+
+        <activity
+            android:name=".ui.activity.OpenEyeUgcDetailActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.OpenEyeCommunityActivity" />
+
+    </application>
 
 </manifest>

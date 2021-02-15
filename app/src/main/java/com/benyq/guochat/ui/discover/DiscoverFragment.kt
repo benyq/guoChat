@@ -10,7 +10,6 @@ import com.benyq.module_base.ui.base.BaseFragment
 import com.benyq.module_base.ext.Toasts
 import com.benyq.module_base.ext.goToActivity
 import com.benyq.module_base.ui.PicturePuzzleConfirmDialog
-import com.benyq.module_openeye.OpenEyeCommunityActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -42,7 +41,7 @@ class DiscoverFragment : BaseFragment<FragmentDiscoverBinding>() {
             }
         }
         binding.ifOpenEye.setOnClickListener {
-            goToActivity<OpenEyeCommunityActivity>()
+//            goToActivity<OpenEyeCommunityActivity>()
         }
 
         binding.ifComic.setOnClickListener {

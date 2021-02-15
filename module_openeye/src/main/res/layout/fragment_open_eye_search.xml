@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/darkgrey"
-    tools:context="com.benyq.module_openeye.OpenEyeSearchFragment">
+    tools:context="com.benyq.guochat.openeye.ui.fragment.OpenEyeSearchFragment">
 
     <LinearLayout
         android:id="@+id/llSearch"

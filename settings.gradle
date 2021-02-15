@@ -1,6 +1,7 @@
+include ':module_chat'
 include ':module_openeye'
 include ':imageviewer'
 include ':swipelayout'
-include ':comic'
+include ':module_comic'
 rootProject.name='guoChat'
 include ':app', ':module_base'

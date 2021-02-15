@@ -1,11 +1,12 @@
-plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
-    id 'kotlin-parcelize'
-    id 'dagger.hilt.android.plugin'
-    id 'kotlin-kapt'
-
+if (module_openeye.toBoolean()) {
+    apply plugin: 'com.android.application'
+}else {
+    apply plugin: 'com.android.library'
 }
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -13,7 +14,9 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-
+        if (module_openeye.toBoolean()) {
+            applicationId "com.benyq.guochat.openeye"
+        }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -34,6 +37,15 @@ android {
 
     viewBinding.enabled = true
 
+    sourceSets {
+        main {
+            if (module_openeye.toBoolean()) {
+                manifest.srcFile 'src/main/moduleManifest/AndroidManifest.xml'
+            }else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
+        }
+    }
 }
 
 dependencies {
