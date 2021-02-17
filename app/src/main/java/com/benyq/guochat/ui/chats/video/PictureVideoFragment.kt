@@ -7,10 +7,10 @@ import com.benyq.guochat.R
 import com.benyq.guochat.app.chatImgPath
 import com.benyq.guochat.app.chatVideoPath
 import com.benyq.guochat.databinding.FragmentPictureVideoBinding
-import com.benyq.guochat.function.video.CaptureController
-import com.benyq.guochat.function.video.filter.BaseFilter
-import com.benyq.guochat.function.video.filter.FilterFactory
-import com.benyq.guochat.function.video.filter.FilterType
+import com.benyq.guochat.media.video.CaptureController
+import com.benyq.guochat.media.video.filter.BaseFilter
+import com.benyq.guochat.media.video.filter.FilterFactory
+import com.benyq.guochat.media.video.filter.FilterType
 import com.benyq.guochat.model.vm.PictureVideoViewModel
 import com.benyq.module_base.ext.Toasts
 import com.benyq.module_base.ext.getCurrentDate

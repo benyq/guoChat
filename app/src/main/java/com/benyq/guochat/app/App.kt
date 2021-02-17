@@ -3,11 +3,10 @@ package com.benyq.guochat.app
 import android.util.Log
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper
 import com.benyq.guochat.comic.local.ComicObjectBox
-import com.benyq.guochat.function.other.NotificationHelper
 import com.benyq.guochat.local.ChatObjectBox
+import com.benyq.guochat.media.NotificationHelper
 import com.benyq.module_base.ui.base.BaseApplication
 import com.benyq.module_base.ext.Toasts
-import com.benyq.module_base.ext.loge
 import com.benyq.module_base.http.ApiException
 import com.benyq.module_base.mvvm.ErrorHandler
 import com.benyq.module_base.mvvm.ExceptionReason

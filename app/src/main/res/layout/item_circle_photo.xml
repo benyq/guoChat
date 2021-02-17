@@ -6,7 +6,6 @@
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/ivCirclePhoto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:transitionName="@string/transition_photo"/>
+        android:layout_height="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

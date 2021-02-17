@@ -79,11 +79,16 @@ dependencies {
     kapt "androidx.hilt:hilt-compiler:$hilt_lifecircle_version"
 
     if (!module_comic.toBoolean()) {
-
+        implementation project(':module_comic')
     }
-    implementation project(':module_comic')
     implementation project(':module_base')
-//    implementation project(':module_openeye')
+    if (!module_openeye.toBoolean()) {
+        implementation project(':module_openeye')
+    }
+    if (!module_media.toBoolean()) {
+        implementation project(':module_media')
+    }
+
     implementation project(':imageviewer')
 }
 

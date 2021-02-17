@@ -13,7 +13,7 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
 import com.benyq.guochat.R
 import com.benyq.guochat.databinding.ActivityMainBinding
-import com.benyq.guochat.function.music.PlayerController
+import com.benyq.guochat.media.music.PlayerController
 import com.benyq.guochat.function.permissionX.PermissionX
 import com.benyq.guochat.function.zxing.android.CaptureActivity
 import com.benyq.guochat.local.ChatObjectBox

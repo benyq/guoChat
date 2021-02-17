@@ -6,8 +6,8 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import com.benyq.guochat.function.other.DateFormatUtil
 import com.benyq.guochat.R
-import com.benyq.guochat.calculateTime
 import com.benyq.guochat.local.entity.ChatRecordEntity
+import com.benyq.module_base.ext.calculateTime
 import com.benyq.module_base.ext.dip2px
 import com.benyq.module_base.ext.getDrawableRef
 import com.bumptech.glide.Glide

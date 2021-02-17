@@ -3,8 +3,7 @@ package com.benyq.guochat.ui.chats.video
 import android.graphics.Color
 import android.widget.TextView
 import com.benyq.guochat.R
-import com.benyq.guochat.function.video.filter.FilterType
-import com.benyq.guochat.model.bean.VideoFilter
+import com.benyq.guochat.media.video.filter.VideoFilter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 

@@ -40,8 +40,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginEnd="15dp"
-                android:transitionName="@string/transition_photo"/>
+                android:layout_marginEnd="15dp"/>
 
             <!--语音-->
             <LinearLayout

@@ -88,3 +88,19 @@ fun getCurrentDate(): String {
     val df = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINESE)
     return df.format(Date())
 }
+
+//计算时间
+fun calculateTime(time: Int): String {
+    loge("video duration $time")
+    return if (time > 60) {
+        val second = time % 60
+        val minute = time / 60
+        (if (minute < 10) "0$minute" else "" + minute) + if (second < 10) ":0$second" else ":$second"
+    } else {
+        if (time < 10) {
+            "00:0$time"
+        } else {
+            "00:$time"
+        }
+    }
+}

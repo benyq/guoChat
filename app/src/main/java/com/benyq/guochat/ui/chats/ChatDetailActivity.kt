@@ -14,10 +14,10 @@ import com.benyq.guochat.R
 import com.benyq.guochat.app.IntentExtra
 import com.benyq.guochat.app.SharedViewModel
 import com.benyq.guochat.databinding.ActivityChatDetailBinding
-import com.benyq.guochat.function.media.MediaRecordController
 import com.benyq.guochat.function.other.GlideEngine
 import com.benyq.guochat.function.permissionX.PermissionX
 import com.benyq.guochat.local.entity.ChatRecordEntity
+import com.benyq.guochat.media.voice.VoiceRecordController
 import com.benyq.guochat.model.bean.ChatListBean
 import com.benyq.guochat.model.vm.ChatDetailViewModel
 import com.benyq.guochat.model.vm.StateEvent
@@ -54,7 +54,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
     private val mVoiceRecordDialog by lazy {
         VoiceRecordDialog().apply {
             setConfirmAction {
-                val voiceBean = MediaRecordController.stopVideoRecord()
+                val voiceBean = VoiceRecordController.stopVideoRecord()
                 //发送
                 voiceBean?.run {
                     val chatBean = ChatRecordEntity(
@@ -68,7 +68,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
                 }
             }
             setCancelAction {
-                MediaRecordController.stopVideoRecord(true)
+                VoiceRecordController.stopVideoRecord(true)
             }
         }
     }
@@ -148,7 +148,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
     override fun isSupportSwipeBack() = true
 
     override fun initListener() {
-        MediaRecordController.setCompleteAction {
+        VoiceRecordController.setCompleteAction {
             mAdapter.setVoiceStop(it)
         }
         binding.etContent.setOnFocusChangeListener { v, hasFocus ->
@@ -174,7 +174,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
             val data = mAdapter.data[position]
             if (data.chatType == ChatRecordEntity.TYPE_VOICE) {
                 mAdapter.setVoiceStop()
-                MediaRecordController.playVideoRecord(this, data.voiceRecordPath, data.id)
+                VoiceRecordController.playVideoRecord(this, data.voiceRecordPath, data.id)
                 mAdapter.setVoicePlay(data)
             }
         }
@@ -219,7 +219,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
             val y = (location.top + location.bottom) / 2
             mVoiceRecordDialog.setTouchY(y)
             mVoiceRecordDialog.show(supportFragmentManager)
-            MediaRecordController.startVoiceRecord()
+            VoiceRecordController.startVoiceRecord()
             true
         }
     }
@@ -357,7 +357,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
 
     override fun onDestroy() {
         super.onDestroy()
-        MediaRecordController.reset()
+        VoiceRecordController.reset()
     }
 
     private fun checkView(v: View, event: MotionEvent): Boolean {

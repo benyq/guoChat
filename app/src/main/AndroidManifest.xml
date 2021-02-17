@@ -47,8 +47,6 @@
         <activity android:name=".ui.contracts.AddContractActivity" />
         <activity android:name=".ui.login.RegisterActivity" />
         <activity android:name=".ui.login.LoginActivity" />
-        <activity android:name=".ui.function.MusicPlayingActivity" />
-        <activity android:name=".ui.common.NotificationHandleActivity" />
         <activity
             android:name=".ui.chats.ChatDetailActivity"
             android:windowSoftInputMode="adjustResize" />
@@ -64,7 +62,6 @@
         <activity android:name=".ui.MainActivity" />
         <activity android:name=".function.zxing.android.CaptureActivity" />
 
-        <service android:name=".function.music.PlayMusicService" />
 
         <meta-data
             android:name="design_width_in_dp"

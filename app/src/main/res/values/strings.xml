@@ -56,16 +56,11 @@
 
 
     <string name="open_eye_function">开眼</string>
+    <string name="comic">漫画</string>
 
     <string name="msg_camera_framework_bug">Sorry, the Android camera encountered a problem. You may need to restart the device.</string>
     <string name="button_ok">OK</string>
     <string name="viewfinderview_status_text1">将二维码/条码放入取景框内</string>
     <string name="viewfinderview_status_text2">即可自动扫描</string>
 
-
-    <string name="save_video_too_short">视频太短啦！</string>
-    <string name="save_video_success">保存视频成功！</string>
-    <string name="save_photo_success">保存照片成功！</string>
-
-    <string name="transition_photo" translatable="false">transition_photo</string>
 </resources>
