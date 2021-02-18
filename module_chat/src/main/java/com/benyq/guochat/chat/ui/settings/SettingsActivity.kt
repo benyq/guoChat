@@ -6,6 +6,7 @@ import com.benyq.guochat.chat.local.ChatLocalStorage
 import com.benyq.module_base.ui.base.BaseActivity
 import com.benyq.guochat.chat.ui.common.CheckFingerprintDialog
 import com.benyq.module_base.ext.goToActivity
+import com.benyq.module_base.ext.gone
 import com.benyq.module_base.ext.loge
 
 /**
@@ -36,7 +37,11 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
             goToActivity<AboutAppActivity>()
         }
 
-        binding.sfFingerprintLogin.setChecked(personConfig.fingerprintLogin)
+        if (FingerprintVerifyManager.canAuthenticate(this)) {
+            binding.sfFingerprintLogin.setChecked(personConfig.fingerprintLogin)
+        }else {
+            binding.sfFingerprintLogin.gone()
+        }
 
         binding.sfFingerprintLogin.getSwitchButton().run {
             setOnClickListener {

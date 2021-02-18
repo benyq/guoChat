@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">guoChat</string>
+    <string name="app_name">chat</string>
 
 
     <string name="add_group_chat">发起群聊</string>
