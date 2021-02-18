@@ -5,12 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.benyq.imageviewer.*
 import com.benyq.imageviewer.anim.AnimBgHelper
 import com.benyq.imageviewer.anim.AnimHelper
-import com.benyq.module_base.ext.loge
 
 /**
  * @author benyqYe
@@ -92,7 +90,6 @@ internal abstract class BasePreviewFragment : Fragment(), OnAnimatorListener {
     }
 
     override fun onExitAnimEnd() {
-        loge("onExitAnimEnd $this")
         requireActivity().finish()
     }
 

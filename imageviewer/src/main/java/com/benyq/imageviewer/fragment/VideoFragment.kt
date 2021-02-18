@@ -9,12 +9,11 @@ import com.benyq.imageviewer.Components
 import com.benyq.imageviewer.R
 import com.benyq.imageviewer.anim.AnimBgHelper
 import com.benyq.imageviewer.anim.AnimHelper
+import com.benyq.imageviewer.gone
+import com.benyq.imageviewer.visible
 import com.benyq.imageviewer.widgets.video.ExoVideoView
 import com.benyq.imageviewer.widgets.video.ExoVideoView2
-import com.benyq.module_base.ext.gone
-import com.benyq.module_base.ext.visible
 import com.bumptech.glide.Glide
-import com.google.android.exoplayer2.ui.PlayerControlView
 import kotlin.math.min
 
 /**

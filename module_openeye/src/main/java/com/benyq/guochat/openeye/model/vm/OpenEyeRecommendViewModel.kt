@@ -2,9 +2,9 @@ package com.benyq.guochat.openeye.model.vm
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import com.benyq.guochat.openeye.model.bean.CommunityRecommend
 import com.benyq.guochat.openeye.model.http.OpenEyeService
 import com.benyq.module_base.mvvm.BaseViewModel
-import com.benyq.guochat.openeye.bean.CommunityRecommend
 import com.benyq.guochat.openeye.model.repository.OpenEyeRepository
 
 /**

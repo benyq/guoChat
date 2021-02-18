@@ -10,8 +10,8 @@ import com.benyq.guochat.openeye.R
 import com.benyq.module_base.ext.getViewModel
 import com.benyq.module_base.ui.base.LifecycleActivity
 import com.benyq.module_base.ext.goToActivity
-import com.benyq.guochat.openeye.bean.CommunityRecommend
 import com.benyq.guochat.openeye.databinding.ActivityEyeUgcDetailBinding
+import com.benyq.guochat.openeye.model.bean.CommunityRecommend
 import com.benyq.guochat.openeye.ui.fragment.FollowCardFragment
 import com.benyq.guochat.openeye.model.vm.OpenEyeUgcDetailViewModel
 import com.benyq.module_base.ext.overScrollNever

@@ -2,11 +2,13 @@ package com.benyq.guochat.openeye.ui.activity
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.benyq.guochat.openeye.R
 import com.benyq.guochat.openeye.databinding.ActivityCommunityBinding
 import com.benyq.guochat.openeye.ui.fragment.DailyPaperFragment
 import com.benyq.guochat.openeye.ui.fragment.OpenEyeSearchFragment
 import com.benyq.guochat.openeye.ui.fragment.RecommendFragment
+import com.benyq.module_base.RouterPath
 import com.benyq.module_base.ext.setTextStyleSelectState
 import com.benyq.module_base.ui.base.BaseActivity
 import com.google.android.material.tabs.TabLayout
@@ -19,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * @note 开眼app其中的一个功能
  */
 @AndroidEntryPoint
+@Route(path = RouterPath.OPEN_EYE_COMMUNITY)
 class OpenEyeCommunityActivity : BaseActivity<ActivityCommunityBinding>() {
 
     override fun provideViewBinding() = ActivityCommunityBinding.inflate(layoutInflater)

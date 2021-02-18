@@ -12,8 +12,8 @@ import com.benyq.module_base.ext.getScreenWidth
 import com.benyq.module_base.ext.getViewModel
 import com.benyq.module_base.ui.base.LifecycleFragment
 import com.benyq.module_base.ui.waterdrop.WaterDropHeader
-import com.benyq.guochat.openeye.bean.CommunityRecommend
 import com.benyq.guochat.openeye.databinding.FragmentRecommendBinding
+import com.benyq.guochat.openeye.model.bean.CommunityRecommend
 import com.benyq.guochat.openeye.model.vm.OpenEyeRecommendViewModel
 import com.bumptech.glide.Glide
 import com.scwang.smart.refresh.footer.BallPulseFooter

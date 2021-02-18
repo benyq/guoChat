@@ -1,8 +1,8 @@
 package com.benyq.guochat.openeye.model.vm
 
 import androidx.hilt.lifecycle.ViewModelInject
+import com.benyq.guochat.openeye.model.bean.CommunityRecommend
 import com.benyq.module_base.mvvm.BaseViewModel
-import com.benyq.guochat.openeye.bean.CommunityRecommend
 import com.benyq.guochat.openeye.model.repository.OpenEyeRepository
 
 /**

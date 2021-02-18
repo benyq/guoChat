@@ -1,5 +1,5 @@
-include ':module_media'
 include ':module_chat'
+include ':module_media'
 include ':module_openeye'
 include ':imageviewer'
 include ':swipelayout'

@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-package com.benyq.guochat.openeye.bean
+package com.benyq.guochat.openeye.model.bean
+
 /**
  * 首页-日报列表，响应实体类。
  *

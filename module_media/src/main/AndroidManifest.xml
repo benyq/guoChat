@@ -6,6 +6,19 @@
         <activity android:name=".MusicPlayingActivity" />
         <activity android:name=".NotificationHandleActivity" />
         <service android:name=".music.PlayMusicService" />
+
+        <receiver android:name=".music.PlayerReceiver">
+            <intent-filter>
+                <action android:name="com.benyq.guochat.ACTION.PLAY_TOGGLE" />
+                <action android:name="com.benyq.guochat.ACTION.PLAY_PLAY" />
+                <action android:name="com.benyq.guochat.ACTION.PLAY_PAUSE" />
+                <action android:name="com.benyq.guochat.ACTION.PLAY_LAST" />
+                <action android:name="com.benyq.guochat.ACTION.PLAY_NEXT" />
+                <action android:name="com.benyq.guochat.ACTION.STOP_SERVICE" />
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+                <action android:name="android.media.AUDIO_BECOMING_NOISY" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

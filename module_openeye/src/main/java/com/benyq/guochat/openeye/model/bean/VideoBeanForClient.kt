@@ -1,7 +1,7 @@
-package com.benyq.guochat.openeye.bean
+package com.benyq.guochat.openeye.model.bean
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import kotlinx.android.parcel.RawValue
 
 /**

@@ -3,9 +3,7 @@ package com.benyq.imageviewer.anim
 import android.animation.ValueAnimator
 import android.graphics.Color
 import android.view.View
-import androidx.core.animation.addListener
 import com.benyq.imageviewer.ColorTool
-import com.benyq.module_base.ext.loge
 
 /**
  * @author benyqYe
@@ -47,7 +45,6 @@ internal object AnimBgHelper {
     }
 
     fun onDrag(parent: View, fraction: Float) {
-        loge("onDrag fraction $fraction View $parent")
         parent.setBackgroundColor(
             ColorTool.getColorWithAlpha(Color.BLACK, fraction)
         )

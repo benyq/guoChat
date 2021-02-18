@@ -1,7 +1,10 @@
-package com.benyq.guochat.openeye.bean
+package com.benyq.guochat.openeye.model.bean
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import com.benyq.guochat.openeye.model.bean.Consumption
+import com.benyq.guochat.openeye.model.bean.Cover
+import com.benyq.guochat.openeye.model.bean.Tag
+import kotlinx.parcelize.Parcelize
 
 /**
  * 社区-推荐列表，响应实体类。

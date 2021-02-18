@@ -2,12 +2,14 @@ package com.benyq.guochat.comic
 
 import android.os.Bundle
 import androidx.fragment.app.FragmentTransaction
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
 import com.benyq.guochat.comic.databinding.ComicActivityComicBinding
 import com.benyq.guochat.comic.model.vm.ComicViewModel
 import com.benyq.guochat.comic.ui.home.ComicHomeFragment
 import com.benyq.guochat.comic.ui.shelf.ComicShelfFragment
+import com.benyq.module_base.RouterPath
 import com.benyq.module_base.ext.getViewModel
 import com.benyq.module_base.ui.base.LifecycleActivity
 import com.gyf.immersionbar.ktx.immersionBar
@@ -20,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * @note 漫画模块入口
  */
 @AndroidEntryPoint
+@Route(path = RouterPath.COMIC_HOME)
 class ComicActivity : LifecycleActivity<ComicViewModel, ComicActivityComicBinding>() {
 
     private val TAG = javaClass.simpleName

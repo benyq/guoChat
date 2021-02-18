@@ -1,7 +1,5 @@
 package com.benyq.imageviewer
 
-import android.graphics.Color
-import com.benyq.module_base.ext.loge
 
 /**
  * @author benyqYe

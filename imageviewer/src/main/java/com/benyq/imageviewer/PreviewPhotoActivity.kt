@@ -1,8 +1,10 @@
 package com.benyq.imageviewer
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.benyq.imageviewer.databinding.ActivityPreviewPhotoBinding
@@ -35,7 +37,6 @@ internal class PreviewPhotoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_preview_photo)
 
         initView()
-
         onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(!mViewModel.isExiting) {
             override fun handleOnBackPressed() {
                 //拦截了activity的退出，先执行玩动画再给我走

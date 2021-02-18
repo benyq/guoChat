@@ -4,7 +4,6 @@ apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 
-
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -19,6 +18,12 @@ android {
         ndk {
             abiFilters 'x86', 'armeabi-v7a', 'arm64-v8a'
         }
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
+
     }
 
     sourceSets {
@@ -47,49 +52,26 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':module_base')
+    implementation project(':module_media')
 
-    implementation 'com.google.zxing:core:3.3.0'
-    implementation 'com.google.zxing:android-core:3.3.0'
-    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.3'
-
-    //https://github.com/airbnb/lottie-android
-    implementation 'com.airbnb.android:lottie:3.0.0'
-
-//    debugImplementation "io.objectbox:objectbox-android-objectbrowser:2.5.1"
-//    releaseImplementation "io.objectbox:objectbox-android:2.5.1"
-
-    //https://github.com/promeG/TinyPinyin 汉字转拼音
-    implementation "com.github.promeg:tinypinyin:2.0.3"
-
-    implementation "android.arch.navigation:navigation-fragment:1.0.0"
-    implementation "android.arch.navigation:navigation-ui:1.0.0"
-
-    implementation 'org.java-websocket:Java-WebSocket:1.4.0'
-
-    implementation 'com.facebook.rebound:rebound:0.3.8'
-    implementation 'com.tumblr:backboard:0.1.0'
-
+    if (!module_comic.toBoolean()) {
+        implementation project(':module_comic')
+    }
+    if (!module_openeye.toBoolean()) {
+        implementation project(':module_openeye')
+    }
+    if (!module_chat.toBoolean()) {
+        implementation project(':module_chat')
+    }
     //Hilt Dagger2简化版
     implementation "com.google.dagger:hilt-android:$hilt_version"
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
     //Hilt-JetPack
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecircle_version"
     kapt "androidx.hilt:hilt-compiler:$hilt_lifecircle_version"
 
-    if (!module_comic.toBoolean()) {
-        implementation project(':module_comic')
-    }
-    implementation project(':module_base')
-    if (!module_openeye.toBoolean()) {
-        implementation project(':module_openeye')
-    }
-    if (!module_media.toBoolean()) {
-        implementation project(':module_media')
-    }
-
-    implementation project(':imageviewer')
+    kapt "com.alibaba:arouter-compiler:$arouterCompiler"
 }
 
 apply plugin: 'io.objectbox'

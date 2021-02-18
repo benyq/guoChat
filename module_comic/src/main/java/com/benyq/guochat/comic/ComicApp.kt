@@ -3,6 +3,8 @@ package com.benyq.guochat.comic
 import android.app.Application
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper
 import com.benyq.guochat.comic.local.ComicObjectBox
+import com.benyq.module_base.CommonModuleInit
+import com.benyq.module_base.IModuleInit
 import com.tencent.mmkv.MMKV
 import dagger.hilt.android.HiltAndroidApp
 
@@ -17,8 +19,12 @@ class ComicApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        MMKV.initialize(this)
-        ComicObjectBox.init(this)
-        BGASwipeBackHelper.init(this, null)
+        CommonModuleInit.onInit(this)
+    }
+}
+
+class ComicInit : IModuleInit {
+    override fun onInitAhead(application: Application) {
+        ComicObjectBox.init(application)
     }
 }

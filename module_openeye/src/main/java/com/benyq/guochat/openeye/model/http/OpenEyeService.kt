@@ -1,7 +1,7 @@
 package com.benyq.guochat.openeye.model.http
 
+import com.benyq.guochat.openeye.model.bean.CommunityRecommend
 import com.benyq.module_base.annotation.BaseUrl
-import com.benyq.guochat.openeye.bean.CommunityRecommend
 import retrofit2.http.GET
 import retrofit2.http.Url
 

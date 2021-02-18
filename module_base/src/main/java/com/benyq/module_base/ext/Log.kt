@@ -10,13 +10,6 @@ import com.socks.library.KLog
  * @note
  */
 
-object Log {
-
-    fun init() {
-        KLog.init(BuildConfig.DEBUG, "benyq")
-    }
-}
-
 fun loge(obj: Any){
     KLog.e("benyq", obj)
 }

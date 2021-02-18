@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
 import android.view.TextureView
-import com.benyq.module_base.ext.loge
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.analytics.AnalyticsListener
@@ -117,7 +116,6 @@ open class ExoVideoView @JvmOverloads constructor(
 
     private val videoListener = object : VideoListener {
         override fun onVideoSizeChanged(width: Int, height: Int, unappliedRotationDegrees: Int, pixelWidthHeightRatio: Float) {
-            loge("onVideoSizeChanged  width $width  height $height")
             updateTextureViewSize(width, height)
         }
     }

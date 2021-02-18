@@ -1,6 +1,8 @@
 package com.benyq.guochat.openeye
 
 import android.app.Application
+import com.benyq.module_base.CommonModuleInit
+import com.benyq.module_base.IModuleInit
 import dagger.hilt.android.HiltAndroidApp
 
 /**
@@ -14,5 +16,12 @@ class OpenEyeApp : Application(){
 
     override fun onCreate() {
         super.onCreate()
+        CommonModuleInit.onInit(this)
+    }
+}
+
+class OpenEyeInit: IModuleInit {
+    override fun onInitAhead(application: Application) {
+
     }
 }

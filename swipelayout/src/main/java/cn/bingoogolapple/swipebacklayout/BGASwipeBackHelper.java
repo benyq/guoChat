@@ -30,6 +30,7 @@ import androidx.annotation.FloatRange;
  * 作者:王浩 邮件:bingoogolapple@gmail.com
  * 创建时间:17/1/4 下午3:44
  * 描述:滑动返回帮助类
+ * https://github.com/bingoogolapple/BGASwipeBackLayout-Android 优化退出，以后可能会用到。已经整个module导入
  */
 public class BGASwipeBackHelper {
     private Activity mActivity;

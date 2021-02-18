@@ -37,7 +37,7 @@ class OpenEyeSearchFragment : LifecycleFragment<OpenEyeSearchViewModel, Fragment
 
     override fun dataObserver() {
         mViewModel.mHotKeywordsData.observe(viewLifecycleOwner, Observer {
-            mAdapter.setList(it.toMutableList()?.apply { add(0, getString(R.string.hot_keywords)) })
+            mAdapter.setList(it.toMutableList().apply { add(0, getString(R.string.hot_keywords)) })
         })
     }
 

@@ -89,11 +89,11 @@ class ComicSearchBookFragment : LifecycleFragment<ComicSearchBookViewModel,Comic
         binding.rvSearchHistory.layoutManager = LinearLayoutManager(mContext)
         binding.rvSearchHistory.addItemDecoration(DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL))
         binding.rvSearchHistory.adapter = mSearchHistoryAdapter
-        mSearchHistoryAdapter.setOnItemChildClickListener { adapter, view, position ->
+        mSearchHistoryAdapter.setOnItemChildClickListener { _, _, position ->
             val comic = mSearchHistoryAdapter.data[position]
             mViewModel.deleteHistoryRecord(comic.id, position)
         }
-        mSearchHistoryAdapter.setOnItemClickListener { adapter, view, position ->
+        mSearchHistoryAdapter.setOnItemClickListener { _, _, position ->
             val comic = mSearchHistoryAdapter.data[position]
             mViewModel.addSearchHistory(comic.comicId, comic.name)
             goToActivity<BookDetailActivity>(ComicIntentExtra.comicId to comic.comicId)

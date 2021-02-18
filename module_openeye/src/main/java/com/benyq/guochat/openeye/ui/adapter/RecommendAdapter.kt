@@ -5,9 +5,9 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.benyq.guochat.openeye.R
+import com.benyq.guochat.openeye.model.bean.CommunityRecommend
 import com.benyq.module_base.ext.loadImage
 import com.benyq.module_base.ext.setDrawable
-import com.benyq.guochat.openeye.bean.CommunityRecommend
 import com.benyq.guochat.openeye.ui.activity.OpenEyeUgcDetailActivity
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder

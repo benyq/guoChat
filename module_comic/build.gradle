@@ -19,6 +19,13 @@ android {
         }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
+
     }
 
     buildTypes {
@@ -54,6 +61,7 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':module_base')
+    kapt "com.alibaba:arouter-compiler:$arouterCompiler"
 
     //Hilt Dagger2简化版
     implementation "com.google.dagger:hilt-android:$hilt_version"

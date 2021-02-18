@@ -2,10 +2,9 @@ package com.benyq.imageviewer
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.benyq.module_base.ext.loge
-import com.benyq.module_base.ext.logw
 
 /**
  * @author benyqYe
@@ -59,13 +58,12 @@ object ImagePreview {
     private fun checkParam() : Boolean{
 
         if (Components.data.isEmpty()) {
-            logw("图片或视频数据不能为空")
+            Log.w("ImagePreview", "图片或视频数据不能为空")
             return false
         }
 
-        loge("Components.cacheView  ${Components.cacheView.isEmpty()} Components.recyclerview  ${Components.recyclerview}")
         if (Components.cacheView.isEmpty() && Components.recyclerview == null) {
-            logw("view 数据不能为空")
+            Log.w("ImagePreview", "view 数据不能为空")
             return false
         }
         return true

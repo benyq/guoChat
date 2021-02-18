@@ -15,8 +15,6 @@ import androidx.transition.TransitionListenerAdapter
 import com.benyq.imageviewer.Components
 import com.benyq.imageviewer.OnAnimatorListener
 import com.benyq.imageviewer.onDestroy
-import com.benyq.module_base.ext.getScreenHeight
-import com.benyq.module_base.ext.loge
 import com.gyf.immersionbar.ImmersionBar
 
 /**
