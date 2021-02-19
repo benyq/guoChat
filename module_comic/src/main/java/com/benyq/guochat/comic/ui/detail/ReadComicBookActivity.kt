@@ -163,13 +163,15 @@ class ReadComicBookActivity : LifecycleActivity<ReadComicBookViewModel, ComicAct
 
     override fun dataObserver() {
         with(viewModelGet()) {
-            previewResult.observe(this@ReadComicBookActivity) {
-                loge("dataObserver previewResult")
-                if (it.isLoading) {
+            loadingResult.observe(this@ReadComicBookActivity) {
+                if (it) {
                     showLoading("")
                 } else {
                     hideLoading()
                 }
+            }
+            previewResult.observe(this@ReadComicBookActivity) {
+                loge("dataObserver previewResult $it")
                 it?.isSuccess?.run {
                     image_list.forEachIndexed { index, imageListBean ->
                         imageListBean.currentIndex = index + 1

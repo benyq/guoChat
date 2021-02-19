@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.benyq.guochat.chat.R
+import com.benyq.guochat.chat.Singleton
 import com.benyq.guochat.chat.databinding.ActivityTestBinding
 import com.benyq.guochat.chat.ui.chats.video.PictureVideoActivity
 import com.benyq.imageviewer.ImagePreview

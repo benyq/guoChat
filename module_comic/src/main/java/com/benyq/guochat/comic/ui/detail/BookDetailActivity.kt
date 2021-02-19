@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.benyq.guochat.comic.ComicIntentExtra
 import com.benyq.guochat.comic.R
 import com.benyq.guochat.comic.databinding.ComicActivityBookDetailBinding
@@ -31,6 +33,7 @@ class BookDetailActivity : LifecycleActivity<BookDetailViewModel, ComicActivityB
     private lateinit var mComicId: String
 
     private val mChapterAdapter: BookChapterAdapter = BookChapterAdapter()
+    private val mTagAdapter: ComicDetailTagAdapter = ComicDetailTagAdapter()
 
     private var mBookShelfTable: BookShelfTable? = null
     private lateinit var mBookComic: Comic
@@ -69,6 +72,9 @@ class BookDetailActivity : LifecycleActivity<BookDetailViewModel, ComicActivityB
             gotoRead(mComicId, position)
         }
 
+        binding.rvTagList.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+        binding.rvTagList.adapter = mTagAdapter
+
         binding.headView.setBackAction { finish() }
         binding.headView.setMenuAction {
             //加入书架
@@ -102,8 +108,9 @@ class BookDetailActivity : LifecycleActivity<BookDetailViewModel, ComicActivityB
                     binding.tvDesContent.text = comic.description
                     binding.ivCover.loadImage(comic.cover)
                     binding.ivBg.loadImage(comic.wideCover ?: "")
+                    binding.ivAvatar.loadImage(comic.author.avatar)
                     mChapterAdapter.setList(chapterList)
-
+                    mTagAdapter.setList(comic.tagList)
                     viewModelGet().searchBookShelf(mComicId)
                 }
             }

@@ -109,7 +109,7 @@ abstract class BaseViewModel : ViewModel() {
     }
 
 
-    open class UiState<T>(
+    data class UiState<T>(
         val isLoading: Boolean = false,
         val isRefresh: Boolean = false,
         val isSuccess: T? = null,

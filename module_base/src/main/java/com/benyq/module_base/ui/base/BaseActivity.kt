@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper
 import com.benyq.module_base.R
+import com.benyq.module_base.ext.loge
 import com.benyq.module_base.ui.NormalProgressDialogManager
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ktx.immersionBar
@@ -116,6 +117,7 @@ abstract class BaseActivity<VB: ViewBinding> : AppCompatActivity(), IActivity, B
     }
 
     protected fun showLoading(msg: String?) {
+        loge("showLoading $msg")
         NormalProgressDialogManager.showLoading(this, msg)
     }
 

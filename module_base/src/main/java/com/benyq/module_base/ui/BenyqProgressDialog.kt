@@ -26,6 +26,7 @@ class BenyqProgressDialog(context: Context, val content: String? = "") : AlertDi
             .build()
         if (content.isNullOrEmpty()) {
             binding.tvLoading.gone()
+            binding.tvLoading.text = ""
         }else {
             binding.tvLoading.text = content
         }

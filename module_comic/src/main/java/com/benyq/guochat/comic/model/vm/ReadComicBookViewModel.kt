@@ -1,7 +1,10 @@
 package com.benyq.guochat.comic.model.vm
 
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.benyq.guochat.comic.local.BookShelfTable
 import com.benyq.guochat.comic.model.bean.ComicDetailResponse
 import com.benyq.guochat.comic.model.bean.ComicPreViewResponse
@@ -19,6 +22,16 @@ class ReadComicBookViewModel @ViewModelInject constructor(private val repository
 
     val previewResult = MutableLiveData<UiState<ComicPreViewResponse>>()
     val bookDetailResult = MutableLiveData<UiState<ComicDetailResponse>>()
+    val loadingResult :LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
+        addSource(previewResult) {
+            if (value != previewResult.value?.isLoading && previewResult.value?.isLoading == true) {
+                value = true
+            }
+            if (previewResult.value?.isSuccess != null) {
+                value = false
+            }
+        }
+    }
 
 
     fun comicPreView(chapterId: String) {
