@@ -32,7 +32,7 @@ class SmartJump(fragmentManager: FragmentManager) {
         }
     }
 
-    private val TAG = BuildConfig.APPLICATION_ID + SmartJump::class.java.simpleName
+    private val TAG = BuildConfig.LIBRARY_PACKAGE_NAME + SmartJump::class.java.simpleName
 
     /**
      * 防止多次跳转

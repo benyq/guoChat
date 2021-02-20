@@ -31,12 +31,10 @@ object CommonModuleInit {
         KLog.init(BuildConfig.DEBUG, "benyq")
 
         if (BuildConfig.isDebug) {
-            loge("onInit  aRouter init")
             ARouter.openLog() // 打印日志
             ARouter.openDebug() // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
         }
         ARouter.init(app)
-        loge("onInit  aRouter")
         MMKV.initialize(app)
         BGASwipeBackHelper.init(app, null)
 
