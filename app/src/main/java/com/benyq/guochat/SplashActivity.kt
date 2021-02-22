@@ -5,14 +5,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.launcher.ARouter
-import com.benyq.guochat.chat.function.fingerprint.FingerprintVerifyManager
-import com.benyq.guochat.chat.local.ChatLocalStorage
-import com.benyq.guochat.chat.ui.login.FingerLoginActivity
 import com.benyq.guochat.chat.ui.login.LoginActivity
+import com.benyq.guochat.databinding.ActivitySplashBinding
 import com.benyq.module_base.RouterPath
-import com.benyq.module_base.ext.getScreenSize
 import com.benyq.module_base.ext.goToActivity
-import com.benyq.module_base.ext.loge
+import com.benyq.module_base.ui.base.BaseActivity
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ktx.immersionBar
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +19,7 @@ import kotlinx.coroutines.withContext
 
 
 class SplashActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         immersionBar {
             hideBar(BarHide.FLAG_HIDE_BAR)
