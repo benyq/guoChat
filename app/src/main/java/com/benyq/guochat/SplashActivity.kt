@@ -10,7 +10,9 @@ import com.benyq.guochat.chat.local.ChatLocalStorage
 import com.benyq.guochat.chat.ui.login.FingerLoginActivity
 import com.benyq.guochat.chat.ui.login.LoginActivity
 import com.benyq.module_base.RouterPath
+import com.benyq.module_base.ext.getScreenSize
 import com.benyq.module_base.ext.goToActivity
+import com.benyq.module_base.ext.loge
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ktx.immersionBar
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +27,7 @@ class SplashActivity : AppCompatActivity() {
             hideBar(BarHide.FLAG_HIDE_BAR)
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+//        setContentView(R.layout.activity_splash)
         if (avoidLaunchHereAgain()) {
             return
         }

@@ -47,7 +47,10 @@ internal class ImageFragment : BasePreviewFragment() {
                     this@ImageFragment)
             }
         })
-
+        fullView.setOnClickListener {
+            mViewModel.setExitAnimPosition(mPosition)
+            mViewModel.isExiting = true
+        }
         if (thumbnailView is ImageView) {
             fullView.scaleType = thumbnailView.scaleType
             fullView.setZoomTransitionDuration(200)

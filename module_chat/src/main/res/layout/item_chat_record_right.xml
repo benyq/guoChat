@@ -30,15 +30,15 @@
                 android:paddingBottom="10dp"
                 android:layout_marginStart="10dp"
                 android:background="@drawable/ic_message_right"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textColor="@color/color_2a2a2a"
-                android:text="我是认真的我是认真的我是认真的我是认真的我是认真的我是认真的我是认真的我是认真的我是认真的我是认真的我是认真的"/>
+                tools:text="我是认真的我是认真的我是认真的我是认真的我是认真的我是认真的我是认真的我是认真的我是认真的我是认真的我是认真的"/>
 
             <!-- 图片 -->
             <ImageView
                 android:id="@+id/ivContent"
                 android:layout_width="100dp"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_gravity="end"
                 android:layout_marginEnd="15dp"/>
 

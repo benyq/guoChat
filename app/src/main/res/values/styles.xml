@@ -1,7 +1,7 @@
 <resources>
 
     <style name="LaunchTheme" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/ic_app_background</item>
+        <item name="android:windowBackground">@drawable/ic_splash</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:statusBarColor">@android:color/white</item>
         <item name="android:windowFullscreen">true</item>

@@ -6,15 +6,16 @@ import android.graphics.Rect
 import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.core.view.postDelayed
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.chat.R
 import com.benyq.guochat.chat.app.IntentExtra
 import com.benyq.guochat.chat.app.SharedViewModel
 import com.benyq.guochat.chat.databinding.ActivityChatDetailBinding
-import com.benyq.module_base.glide.GlideEngine
 import com.benyq.guochat.chat.local.entity.ChatRecordEntity
 import com.benyq.guochat.chat.model.bean.ChatListBean
 import com.benyq.guochat.chat.model.vm.ChatDetailViewModel
@@ -26,8 +27,10 @@ import com.benyq.imageviewer.PreviewPhoto
 import com.benyq.imageviewer.PreviewTypeEnum
 import com.benyq.module_base.SmartJump
 import com.benyq.module_base.ext.*
+import com.benyq.module_base.glide.GlideEngine
 import com.benyq.module_base.ui.base.LifecycleActivity
 import com.gyf.immersionbar.ktx.immersionBar
+import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.XXPermissions
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
@@ -35,7 +38,6 @@ import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.properties.Delegates
-import com.hjq.permissions.OnPermissionCallback
 
 
 /**
@@ -52,6 +54,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
     private val TYPE_VOICE = 1
 
     private val mAdapter = ChatRecordAdapter(1)
+    private val mEmojiAdapter by lazy { EmojiAdapter() }
     private val mVoiceRecordDialog by lazy {
         VoiceRecordDialog().apply {
             setConfirmAction {
@@ -78,8 +81,12 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
         if (new == TYPE_VOICE) {
 
             XXPermissions.with(this)
-                .permission(listOf(Manifest.permission.RECORD_AUDIO,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE))
+                .permission(
+                    listOf(
+                        Manifest.permission.RECORD_AUDIO,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
+                )
                 .request(object : OnPermissionCallback {
                     override fun onGranted(permissions: MutableList<String>?, all: Boolean) {
                         if (all) {
@@ -116,9 +123,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
             }
         }
         binding.rvChatRecord.layoutManager = LinearLayoutManager(this)
-
         binding.rvChatRecord.adapter = mAdapter
-
         binding.rvChatRecord.itemAnimator?.run {
             addDuration = 0
             changeDuration = 0
@@ -126,6 +131,13 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
             removeDuration = 0
         }
 
+        binding.rvEmoji.apply {
+            layoutManager = GridLayoutManager(this@ChatDetailActivity, 8)
+            adapter = mEmojiAdapter
+            mEmojiAdapter.setOnItemClickListener { _, _, position ->
+                binding.etContent.append(mEmojiAdapter.data[position])
+            }
+        }
 
         binding.headerView.setBackAction {
             finish()
@@ -169,6 +181,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
         binding.etContent.setOnClickListener(this)
         binding.tvSend.setOnClickListener(this)
         binding.ivMoreFunction.setOnClickListener(this)
+        binding.ivEmoji.setOnClickListener(this)
 
         binding.llAlbum.setOnClickListener(this)
         binding.llCapture.setOnClickListener(this)
@@ -196,13 +209,15 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
                         val realIndex = index - visiblePosition
                         if (entity.chatType == ChatRecordEntity.TYPE_IMG) {
                             tmpView.add(
-                                binding.rvChatRecord.getChildAt(realIndex)?.findViewById(R.id.ivContent)
+                                binding.rvChatRecord.getChildAt(realIndex)
+                                    ?.findViewById(R.id.ivContent)
                             )
                             tmpData.add(PreviewPhoto(entity.imgUrl, PreviewTypeEnum.IMAGE))
                         }
                         if (entity.chatType == ChatRecordEntity.TYPE_VIDEO) {
                             tmpView.add(
-                                binding.rvChatRecord.getChildAt(realIndex)?.findViewById(R.id.ivVideo)
+                                binding.rvChatRecord.getChildAt(realIndex)
+                                    ?.findViewById(R.id.ivVideo)
                             )
                             tmpData.add(PreviewPhoto(entity.videoPath, PreviewTypeEnum.VIDEO))
                         }
@@ -262,21 +277,37 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
         return super.dispatchTouchEvent(ev)
     }
 
-    private fun showFunctionMenu(duration: Long = 300) {
-        binding.llBottom.animate().translationY(-binding.flBottom.height.toFloat()).setDuration(duration).start()
+    private fun showFunctionMenu(duration: Long = 200) {
+        binding.llBottom.animate().translationY(-binding.flBottom.height.toFloat())
+            .setDuration(duration).start()
         binding.flBottom.animate().withStartAction {
             binding.flBottom.visible()
         }.translationY(-binding.flBottom.height.toFloat()).setDuration(duration).start()
-
     }
 
-    private fun hideFunctionMenu(duration: Long = 300) {
+    private fun hideFunctionMenu(duration: Long = 200) {
         binding.llBottom.animate().translationY(0f).setDuration(duration).start()
 
         binding.flBottom.animate().withEndAction {
             binding.flBottom.gone()
         }.translationY(0f).setDuration(duration).start()
 
+    }
+
+    private fun showChatEmoji(duration: Long = 200) {
+        binding.llBottom.animate().translationY(-binding.rvEmoji.height.toFloat())
+            .setDuration(duration).start()
+        binding.rvEmoji.animate().withStartAction {
+            binding.rvEmoji.visible()
+        }.translationY(-binding.rvEmoji.height.toFloat()).setDuration(duration).start()
+    }
+
+    private fun hideChatEmoji(duration: Long = 200L) {
+        binding.llBottom.animate().translationY(0f).setDuration(duration).start()
+
+        binding.rvEmoji.animate().withEndAction {
+            binding.rvEmoji.gone()
+        }.translationY(0f).setDuration(duration).start()
     }
 
     override fun onClick(v: View?) {
@@ -299,6 +330,9 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
             }
             R.id.ivMoreFunction -> {
                 showFunctionMenu()
+            }
+            R.id.ivEmoji -> {
+                showChatEmoji()
             }
             R.id.llAlbum -> {
                 PictureSelector.create(this)
@@ -324,16 +358,21 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
             }
             R.id.llCapture -> {
                 XXPermissions.with(this)
-                    .permission(arrayOf(Manifest.permission.CAMERA,
-                        Manifest.permission.RECORD_AUDIO))
+                    .permission(
+                        arrayOf(
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.RECORD_AUDIO
+                        )
+                    )
                     .request(object : OnPermissionCallback {
                         override fun onGranted(permissions: MutableList<String>?, all: Boolean) {
                             if (all) {
                                 gotoCameraCapture()
-                            }else {
+                            } else {
                                 Toasts.show("请授予相应权限")
                             }
                         }
+
                         override fun onDenied(permissions: MutableList<String>?, never: Boolean) {
                             Toasts.show("请授予相应权限")
                         }
@@ -355,11 +394,18 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
     }
 
     override fun hideView(ev: MotionEvent) {
+        loge("currentFocus $currentFocus")
         //两种情况 etContent 和 tvSend 不隐藏
         val iv = checkView(binding.ivMoreFunction, ev)
         val fl = checkView(binding.flBottom, ev)
-        if (!iv && !fl) {
+        if (!iv && !fl && binding.flBottom.isVisible) {
             hideFunctionMenu()
+        }
+
+        val ivEmoji = checkView(binding.ivEmoji, ev)
+        val rvEmoji = checkView(binding.rvEmoji, ev)
+        if (!ivEmoji && !rvEmoji && binding.rvEmoji.isVisible) {
+            hideChatEmoji()
         }
     }
 

@@ -14,8 +14,12 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.benyq.module_base.R
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.google.android.material.tabs.TabLayout
 
 /**
@@ -166,11 +170,11 @@ fun ImageView.loadImage(
 ) {
     Glide.with(context).load(url)
         .apply {
+            placeholder(placeHolder)
             if (isCircle) {
                 transform(CircleCrop())
             } else if (round > 0) {
                 transform(RoundedCorners(context.dip2px(round).toInt()))
-                    .placeholder(placeHolder)
             }
         }
         .into(this)

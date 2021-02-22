@@ -43,7 +43,7 @@
             <ImageView
                 android:id="@+id/ivContent"
                 android:layout_width="100dp"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_gravity="start"
                 android:layout_marginStart="15dp"/>
 
@@ -65,7 +65,7 @@
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:layout_marginStart="5dp"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:textColor="@color/color_2a2a2a"
                     tools:text="50&#8221;"/>
 
@@ -112,6 +112,7 @@
             </FrameLayout>
 
         </FrameLayout>
+
     </LinearLayout>
 
     <TextView

@@ -4,25 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#dc7984"
+    android:background="@color/black"
     tools:context="com.benyq.guochat.SplashActivity">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_app_name"/>
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_app_logo"/>
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_splash"/>
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_gravity="bottom"
-        android:src="@drawable/ic_background_title"/>
+        android:layout_width="108dp"
+        android:layout_height="234dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_splash"/>
+
 
 
 </FrameLayout>

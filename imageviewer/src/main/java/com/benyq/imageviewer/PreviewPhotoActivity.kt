@@ -1,10 +1,8 @@
 package com.benyq.imageviewer
 
 import android.os.Bundle
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.benyq.imageviewer.databinding.ActivityPreviewPhotoBinding
@@ -34,7 +32,7 @@ internal class PreviewPhotoActivity : AppCompatActivity() {
         //取消动画
         overridePendingTransition(0, 0)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_preview_photo)
+        setContentView(binding.root)
 
         initView()
         onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(!mViewModel.isExiting) {

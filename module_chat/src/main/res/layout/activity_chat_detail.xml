@@ -5,8 +5,8 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".ui.chats.ChatDetailActivity">
 
     <com.benyq.module_base.ui.widget.HeaderView
@@ -33,8 +33,9 @@
                 android:layout_height="0dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:overScrollMode="never"
-                android:clickable="true"/>
+                android:clickable="true"
+                android:focusable="true"
+                android:overScrollMode="never" />
 
             <View style="@style/thin_horizontal_divider" />
 
@@ -83,6 +84,15 @@
                     app:elevation="0dp" />
 
                 <ImageView
+                    android:id="@+id/ivEmoji"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="4dp"
+                    android:src="@drawable/ic_emoji" />
+
+                <ImageView
                     android:id="@+id/ivMoreFunction"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
@@ -113,26 +123,25 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
 
         <com.google.android.flexbox.FlexboxLayout
             android:id="@+id/flBottom"
             android:layout_width="match_parent"
             android:layout_height="110dp"
+            android:layout_gravity="bottom"
+            android:background="@color/darkgrey"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
-            android:background="@color/darkgrey"
-            android:layout_gravity="bottom"
-            app:justifyContent="space_around"
-            app:flexWrap="wrap">
+            app:flexWrap="wrap"
+            app:justifyContent="space_around">
 
             <LinearLayout
                 android:id="@+id/llAlbum"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <ImageButton
                     android:layout_width="match_parent"
@@ -145,8 +154,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="@string/album"/>
+                    android:text="@string/album"
+                    android:textSize="12sp" />
 
 
             </LinearLayout>
@@ -155,8 +164,8 @@
                 android:id="@+id/llCapture"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <ImageButton
                     android:layout_width="match_parent"
@@ -169,8 +178,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="@string/capture"/>
+                    android:text="@string/capture"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -178,8 +187,8 @@
                 android:id="@+id/llContracts"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <ImageButton
                     android:layout_width="match_parent"
@@ -192,13 +201,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="@string/calling_card"/>
+                    android:text="@string/calling_card"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
 
         </com.google.android.flexbox.FlexboxLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:visibility="gone"
+            android:id="@+id/rvEmoji"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/darkgrey"
+            android:overScrollMode="never"
+            android:paddingStart="5dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="10dp" />
 
     </LinearLayout>
 

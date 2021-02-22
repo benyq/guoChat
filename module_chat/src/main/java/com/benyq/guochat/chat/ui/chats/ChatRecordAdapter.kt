@@ -1,18 +1,26 @@
 package com.benyq.guochat.chat.ui.chats
 
+import android.graphics.Bitmap
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
+import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
+import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import com.benyq.guochat.chat.R
 import com.benyq.guochat.chat.function.other.DateFormatUtil
 import com.benyq.guochat.chat.local.entity.ChatRecordEntity
 import com.benyq.module_base.ext.calculateTime
 import com.benyq.module_base.ext.dip2px
 import com.benyq.module_base.ext.getDrawableRef
+import com.benyq.module_base.ext.loadImage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.chad.library.adapter.base.BaseDelegateMultiAdapter
 import com.chad.library.adapter.base.delegate.BaseMultiTypeDelegate
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -95,9 +103,36 @@ class ChatRecordAdapter(private val uid: Int) :
                         .setGone(R.id.llVoice, true)
                         .setGone(R.id.flVideo, true)
 
+                    //竖直的图片有固定的高度，宽度计算
+                    //水平的图片有固定的宽度，高度计算
+                    //默认 100px
                     val ivContent = helper.getView<ImageView>(R.id.ivContent)
-                    Glide.with(context).load(imgUrl)
-                        .into(ivContent)
+                    val baseWidth = context.dip2px(150).toInt()
+
+                    Glide.with(ivContent)
+                        .asBitmap()
+                        .load(imgUrl)
+                        .transform(RoundedCorners(context.dip2px(10).toInt()))
+                        .into(object: CustomTarget<Bitmap>() {
+                            override fun onResourceReady(
+                                resource: Bitmap,
+                                transition: Transition<in Bitmap>?
+                            ) {
+                                val width = resource.width
+                                val height = resource.height
+                                if (width >= height) {
+                                    ivContent.layoutParams.width = baseWidth
+                                    ivContent.layoutParams.height = height * baseWidth / width
+                                }else {
+                                    ivContent.layoutParams.width = width * baseWidth / height
+                                    ivContent.layoutParams.height = baseWidth
+                                }
+                                ivContent.setImageBitmap(resource)
+                            }
+                            override fun onLoadCleared(placeholder: Drawable?) {
+                                ivContent.setImageDrawable(placeholder)
+                            }
+                        })
                 }
                 ChatRecordEntity.TYPE_VOICE -> {
                     helper.setGone(R.id.llVoice, false)
