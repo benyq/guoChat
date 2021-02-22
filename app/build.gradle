@@ -74,5 +74,3 @@ dependencies {
     kapt "com.alibaba:arouter-compiler:$arouterCompiler"
 }
 
-apply plugin: 'io.objectbox'
-
