@@ -16,11 +16,11 @@ import com.benyq.guochat.chat.R
 import com.benyq.guochat.chat.app.IntentExtra
 import com.benyq.guochat.chat.app.SharedViewModel
 import com.benyq.guochat.chat.databinding.ActivityChatDetailBinding
-import com.benyq.guochat.chat.local.entity.ChatRecordEntity
 import com.benyq.guochat.chat.model.bean.ChatListBean
 import com.benyq.guochat.chat.model.vm.ChatDetailViewModel
 import com.benyq.guochat.chat.model.vm.StateEvent
 import com.benyq.guochat.chat.ui.chats.video.PictureVideoActivity
+import com.benyq.guochat.database.entity.chat.ChatRecordEntity
 import com.benyq.guochat.media.voice.VoiceRecordController
 import com.benyq.imageviewer.ImagePreview
 import com.benyq.imageviewer.PreviewPhoto

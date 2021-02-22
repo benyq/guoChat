@@ -25,6 +25,6 @@ class ComicApp : Application() {
 
 class ComicInit : IModuleInit {
     override fun onInitAhead(application: Application) {
-        ComicObjectBox.init(application)
+
     }
 }

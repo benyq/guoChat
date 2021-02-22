@@ -2,13 +2,11 @@ package com.benyq.guochat.chat.local
 
 import android.content.Context
 import com.benyq.guochat.chat.app.CHAT_TYPE_CONTRACT
-import com.benyq.guochat.chat.local.entity.*
 import com.benyq.guochat.chat.model.bean.ChatListBean
-import com.benyq.module_base.ext.logi
+import com.benyq.guochat.database.DataObjectBox
+import com.benyq.guochat.database.entity.chat.*
 import io.objectbox.Box
 import io.objectbox.BoxStore
-import io.objectbox.android.AndroidObjectBrowser
-import io.objectbox.android.BuildConfig
 import io.objectbox.kotlin.boxFor
 import io.objectbox.kotlin.query
 
@@ -24,15 +22,8 @@ object ChatObjectBox {
     lateinit var boxStore: BoxStore
         private set
 
-    fun init(context: Context) {
-        boxStore = MyObjectBox.builder()
-            .name("chat")
-            .androidContext(context.applicationContext).build()
-
-        if (!BuildConfig.DEBUG) {
-            val started = AndroidObjectBrowser(boxStore).start(context)
-            logi("ObjectBrowser Started: $started")
-        }
+    fun init() {
+        boxStore = DataObjectBox.boxStore
     }
 
     fun testAddChatFromTo() {

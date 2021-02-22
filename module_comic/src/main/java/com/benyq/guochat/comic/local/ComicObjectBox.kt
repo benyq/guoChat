@@ -1,12 +1,9 @@
 package com.benyq.guochat.comic.local
 
-import android.content.Context
-import com.benyq.module_base.ext.logi
+import com.benyq.guochat.database.DataObjectBox
+import com.benyq.guochat.database.entity.comic.BookShelfTable
+import com.benyq.guochat.database.entity.comic.SearchHistoryRecord
 import io.objectbox.Box
-import io.objectbox.BoxStore
-import io.objectbox.android.AndroidObjectBrowser
-import io.objectbox.android.BuildConfig
-import io.objectbox.kotlin.boxFor
 
 /**
  * @author benyq
@@ -18,16 +15,6 @@ object ComicObjectBox {
 
     const val searchHistoryLimit = 10L
 
-    private lateinit var boxStore: BoxStore
-
-    val searchHistoryBox: Box<SearchHistoryRecord> by lazy { boxStore.boxFor() }
-    val bookShelfBox: Box<BookShelfTable> by lazy { boxStore.boxFor() }
-
-    fun init(context: Context) {
-        boxStore = MyObjectBox.builder()
-            .name("comic")
-            .androidContext(context.applicationContext).build()
-
-    }
-
+    val searchHistoryBox: Box<SearchHistoryRecord> by lazy { DataObjectBox.searchHistoryBox }
+    val bookShelfBox: Box<BookShelfTable> by lazy { DataObjectBox.bookShelfBox }
 }

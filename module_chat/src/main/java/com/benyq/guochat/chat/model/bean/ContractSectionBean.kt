@@ -1,6 +1,6 @@
 package com.benyq.guochat.chat.model.bean
 
-import com.benyq.guochat.chat.local.entity.ContractEntity
+import com.benyq.guochat.database.entity.chat.ContractEntity
 import com.chad.library.adapter.base.entity.SectionEntity
 
 /**

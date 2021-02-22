@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper
 import com.alibaba.android.arouter.launcher.ARouter
+import com.benyq.guochat.database.DataObjectBox
 import com.benyq.module_base.ext.Toasts
 import com.benyq.module_base.ext.loge
 import com.benyq.module_base.http.ApiException
@@ -47,6 +48,7 @@ object CommonModuleInit {
         }
         ARouter.init(app)
         MMKV.initialize(app)
+        DataObjectBox.init(app)
         BGASwipeBackHelper.init(app, null)
         injectError()
         register(app)

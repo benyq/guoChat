@@ -2,7 +2,7 @@ package com.benyq.guochat.chat.ui.contracts
 
 import com.benyq.guochat.chat.app.IntentExtra
 import com.benyq.guochat.chat.databinding.ActivityContractNickBinding
-import com.benyq.guochat.chat.local.entity.ContractEntity
+import com.benyq.guochat.database.entity.chat.ContractEntity
 import com.benyq.module_base.ext.textTrim
 import com.benyq.module_base.ui.base.BaseActivity
 

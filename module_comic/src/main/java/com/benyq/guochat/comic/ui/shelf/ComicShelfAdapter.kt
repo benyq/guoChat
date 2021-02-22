@@ -3,7 +3,7 @@ package com.benyq.guochat.comic.ui.shelf
 import android.widget.ImageView
 import android.widget.TextView
 import com.benyq.guochat.comic.R
-import com.benyq.guochat.comic.local.BookShelfTable
+import com.benyq.guochat.database.entity.comic.BookShelfTable
 import com.benyq.module_base.ext.loadImage
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder

@@ -47,7 +47,7 @@ class ChatApp : BaseApplication(){
 
 class ChatInit: IModuleInit {
     override fun onInitAhead(application: Application) {
-        ChatObjectBox.init(application)
+        ChatObjectBox.init()
         Pinyin.init(null)
         NotificationHelper.init(application)
         EmojiCompat.init(BundledEmojiCompatConfig(application))

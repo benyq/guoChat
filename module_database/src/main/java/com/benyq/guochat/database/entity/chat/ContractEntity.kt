@@ -1,8 +1,6 @@
-package com.benyq.guochat.chat.local.entity
+package com.benyq.guochat.database.entity.chat
 
 import android.os.Parcelable
-import com.benyq.guochat.chat.app.CHAT_TYPE_CONTRACT
-import com.benyq.guochat.chat.app.GENDER_UNKNOWN
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 import kotlinx.parcelize.Parcelize
@@ -31,8 +29,9 @@ data class ContractEntity(
     val contractName: String = "",
     /**
      * 性别 0 女性  1 男性  2 隐藏
+     * GENDER_UNKNOWN == 1
      */
-    val gender: Int = GENDER_UNKNOWN,
+    val gender: Int = 1,
     /**
      * 备注
      */
@@ -40,6 +39,7 @@ data class ContractEntity(
 
     val avatarUrl: String = "",
 
-    var chatType: Int = CHAT_TYPE_CONTRACT
+    // CHAT_TYPE_CONTRACT == 1
+    var chatType: Int = 1
 
 ): Parcelable

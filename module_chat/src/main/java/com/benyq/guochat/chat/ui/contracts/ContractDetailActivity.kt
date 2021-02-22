@@ -10,10 +10,10 @@ import com.benyq.guochat.chat.app.IntentExtra
 import com.benyq.guochat.chat.databinding.ActivityContractDetailBinding
 import com.benyq.guochat.chat.local.ChatLocalStorage
 import com.benyq.guochat.chat.local.ChatObjectBox
-import com.benyq.guochat.chat.local.entity.ContractEntity
 import com.benyq.module_base.ui.base.BaseActivity
 import com.benyq.guochat.chat.ui.chats.ChatDetailActivity
 import com.benyq.guochat.chat.ui.common.CommonBottomDialog
+import com.benyq.guochat.database.entity.chat.ContractEntity
 import com.benyq.module_base.SmartJump
 import com.benyq.module_base.ext.Toasts
 import com.benyq.module_base.ext.goToActivity

@@ -1,12 +1,10 @@
 package com.benyq.guochat.comic.model.repository
 
-import com.benyq.guochat.comic.local.BookShelfTable
-import com.benyq.guochat.comic.local.BookShelfTable_
 import com.benyq.guochat.comic.local.ComicObjectBox
-import com.benyq.guochat.comic.local.SearchHistoryRecord_
 import com.benyq.guochat.comic.model.http.ComicResponse
+import com.benyq.guochat.database.entity.comic.BookShelfTable
+import com.benyq.guochat.database.entity.comic.BookShelfTable_
 import com.benyq.module_base.mvvm.BaseRepository
-import io.objectbox.kotlin.query
 import javax.inject.Inject
 
 /**

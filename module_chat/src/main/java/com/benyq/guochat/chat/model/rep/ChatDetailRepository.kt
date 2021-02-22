@@ -1,8 +1,8 @@
 package com.benyq.guochat.chat.model.rep
 
 import com.benyq.guochat.chat.local.ChatObjectBox
-import com.benyq.guochat.chat.local.entity.ChatRecordEntity
 import com.benyq.guochat.chat.model.bean.ChatResponse
+import com.benyq.guochat.database.entity.chat.ChatRecordEntity
 import com.benyq.module_base.mvvm.BaseRepository
 import javax.inject.Inject
 

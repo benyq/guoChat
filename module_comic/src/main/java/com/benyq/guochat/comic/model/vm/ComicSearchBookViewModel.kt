@@ -1,12 +1,11 @@
 package com.benyq.guochat.comic.model.vm
 
-import android.view.SearchEvent
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
-import com.benyq.guochat.comic.local.SearchHistoryRecord
 import com.benyq.guochat.comic.model.bean.ComicSearchResponse
 import com.benyq.guochat.comic.model.bean.SearchHotEntity
 import com.benyq.guochat.comic.model.repository.ComicSearchBookRepository
+import com.benyq.guochat.database.entity.comic.SearchHistoryRecord
 import com.benyq.module_base.mvvm.BaseViewModel
 
 /**

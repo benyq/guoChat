@@ -1,4 +1,4 @@
-package com.benyq.guochat.comic.local
+package com.benyq.guochat.database.entity.comic
 
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id

@@ -1,0 +1,99 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:7606315228646556483",
+      "lastPropertyId": "7:2288958767344378731",
+      "name": "BookShelfTable",
+      "properties": [
+        {
+          "id": "1:7724142042420345259",
+          "name": "comicId",
+          "indexId": "1:786591281405158848",
+          "type": 9,
+          "flags": 2080
+        },
+        {
+          "id": "2:7091030512748080204",
+          "name": "comicName",
+          "type": 9
+        },
+        {
+          "id": "3:4639038252236374987",
+          "name": "coverUrl",
+          "type": 9
+        },
+        {
+          "id": "4:2011594509391441315",
+          "name": "readChapterPosition",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "5:5813552290200027225",
+          "name": "chapterSize",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "6:5475713710828403170",
+          "name": "readTime",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "7:2288958767344378731",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:3507139026484080127",
+      "lastPropertyId": "4:3260958529869213956",
+      "name": "SearchHistoryRecord",
+      "properties": [
+        {
+          "id": "1:3111733257587302742",
+          "name": "comicId",
+          "indexId": "2:7095907881387222621",
+          "type": 9,
+          "flags": 2080
+        },
+        {
+          "id": "2:4310119498221864191",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:5388694668855824391",
+          "name": "updateTime",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "4:3260958529869213956",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "2:3507139026484080127",
+  "lastIndexId": "2:7095907881387222621",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

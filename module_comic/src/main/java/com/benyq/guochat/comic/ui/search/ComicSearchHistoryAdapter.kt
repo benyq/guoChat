@@ -2,7 +2,7 @@ package com.benyq.guochat.comic.ui.search
 
 import android.widget.TextView
 import com.benyq.guochat.comic.R
-import com.benyq.guochat.comic.local.SearchHistoryRecord
+import com.benyq.guochat.database.entity.comic.SearchHistoryRecord
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 

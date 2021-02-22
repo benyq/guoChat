@@ -2,8 +2,8 @@ package com.benyq.guochat.comic.model.vm
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
-import com.benyq.guochat.comic.local.BookShelfTable
 import com.benyq.guochat.comic.model.repository.ComicShelfRepository
+import com.benyq.guochat.database.entity.comic.BookShelfTable
 import com.benyq.module_base.mvvm.BaseViewModel
 
 /**

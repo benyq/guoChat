@@ -3,19 +3,14 @@ package com.benyq.guochat.chat.ui.chats
 import android.graphics.Bitmap
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
-import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
-import androidx.core.view.isVisible
-import androidx.core.view.updateLayoutParams
 import com.benyq.guochat.chat.R
 import com.benyq.guochat.chat.function.other.DateFormatUtil
-import com.benyq.guochat.chat.local.entity.ChatRecordEntity
+import com.benyq.guochat.database.entity.chat.ChatRecordEntity
 import com.benyq.module_base.ext.calculateTime
 import com.benyq.module_base.ext.dip2px
 import com.benyq.module_base.ext.getDrawableRef
-import com.benyq.module_base.ext.loadImage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
@@ -113,7 +108,7 @@ class ChatRecordAdapter(private val uid: Int) :
                         .asBitmap()
                         .load(imgUrl)
                         .transform(RoundedCorners(context.dip2px(10).toInt()))
-                        .into(object: CustomTarget<Bitmap>() {
+                        .into(object : CustomTarget<Bitmap>() {
                             override fun onResourceReady(
                                 resource: Bitmap,
                                 transition: Transition<in Bitmap>?
@@ -123,12 +118,13 @@ class ChatRecordAdapter(private val uid: Int) :
                                 if (width >= height) {
                                     ivContent.layoutParams.width = baseWidth
                                     ivContent.layoutParams.height = height * baseWidth / width
-                                }else {
+                                } else {
                                     ivContent.layoutParams.width = width * baseWidth / height
                                     ivContent.layoutParams.height = baseWidth
                                 }
                                 ivContent.setImageBitmap(resource)
                             }
+
                             override fun onLoadCleared(placeholder: Drawable?) {
                                 ivContent.setImageDrawable(placeholder)
                             }
@@ -143,11 +139,12 @@ class ChatRecordAdapter(private val uid: Int) :
                     val pb = helper.getView<ProgressBar>(R.id.pbVoice)
                     val drawable: Drawable? = if (item.id == mPlayingRecord?.id ?: 0) {
                         context.getDrawableRef(R.drawable.anim_voice_play)
-                    }else {
+                    } else {
                         context.getDrawableRef(R.drawable.ic_volume_3)
                     }
 
-                    val bounds: Rect = pb.indeterminateDrawable.bounds // re-use bounds from current drawable
+                    val bounds: Rect =
+                        pb.indeterminateDrawable.bounds // re-use bounds from current drawable
 
                     pb.indeterminateDrawable = drawable // set new drawable
 

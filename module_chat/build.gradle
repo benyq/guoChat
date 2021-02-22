@@ -67,10 +67,6 @@ dependencies {
     //https://github.com/airbnb/lottie-android
     implementation 'com.airbnb.android:lottie:3.0.0'
 
-//    debugImplementation("io.objectbox:objectbox-android-objectbrowser:2.7.1") {
-//        exclude group: 'io.objectbox'
-//    }
-
     //https://github.com/promeG/TinyPinyin 汉字转拼音
     implementation "com.github.promeg:tinypinyin:2.0.3"
 
@@ -95,5 +91,3 @@ dependencies {
     implementation "androidx.emoji:emoji-bundled:1.0.0"
     implementation "androidx.emoji:emoji-appcompat:1.0.0"
 }
-
-apply plugin: 'io.objectbox'

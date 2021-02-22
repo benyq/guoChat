@@ -1,12 +1,12 @@
 package com.benyq.guochat.comic.model.repository
 
 import com.benyq.guochat.comic.local.ComicObjectBox
-import com.benyq.guochat.comic.local.SearchHistoryRecord
-import com.benyq.guochat.comic.local.SearchHistoryRecord_
 import com.benyq.guochat.comic.model.bean.ComicSearchResponse
 import com.benyq.guochat.comic.model.bean.SearchHotEntity
 import com.benyq.guochat.comic.model.http.ComicApiService
 import com.benyq.guochat.comic.model.http.ComicResponse
+import com.benyq.guochat.database.entity.comic.SearchHistoryRecord
+import com.benyq.guochat.database.entity.comic.SearchHistoryRecord_
 import com.benyq.module_base.mvvm.BaseRepository
 import javax.inject.Inject
 

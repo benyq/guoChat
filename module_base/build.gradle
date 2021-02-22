@@ -49,6 +49,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(':swipelayout')
     api project(':imageviewer')
+    api project(':module_database')
     // 1.4以上不再需要手动添加依赖，kotlin-gradle-plugin 会自动引入版本号一致的库
 //    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 

@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.benyq.guochat.comic.ComicIntentExtra
 import com.benyq.guochat.comic.R
 import com.benyq.guochat.comic.databinding.ComicActivityBookDetailBinding
-import com.benyq.guochat.comic.local.BookShelfTable
 import com.benyq.guochat.comic.model.bean.Comic
 import com.benyq.guochat.comic.model.vm.BookDetailViewModel
 import com.benyq.guochat.comic.ui.home.GridItemDecoration
+import com.benyq.guochat.database.entity.comic.BookShelfTable
 import com.benyq.module_base.SmartJump
 import com.benyq.module_base.ext.*
 import com.benyq.module_base.ui.base.LifecycleActivity
