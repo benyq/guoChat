@@ -83,9 +83,168 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "3:4781848415072188291",
+      "lastPropertyId": "4:44008574458591295",
+      "name": "ChatFromToEntity",
+      "properties": [
+        {
+          "id": "1:3098732170396412978",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:9080924947024093345",
+          "name": "fromUid",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "3:360632014280633262",
+          "name": "toUid",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "4:44008574458591295",
+          "name": "updateTime",
+          "type": 6,
+          "flags": 4
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:6728705956875256297",
+      "lastPropertyId": "12:6914392006897016167",
+      "name": "ChatRecordEntity",
+      "properties": [
+        {
+          "id": "1:8992878188284229918",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3675473313080111139",
+          "name": "content",
+          "type": 9
+        },
+        {
+          "id": "3:4795235910619447451",
+          "name": "sendTime",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "4:3230731927468611662",
+          "name": "imgUrl",
+          "type": 9
+        },
+        {
+          "id": "5:2091752074006529837",
+          "name": "voiceRecordPath",
+          "type": 9
+        },
+        {
+          "id": "6:1381488529056390094",
+          "name": "voiceRecordDuration",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "7:807598760432567041",
+          "name": "videoPath",
+          "type": 9
+        },
+        {
+          "id": "8:5461812988537762085",
+          "name": "videoDuration",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "9:2188294919477163277",
+          "name": "chatType",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "10:2312556520627144961",
+          "name": "fromUid",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "11:9009732530726133984",
+          "name": "toUid",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "12:6914392006897016167",
+          "name": "fromToId",
+          "type": 6,
+          "flags": 4
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:1977005759769735532",
+      "lastPropertyId": "8:4170615368329090901",
+      "name": "ContractEntity",
+      "properties": [
+        {
+          "id": "1:50492819908665553",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6569239190215561869",
+          "name": "contractId",
+          "type": 9
+        },
+        {
+          "id": "3:7534167599974112334",
+          "name": "ownUserId",
+          "type": 9
+        },
+        {
+          "id": "4:3678252846597077057",
+          "name": "contractName",
+          "type": 9
+        },
+        {
+          "id": "5:3833103927148431835",
+          "name": "gender",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "6:8642716996996841174",
+          "name": "nick",
+          "type": 9
+        },
+        {
+          "id": "7:5220196008209721257",
+          "name": "avatarUrl",
+          "type": 9
+        },
+        {
+          "id": "8:4170615368329090901",
+          "name": "chatType",
+          "type": 5,
+          "flags": 4
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "2:3507139026484080127",
+  "lastEntityId": "5:1977005759769735532",
   "lastIndexId": "2:7095907881387222621",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

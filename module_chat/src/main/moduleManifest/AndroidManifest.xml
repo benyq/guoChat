@@ -36,7 +36,8 @@
         <activity android:name=".ui.contracts.ContractNickActivity" />
         <activity android:name=".ui.discover.FriendCircleActivity" />
         <activity android:name=".ui.contracts.ContractDetailActivity" />
-        <activity android:name=".test.TestActivity" />
+        <activity android:name=".test.TestActivity" >
+        </activity>
         <activity android:name=".ui.settings.AboutAppActivity" />
         <activity android:name=".ui.settings.SettingsActivity" />
         <activity android:name=".ui.me.PersonalInfoEditActivity" />
@@ -46,8 +47,7 @@
         <activity android:name=".ui.contracts.CallingCardActivity" />
         <activity android:name=".ui.contracts.AddContractActivity" />
         <activity android:name=".ui.login.RegisterActivity" />
-        <activity android:name=".ui.login.LoginActivity"
-            android:theme="@style/LaunchTheme">
+        <activity android:name=".ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

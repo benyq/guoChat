@@ -133,22 +133,22 @@ class MainActivity : LifecycleActivity<MainViewModel, ActivityMainBinding>() {
             val fragment = supportFragmentManager.findFragmentByTag(tag) ?: when (position) {
                 0 -> {
                     ChatFragment().apply {
-                        it.add(R.id.llContainer, this, tag)
+                        it.add(R.id.flContainer, this, tag)
                     }
                 }
                 1 -> {
                     ContractsFragment().apply {
-                        it.add(R.id.llContainer, this, tag)
+                        it.add(R.id.flContainer, this, tag)
                     }
                 }
                 2 -> {
                     DiscoverFragment().apply {
-                        it.add(R.id.llContainer, this, tag)
+                        it.add(R.id.flContainer, this, tag)
                     }
                 }
                 else -> {
                     MeFragment().apply {
-                        it.add(R.id.llContainer, this, tag)
+                        it.add(R.id.flContainer, this, tag)
                     }
                 }
             }

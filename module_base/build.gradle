@@ -105,9 +105,9 @@ dependencies {
     api 'com.shuyu:GSYVideoPlayer:7.1.6'
 
     //下拉刷新 https://github.com/scwang90/SmartRefreshLayout
-    api 'com.scwang.smart:refresh-layout-kernel:2.0.1'
-    api 'com.scwang.smart:refresh-header-material:2.0.1'
-    api 'com.scwang.smart:refresh-footer-ball:2.0.1' //球脉冲加载
+    api 'com.scwang.smart:refresh-layout-kernel:2.0.3'
+    api 'com.scwang.smart:refresh-header-material:2.0.3'
+    api 'com.scwang.smart:refresh-footer-ball:2.0.3' //球脉冲加载
 
     // 权限请求框架：https://github.com/getActivity/XXPermissions
     api 'com.hjq:xxpermissions:9.8'
