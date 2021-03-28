@@ -9,10 +9,10 @@ import android.opengl.GLES20
  * description 所有滤镜都处理好之后，直接渲染的滤镜
  */
 
-class NoFilter : BaseFilter(){
+open class NoFilter(enableFBO: Boolean = false) : BaseFilter(){
 
     init {
-        enableFrameBuffer = false
+        enableFrameBuffer = enableFBO
     }
 
     override fun getLocations() {

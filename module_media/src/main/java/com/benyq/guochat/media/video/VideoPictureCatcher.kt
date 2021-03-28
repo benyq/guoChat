@@ -85,6 +85,7 @@ object VideoPictureCatcher {
         videoFileName: String,
         cameraWidth: Int,
         cameraHeight: Int,
+        frontCamera: Boolean,
         success: VideoRecordSuccessListener,
         error: VideoRecordErrorListener
     ) {
@@ -111,7 +112,15 @@ object VideoPictureCatcher {
                 else -> recordOrientation = 0f
             }
 
-            loge("startRecording videoWidth $videoWidth    videoHeight $videoHeight")
+            if (!frontCamera) {
+                when(orientation) {
+                    90 -> recordOrientation = 180f
+                    270 -> recordOrientation = 180f
+                }
+            }
+
+            logd("startRecording orientation $orientation    recordOrientation $recordOrientation")
+            logd("startRecording videoWidth $videoWidth    videoHeight $videoHeight")
 
             MediaVideoEncoder(mMuxer, mMediaEncoderListener, videoWidth, videoHeight)
             MediaAudioEncoder(mMuxer, mMediaEncoderListener)
@@ -333,7 +342,7 @@ object VideoPictureCatcher {
 
     private fun toByteArray(bitmap: Bitmap): ByteArray {
         val os = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os)
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, os)
         return os.toByteArray()
     }
 }

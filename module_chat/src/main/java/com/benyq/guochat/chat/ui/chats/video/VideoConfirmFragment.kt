@@ -71,8 +71,8 @@ class VideoConfirmFragment : BaseFragment<FragmentVideoConfirmBinding>() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         binding.videoView.release()
+        super.onDestroyView()
     }
 
 

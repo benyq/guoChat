@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.opengl.GLES20
 import android.opengl.Matrix
 import com.benyq.guochat.media.video.OpenGLTools
+import com.benyq.module_base.ext.loge
 
 class BitmapDrawer(bitmap: Bitmap) : BaseDrawer() {
 
@@ -114,11 +115,15 @@ class BitmapDrawer(bitmap: Bitmap) : BaseDrawer() {
         GLES20.glDeleteProgram(mProgram)
     }
 
-    fun setViewPoint(width: Int, height: Int) {
-        mViewWidth = width.toFloat()
-        mViewHeight = height.toFloat()
-        scale = 1f
-        Matrix.scaleM(mMvpMatrix, 0, scale * mBitmapWidth / mViewWidth, scale * mBitmapHeight / mViewHeight, 1f)
+
+    //按比例缩小图片大小为显示大小的几分之一,默认放到图片右下角
+    fun setViewRadio(radio: Float, viewWidth: Int, viewHeight: Int) {
+
+        val changeRadio = radio * viewWidth * mBitmapHeight / viewHeight / mBitmapWidth
+
+        Matrix.scaleM(mMvpMatrix, 0, radio, changeRadio, 1f)
+        //原理未知，猜出来的，右下角
+        Matrix.translateM(mMvpMatrix, 0, (1 / radio) - 1, -((1 / changeRadio) - 1), 0f)
     }
 
 }

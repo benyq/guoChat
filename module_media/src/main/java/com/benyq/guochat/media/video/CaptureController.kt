@@ -219,7 +219,7 @@ class CaptureController(
     //开始录制
     fun startRecording(videoFileName: String, cameraWidth: Int, cameraHeight: Int, success: VideoRecordSuccessListener,
                        error: VideoRecordErrorListener) {
-        VideoPictureCatcher.startRecording(videoFileName, cameraWidth, cameraHeight, success, error)
+        VideoPictureCatcher.startRecording(videoFileName, cameraWidth, cameraHeight, mCameraFacing == Camera.CameraInfo.CAMERA_FACING_FRONT, success, error)
     }
 
     fun stopRecording() {

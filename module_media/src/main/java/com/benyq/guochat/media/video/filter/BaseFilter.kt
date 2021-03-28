@@ -130,6 +130,9 @@ abstract class BaseFilter {
         mTextureBuffer = textureBuffer
     }
 
+    /**
+     * 照理如果size改变，FrameBuffer也要重新创建，不过暂时就不处理了
+     */
     fun setSize(width: Int, height: Int) {
         mWidth = width
         mHeight = height

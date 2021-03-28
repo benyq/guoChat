@@ -1,12 +1,17 @@
 package com.benyq.guochat.media.video
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.opengl.GLES11Ext
 import android.opengl.GLES20
 import android.opengl.GLSurfaceView
+import com.benyq.guochat.media.R
+import com.benyq.guochat.media.video.drawer.BitmapDrawer
 import com.benyq.guochat.media.video.drawer.CameraDrawer
 import com.benyq.guochat.media.video.filter.BaseFilter
 import com.benyq.guochat.media.video.filter.NoFilter
+import com.benyq.guochat.media.video.filter.WatermarkFilter
+import com.benyq.module_base.ext.loge
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -25,7 +30,8 @@ class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
     //将图像显示到屏幕的滤镜
     private lateinit var mShowFilter: NoFilter
     private val mFilterList : MutableList<BaseFilter> = mutableListOf()
-
+    private lateinit var mWatermarkDrawer: BitmapDrawer
+    private lateinit var mWatermarkFilter: WatermarkFilter
 
     private var mMvpMatrix: FloatArray = FloatArray(16){0f}
     private var mTexMatrix: FloatArray = floatArrayOf(
@@ -50,6 +56,9 @@ class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
         mDrawer = CameraDrawer()
         mShowFilter = NoFilter()
 
+        mWatermarkDrawer = BitmapDrawer(BitmapFactory.decodeResource(context.resources, R.drawable.ic_app_logo))
+        mWatermarkFilter = WatermarkFilter(mWatermarkDrawer)
+
         mGLStatusListener?.onSurfaceCreated()
     }
 
@@ -59,7 +68,9 @@ class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
         mViewHeight = height
         mGLStatusListener?.onSurfaceChanged(width, height)
         mFrameBuffer = FrameBuffer(width, height)
+        mWatermarkFilter.setSize(mViewWidth, mViewHeight)
 
+        mWatermarkDrawer.setViewRadio(0.2f, mViewWidth, mViewHeight)
     }
 
 
@@ -82,6 +93,10 @@ class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
             mFilterTextureId = it.getTextureId()
         }
 
+        //添加水印
+        mWatermarkFilter.draw(mFilterTextureId)
+        mFilterTextureId = mWatermarkFilter.getTextureId()
+
         mShowFilter.draw(mFilterTextureId)
 
         mGLStatusListener?.onDrawFrame(mFilterTextureId, mMvpMatrix, mTexMatrix)
@@ -92,7 +107,9 @@ class CaptureRenderer(val context: Context) : GLSurfaceView.Renderer {
         GLES20.glDeleteTextures(1, intArrayOf(mCameraTextureId), 0)
         removeFilter()
         mShowFilter.release()
+        mWatermarkFilter.release()
         mDrawer.release()
+        mFrameBuffer.delete()
     }
 
     fun getTextureId() = mCameraTextureId
