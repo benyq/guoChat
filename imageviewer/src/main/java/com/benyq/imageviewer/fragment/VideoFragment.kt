@@ -40,7 +40,7 @@ internal class VideoFragment : BasePreviewFragment() {
         }
     }
 
-    override fun beforeEnterAnim(fullView: View, thumbnailView: View?) {
+    override fun beforeEnterAnim(fullView: View, thumbnailView: View?, parentView: View) {
         mVideoView = fragmentView.findViewById(R.id.previewVideoView)
         mIvPreview = fragmentView.findViewById(R.id.ivPreview)
         Glide.with(mIvPreview).load(mData.url).into(mIvPreview)

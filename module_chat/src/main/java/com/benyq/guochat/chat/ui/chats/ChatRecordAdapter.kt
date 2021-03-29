@@ -3,6 +3,8 @@ package com.benyq.guochat.chat.ui.chats
 import android.graphics.Bitmap
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
+import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
 import com.benyq.guochat.chat.R
@@ -102,33 +104,7 @@ class ChatRecordAdapter(private val uid: Int) :
                     //水平的图片有固定的宽度，高度计算
                     //默认 100px
                     val ivContent = helper.getView<ImageView>(R.id.ivContent)
-                    val baseWidth = context.dip2px(150).toInt()
-
-                    Glide.with(ivContent)
-                        .asBitmap()
-                        .load(imgUrl)
-                        .transform(RoundedCorners(context.dip2px(10).toInt()))
-                        .into(object : CustomTarget<Bitmap>() {
-                            override fun onResourceReady(
-                                resource: Bitmap,
-                                transition: Transition<in Bitmap>?
-                            ) {
-                                val width = resource.width
-                                val height = resource.height
-                                if (width >= height) {
-                                    ivContent.layoutParams.width = baseWidth
-                                    ivContent.layoutParams.height = height * baseWidth / width
-                                } else {
-                                    ivContent.layoutParams.width = width * baseWidth / height
-                                    ivContent.layoutParams.height = baseWidth
-                                }
-                                ivContent.setImageBitmap(resource)
-                            }
-
-                            override fun onLoadCleared(placeholder: Drawable?) {
-                                ivContent.setImageDrawable(placeholder)
-                            }
-                        })
+                    loadThumbImg(ivContent, imgUrl)
                 }
                 ChatRecordEntity.TYPE_VOICE -> {
                     helper.setGone(R.id.llVoice, false)
@@ -159,9 +135,8 @@ class ChatRecordAdapter(private val uid: Int) :
                         .setText(R.id.tvVideoDuration, calculateTime(videoDuration.toInt()))
 
                     val ivVideo = helper.getView<ImageView>(R.id.ivVideo)
-                    Glide.with(context).load(videoPath)
-                        .into(ivVideo)
-
+                    val flVideo = helper.getView<FrameLayout>(R.id.flVideo)
+                    loadThumbImg(ivVideo, videoPath, flVideo)
                 }
                 //ChatRecordBean.TYPE_TEXT
                 else -> {
@@ -196,5 +171,39 @@ class ChatRecordAdapter(private val uid: Int) :
                 return@forEachIndexed
             }
         }
+    }
+
+    private fun loadThumbImg(view: ImageView, url: String, changeView: View? = null) {
+
+        val changeViewLocal = changeView ?: view
+
+        val baseWidth = context.dip2px(150).toInt()
+
+        Glide.with(view)
+            .asBitmap()
+            .load(url)
+            .transform(RoundedCorners(context.dip2px(10).toInt()))
+            .into(object : CustomTarget<Bitmap>() {
+                override fun onResourceReady(
+                    resource: Bitmap,
+                    transition: Transition<in Bitmap>?
+                ) {
+                    val width = resource.width
+                    val height = resource.height
+                    if (width >= height) {
+                        changeViewLocal.layoutParams.width = baseWidth
+                        changeViewLocal.layoutParams.height = height * baseWidth / width
+                    } else {
+                        changeViewLocal.layoutParams.width = width * baseWidth / height
+                        changeViewLocal.layoutParams.height = baseWidth
+                    }
+                    view.setImageBitmap(resource)
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+                    view.setImageDrawable(placeholder)
+                }
+            })
+
     }
 }

@@ -5,11 +5,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.launcher.ARouter
-import com.benyq.guochat.chat.ui.login.LoginActivity
-import com.benyq.guochat.databinding.ActivitySplashBinding
+import com.benyq.guochat.chat.test.TestActivity
 import com.benyq.module_base.RouterPath
 import com.benyq.module_base.ext.goToActivity
-import com.benyq.module_base.ui.base.BaseActivity
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ktx.immersionBar
 import kotlinx.coroutines.Dispatchers

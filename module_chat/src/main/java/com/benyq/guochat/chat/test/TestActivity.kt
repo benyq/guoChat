@@ -15,6 +15,7 @@ import com.benyq.imageviewer.PreviewTypeEnum
 import com.benyq.module_base.ext.goToActivity
 import com.benyq.module_base.ext.loadImage
 import com.benyq.module_base.ui.base.BaseActivity
+import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,10 +28,14 @@ class TestActivity : BaseActivity<ActivityTestBinding>() {
     private val TAG = "TestActivity"
     private lateinit var mViewModel: TestViewModel
 
+    override fun isHideBar() = true
+
     override fun provideViewBinding() = ActivityTestBinding.inflate(layoutInflater)
 
     override fun initView() {
         mViewModel = ViewModelProvider(this).get(TestViewModel::class.java)
+        val imgPath = intent.getStringExtra("imgPath")
+        Glide.with(this).load(imgPath).into(binding.ivTest)
     }
 
     override fun initListener() {
