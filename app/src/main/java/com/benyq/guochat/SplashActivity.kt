@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.launcher.ARouter
+import com.benyq.guochat.test.TestActivity
 import com.benyq.module_base.RouterPath
+import com.benyq.module_base.ext.goToActivity
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ktx.immersionBar
 import kotlinx.coroutines.Dispatchers
@@ -16,6 +18,8 @@ import kotlinx.coroutines.withContext
 
 class SplashActivity : AppCompatActivity() {
 
+    private val isDebug = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         immersionBar {
             hideBar(BarHide.FLAG_HIDE_BAR)
@@ -25,12 +29,17 @@ class SplashActivity : AppCompatActivity() {
         if (avoidLaunchHereAgain()) {
             return
         }
-        lifecycleScope.launch(Dispatchers.IO) {
-            delay(1000)
-            withContext(Dispatchers.Main) {
-                //这边要判断，是否开启指纹登录
-                ARouter.getInstance().build(RouterPath.CHAT_LOGIN_PWD).navigation()
-                finish()
+
+        if (isDebug) {
+            goToActivity<TestActivity>()
+        } else {
+            lifecycleScope.launch(Dispatchers.IO) {
+                delay(1000)
+                withContext(Dispatchers.Main) {
+                    //这边要判断，是否开启指纹登录
+                    ARouter.getInstance().build(RouterPath.CHAT_LOGIN_PWD).navigation()
+                    finish()
+                }
             }
         }
     }
