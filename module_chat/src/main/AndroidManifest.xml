@@ -26,7 +26,6 @@
         <activity android:name=".ui.contracts.ContractNickActivity" />
         <activity android:name=".ui.discover.FriendCircleActivity" />
         <activity android:name=".ui.contracts.ContractDetailActivity" />
-        <activity android:name=".test.TestActivity" />
         <activity android:name=".ui.settings.AboutAppActivity" />
         <activity android:name=".ui.settings.SettingsActivity" />
         <activity android:name=".ui.me.PersonalInfoEditActivity" />

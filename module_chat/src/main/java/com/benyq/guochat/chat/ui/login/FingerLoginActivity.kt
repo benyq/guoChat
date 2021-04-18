@@ -3,6 +3,7 @@ package com.benyq.guochat.chat.ui.login
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import androidx.lifecycle.Observer
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.benyq.guochat.chat.R
 import com.benyq.guochat.chat.databinding.ActivityFingerLoginBinding
 import com.benyq.guochat.chat.function.fingerprint.FingerprintVerifyManager
@@ -11,6 +12,7 @@ import com.benyq.guochat.chat.model.vm.LoginViewModel
 import com.benyq.guochat.chat.ui.MainActivity
 import com.benyq.guochat.chat.ui.common.CheckFingerprintDialog
 import com.benyq.module_base.DrawableBuilder
+import com.benyq.module_base.RouterPath
 import com.benyq.module_base.ui.base.LifecycleActivity
 import com.benyq.module_base.ext.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * @note 指纹登陆
  */
 @AndroidEntryPoint
+@Route(path = RouterPath.CHAT_LOGIN_FINGER)
 class FingerLoginActivity : LifecycleActivity<LoginViewModel, ActivityFingerLoginBinding>() {
 
     private val mCheckFingerprintDialog by lazy { CheckFingerprintDialog.newInstance() }

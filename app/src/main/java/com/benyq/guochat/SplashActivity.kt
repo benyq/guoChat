@@ -5,9 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.launcher.ARouter
-import com.benyq.guochat.chat.test.TestActivity
 import com.benyq.module_base.RouterPath
-import com.benyq.module_base.ext.goToActivity
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ktx.immersionBar
 import kotlinx.coroutines.Dispatchers
@@ -31,7 +29,7 @@ class SplashActivity : AppCompatActivity() {
             delay(1000)
             withContext(Dispatchers.Main) {
                 //这边要判断，是否开启指纹登录
-                ARouter.getInstance().build(RouterPath.CHAT_LOGIN).navigation()
+                ARouter.getInstance().build(RouterPath.CHAT_LOGIN_PWD).navigation()
                 finish()
             }
         }

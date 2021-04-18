@@ -26,21 +26,12 @@ import dagger.hilt.android.AndroidEntryPoint
  * @note
  */
 @AndroidEntryPoint
-@Route(path = RouterPath.CHAT_LOGIN)
+@Route(path = RouterPath.CHAT_LOGIN_PWD)
 class LoginActivity : LifecycleActivity<LoginViewModel, ActivityLoginBinding>() {
 
     override fun initVM(): LoginViewModel = getViewModel()
 
     override fun provideViewBinding() = ActivityLoginBinding.inflate(layoutInflater)
-
-    override fun initView() {
-        super.initView()
-        //这边要判断，是否开启指纹登录
-        if (FingerprintVerifyManager.canAuthenticate(this) && ChatLocalStorage.personConfig.fingerprintLogin) {
-            goToActivity<FingerLoginActivity>(exitAnim = R.anim.normal_out)
-            finish()
-        }
-    }
 
     override fun initListener() {
         super.initListener()

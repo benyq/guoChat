@@ -3,7 +3,6 @@ package com.benyq.guochat.chat.ui.chats
 import android.Manifest
 import android.app.Activity
 import android.graphics.Rect
-import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.view.isVisible
@@ -19,7 +18,6 @@ import com.benyq.guochat.chat.databinding.ActivityChatDetailBinding
 import com.benyq.guochat.chat.model.bean.ChatListBean
 import com.benyq.guochat.chat.model.vm.ChatDetailViewModel
 import com.benyq.guochat.chat.model.vm.StateEvent
-import com.benyq.guochat.chat.test.TestActivity
 import com.benyq.guochat.chat.ui.chats.video.PictureVideoActivity
 import com.benyq.guochat.database.entity.chat.ChatRecordEntity
 import com.benyq.guochat.media.voice.VoiceRecordController
