@@ -20,7 +20,7 @@ void process_bitmap(JNIEnv *env, jobject bitmap, int type, float progress) {
     int alpha = 0xFF000000;
     int w = bitmapInfo.width;
     int h = bitmapInfo.height;
-
+    LOGE("pixels %d", w * h);
     for (int i = 0; i < h; ++i) {
         for (int j = 0; j < w; ++j) {
             int color = data[w * i + j];
