@@ -24,6 +24,21 @@
             android:layout_height="wrap_content"
             android:text="黑白"/>
 
+        <Button
+            android:id="@+id/btnAgainstWorld"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="逆世界"/>
+
+        <Button
+            android:id="@+id/btnAnaglyph"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="浮雕"/>
+
+
     </LinearLayout>
 
     <LinearLayout

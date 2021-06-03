@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.launcher.ARouter
+import com.benyq.guochat.chat.ui.discover.AddCircleActivity
 import com.benyq.guochat.test.TestActivity
 import com.benyq.module_base.RouterPath
 import com.benyq.module_base.ext.goToActivity
@@ -18,7 +19,7 @@ import kotlinx.coroutines.withContext
 
 class SplashActivity : AppCompatActivity() {
 
-    private val isDebug = false
+    private val isDebug : Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         immersionBar {
@@ -31,7 +32,8 @@ class SplashActivity : AppCompatActivity() {
         }
 
         if (isDebug) {
-            goToActivity<TestActivity>()
+//            goToActivity<TestActivity>()
+            goToActivity<AddCircleActivity>()
         } else {
             lifecycleScope.launch(Dispatchers.IO) {
                 delay(1000)

@@ -7,15 +7,23 @@
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_benyq_guochat_core_BitmapUtil_gray(JNIEnv *env, jclass clazz, jobject bitmap) {
-    process_bitmap(env, bitmap, 1);
-
-    int red = (0xFF547812 & 0x00FF0000) >> 16;
-    red = (int)(red + 250) & 0xFF;//84+250=334-78=
-    LOGE("red %d", red);
+    process_bitmap_color(env, bitmap, 1);
 }
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_benyq_guochat_core_BitmapUtil_brightness(JNIEnv *env, jclass clazz, jobject bitmap,
                                                   jfloat progress) {
-    process_bitmap(env, bitmap, 2, progress);
+    process_bitmap_color(env, bitmap, 2, progress);
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_benyq_guochat_core_BitmapUtil_anaglyph(JNIEnv *env, jclass clazz, jobject bitmap) {
+    process_bitmap_shape(env, bitmap, 2);
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_benyq_guochat_core_BitmapUtil_againstWorld(JNIEnv *env, jclass clazz, jobject bitmap) {
+    process_bitmap_shape(env, bitmap, 1);
 }

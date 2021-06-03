@@ -78,7 +78,6 @@ class AddCircleActivity : LifecycleActivity<AddCircleViewModel, ActivityAddCircl
                             1 -> {
                                 selectPhoto()
                             }
-
                         }
                     }
                 }

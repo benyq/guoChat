@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.benyq.guochat.R
 import com.benyq.guochat.core.BitmapUtil
 import com.benyq.guochat.databinding.ActivityTestBinding
+import com.benyq.module_base.ext.loge
 import com.benyq.module_base.ui.base.BaseActivity
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +31,16 @@ class TestActivity : BaseActivity<ActivityTestBinding>() {
         binding.btnGray.setOnClickListener {
             val bitmap = BitmapFactory.decodeResource(resources, R.drawable.attack_on_titan)
             BitmapUtil.gray(bitmap)
+            binding.ivTest.setImageBitmap(bitmap)
+        }
+        binding.btnAgainstWorld.setOnClickListener {
+            val bitmap = BitmapFactory.decodeResource(resources, R.drawable.attack_on_titan)
+            BitmapUtil.againstWorld(bitmap)
+            binding.ivTest.setImageBitmap(bitmap)
+        }
+        binding.btnAnaglyph.setOnClickListener {
+            val bitmap = BitmapFactory.decodeResource(resources, R.drawable.attack_on_titan)
+            BitmapUtil.anaglyph(bitmap)
             binding.ivTest.setImageBitmap(bitmap)
         }
         binding.sbBrightness.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {

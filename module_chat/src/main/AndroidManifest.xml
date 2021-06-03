@@ -36,6 +36,7 @@
         <activity android:name=".ui.contracts.AddContractActivity" />
         <activity android:name=".ui.login.RegisterActivity" />
         <activity android:name=".ui.login.LoginActivity" />
+        <activity android:name=".ui.discover.EditImageActivity" />
         <activity
             android:name=".ui.chats.ChatDetailActivity"
             android:windowSoftInputMode="adjustResize" />
