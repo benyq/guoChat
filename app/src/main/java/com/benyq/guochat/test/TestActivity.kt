@@ -25,37 +25,6 @@ class TestActivity : BaseActivity<ActivityTestBinding>() {
 
     override fun initView() {
         mViewModel = ViewModelProvider(this).get(TestViewModel::class.java)
-
-        binding.ivTest.setImageBitmap(BitmapFactory.decodeResource(resources, R.drawable.attack_on_titan))
-
-        binding.btnGray.setOnClickListener {
-            val bitmap = BitmapFactory.decodeResource(resources, R.drawable.attack_on_titan)
-            BitmapUtil.gray(bitmap)
-            binding.ivTest.setImageBitmap(bitmap)
-        }
-        binding.btnAgainstWorld.setOnClickListener {
-            val bitmap = BitmapFactory.decodeResource(resources, R.drawable.attack_on_titan)
-            BitmapUtil.againstWorld(bitmap)
-            binding.ivTest.setImageBitmap(bitmap)
-        }
-        binding.btnAnaglyph.setOnClickListener {
-            val bitmap = BitmapFactory.decodeResource(resources, R.drawable.attack_on_titan)
-            BitmapUtil.anaglyph(bitmap)
-            binding.ivTest.setImageBitmap(bitmap)
-        }
-        binding.sbBrightness.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                val bitmap = BitmapFactory.decodeResource(resources, R.drawable.attack_on_titan)
-                BitmapUtil.brightness(bitmap, (progress - 128).toFloat())
-                binding.ivTest.setImageBitmap(bitmap)
-            }
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
-            }
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-            }
-        })
     }
 
     override fun initListener() {
