@@ -10,6 +10,7 @@ import com.benyq.guochat.chat.R
 import com.benyq.guochat.chat.app.IntentExtra
 import com.benyq.guochat.chat.databinding.ActivityCirclePhotoViewPagerBinding
 import com.benyq.module_base.ext.goToActivity
+import com.benyq.module_base.ext.loge
 import com.benyq.module_base.ui.base.BaseActivity
 
 
@@ -67,6 +68,7 @@ class CirclePhotoViewPagerActivity : BaseActivity<ActivityCirclePhotoViewPagerBi
         binding.viewPager.setCurrentItem(photoUrlsIndex, false)
 
         binding.tvEdit.setOnClickListener {
+            loge("img url ${mAdapter.data[mCurrentIndex]}")
             goToActivity<EditImageActivity>(IntentExtra.editImagePath to mAdapter.data[mCurrentIndex])
         }
 

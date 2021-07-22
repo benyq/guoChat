@@ -6,7 +6,10 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewConfiguration
 import androidx.annotation.ColorInt
+import kotlin.math.abs
+
 
 /**
  * @author benyq
@@ -31,6 +34,13 @@ class PaintPathView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
 
     @ColorInt
     private var mPaintColor: Int = Color.BLUE
+    private var touchSlop = ViewConfiguration.get(context).scaledTouchSlop
+
+    private var mOnChangePaintStatusAction: ((Boolean)->Unit)? = null
+    private var mOnHideOtherViewAction: (()->Unit)? = null
+
+    private var actionDownX = 0f
+    private var actionDownY = 0f
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event?.run {
@@ -40,6 +50,9 @@ class PaintPathView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
 
             when(action) {
                 MotionEvent.ACTION_DOWN -> {
+                    actionDownX = touchX
+                    actionDownY = touchY
+
                     paintPathData = generatePaintPathData().apply {
                         path.moveTo(touchX, touchY)
                         paintPathList.add(this)
@@ -49,18 +62,26 @@ class PaintPathView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
                     return true
                 }
                 MotionEvent.ACTION_MOVE -> {
-                    dismissController()
+                    mOnHideOtherViewAction?.invoke()
                     paintPathData?.path?.lineTo(touchX, touchY)
                     Log.e("PainterView", "onTouchEvent: move")
                 }
                 MotionEvent.ACTION_UP -> {
-                    dismissController()
+                    if (abs(touchX - actionDownX) > touchSlop || abs(touchY - actionDownY) > touchSlop) {
+                        //手指滑动了
+                        Log.e("PainterView", "onTouchEvent: 手指滑动了")
+                    }else {
+                        Log.e("PainterView", "onTouchEvent: 手指没滑动")
+                        changePaintStatus()
+                    }
                     Log.e("PainterView", "onTouchEvent: up")
                 }
                 MotionEvent.ACTION_CANCEL -> {
-
+                    Log.e("PainterView", "onTouchEvent: cancel")
                 }
-                else -> {}
+                else -> {
+                    Log.e("PainterView", "onTouchEvent: else ${action}")
+                }
             }
         }
         invalidate()
@@ -98,6 +119,14 @@ class PaintPathView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
         mPaintColor = color
     }
 
+    fun setOnChangePaintStatusAction(action: (Boolean)->Unit) {
+        mOnChangePaintStatusAction = action
+    }
+
+    fun setOnHideOtherViewAction(action: ()->Unit) {
+        mOnHideOtherViewAction = action
+    }
+
     fun hasEdited() = paintPathList.isNotEmpty()
 
     private fun generatePaintPathData(): PaintPathData {
@@ -114,7 +143,7 @@ class PaintPathView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
     /**
      * 通知外部控制器隐藏
      */
-    private fun dismissController() {
-
+    private fun changePaintStatus() {
+        mOnChangePaintStatusAction?.invoke(false)
     }
 }

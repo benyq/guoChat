@@ -1,10 +1,12 @@
 package com.benyq.guochat.chat.ui.discover
 
 import android.graphics.*
+import android.net.Uri
+import android.util.Log
 import android.view.View
+import android.view.animation.AlphaAnimation
 import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.chat.app.IntentExtra
 import com.benyq.guochat.chat.databinding.ActivityEditImageBinding
@@ -35,6 +37,8 @@ class EditImageActivity : BaseActivity<ActivityEditImageBinding>() {
 
     override fun provideViewBinding() = ActivityEditImageBinding.inflate(layoutInflater)
 
+    private var isControllerHidden = false
+
     override fun initView() {
         super.initView()
 
@@ -42,14 +46,14 @@ class EditImageActivity : BaseActivity<ActivityEditImageBinding>() {
             finish()
         }
         mFilePath = intent.getStringExtra(IntentExtra.editImagePath)!!
-        mBitmap = BitmapFactory.decodeFile(mFilePath)
+        mBitmap = decodeBitmap(mFilePath)
         binding.ivImage.setImageBitmap(mBitmap)
         binding.ivImage.scaleType
         resizeViewMargin()
 
-        binding.imagePanel.setFilterAction{
+        binding.imagePanel.setFilterAction {
             lifecycleScope.launch(Dispatchers.IO) {
-                mBitmap = BitmapFactory.decodeFile(mFilePath)
+                mBitmap = decodeBitmap(mFilePath)
                 when (it) {
                     FilterType.GRAY -> {
                         BitmapUtil.gray(mBitmap)
@@ -60,6 +64,7 @@ class EditImageActivity : BaseActivity<ActivityEditImageBinding>() {
                     FilterType.ANAGLYPH -> {
                         BitmapUtil.anaglyph(mBitmap)
                     }
+                    FilterType.NONE -> {}
                 }
                 withContext(Dispatchers.Main) {
                     binding.ivImage.setImageBitmap(mBitmap)
@@ -76,6 +81,21 @@ class EditImageActivity : BaseActivity<ActivityEditImageBinding>() {
             val bmp = saveBitmap(binding.paintView)
             binding.paintView.setBitmap(bmp)
         }
+        binding.paintView.setOnChangePaintStatusAction {
+            if (!isControllerHidden) {
+                hideFunctionMenu()
+                Log.e("PainterView", "hideFunctionMenu")
+            } else {
+                Log.e("PainterView", "showFunctionMenu")
+                showFunctionMenu()
+            }
+        }
+        binding.paintView.setOnHideOtherViewAction {
+            Log.e("PainterView", "setOnHideOtherViewAction")
+            binding.headerView.alpha = 0f
+            binding.imagePanel.alpha = 0f
+            isControllerHidden = true
+        }
 
         lifecycleScope.launch(Dispatchers.Main) {
             delay(200)
@@ -85,15 +105,16 @@ class EditImageActivity : BaseActivity<ActivityEditImageBinding>() {
             val values = FloatArray(10)
             matrix.getValues(values)
 
-            val drawWidth = drawable.bounds.width()*values[0]
-            val drawHeight = drawable.bounds.height()*values[4]
+            val drawWidth = drawable.bounds.width() * values[0]
+            val drawHeight = drawable.bounds.height() * values[4]
 
             val screenWidth = getScreenWidth()
             val screenHeight = getScreenHeight()
 
             binding.paintView.visible()
             binding.paintView.setPaintColor(Color.BLUE)
-            val layoutParam: FrameLayout.LayoutParams = binding.paintView.layoutParams as FrameLayout.LayoutParams
+            val layoutParam: FrameLayout.LayoutParams =
+                binding.paintView.layoutParams as FrameLayout.LayoutParams
             layoutParam.width = drawWidth.toInt()
             layoutParam.height = drawHeight.toInt()
             layoutParam.topMargin = ((screenHeight - drawHeight) / 2).toInt()
@@ -109,7 +130,7 @@ class EditImageActivity : BaseActivity<ActivityEditImageBinding>() {
             binding.ivImage.invisible()
         }
 
-        onBackPressedDispatcher.addCallback(this, object :  OnBackPressedCallback(true){
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (binding.paintView.hasEdited() || binding.imagePanel.hasEdited()) {
                     WarningDialog.show(this@EditImageActivity, 2) {
@@ -125,7 +146,7 @@ class EditImageActivity : BaseActivity<ActivityEditImageBinding>() {
                             val bmp = saveBitmap(binding.paintView)
                         }
                     }
-                }else {
+                } else {
                     finish()
                 }
             }
@@ -147,14 +168,14 @@ class EditImageActivity : BaseActivity<ActivityEditImageBinding>() {
 
     private fun resizeViewMargin() {
         if (this.checkFullScreenPhone()) {
-            val topMargin = (this.dip2px(15) + ImmersionBar.getStatusBarHeight(this)).toInt()
-            val headViewParam = binding.headerView.layoutParams as ConstraintLayout.LayoutParams
+            val topMargin = ImmersionBar.getStatusBarHeight(this)
+            val headViewParam = binding.headerView.layoutParams as FrameLayout.LayoutParams
             headViewParam.topMargin = topMargin
             binding.headerView.layoutParams = headViewParam
         }
     }
 
-    fun resizeImage(bitmap: Bitmap, w: Int, h: Int): Bitmap {
+    private fun resizeImage(bitmap: Bitmap, w: Int, h: Int): Bitmap {
         val width = bitmap.width
         val height = bitmap.height
         val scaleWidth = w.toFloat() / width.toFloat()
@@ -164,4 +185,46 @@ class EditImageActivity : BaseActivity<ActivityEditImageBinding>() {
         return Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true)
     }
 
+    private fun hideFunctionMenu(duration: Long = 500) {
+        binding.headerView.animate().alpha(0f).setDuration(duration)
+            .withStartAction {
+                binding.headerView.alpha = 1f
+            }.withEndAction {
+                isControllerHidden = true
+            }
+
+        binding.imagePanel.animate().alpha(0f).setDuration(duration)
+            .withStartAction {
+                binding.headerView.alpha = 1f
+            }.withEndAction {
+                isControllerHidden = true
+            }
+    }
+
+    private fun showFunctionMenu(duration: Long = 500) {
+
+        binding.headerView.animate().alpha(1f).setDuration(duration)
+            .withStartAction {
+                binding.headerView.alpha = 0f
+            }.withEndAction {
+                isControllerHidden = false
+            }
+
+        binding.imagePanel.animate().alpha(1f).setDuration(duration)
+            .withStartAction {
+                binding.headerView.alpha = 0f
+            }.withEndAction {
+                isControllerHidden = false
+            }
+    }
+
+    private fun decodeBitmap(filePath: String): Bitmap {
+        return if (filePath.startsWith("content://")) {
+            val uri = Uri.parse(filePath)
+            val ins = contentResolver.openInputStream(uri)
+            BitmapFactory.decodeStream(ins)
+        } else {
+            BitmapFactory.decodeFile(filePath)
+        }
+    }
 }
