@@ -8,12 +8,13 @@ import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper
 import com.alibaba.android.arouter.launcher.ARouter
 import com.benyq.guochat.database.DataObjectBox
 import com.benyq.module_base.ext.Toasts
-import com.benyq.module_base.ext.loge
 import com.benyq.module_base.http.ApiException
 import com.benyq.module_base.mvvm.ErrorHandler
 import com.benyq.module_base.mvvm.ExceptionReason
 import com.google.gson.JsonParseException
-import com.socks.library.KLog
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
+import com.orhanobut.logger.PrettyFormatStrategy
 import com.tencent.mmkv.MMKV
 import org.json.JSONException
 import retrofit2.HttpException
@@ -21,6 +22,7 @@ import java.io.InterruptedIOException
 import java.net.ConnectException
 import java.net.UnknownHostException
 import java.text.ParseException
+
 
 /**
  * @author benyqYe
@@ -40,7 +42,13 @@ object CommonModuleInit {
 
     fun onInit(app: Application) {
         Toasts.init(app)
-        KLog.init(BuildConfig.DEBUG, "benyq")
+        Logger.addLogAdapter(object : AndroidLogAdapter(PrettyFormatStrategy.newBuilder()
+            .showThreadInfo(true)
+            .methodCount(3)
+            .tag("benyq")
+            .build()) {
+            override fun isLoggable(priority: Int, tag: String?) = BuildConfig.DEBUG
+        })
 
         if (BuildConfig.isDebug) {
             ARouter.openLog() // 打印日志

@@ -39,7 +39,7 @@ class MMKVValue<T>(val name:String, private val default:T) {
     }
 
     private fun decode(name: String, default: T): T = with(kv) {
-        val res: Any = when (default) {
+        val res: Any? = when (default) {
             is Long -> decodeLong(name, default)
             is String -> decodeString(name, default)
             is Int -> decodeInt(name, default)
@@ -47,7 +47,7 @@ class MMKVValue<T>(val name:String, private val default:T) {
             is Float -> decodeFloat(name, default)
             else ->  deSerialization(decodeString(name,serialize(default)))
         }
-        return res as T
+        return res as T ?: default
     }
 
 
@@ -86,7 +86,10 @@ class MMKVValue<T>(val name:String, private val default:T) {
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IOException::class, ClassNotFoundException::class)
-    private fun<A> deSerialization(str: String): A {
+    private fun<A> deSerialization(str: String?): A? {
+        if (str == null) {
+            return null
+        }
         val redStr = java.net.URLDecoder.decode(str, "UTF-8")
         val byteArrayInputStream = ByteArrayInputStream(
             redStr.toByteArray(charset("ISO-8859-1")))

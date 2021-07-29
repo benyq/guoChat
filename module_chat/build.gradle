@@ -57,15 +57,15 @@ android {
 
 dependencies {
 
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation fileTree(dir: "libs", include: ["*.jar", '*.aar'])
     implementation project(':module_base')
     implementation project(':module_media')
 
-    implementation 'com.google.zxing:core:3.3.0'
+    implementation 'com.google.zxing:core:3.3.3'
     implementation 'com.google.zxing:android-core:3.3.0'
 
     //https://github.com/airbnb/lottie-android
-    implementation 'com.airbnb.android:lottie:3.0.0'
+    implementation 'com.airbnb.android:lottie:3.6.0'
 
     //https://github.com/promeG/TinyPinyin 汉字转拼音
     implementation "com.github.promeg:tinypinyin:2.0.3"
@@ -73,14 +73,11 @@ dependencies {
     implementation 'org.java-websocket:Java-WebSocket:1.4.0'
 
     implementation 'com.facebook.rebound:rebound:0.3.8'
-    implementation 'com.tumblr:backboard:0.1.0'
 
-    //Hilt Dagger2简化版
     implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
-    //Hilt-JetPack
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecircle_version"
     kapt "androidx.hilt:hilt-compiler:$hilt_lifecircle_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -88,6 +85,6 @@ dependencies {
 
     kapt "com.alibaba:arouter-compiler:$arouterCompiler"
 
-    implementation "androidx.emoji:emoji-bundled:1.0.0"
-    implementation "androidx.emoji:emoji-appcompat:1.0.0"
+    implementation "androidx.emoji:emoji-bundled:1.1.0"
+    implementation "androidx.emoji:emoji-appcompat:1.1.0"
 }

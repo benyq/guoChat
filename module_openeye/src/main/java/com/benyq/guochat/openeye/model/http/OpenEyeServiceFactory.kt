@@ -3,11 +3,11 @@ package com.benyq.guochat.openeye.model.http
 import com.benyq.module_base.ext.isJson
 import com.benyq.module_base.ext.logi
 import com.benyq.module_base.http.RetrofitFactory
-import com.socks.library.KLog
+import com.orhanobut.logger.Logger
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Singleton
 
@@ -18,19 +18,17 @@ import javax.inject.Singleton
  * @note
  */
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object OpenEyeServiceFactory {
 
     private fun initClient() {
-        val loggingInterceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
-            override fun log(message: String) {
-                if (message.isJson()){
-                    KLog.json(message)
-                }else {
-                    logi(message)
-                }
+        val loggingInterceptor = HttpLoggingInterceptor { message ->
+            if (message.isJson()) {
+                Logger.json(message)
+            } else {
+                logi(message)
             }
-        })
+        }
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
         RetrofitFactory.init(loggingInterceptor)

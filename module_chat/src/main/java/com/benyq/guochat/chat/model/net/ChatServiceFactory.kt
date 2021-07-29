@@ -3,11 +3,11 @@ package com.benyq.guochat.chat.model.net
 import com.benyq.module_base.ext.isJson
 import com.benyq.module_base.ext.logi
 import com.benyq.module_base.http.RetrofitFactory
-import com.socks.library.KLog
+import com.orhanobut.logger.Logger
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Singleton
 
@@ -18,13 +18,13 @@ import javax.inject.Singleton
  * @note
  */
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object ChatServiceFactory {
 
     private fun initClient() {
         val loggingInterceptor = HttpLoggingInterceptor { message ->
             if (message.isJson()) {
-                KLog.json(message)
+                Logger.json(message)
             } else {
                 logi(message)
             }

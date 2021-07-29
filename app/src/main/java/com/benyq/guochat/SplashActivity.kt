@@ -19,7 +19,7 @@ import kotlinx.coroutines.withContext
 
 class SplashActivity : AppCompatActivity() {
 
-    private val isDebug : Boolean = true
+    private val isDebug : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         immersionBar {

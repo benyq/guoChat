@@ -1,7 +1,7 @@
 package com.benyq.module_base.ext
 
-import com.benyq.module_base.BuildConfig
-import com.socks.library.KLog
+import com.orhanobut.logger.Logger
+
 
 /**
  * @author benyq
@@ -11,19 +11,19 @@ import com.socks.library.KLog
  */
 
 fun loge(obj: Any){
-    KLog.e("benyq", obj)
+    Logger.e("benyq", obj)
 }
 
 fun logi(obj: Any){
-    KLog.i("benyq", obj)
+    Logger.i("benyq", obj)
 }
 
 fun logd(obj: Any){
-    KLog.i("benyq", obj)
+    Logger.i("benyq", obj)
 }
 
 fun logw(obj: Any){
-    KLog.w("benyq", obj)
+    Logger.w("benyq", obj)
 }
 
 fun String.showLog() {
