@@ -1,11 +1,12 @@
 package com.benyq.guochat.openeye.model.vm
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.openeye.model.bean.CommunityRecommend
 import com.benyq.guochat.openeye.model.http.OpenEyeService
 import com.benyq.module_base.mvvm.BaseViewModel
 import com.benyq.guochat.openeye.model.repository.OpenEyeRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 /**
  * @author benyq
@@ -13,7 +14,8 @@ import com.benyq.guochat.openeye.model.repository.OpenEyeRepository
  * @e-mail 1520063035@qq.com
  * @note
  */
-class OpenEyeRecommendViewModel @ViewModelInject constructor(private val mRepository: OpenEyeRepository): BaseViewModel() {
+@HiltViewModel
+class OpenEyeRecommendViewModel @Inject constructor(private val mRepository: OpenEyeRepository): BaseViewModel() {
 
     val recommendDataResult = MutableLiveData<List<CommunityRecommend.Item>>()
     val recommendDataMoreResult = MutableLiveData<List<CommunityRecommend.Item>>()
