@@ -1,12 +1,13 @@
 package com.benyq.guochat.comic.model.vm
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.comic.model.bean.ComicSearchResponse
 import com.benyq.guochat.comic.model.bean.SearchHotEntity
 import com.benyq.guochat.comic.model.repository.ComicSearchBookRepository
 import com.benyq.guochat.database.entity.comic.SearchHistoryRecord
 import com.benyq.module_base.mvvm.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 /**
  * @author benyq
@@ -14,7 +15,9 @@ import com.benyq.module_base.mvvm.BaseViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
-class ComicSearchBookViewModel @ViewModelInject constructor(private val repository: ComicSearchBookRepository): BaseViewModel(){
+@HiltViewModel
+class ComicSearchBookViewModel @Inject constructor(private val repository: ComicSearchBookRepository) :
+    BaseViewModel() {
 
     val searchHotKey = MutableLiveData<SearchHotEntity>()
     val searchHistory = MutableLiveData<List<SearchHistoryRecord>>()
@@ -22,9 +25,9 @@ class ComicSearchBookViewModel @ViewModelInject constructor(private val reposito
     val comicSearchResult = MutableLiveData<UiState<ComicSearchResponse>>()
 
     private var currentPage = 1
-    private var currentSearchKey  = ""
+    private var currentSearchKey = ""
 
-    fun comicSearchHot(){
+    fun comicSearchHot() {
         quickLaunch<SearchHotEntity> {
 
             onSuccess { searchHotKey.value = it }
@@ -33,7 +36,7 @@ class ComicSearchBookViewModel @ViewModelInject constructor(private val reposito
         }
     }
 
-    fun getSearchHistory(){
+    fun getSearchHistory() {
         quickLaunch<List<SearchHistoryRecord>> {
 
             onSuccess { searchHistory.value = it }

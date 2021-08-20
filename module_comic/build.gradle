@@ -63,10 +63,8 @@ dependencies {
     implementation project(':module_base')
     kapt "com.alibaba:arouter-compiler:$arouterCompiler"
 
-    //Hilt Dagger2简化版
     implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
-    //Hilt-JetPack
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecircle_version"
     kapt "androidx.hilt:hilt-compiler:$hilt_lifecircle_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 }

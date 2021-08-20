@@ -1,7 +1,8 @@
 package com.benyq.guochat.comic.model.vm
 
-import androidx.hilt.lifecycle.ViewModelInject
 import com.benyq.module_base.mvvm.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 /**
  * @author benyq
@@ -9,7 +10,8 @@ import com.benyq.module_base.mvvm.BaseViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
-class ComicViewModel @ViewModelInject constructor(): BaseViewModel(){
+@HiltViewModel
+class ComicViewModel @Inject constructor() : BaseViewModel() {
 
     /**
      * Activity中页面下标

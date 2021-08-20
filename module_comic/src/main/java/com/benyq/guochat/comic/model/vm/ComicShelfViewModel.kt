@@ -1,10 +1,11 @@
 package com.benyq.guochat.comic.model.vm
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.comic.model.repository.ComicShelfRepository
 import com.benyq.guochat.database.entity.comic.BookShelfTable
 import com.benyq.module_base.mvvm.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 /**
  * @author benyq
@@ -12,7 +13,9 @@ import com.benyq.module_base.mvvm.BaseViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
-class ComicShelfViewModel @ViewModelInject constructor(private val repository: ComicShelfRepository): BaseViewModel(){
+@HiltViewModel
+class ComicShelfViewModel @Inject constructor(private val repository: ComicShelfRepository) :
+    BaseViewModel() {
 
     val comicShelfBookResult = MutableLiveData<List<BookShelfTable>>()
 

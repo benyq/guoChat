@@ -90,7 +90,7 @@ class RecommendFragment : LifecycleFragment<OpenEyeRecommendViewModel, FragmentR
                     addBannerLifecycleObserver(this@RecommendFragment)
                     indicator = CircleIndicator(mContext)
                     setBannerRound(20f)
-                    adapter = RecommendBannerAdapter(liveData)
+                    setAdapter(RecommendBannerAdapter(liveData))
                     setOnBannerListener(object : OnBannerListener<CommunityRecommend.ItemX> {
                         override fun OnBannerClick(data: CommunityRecommend.ItemX?, position: Int) {
                             if (data != null) {

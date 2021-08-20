@@ -30,4 +30,6 @@ object IntentExtra {
     //朋友圈
     const val addCircleContent = "addCircleContent"
     const val addCircleImages = "addCircleImages"
+
+    const val editImagePath = "editImagePath"
 }

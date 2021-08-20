@@ -13,6 +13,10 @@ object RouterPath {
 
     const val COMIC_HOME = "/comic/home"
 
-    const val CHAT_LOGIN = "/chat/login"
+    const val CHAT_LOGIN_PWD = "/chat/loginPwd"
+
+    const val CHAT_LOGIN_FINGER = "/chat/loginFinger"
+
+    const val CHAT_PATH_REPLACE = "/path/pathReplace"
 
 }

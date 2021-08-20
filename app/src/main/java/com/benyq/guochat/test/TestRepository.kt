@@ -1,4 +1,4 @@
-package com.benyq.guochat.chat.test
+package com.benyq.guochat.test
 
 import com.benyq.guochat.chat.model.bean.ChatResponse
 import com.benyq.guochat.chat.model.net.ChatApiService

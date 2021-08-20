@@ -1,6 +1,7 @@
 package com.benyq.imageviewer.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,7 +65,7 @@ internal abstract class BasePreviewFragment : Fragment(), OnAnimatorListener {
             }
         }
 
-        beforeEnterAnim(view.findViewById(getFullViewId()), Components.getView(mPosition))
+        beforeEnterAnim(view.findViewById(getFullViewId()), Components.getView(mPosition), view)
         if (Components.isLoad) {
             //已经加载过了
             AnimBgHelper.onDrag(fragmentView, 1f)
@@ -106,5 +107,6 @@ internal abstract class BasePreviewFragment : Fragment(), OnAnimatorListener {
     //完整的View的id
     abstract fun getFullViewId(): Int
 
-    abstract fun beforeEnterAnim(fullView: View, thumbnailView: View?)
+    //parentView 主要是为了提供宽高
+    abstract fun beforeEnterAnim(fullView: View, thumbnailView: View?, parentView: View)
 }

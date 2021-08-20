@@ -9,6 +9,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.benyq.guochat.chat.R
 import com.benyq.guochat.chat.app.IntentExtra
 import com.benyq.guochat.chat.databinding.ActivityCirclePhotoViewPagerBinding
+import com.benyq.module_base.ext.goToActivity
+import com.benyq.module_base.ext.loge
 import com.benyq.module_base.ui.base.BaseActivity
 
 
@@ -21,6 +23,8 @@ import com.benyq.module_base.ui.base.BaseActivity
 class CirclePhotoViewPagerActivity : BaseActivity<ActivityCirclePhotoViewPagerBinding>() {
 
     private val mAdapter = CirclePhotoAdapter()
+
+    private var mCurrentIndex = 0
 
     override fun provideViewBinding() = ActivityCirclePhotoViewPagerBinding.inflate(layoutInflater)
 
@@ -51,6 +55,7 @@ class CirclePhotoViewPagerActivity : BaseActivity<ActivityCirclePhotoViewPagerBi
 
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
+                mCurrentIndex = position
                 super.onPageSelected(position)
                 if (mAdapter.data.isEmpty()) {
                     binding.headerView.setToolbarTitle("0 / 0")
@@ -61,6 +66,11 @@ class CirclePhotoViewPagerActivity : BaseActivity<ActivityCirclePhotoViewPagerBi
         })
 
         binding.viewPager.setCurrentItem(photoUrlsIndex, false)
+
+        binding.tvEdit.setOnClickListener {
+            loge("img url ${mAdapter.data[mCurrentIndex]}")
+            goToActivity<EditImageActivity>(IntentExtra.editImagePath to mAdapter.data[mCurrentIndex])
+        }
 
         onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

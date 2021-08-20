@@ -3,7 +3,6 @@ package com.benyq.guochat.chat.ui.chats
 import android.Manifest
 import android.app.Activity
 import android.graphics.Rect
-import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.view.isVisible
@@ -81,12 +80,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
         if (new == TYPE_VOICE) {
 
             XXPermissions.with(this)
-                .permission(
-                    listOf(
-                        Manifest.permission.RECORD_AUDIO,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )
-                )
+                .permission(Manifest.permission.RECORD_AUDIO)
                 .request(object : OnPermissionCallback {
                     override fun onGranted(permissions: MutableList<String>?, all: Boolean) {
                         if (all) {
@@ -103,6 +97,8 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
         } else if (new == TYPE_TEXT) {
             binding.ivTextVoice.setImageResource(R.drawable.ic_keyboard)
             binding.etContent.visible()
+            binding.etContent.requestFocus()
+            binding.etContent.textAndSelection(binding.etContent.textTrim())
             binding.tvPressVoice.gone()
         }
     })
@@ -253,14 +249,13 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
                 if (mAdapter.data.size > 0) {
                     mAdapter.addData(it)
                 } else {
-                    binding.rvChatRecord.invisible()
+                    binding.rvChatRecord.alpha = 0f
                     //根据item总高度显示区分 stackFromEnd 会出现问题，所以目前先靠估算吧
                     val layoutManager = binding.rvChatRecord.layoutManager as LinearLayoutManager
                     mAdapter.setNewInstance(it.toMutableList())
                     binding.rvChatRecord.postDelayed(50) {
                         layoutManager.stackFromEnd = isFullScreen(layoutManager)
                         binding.rvChatRecord.alpha = 1f
-                        binding.rvChatRecord.visible()
                     }
                 }
             })
@@ -295,11 +290,12 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
     }
 
     private fun showChatEmoji(duration: Long = 200) {
-        binding.llBottom.animate().translationY(-binding.rvEmoji.height.toFloat())
+        val emojiHeight = dip2px(200)
+        binding.llBottom.animate().translationY(-emojiHeight)
             .setDuration(duration).start()
         binding.rvEmoji.animate().withStartAction {
             binding.rvEmoji.visible()
-        }.translationY(-binding.rvEmoji.height.toFloat()).setDuration(duration).start()
+        }.translationY(-emojiHeight).setDuration(duration).start()
     }
 
     private fun hideChatEmoji(duration: Long = 200L) {
@@ -332,6 +328,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
                 showFunctionMenu()
             }
             R.id.ivEmoji -> {
+                mInputType = TYPE_TEXT
                 showChatEmoji()
             }
             R.id.llAlbum -> {
@@ -438,10 +435,10 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
         data.fromToId = mChatListBean.fromToId
         mAdapter.addData(data)
         binding.rvChatRecord.smoothScrollToPosition(mAdapter.data.size - 1)
-        Handler().postDelayed({
+        runOnUiThread(200) {
             val mLayoutManager = binding.rvChatRecord.layoutManager as LinearLayoutManager
             mLayoutManager.scrollToPositionWithOffset(mAdapter.data.size - 1, 0)
-        }, 200)
+        }
         viewModelGet().sendChatMessage(data)
 
         getAppViewModelProvider().get(SharedViewModel::class.java).notifyChatChange(true)

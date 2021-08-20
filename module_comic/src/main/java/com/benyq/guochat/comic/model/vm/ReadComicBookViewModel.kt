@@ -1,6 +1,5 @@
 package com.benyq.guochat.comic.model.vm
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,6 +8,8 @@ import com.benyq.guochat.comic.model.bean.ComicPreViewResponse
 import com.benyq.guochat.comic.model.repository.BookDetailRepository
 import com.benyq.module_base.ext.loge
 import com.benyq.module_base.mvvm.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 /**
  * @author benyq
@@ -16,11 +17,13 @@ import com.benyq.module_base.mvvm.BaseViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
-class ReadComicBookViewModel @ViewModelInject constructor(private val repository: BookDetailRepository) : BaseViewModel(){
+@HiltViewModel
+class ReadComicBookViewModel @Inject constructor(private val repository: BookDetailRepository) :
+    BaseViewModel() {
 
     val previewResult = MutableLiveData<UiState<ComicPreViewResponse>>()
     val bookDetailResult = MutableLiveData<UiState<ComicDetailResponse>>()
-    val loadingResult :LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
+    val loadingResult: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
         addSource(previewResult) {
             if (value != previewResult.value?.isLoading && previewResult.value?.isLoading == true) {
                 value = true
