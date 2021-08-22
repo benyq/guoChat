@@ -19,4 +19,6 @@ object RouterPath {
 
     const val CHAT_PATH_REPLACE = "/path/pathReplace"
 
+    const val WAN_ANDROID = "/wanAndroid/main"
+
 }

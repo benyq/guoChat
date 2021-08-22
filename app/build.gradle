@@ -64,6 +64,9 @@ dependencies {
     if (!module_chat.toBoolean()) {
         implementation project(':module_chat')
     }
+    if (!module_wanandroid.toBoolean()) {
+        implementation project(':module_wanandroid')
+    }
     //Hilt Dagger2简化版
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"

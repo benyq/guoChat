@@ -48,4 +48,14 @@
 
     <View style="@style/string_horizontal_divider"/>
 
+    <com.benyq.module_base.ui.widget.IconFormLine
+        android:id="@+id/ifWanAndroid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:line_show_divide="false"
+        app:form_title="@string/wan_android"
+        app:form_icon="@drawable/ic_wanandroid_logo"/>
+
+    <View style="@style/string_horizontal_divider"/>
+
 </LinearLayout>

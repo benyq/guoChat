@@ -51,5 +51,8 @@ class DiscoverFragment : BaseFragment<FragmentDiscoverBinding>() {
                 ARouter.getInstance().build(RouterPath.COMIC_HOME).navigation()
             }.show(childFragmentManager)
         }
+        binding.ifWanAndroid.setOnClickListener {
+            ARouter.getInstance().build(RouterPath.WAN_ANDROID).navigation()
+        }
     }
 }

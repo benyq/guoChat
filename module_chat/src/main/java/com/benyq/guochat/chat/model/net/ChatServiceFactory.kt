@@ -31,7 +31,9 @@ object ChatServiceFactory {
         }
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
-        RetrofitFactory.init(loggingInterceptor)
+        RetrofitFactory.init {
+            addInterceptor(loggingInterceptor)
+        }
     }
 
     @Singleton

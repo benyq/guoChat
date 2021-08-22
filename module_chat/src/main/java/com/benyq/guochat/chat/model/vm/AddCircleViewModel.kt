@@ -1,9 +1,10 @@
 package com.benyq.guochat.chat.model.vm
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.chat.model.rep.AddCircleRepository
 import com.benyq.module_base.mvvm.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 /**
  * @author benyq
@@ -11,8 +12,10 @@ import com.benyq.module_base.mvvm.BaseViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
-class AddCircleViewModel @ViewModelInject constructor(private val mRepository: AddCircleRepository) : BaseViewModel(){
-    val addCirclePhotoUrlData : MutableLiveData<MutableList<String>> = MutableLiveData()
+@HiltViewModel
+class AddCircleViewModel @Inject constructor(private val mRepository: AddCircleRepository) :
+    BaseViewModel() {
+    val addCirclePhotoUrlData: MutableLiveData<MutableList<String>> = MutableLiveData()
 
     fun addCirclePhotoUrl(url: List<String>) {
         val urls = addCirclePhotoUrlData.value ?: mutableListOf()

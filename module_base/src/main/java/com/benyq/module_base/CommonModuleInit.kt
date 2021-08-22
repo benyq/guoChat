@@ -36,8 +36,9 @@ object CommonModuleInit {
     private const val ModuleComic = "com.benyq.guochat.comic.ComicInit"
     private const val ModuleOpenEye = "com.benyq.guochat.openeye.OpenEyeInit"
     private const val ModuleChat = "com.benyq.guochat.chat.app.ChatInit"
+    private const val ModuleWanAndroid = "com.benyq.guochat.wanandroid.WanAndroidInit"
 
-    private var initModuleNames = arrayOf(ModuleComic, ModuleOpenEye, ModuleChat)
+    private var initModuleNames = arrayOf(ModuleComic, ModuleOpenEye, ModuleChat, ModuleWanAndroid)
 
 
     fun onInit(app: Application) {

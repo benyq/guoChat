@@ -1,11 +1,12 @@
 package com.benyq.guochat.chat.model.vm
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.chat.model.bean.FriendCircleBean
 import com.benyq.guochat.chat.model.rep.FriendCircleRepository
 import com.benyq.module_base.ext.Toasts
 import com.benyq.module_base.mvvm.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 /**
  * @author benyq
@@ -13,7 +14,9 @@ import com.benyq.module_base.mvvm.BaseViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
-class FriendCircleViewModel @ViewModelInject constructor(private val mRepository: FriendCircleRepository) : BaseViewModel(){
+@HiltViewModel
+class FriendCircleViewModel @Inject constructor(private val mRepository: FriendCircleRepository) :
+    BaseViewModel() {
 
     val mFriendCircleData = MutableLiveData<List<FriendCircleBean>>()
     val mFriendCircleLikeData = MutableLiveData<Boolean>()

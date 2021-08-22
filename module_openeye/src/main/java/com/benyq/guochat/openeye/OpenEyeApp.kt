@@ -11,7 +11,7 @@ import dagger.hilt.android.HiltAndroidApp
  * @e-mail 1520063035@qq.com
  * @note
  */
-@HiltAndroidApp
+//@HiltAndroidApp
 class OpenEyeApp : Application(){
 
     override fun onCreate() {

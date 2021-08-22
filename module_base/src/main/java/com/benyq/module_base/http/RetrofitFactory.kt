@@ -43,24 +43,14 @@ object RetrofitFactory {
             .build()
     }
 
-
-    private var hasInit = false
     private val builder = OkHttpClient.Builder()
 
-    fun init(vararg interceptors: Interceptor) {
-        if (hasInit){
-            return
-        }
-        hasInit = !hasInit
-        interceptors.forEach {
-            builder.addInterceptor(it)
-        }
-
+    fun init(action: OkHttpClient.Builder.()->Unit) {
+        action(builder)
         builder.readTimeout(HttpSetting.READ_TIME_OUT, TimeUnit.SECONDS)
             .writeTimeout(HttpSetting.WRITE_TIME_OUT, TimeUnit.SECONDS)
             .connectTimeout(HttpSetting.CONNECT_TIME_OUT, TimeUnit.SECONDS)
             .retryOnConnectionFailure(true)
-
 
     }
 

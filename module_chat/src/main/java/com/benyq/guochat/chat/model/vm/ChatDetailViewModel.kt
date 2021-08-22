@@ -1,10 +1,11 @@
 package com.benyq.guochat.chat.model.vm
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.chat.model.rep.ChatDetailRepository
 import com.benyq.guochat.database.entity.chat.ChatRecordEntity
 import com.benyq.module_base.mvvm.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 /**
  * @author benyq
@@ -12,7 +13,9 @@ import com.benyq.module_base.mvvm.BaseViewModel
  * @e-mail 1520063035@qq.com
  * @note
  */
-class ChatDetailViewModel@ViewModelInject constructor(private val mRepository: ChatDetailRepository) : BaseViewModel(){
+@HiltViewModel
+class ChatDetailViewModel @Inject constructor(private val mRepository: ChatDetailRepository) :
+    BaseViewModel() {
 
     val mChatRecordData = MutableLiveData<List<ChatRecordEntity>>()
     val mSendMessageData = MutableLiveData<Boolean>()
