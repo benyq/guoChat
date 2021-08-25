@@ -21,7 +21,8 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url 'https://maven.aliyun.com/repository/public' }
+        mavenCentral()
+        jcenter()
         google()
         maven { url "https://jitpack.io" }
     }
