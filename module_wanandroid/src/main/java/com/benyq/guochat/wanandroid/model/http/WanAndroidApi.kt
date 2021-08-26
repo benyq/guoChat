@@ -1,10 +1,6 @@
 package com.benyq.guochat.wanandroid.model.http
 
-import com.benyq.guochat.wanandroid.model.LoginData
-import com.benyq.guochat.wanandroid.model.PageData
-import com.benyq.guochat.wanandroid.model.PersonScoreData
-import com.benyq.guochat.wanandroid.model.WanResult
-import com.benyq.guowanandroid.model.*
+import com.benyq.guochat.wanandroid.model.*
 import com.benyq.module_base.annotation.BaseUrl
 import retrofit2.http.*
 

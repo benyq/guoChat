@@ -1,4 +1,4 @@
-package com.benyq.guowanandroid.model
+package com.benyq.guochat.wanandroid.model
 
 /**
  *

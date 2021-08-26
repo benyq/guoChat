@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.benyq.guochat.wanandroid.R
-import com.benyq.guowanandroid.model.BannerData
+import com.benyq.guochat.wanandroid.model.BannerData
 import com.google.accompanist.pager.*
 import com.google.android.material.math.MathUtils
 import kotlinx.coroutines.launch

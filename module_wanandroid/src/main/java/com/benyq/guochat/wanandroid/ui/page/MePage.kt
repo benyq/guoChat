@@ -51,7 +51,7 @@ fun MePage(userLiveData: MutableLiveData<UserData>, clickAction: MineClickAction
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(170.dp)
                 .background(Color(0xFF36C1BC))
                 .padding(top = 10.dp, start = 10.dp, bottom = 10.dp)
         ) {

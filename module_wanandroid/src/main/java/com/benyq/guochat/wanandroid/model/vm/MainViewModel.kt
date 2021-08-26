@@ -1,8 +1,8 @@
 package com.benyq.guochat.wanandroid.model.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.benyq.guowanandroid.model.ArticleData
-import com.benyq.guowanandroid.model.BannerData
+import com.benyq.guochat.wanandroid.model.ArticleData
+import com.benyq.guochat.wanandroid.model.BannerData
 import com.benyq.guochat.wanandroid.model.PageData
 import com.benyq.guochat.wanandroid.model.repository.MainRepository
 import com.benyq.module_base.mvvm.BaseViewModel

@@ -6,11 +6,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -18,9 +21,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.annotation.ExperimentalCoilApi
 import com.benyq.guochat.wanandroid.R
-import com.benyq.guowanandroid.model.ArticleData
+import com.benyq.guochat.wanandroid.model.ArticleData
 import com.benyq.guochat.wanandroid.model.vm.MainViewModel
-import com.google.accompanist.pager.*
+import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
@@ -49,7 +52,7 @@ fun MainPage(mainViewModel: MainViewModel = viewModel()) {
                 .padding(top = 0.dp)
                 .weight(1f)
         ) {
-            bannerData?.let { data->
+            bannerData?.let { data ->
                 item {
                     Banner(
                         modifier = Modifier
@@ -61,7 +64,7 @@ fun MainPage(mainViewModel: MainViewModel = viewModel()) {
                 }
             }
             articleData?.run {
-                itemsIndexed(this){ index, article ->
+                itemsIndexed(this) { index, article ->
                     ArticleItem(article = article)
                     Spacer(modifier = Modifier.padding(top = 5.dp, bottom = 5.dp))
                 }
@@ -89,91 +92,101 @@ fun ShowArticleItem() {
 @Composable
 fun ArticleItem(article: ArticleData) {
     Card(modifier = Modifier.fillMaxWidth(), elevation = 5.dp, shape = RoundedCornerShape(5.dp)) {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)) {
-            Text(
-                text = article.title,
-                modifier = Modifier.fillMaxWidth(),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                fontSize = 20.sp
-            )
-            Row(modifier = Modifier
-                .padding(top = 5.dp)
-                .fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(15.dp, 8.dp)
+        ) {
 
-                val content = if (TextUtils.isEmpty(article.shareUser)) {
-                    "作者: ${article.author}"
-                }else {
-                    "分享者: ${article.shareUser}"
-                }
+            Row(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = content,
+                    text = if (TextUtils.isEmpty(article.shareUser)) article.author else article.shareUser,
                     modifier = Modifier.weight(1f),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    fontSize = 16.sp,
+                    fontSize = 14.sp,
                     color = Color.Gray
                 )
+
                 Text(
-                    text = "分类: ${article.chapterName}",
-                    modifier = Modifier.weight(1f),
+                    text = article.niceDate,
+                    modifier = Modifier
+                        .padding(start = 5.dp),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    fontSize = 16.sp,
+                    fontSize = 13.sp,
                     color = Color.Gray
                 )
+
             }
             Text(
-                text = "时间: ${article.niceDate}",
+                text = article.title,
+                modifier = Modifier
+                    .padding(0.dp, 5.dp)
+                    .fillMaxWidth(),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                fontSize = 12.sp
+            )
+            Row(
                 modifier = Modifier
                     .padding(top = 5.dp)
-                    .fillMaxWidth(),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                fontSize = 16.sp,
-                color = Color.Gray
-            )
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = "${article.superChapterName} · ${article.chapterName}",
+                    modifier = Modifier.weight(1f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    fontSize = 12.sp,
+                    color = Color.Gray
+                )
+                Icon(
+                    painter = painterResource(id = if (!article.collect) R.drawable.ic_article_like else R.drawable.ic_article_unlike),
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+
         }
     }
 }
 
 fun fakeData(): List<ArticleData> {
     val article = ArticleData(
-        apkLink="",
-        audit=1,
-        author="张鸿洋",
-        canEdit=false,
-        chapterId=543,
-        chapterName="Android技术周报",
-        collect=false,
-        courseId=13,
-        desc="",
-        descMd="",
-        envelopePic="",
-        fresh=false,
-        host="",
-        id=19132,
-        link="https://www.wanandroid.com/blog/show/3039",
-        niceDate="2021-07-28 00:00",
-        niceShareDate="2021-07-28 00:10",
-        origin="",
-        prefix="",
-        projectLink="",
-        publishTime=1627401600000,
-        realSuperChapterId=542,
-        selfVisible=0,
-        shareDate=1627402200000,
-        shareUser="",
-        superChapterId=543,
-        superChapterName="技术周报",
-        tags= listOf(),
-        title="Android 技术周刊 （2021-07-21 ~ 2021-07-28）",
-        type=0,
-        userId=-1,
-        visible=1,
-        zan=0
+        apkLink = "",
+        audit = 1,
+        author = "张鸿洋",
+        canEdit = false,
+        chapterId = 543,
+        chapterName = "Android技术周报",
+        collect = false,
+        courseId = 13,
+        desc = "",
+        descMd = "",
+        envelopePic = "",
+        fresh = false,
+        host = "",
+        id = 19132,
+        link = "https://www.wanandroid.com/blog/show/3039",
+        niceDate = "2021-07-28 00:00",
+        niceShareDate = "2021-07-28 00:10",
+        origin = "",
+        prefix = "",
+        projectLink = "",
+        publishTime = 1627401600000,
+        realSuperChapterId = 542,
+        selfVisible = 0,
+        shareDate = 1627402200000,
+        shareUser = "",
+        superChapterId = 543,
+        superChapterName = "技术周报",
+        tags = listOf(),
+        title = "Android 技术周刊 （2021-07-21 ~ 2021-07-28）",
+        type = 0,
+        userId = -1,
+        visible = 1,
+        zan = 0
     )
 
     return listOf(article, article, article, article, article, article, article)

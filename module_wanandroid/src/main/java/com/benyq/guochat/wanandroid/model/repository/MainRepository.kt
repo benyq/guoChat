@@ -1,10 +1,10 @@
 package com.benyq.guochat.wanandroid.model.repository
 
+import com.benyq.guochat.wanandroid.model.ArticleData
+import com.benyq.guochat.wanandroid.model.BannerData
 import com.benyq.guochat.wanandroid.model.PageData
 import com.benyq.guochat.wanandroid.model.WanResult
 import com.benyq.guochat.wanandroid.model.http.WanAndroidApi
-import com.benyq.guowanandroid.model.ArticleData
-import com.benyq.guowanandroid.model.BannerData
 import com.benyq.module_base.mvvm.BaseRepository
 import javax.inject.Inject
 
