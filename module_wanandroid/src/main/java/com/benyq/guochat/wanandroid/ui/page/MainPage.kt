@@ -1,28 +1,36 @@
 package com.benyq.guochat.wanandroid.ui.page
 
 import android.text.TextUtils
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.paging.LoadState
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemsIndexed
 import coil.annotation.ExperimentalCoilApi
 import com.benyq.guochat.wanandroid.R
 import com.benyq.guochat.wanandroid.model.ArticleData
 import com.benyq.guochat.wanandroid.model.vm.MainViewModel
+import com.benyq.module_base.ui.WebViewActivity
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -34,7 +42,7 @@ fun MainPage(mainViewModel: MainViewModel = viewModel()) {
 
     val systemUiController = rememberSystemUiController()
     systemUiController.setStatusBarColor(Color.Black)
-
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -45,7 +53,7 @@ fun MainPage(mainViewModel: MainViewModel = viewModel()) {
 
         })
 
-        val articleData by mainViewModel.homeArticleData.observeAsState()
+        val articleData = mainViewModel.pager.collectAsLazyPagingItems()
         val bannerData by mainViewModel.bannerData.observeAsState()
         LazyColumn(
             modifier = Modifier
@@ -63,10 +71,49 @@ fun MainPage(mainViewModel: MainViewModel = viewModel()) {
                     Spacer(modifier = Modifier.padding(top = 5.dp, bottom = 5.dp))
                 }
             }
-            articleData?.run {
+            articleData.apply {
                 itemsIndexed(this) { index, article ->
-                    ArticleItem(article = article)
-                    Spacer(modifier = Modifier.padding(top = 5.dp, bottom = 5.dp))
+                    ArticleItem(article = article!!) {
+                        WebViewActivity.gotoWeb(context, article.link, article.title)
+                    }
+                }
+                when (loadState.append) {
+                    LoadState.Loading -> {
+                        item {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(10.dp),
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier
+                                        .padding(end = 20.dp)
+                                        .size(30.dp)
+                                )
+                                Text(
+                                    modifier = Modifier
+                                        .clickable { retry() },
+                                    text = "正在加载。。。",
+                                    color = Color.Black,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                        }
+                    }
+                    is LoadState.Error -> {
+                        item {
+                            Text(
+                                modifier = Modifier.padding(15.dp)
+                                    .fillMaxWidth()
+                                    .clickable { retry() },
+                                text = "加载失败, 点击重试",
+                                color = Color.Black,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -86,12 +133,20 @@ fun ShowMainPage() {
 @Composable
 @Preview
 fun ShowArticleItem() {
-    ArticleItem(article = fakeData()[0])
+    ArticleItem(article = fakeData()[0]) {
+
+    }
 }
 
 @Composable
-fun ArticleItem(article: ArticleData) {
-    Card(modifier = Modifier.fillMaxWidth(), elevation = 5.dp, shape = RoundedCornerShape(5.dp)) {
+fun ArticleItem(article: ArticleData, itemClickAction: () -> Unit) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = itemClickAction),
+        elevation = 5.dp,
+        shape = RoundedCornerShape(5.dp)
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -128,6 +183,9 @@ fun ArticleItem(article: ArticleData) {
                 overflow = TextOverflow.Ellipsis,
                 fontSize = 12.sp
             )
+            var collect by remember {
+                mutableStateOf(article.collect)
+            }
             Row(
                 modifier = Modifier
                     .padding(top = 5.dp)
@@ -142,9 +200,14 @@ fun ArticleItem(article: ArticleData) {
                     color = Color.Gray
                 )
                 Icon(
-                    painter = painterResource(id = if (!article.collect) R.drawable.ic_article_like else R.drawable.ic_article_unlike),
+                    painter = painterResource(id = if (collect) R.drawable.ic_article_like else R.drawable.ic_article_unlike),
                     contentDescription = null,
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier
+                        .size(20.dp)
+                        .clickable {
+                            collect = !collect
+                        },
+                    tint = Color(0xFF36C1BC)
                 )
             }
 

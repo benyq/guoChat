@@ -56,7 +56,7 @@ fun AppTopBar(
         }
         Text(
             text = title, modifier = Modifier
-                .weight(1f), fontSize = 18.sp, textAlign = TextAlign.Center
+                .weight(1f).height(40.dp), fontSize = 18.sp, textAlign = TextAlign.Center
         )
         if (functionIcon != null) {
             Icon(

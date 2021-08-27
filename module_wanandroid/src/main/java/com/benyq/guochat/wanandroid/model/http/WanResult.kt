@@ -1,4 +1,4 @@
-package com.benyq.guochat.wanandroid.model
+package com.benyq.guochat.wanandroid.model.http
 
 import com.benyq.module_base.ext.Toasts
 import com.benyq.module_base.http.ApiException
