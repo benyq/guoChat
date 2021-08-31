@@ -9,7 +9,10 @@ interface WanAndroidApi {
 
     @POST("/user/login")
     @FormUrlEncoded
-    suspend fun login(@Field("username")username: String, @Field("password")password: String): WanResult<LoginData>
+    suspend fun login(
+        @Field("username") username: String,
+        @Field("password") password: String
+    ): WanResult<LoginData>
 
 
     @GET("/lg/coin/userinfo/json")
@@ -20,4 +23,15 @@ interface WanAndroidApi {
 
     @GET("/banner/json")
     suspend fun banner(): WanResult<List<BannerData>>
+
+    @GET("project/tree/json")
+    suspend fun listProjectsTab(): WanResult<List<ProjectTreeData>>
+
+    @GET("project/list/{page}/json")
+    suspend fun listProjects(
+        @Path("page") page: Int,
+        @Query("cid") id: String
+    ): WanResult<PageData<ArticleData>>
+
+
 }

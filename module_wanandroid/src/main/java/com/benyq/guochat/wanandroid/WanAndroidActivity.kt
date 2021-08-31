@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.benyq.guochat.wanandroid.ui.page.HomePage
-import com.benyq.guowanandroid.ui.theme.GuoWanAndroidTheme
+import com.benyq.guochat.wanandroid.ui.theme.GuoWanAndroidTheme
 import com.benyq.module_base.RouterPath
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.orhanobut.logger.Logger

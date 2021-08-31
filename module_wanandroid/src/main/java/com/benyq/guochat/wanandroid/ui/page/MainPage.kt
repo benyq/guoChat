@@ -1,7 +1,6 @@
 package com.benyq.guochat.wanandroid.ui.page
 
 import android.text.TextUtils
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -29,6 +28,7 @@ import androidx.paging.compose.itemsIndexed
 import coil.annotation.ExperimentalCoilApi
 import com.benyq.guochat.wanandroid.R
 import com.benyq.guochat.wanandroid.model.ArticleData
+import com.benyq.guochat.wanandroid.model.fakeArticleData
 import com.benyq.guochat.wanandroid.model.vm.MainViewModel
 import com.benyq.module_base.ui.WebViewActivity
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -39,9 +39,6 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @ExperimentalPagerApi
 @Composable
 fun MainPage(mainViewModel: MainViewModel = viewModel()) {
-
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setStatusBarColor(Color.Black)
     val context = LocalContext.current
     Column(
         modifier = Modifier
@@ -80,46 +77,20 @@ fun MainPage(mainViewModel: MainViewModel = viewModel()) {
                 when (loadState.append) {
                     LoadState.Loading -> {
                         item {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(10.dp),
-                                horizontalArrangement = Arrangement.Center,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                CircularProgressIndicator(
-                                    modifier = Modifier
-                                        .padding(end = 20.dp)
-                                        .size(30.dp)
-                                )
-                                Text(
-                                    modifier = Modifier
-                                        .clickable { retry() },
-                                    text = "正在加载。。。",
-                                    color = Color.Black,
-                                    textAlign = TextAlign.Center
-                                )
-                            }
+                            DataLoading()
                         }
                     }
                     is LoadState.Error -> {
                         item {
-                            Text(
-                                modifier = Modifier.padding(15.dp)
-                                    .fillMaxWidth()
-                                    .clickable { retry() },
-                                text = "加载失败, 点击重试",
-                                color = Color.Black,
-                                textAlign = TextAlign.Center
-                            )
+                            DataLoadError {
+                                retry()
+                            }
                         }
                     }
                 }
             }
         }
     }
-    mainViewModel.bannerData()
-    mainViewModel.getArticleData()
 }
 
 
@@ -133,7 +104,7 @@ fun ShowMainPage() {
 @Composable
 @Preview
 fun ShowArticleItem() {
-    ArticleItem(article = fakeData()[0]) {
+    ArticleItem(article = fakeArticleData()[0]) {
 
     }
 }
@@ -206,6 +177,7 @@ fun ArticleItem(article: ArticleData, itemClickAction: () -> Unit) {
                         .size(20.dp)
                         .clickable {
                             collect = !collect
+                            article.collect = collect
                         },
                     tint = Color(0xFF36C1BC)
                 )
@@ -213,44 +185,4 @@ fun ArticleItem(article: ArticleData, itemClickAction: () -> Unit) {
 
         }
     }
-}
-
-fun fakeData(): List<ArticleData> {
-    val article = ArticleData(
-        apkLink = "",
-        audit = 1,
-        author = "张鸿洋",
-        canEdit = false,
-        chapterId = 543,
-        chapterName = "Android技术周报",
-        collect = false,
-        courseId = 13,
-        desc = "",
-        descMd = "",
-        envelopePic = "",
-        fresh = false,
-        host = "",
-        id = 19132,
-        link = "https://www.wanandroid.com/blog/show/3039",
-        niceDate = "2021-07-28 00:00",
-        niceShareDate = "2021-07-28 00:10",
-        origin = "",
-        prefix = "",
-        projectLink = "",
-        publishTime = 1627401600000,
-        realSuperChapterId = 542,
-        selfVisible = 0,
-        shareDate = 1627402200000,
-        shareUser = "",
-        superChapterId = 543,
-        superChapterName = "技术周报",
-        tags = listOf(),
-        title = "Android 技术周刊 （2021-07-21 ~ 2021-07-28）",
-        type = 0,
-        userId = -1,
-        visible = 1,
-        zan = 0
-    )
-
-    return listOf(article, article, article, article, article, article, article)
 }

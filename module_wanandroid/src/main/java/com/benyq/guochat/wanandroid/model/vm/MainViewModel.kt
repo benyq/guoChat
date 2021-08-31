@@ -19,35 +19,12 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class MainViewModel @Inject constructor(private val repository: MainRepository) : BaseViewModel(){
-    val homeArticleData = MutableLiveData<List<ArticleData>>()
     val bannerData = MutableLiveData<List<BannerData>>()
 
     private val page: Int = 1
 
-    fun getArticleData() {
-        quickLaunch<PageData<ArticleData>> {
-            onSuccess {
-                it?.run {
-                    if (it.over) {
-                        //全部获取
-                    }
-                    val oldData = homeArticleData.value
-                    if (oldData == null) {
-                        homeArticleData.value = it.data
-                    }else {
-                        oldData.toMutableList().addAll(it.data)
-                        homeArticleData.value = oldData.toList()
-                    }
-                }
-            }
-            onError {
-
-            }
-
-            request {
-                repository.articleList(page)
-            }
-        }
+    init {
+        bannerData()
     }
 
     val pager = Pager(PagingConfig(
@@ -80,8 +57,8 @@ class ArticleDataSource(private val repo: MainRepository): PagingSource<Int, Art
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ArticleData> {
         val loadPage = params.key ?: 0
         val result = repo.articleList(loadPage)
-        val nextPage = if (result.getRealData() == null) null else loadPage + 1
-        return if (result.data != null && loadPage < 2){
+        val nextPage = if (result.data == null) null else loadPage + 1
+        return if (result.data != null){
             LoadResult.Page(
                 data = result.data.data,
                 prevKey = null,

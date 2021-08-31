@@ -18,7 +18,11 @@ import javax.inject.Inject
 class MainRepository @Inject constructor(private val apiService: WanAndroidApi) : BaseRepository() {
 
     suspend fun articleList(page: Int): WanResult<PageData<ArticleData>> {
-        return apiService.articleList(page)
+        return try {
+            apiService.articleList(page)
+        }catch (t: Throwable) {
+            WanResult.error(t.message ?: t.cause?.message ?: "未知错误")
+        }
     }
 
     suspend fun banner(): WanResult<List<BannerData>> {

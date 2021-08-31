@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -158,4 +159,53 @@ fun Banner(
         )
     }
 
+}
+
+
+@Composable
+fun DataLoading() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier
+                .padding(end = 20.dp)
+                .size(30.dp)
+        )
+        Text(
+            text = "正在加载。。。",
+            color = Color.Black,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Composable
+@Preview
+fun ShowDataLoading() {
+    DataLoading()
+}
+
+@Composable
+fun DataLoadError(errorAction: ()->Unit) {
+    Text(
+        modifier = Modifier.padding(15.dp)
+            .fillMaxWidth()
+            .clickable { errorAction() },
+        text = "加载失败, 点击重试",
+        color = Color.Black,
+        textAlign = TextAlign.Center
+    )
+}
+
+@Composable
+@Preview
+fun ShowDataLoadError() {
+    DataLoadError{
+
+    }
 }
