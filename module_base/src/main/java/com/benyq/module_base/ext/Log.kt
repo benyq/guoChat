@@ -11,19 +11,19 @@ import com.orhanobut.logger.Logger
  */
 
 fun loge(obj: Any){
-    Logger.e("benyq", obj)
+    Logger.e(obj.toString())
 }
 
 fun logi(obj: Any){
-    Logger.i("benyq", obj)
+    Logger.i(obj.toString())
 }
 
 fun logd(obj: Any){
-    Logger.i("benyq", obj)
+    Logger.i(obj.toString())
 }
 
 fun logw(obj: Any){
-    Logger.w("benyq", obj)
+    Logger.w(obj.toString())
 }
 
 fun String.showLog() {

@@ -1,6 +1,7 @@
 package com.benyq.guochat.wanandroid
 
 import android.app.Application
+import com.benyq.module_base.CommonModuleInit
 import com.benyq.module_base.IModuleInit
 import dagger.hilt.android.HiltAndroidApp
 
@@ -15,7 +16,7 @@ class WanAndroidApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        WanAndroidInit.instance = this
+        CommonModuleInit.onInit(this)
     }
 }
 

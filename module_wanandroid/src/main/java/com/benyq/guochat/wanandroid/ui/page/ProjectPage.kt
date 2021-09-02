@@ -32,15 +32,17 @@ import com.benyq.guochat.wanandroid.R
 import com.benyq.guochat.wanandroid.model.ArticleData
 import com.benyq.guochat.wanandroid.model.fakeArticleData
 import com.benyq.guochat.wanandroid.model.vm.ProjectViewModel
+import com.benyq.guochat.wanandroid.ui.theme.GrayApp
 import com.benyq.module_base.ext.loge
 import com.benyq.module_base.ui.WebViewActivity
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 /**
  *
  * @author benyq
  * @date 2021/8/30
  * @email 1520063035@qq.com
- *
+ * 类似于 可移动的Dialog 还未实现
  */
 @ExperimentalCoilApi
 @Composable
@@ -145,7 +147,7 @@ fun ProjectItem(articleData: ArticleData, modifier: Modifier) {
 
         Column(
             modifier = Modifier
-                .padding(10.dp)
+                .padding(start = 10.dp)
                 .weight(3f)
                 .fillMaxHeight(),
             verticalArrangement = Arrangement.SpaceBetween

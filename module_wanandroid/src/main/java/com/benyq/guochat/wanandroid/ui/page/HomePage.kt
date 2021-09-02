@@ -1,5 +1,6 @@
 package com.benyq.guochat.wanandroid.ui.page
 
+import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -34,6 +35,7 @@ import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 import com.benyq.guochat.wanandroid.R
 import com.benyq.guochat.wanandroid.ui.theme.GrayApp
+import com.benyq.module_base.ext.loge
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 /**
@@ -49,6 +51,19 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun HomePage(viewModel: HomeViewModel = viewModel()) {
     val systemUiController = rememberSystemUiController()
+    systemUiController.setStatusBarColor(GrayApp)
+    when (viewModel.currentPosition) {
+        0, 1, 2 -> {
+            systemUiController.setStatusBarColor(GrayApp)
+        }
+        3 -> {
+            systemUiController.setStatusBarColor(Color.White)
+        }
+        4 -> {
+            systemUiController.setStatusBarColor(Color(0xFF36C1BC))
+        }
+    }
+
     Column(modifier = Modifier.fillMaxSize()) {
         val scope = rememberCoroutineScope()
         val pagerState = rememberPagerState(pageCount = 5)
@@ -60,23 +75,18 @@ fun HomePage(viewModel: HomeViewModel = viewModel()) {
         ) { page ->
             when (page) {
                 0 -> {
-                    systemUiController.setStatusBarColor(GrayApp)
                     MainPage()
                 }
                 1 -> {
-                    systemUiController.setStatusBarColor(GrayApp)
                     ProjectPage()
                 }
                 2 -> {
-                    systemUiController.setStatusBarColor(GrayApp)
                     LoginPage({})
                 }
                 3 -> {
-                    systemUiController.setStatusBarColor(Color.Yellow)
-                    LoginPage({})
+                    WechatPage()
                 }
                 4 -> {
-                    systemUiController.setStatusBarColor(Color(0xFF36C1BC))
                     val test = MutableLiveData<UserData>()
                     MePage(userLiveData = test, clickAction = MineClickAction())
                 }

@@ -35,9 +35,10 @@ import kotlin.math.absoluteValue
 @Composable
 fun AppTopBar(
     title: String,
-    onBack: (() -> Unit)? = null,
-    @DrawableRes functionIcon: Int? = null,
-    onFunction: (() -> Unit)? = null
+    onLeft: (() -> Unit)? = null,
+    @DrawableRes leftIcon: Int? = null,
+    onRight: (() -> Unit)? = null,
+    @DrawableRes rightIcon: Int? = null
 ) {
     Row(
         modifier = Modifier
@@ -46,26 +47,26 @@ fun AppTopBar(
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        onBack?.run {
+        onLeft?.run {
             Icon(
-                painter = painterResource(R.drawable.ic_back), contentDescription = null,
+                painter = painterResource(leftIcon ?: R.drawable.ic_back), contentDescription = null,
                 modifier = Modifier
                     .size(36.dp)
-                    .clickable(onClick = onBack)
+                    .clickable(onClick = onLeft)
                     .padding(6.dp)
             )
         }
         Text(
             text = title, modifier = Modifier
-                .weight(1f).height(40.dp), fontSize = 18.sp, textAlign = TextAlign.Center
+                .weight(1f), fontSize = 18.sp, textAlign = TextAlign.Center
         )
-        if (functionIcon != null) {
+        if (rightIcon != null) {
             Icon(
-                painter = painterResource(functionIcon), contentDescription = null,
+                painter = painterResource(rightIcon), contentDescription = null,
                 modifier = Modifier
                     .size(36.dp)
                     .clickable(onClick = {
-                        onFunction?.invoke()
+                        onRight?.invoke()
                     })
                     .padding(5.dp)
             )
@@ -76,9 +77,9 @@ fun AppTopBar(
 @Preview
 @Composable
 fun ShowAppToBar() {
-    AppTopBar("hello", functionIcon = R.drawable.ic_search, onBack = {
+    AppTopBar("hello", rightIcon = R.drawable.ic_search, onLeft = {
 
-    }, onFunction = {
+    }, onRight = {
 
     })
 }
@@ -209,3 +210,6 @@ fun ShowDataLoadError() {
 
     }
 }
+
+
+

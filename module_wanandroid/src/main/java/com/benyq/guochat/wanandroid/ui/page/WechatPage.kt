@@ -1,6 +1,9 @@
 package com.benyq.guochat.wanandroid.ui.page
 
 import android.text.TextUtils
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,8 +13,11 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -22,53 +28,50 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
-import coil.annotation.ExperimentalCoilApi
 import com.benyq.guochat.wanandroid.R
 import com.benyq.guochat.wanandroid.model.ArticleData
 import com.benyq.guochat.wanandroid.model.fakeArticleData
-import com.benyq.guochat.wanandroid.model.vm.MainViewModel
+import com.benyq.guochat.wanandroid.model.vm.WechatViewModel
 import com.benyq.module_base.ui.WebViewActivity
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
+/**
+ *
+ * @author benyq
+ * @date 2021/9/2
+ * @email 1520063035@qq.com
+ * 旋转功能还未实现
+ */
 
-@ExperimentalCoilApi
-@ExperimentalPagerApi
 @Composable
-fun MainPage(mainViewModel: MainViewModel = viewModel()) {
+@Preview
+fun ShowWechatPage() {
+    WechatPage()
+}
+
+@Composable
+fun WechatPage(wechatViewModel: WechatViewModel = viewModel()) {
     val context = LocalContext.current
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 8.dp)
-    ) {
+    Column(modifier = Modifier.fillMaxSize()) {
 
-        AppTopBar("WanAndroid", rightIcon = R.drawable.ic_search, onRight = {
-
-        })
-
-        val articleData = mainViewModel.pager.collectAsLazyPagingItems()
-        val bannerData by mainViewModel.bannerData.observeAsState()
-        LazyColumn(
-            modifier = Modifier
-                .padding(top = 0.dp)
-                .weight(1f)
-        ) {
-            bannerData?.let { data ->
-                item {
-                    Banner(
-                        modifier = Modifier
-                            .padding(top = 5.dp)
-                            .fillMaxWidth()
-                            .height(200.dp), dataList = data
-                    )
-                    Spacer(modifier = Modifier.padding(top = 5.dp, bottom = 5.dp))
-                }
-            }
+        val articleData = wechatViewModel.pager.collectAsLazyPagingItems()
+        val selectedAuthor by wechatViewModel.selectedAuthor.observeAsState()
+        selectedAuthor?.run {
+            articleData.refresh()
+        }
+        WechatPageTop(selectedAuthor?.name ?: "")
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
             articleData.apply {
                 itemsIndexed(this) { index, article ->
-                    ArticleItem(article = article!!) {
-                        WebViewActivity.gotoWeb(context, article.link, article.title)
+                    article?.run {
+                        WechatArticleItem(
+                            Modifier
+                                .fillMaxWidth()
+                                .height(120.dp)
+                                .padding(10.dp, 5.dp)
+                                .clickable {
+                                    WebViewActivity.gotoWeb(context, article.link, article.title)
+                                }, article
+                        )
                     }
                 }
                 when (loadState.append) {
@@ -87,38 +90,67 @@ fun MainPage(mainViewModel: MainViewModel = viewModel()) {
                 }
             }
         }
+
+    }
+
+}
+
+
+@Composable
+fun WechatPageTop(title: String) {
+
+    val isEnabled = remember { mutableStateOf(true) }
+    val isRotated = remember { mutableStateOf(false) }
+
+    val angle: Float by animateFloatAsState(
+        targetValue = if (isRotated.value) -90F else 0F,
+        animationSpec = tween(
+            durationMillis = 500, // duration
+            easing = FastOutSlowInEasing
+        ),
+        finishedListener = {
+            // disable the button
+            isEnabled.value = true
+        }
+    )
+    Box(modifier = Modifier.fillMaxWidth().padding(10.dp, 5.dp)) {
+
+        Text(
+            modifier = Modifier.align(Alignment.Center),
+            text = title,
+            fontSize = 20.sp,
+            color = Color.Black
+        )
+        Icon(
+            painter = painterResource(R.drawable.ic_more), contentDescription = null,
+            modifier = Modifier
+                .size(36.dp)
+                .padding(6.dp).rotate(angle).clickable {
+                    isRotated.value = !isRotated.value
+                    isEnabled.value = false
+                }
+        )
     }
 }
 
-
-@ExperimentalPagerApi
 @Composable
 @Preview
-fun ShowMainPage() {
-    MainPage()
+fun ShowWechatPageTop() {
+    WechatPageTop("鸿洋")
 }
 
-@Composable
-@Preview
-fun ShowArticleItem() {
-    ArticleItem(article = fakeArticleData()[0]) {
-
-    }
-}
 
 @Composable
-fun ArticleItem(article: ArticleData, itemClickAction: () -> Unit) {
+fun WechatArticleItem(modifier: Modifier, article: ArticleData) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = itemClickAction),
+        modifier = modifier,
         elevation = 5.dp,
         shape = RoundedCornerShape(5.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(15.dp, 8.dp)
+                .padding(10.dp, 8.dp)
         ) {
 
             Row(modifier = Modifier.fillMaxWidth()) {
@@ -182,4 +214,11 @@ fun ArticleItem(article: ArticleData, itemClickAction: () -> Unit) {
 
         }
     }
+}
+
+
+@Composable
+@Preview
+fun ShowWechatArticleItem() {
+    WechatArticleItem(Modifier.fillMaxWidth(), fakeArticleData()[0])
 }
