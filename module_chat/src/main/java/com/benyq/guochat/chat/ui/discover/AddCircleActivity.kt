@@ -105,7 +105,7 @@ class AddCircleActivity : LifecycleActivity<AddCircleViewModel, ActivityAddCircl
             .loadImageEngine(GlideEngine)
             .forResult(object : OnResultCallbackListener<LocalMedia> {
                 override fun onResult(result: List<LocalMedia>) {
-                    viewModelGet().addCirclePhotoUrl(result.map { it.path })
+                    viewModelGet().addCirclePhotoUrl(result.map { if (it.realPath.isNullOrEmpty()) it.androidQToPath else it.realPath })
                 }
 
                 override fun onCancel() {
