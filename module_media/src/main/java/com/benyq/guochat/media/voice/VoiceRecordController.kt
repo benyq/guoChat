@@ -44,13 +44,8 @@ object VoiceRecordController {
         }
     }
 
-    fun init(context: Context) {
-        recordFilePath = context.getExternalFilesDir("soundRecord")!!.absolutePath + "/"
-    }
-
-    fun startVoiceRecord() {
-        mVoiceFilePath =
-            getFileName()
+    fun startVoiceRecord(context: Context) {
+        mVoiceFilePath = getFileName(context)
         mRecord = MediaRecorder().apply {
             //必须按照这个顺序，否则会报错
             setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -124,12 +119,15 @@ object VoiceRecordController {
         mCompleteAction = action
     }
 
-    private fun getFileName(): String {
+    private fun getFileName(context: Context): String {
+        if (recordFilePath.isEmpty()) {
+            recordFilePath = context.getExternalFilesDir("soundRecord")!!.absolutePath + "/"
+        }
         val soundDir = File(recordFilePath)
         if (!soundDir.exists()) {
             soundDir.mkdir()
         }
-        return recordFilePath + System.currentTimeMillis() + ".amr";
+        return recordFilePath + System.currentTimeMillis() + ".amr"
     }
 
     private fun deleteVoiceFile() {

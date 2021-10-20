@@ -234,7 +234,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
             val y = (location.top + location.bottom) / 2
             mVoiceRecordDialog.setTouchY(y)
             mVoiceRecordDialog.show(supportFragmentManager)
-            VoiceRecordController.startVoiceRecord()
+            VoiceRecordController.startVoiceRecord(this)
             true
         }
     }
