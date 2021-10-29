@@ -174,13 +174,13 @@
         {
           "id": "10:2312556520627144961",
           "name": "fromUid",
-          "type": 5,
+          "type": 6,
           "flags": 4
         },
         {
           "id": "11:9009732530726133984",
           "name": "toUid",
-          "type": 5,
+          "type": 6,
           "flags": 4
         },
         {
@@ -194,7 +194,7 @@
     },
     {
       "id": "5:1977005759769735532",
-      "lastPropertyId": "8:4170615368329090901",
+      "lastPropertyId": "10:2174451326732047401",
       "name": "ContractEntity",
       "properties": [
         {
@@ -211,11 +211,6 @@
         {
           "id": "3:7534167599974112334",
           "name": "ownUserId",
-          "type": 9
-        },
-        {
-          "id": "4:3678252846597077057",
-          "name": "contractName",
           "type": 9
         },
         {
@@ -239,6 +234,16 @@
           "name": "chatType",
           "type": 5,
           "flags": 4
+        },
+        {
+          "id": "9:6644262312580241379",
+          "name": "chatNo",
+          "type": 9
+        },
+        {
+          "id": "10:2174451326732047401",
+          "name": "remark",
+          "type": 9
         }
       ],
       "relations": []
@@ -252,7 +257,9 @@
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    3678252846597077057
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

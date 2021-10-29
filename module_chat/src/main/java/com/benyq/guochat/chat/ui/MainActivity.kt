@@ -46,7 +46,6 @@ class MainActivity : LifecycleActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ChatObjectBox.testAddChatFromTo()
         PlayerController.setContext(this)
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
@@ -113,6 +112,17 @@ class MainActivity : LifecycleActivity<MainViewModel, ActivityMainBinding>() {
 
 
     override fun initData() {
+        viewModelGet().refreshData()
+    }
+
+    override fun dataObserver() {
+        viewModelGet().loadingType.observe(this) {
+            if (it.isLoading) {
+                showLoading(it.isSuccess)
+            } else {
+                hideLoading()
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -214,6 +224,5 @@ class MainActivity : LifecycleActivity<MainViewModel, ActivityMainBinding>() {
         return popWindow
     }
 
-    override fun dataObserver() {
-    }
+
 }

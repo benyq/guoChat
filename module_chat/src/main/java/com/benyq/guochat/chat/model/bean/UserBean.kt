@@ -1,5 +1,6 @@
 package com.benyq.guochat.chat.model.bean
 
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 /**
@@ -12,17 +13,23 @@ data class UserBean(
     /**
      * 果聊号
      */
-    val chatId: String = "",
+    @SerializedName("id")
+    val chatId: String,
     /**
      * 果聊号
      */
-    val chatNo: String = "",
+    val chatNo: String,
     /**
      * 昵称
      */
-    var nickName: String = "",
+    @SerializedName("nick")
+    var nickName: String,
     /**
      * 头像url
      */
-    var avatarUrl: String = ""
+    @SerializedName("avatar")
+    var avatarUrl: String?,
+    var token: String,
+    var phone: String,
+    var gender: Int = 2,
 ) : Serializable

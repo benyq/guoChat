@@ -62,7 +62,7 @@ class ChatFragment : LifecycleFragment<ChatViewModel, FragmentChatBinding>() {
     override fun initListener() {
         binding.refreshLayout.setOnRefreshListener {
             initData()
-            binding.refreshLayout.finishRefresh(2000)
+            binding.refreshLayout.finishRefresh()
         }
     }
 
@@ -72,9 +72,9 @@ class ChatFragment : LifecycleFragment<ChatViewModel, FragmentChatBinding>() {
 
     override fun dataObserver() {
         with(mViewModel) {
-            mChatListData.observe(viewLifecycleOwner, Observer {
+            mChatListData.observe(viewLifecycleOwner) {
                 mChatAdapter.setDiffNewData(it.toMutableList())
-            })
+            }
         }
     }
 }

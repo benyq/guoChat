@@ -11,7 +11,7 @@ import dagger.hilt.android.HiltAndroidApp
  * @date 2021/8/20
  * @email 1520063035@qq.com
  */
-@HiltAndroidApp
+//@HiltAndroidApp
 class WanAndroidApp : Application() {
 
     override fun onCreate() {

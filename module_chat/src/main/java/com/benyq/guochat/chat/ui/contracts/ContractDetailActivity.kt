@@ -10,6 +10,7 @@ import com.benyq.guochat.chat.app.IntentExtra
 import com.benyq.guochat.chat.databinding.ActivityContractDetailBinding
 import com.benyq.guochat.chat.local.ChatLocalStorage
 import com.benyq.guochat.chat.local.ChatObjectBox
+import com.benyq.guochat.chat.model.bean.ContractBean
 import com.benyq.module_base.ui.base.BaseActivity
 import com.benyq.guochat.chat.ui.chats.ChatDetailActivity
 import com.benyq.guochat.chat.ui.common.CommonBottomDialog
@@ -30,15 +31,15 @@ class ContractDetailActivity : BaseActivity<ActivityContractDetailBinding>() {
     override fun provideViewBinding() = ActivityContractDetailBinding.inflate(layoutInflater)
 
     private var mBottomDialog: CommonBottomDialog? = null
-    private lateinit var mContractEntity: ContractEntity
+    private lateinit var mContractEntity: ContractBean
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
         //根据传过来的联系人信息初始化页面
         mContractEntity = intent.getParcelableExtra(IntentExtra.contractData)!!
-        binding.ivAvatar.loadImage(mContractEntity.avatarUrl)
+        binding.ivAvatar.loadImage(mContractEntity.avatar)
         binding.tvNickName.text = mContractEntity.nick
-        binding.tvChatNo.text = "果聊号: ${mContractEntity.contractId}"
+        binding.tvChatNo.text = "果聊号: ${mContractEntity.chatNo}"
         if (mContractEntity.gender == GENDER_FEMALE) {
             binding.ivGender.setImageResource(R.drawable.ic_gender_female)
         }else if (mContractEntity.gender == GENDER_MALE) {

@@ -1,55 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".ui.login.RegisterActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
 
     <com.benyq.module_base.ui.widget.HeaderView
         android:id="@+id/headerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:enable_back="false"
+        app:toolbar_title="@string/login"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:toolbar_title="@string/register" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
         android:id="@+id/ivLogo"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:src="@mipmap/ic_launcher"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerView" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerView"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/userNameLayout"
         style="@style/TextInputLayout"
-        android:layout_marginTop="130dp"
-        android:hint="@string/username"
+        app:layout_constraintTop_toBottomOf="@id/headerView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerView">
+        android:layout_marginTop="130dp"
+        android:hint="@string/username">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="number"
             android:singleLine="true"
-            android:text="" />
+            android:text="15858129939"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/pswLayout"
         style="@style/TextInputLayout"
-        android:hint="@string/password"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/userNameLayout"
-        app:passwordToggleEnabled="true">
+        app:layout_constraintStart_toStartOf="parent"
+        app:passwordToggleEnabled="true"
+        android:hint="@string/password">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etPassword"
@@ -57,22 +58,34 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:singleLine="true"
-            android:text="" />
+            android:text="123456"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/pswLayout"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
         android:background="@color/colorPrimaryDark"
         android:text="@string/register"
         android:textColor="@color/white"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/pswLayout" />
+        app:layout_constraintTop_toBottomOf="@id/btnLogin"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

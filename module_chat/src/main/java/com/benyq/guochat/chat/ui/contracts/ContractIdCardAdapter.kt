@@ -25,7 +25,7 @@ class ContractIdCardAdapter :
             val ivAvatar = holder.getView<ImageView>(R.id.ivAvatar)
             ivAvatar.loadImage(avatarUrl, context.dip2px(5).toInt())
 
-            holder.setText(R.id.tvContractName, contractName)
+            holder.setText(R.id.tvContractName, nick)
             val gender = when (gender) {
                 GENDER_FEMALE -> "女性"
                 GENDER_MALE -> "男性"

@@ -48,11 +48,11 @@ data class ChatRecordEntity(
     /**
      * 发送者id
      */
-    var fromUid: Int = 0,
+    var fromUid: Long = 0,
     /**
      * 接收者id
      */
-    var toUid: Int = 0,
+    var toUid: Long = 0,
 
     var fromToId: Long = 0
 

@@ -97,7 +97,7 @@ class AvatarActivity : LifecycleActivity<PersonalInfoViewModel, ActivityAvatarBi
                                     .forResult(object : OnResultCallbackListener<LocalMedia> {
                                         override fun onResult(result: List<LocalMedia>) {
                                             val res = result[0]
-                                            uploadAvatar(res.path)
+                                            uploadAvatar(res.realPath)
                                         }
 
                                         override fun onCancel() {

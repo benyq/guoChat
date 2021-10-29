@@ -41,3 +41,5 @@ fun Context.chatVideoPath(): String {
     return getExternalFilesDir(VIDEO_PATH)!!.absolutePath + File.separator
 }
 
+
+const val baseUrl = "http://81.69.26.237/"

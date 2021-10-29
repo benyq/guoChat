@@ -163,7 +163,7 @@ fun View?.visibleAlphaAnimation(duration: Long = 500L) {
 }
 
 fun ImageView.loadImage(
-    url: String,
+    url: String?,
     round: Int = 10,
     isCircle: Boolean = false,
     placeHolder: Int = R.drawable.shape_album_loading_bg

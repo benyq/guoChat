@@ -34,7 +34,6 @@
         <activity android:name=".ui.chats.video.PictureVideoActivity" />
         <activity android:name=".ui.contracts.CallingCardActivity" />
         <activity android:name=".ui.contracts.AddContractActivity" />
-        <activity android:name=".ui.login.RegisterActivity" />
         <activity android:name=".ui.login.LoginActivity" />
         <activity android:name=".ui.discover.EditImageActivity" />
         <activity

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/darkgrey"
+    android:orientation="vertical"
+    tools:context=".ui.contracts.ApplyContractActivity">
+
+    <com.benyq.module_base.ui.widget.HeaderView
+        android:id="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:toolbar_menu="false" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="15dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="20dp">
+
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvNickName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/color_2a2a2a"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/ivAvatar"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="苏打先生" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View style="@style/thin_horizontal_divider" />
+
+    <com.benyq.module_base.ui.widget.IconFormLine
+        android:id="@+id/ifContractPermission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:form_title="@string/contract_permission" />
+
+    <com.benyq.module_base.ui.widget.IconFormLine
+        android:id="@+id/ifGuoChatCircle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:form_title="@string/guo_chat_circle"
+        app:line_show_divide="false" />
+
+    <View style="@style/string_horizontal_divider" />
+
+    <LinearLayout
+        android:id="@+id/llApplyContract"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/tvApplyContract"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/add_to_contract"
+            android:textColor="@color/color_2a2a2a"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -16,30 +16,32 @@ import kotlinx.parcelize.Parcelize
 data class ContractEntity(
     @Id var id: Long = 0,
     /**
-     * 后台数据库中的Id
-     */
-    val contractId: String = "",
-    /**
      * 这个联系人的归属对象
      */
     val ownUserId: String = "",
     /**
+     * 后台数据库中的Id
+     */
+    val contractId: String = "",
+    var chatNo: String,
+
+    /**
      * 联系人名字
      */
-    val contractName: String = "",
+    var nick: String = "",
     /**
      * 性别 0 女性  1 男性  2 隐藏
      * GENDER_UNKNOWN == 1
      */
-    val gender: Int = 1,
+    var gender: Int = 1,
     /**
      * 备注
      */
-    val nick: String = contractName,
+    var remark: String?,
 
-    val avatarUrl: String = "",
+    var avatarUrl: String?,
 
     // CHAT_TYPE_CONTRACT == 1
     var chatType: Int = 1
 
-): Parcelable
+) : Parcelable

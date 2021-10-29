@@ -30,7 +30,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
  * @note
  */
 //uid 是当前帐号id
-class ChatRecordAdapter(private val uid: Int) :
+class ChatRecordAdapter(private val uid: Long) :
     BaseDelegateMultiAdapter<ChatRecordEntity, BaseViewHolder>() {
 
     private var contractAvatar =

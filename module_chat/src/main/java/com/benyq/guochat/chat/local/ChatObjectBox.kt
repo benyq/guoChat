@@ -26,63 +26,6 @@ object ChatObjectBox {
         boxStore = DataObjectBox.boxStore
     }
 
-    fun testAddChatFromTo() {
-        val chatBox: Box<ChatFromToEntity> = boxStore.boxFor()
-        val contractBox: Box<ContractEntity> = boxStore.boxFor()
-        if (chatBox.query().build().count() <= 0) {
-            chatBox.put(
-                ChatFromToEntity(
-                    0,
-                    0L,
-                    1L,
-                    System.currentTimeMillis()
-                ),
-                ChatFromToEntity(
-                    0,
-                    0L,
-                    2L,
-                    System.currentTimeMillis()
-                ),
-                ChatFromToEntity(
-                    0,
-                    0L,
-                    3L,
-                    System.currentTimeMillis()
-                ),
-                ChatFromToEntity(
-                    0,
-                    0L,
-                    4L,
-                    System.currentTimeMillis()
-                )
-            )
-        }
-        if (contractBox.query().build().count() <= 0) {
-            contractBox.put(
-                ContractEntity(
-                    0, "2", "klfjjasjasjda", "哪吒", 1, "哪吒",
-                    "https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1305353222,2352820043&fm=26&gp=0.jpg",
-                    CHAT_TYPE_CONTRACT
-                ),
-                ContractEntity(
-                    0, "2", "klfjjasjasjda", "三公主", 0, "三公主",
-                    "https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=909846316,603824306&fm=111&gp=0.jpg",
-                    CHAT_TYPE_CONTRACT
-                ),
-                ContractEntity(
-                    0, "2", "klfjjasjasjda", "招新", 2, "招新",
-                    "https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1361981880,3052617388&fm=111&gp=0.jpg",
-                    CHAT_TYPE_CONTRACT
-                ),
-                ContractEntity(
-                    0, "2", "klfjjasjasjda", "凯南", 1, "凯南",
-                    "https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3321238736,733069773&fm=26&gp=0.jpg",
-                    CHAT_TYPE_CONTRACT
-                )
-            )
-        }
-    }
-
     /**
      * 获取ChatFromToEntity，如果不存在则新建
      */
@@ -179,9 +122,14 @@ object ChatObjectBox {
         return messageBox.put(data)
     }
 
-    fun getAllContracts(): List<ContractEntity> {
+    /**
+     * uid,当前用户id
+     */
+    fun getAllContracts(uid: String): List<ContractEntity> {
         val contractStore: Box<ContractEntity> = boxStore.boxFor()
-        return contractStore.query().build().find()
+        return contractStore.query{
+            equal(ContractEntity_.ownUserId, uid)
+        }.find()
     }
 
     /**
@@ -202,5 +150,18 @@ object ChatObjectBox {
             true,
             toUid
         )
+    }
+
+    /**
+     * @param id 本地数据库中的联系人id
+     */
+    fun deleteChatRecordByContractId(id: Long) {
+        val chatRecordBox: Box<ChatRecordEntity> = boxStore.boxFor()
+        chatRecordBox.query {
+            equal(ChatRecordEntity_.fromUid, id)
+        }.remove()
+        chatRecordBox.query {
+            equal(ChatRecordEntity_.toUid, id)
+        }.remove()
     }
 }

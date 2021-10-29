@@ -30,7 +30,7 @@ import java.text.ParseException
  * @e-mail 1520063035@qq.com
  * @note
  */
-//@HiltAndroidApp
+@HiltAndroidApp
 class ChatApp : BaseApplication(){
 
     companion object {

@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
+import com.benyq.module_base.ext.loge
+import com.benyq.module_base.ui.NormalProgressDialogManager
 
 /**
  * @author benyq
@@ -54,6 +56,15 @@ abstract class BaseFragment<VB: ViewBinding> : Fragment(), IFragment{
             appViewModelProvider = ViewModelProvider(requireActivity().applicationContext as BaseApplication, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application))
         }
         return appViewModelProvider
+    }
+
+    protected fun showLoading(msg: String?) {
+        loge("showLoading $msg")
+        NormalProgressDialogManager.showLoading(requireActivity(), msg)
+    }
+
+    protected fun hideLoading() {
+        NormalProgressDialogManager.dismissLoading()
     }
 
     open fun initData() {}

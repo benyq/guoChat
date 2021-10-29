@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.launcher.ARouter
-import com.benyq.guochat.chat.ui.discover.AddCircleActivity
 import com.benyq.guochat.test.TestActivity
 import com.benyq.module_base.RouterPath
 import com.benyq.module_base.ext.goToActivity
@@ -32,8 +31,7 @@ class SplashActivity : AppCompatActivity() {
         }
 
         if (isDebug) {
-//            goToActivity<TestActivity>()
-            goToActivity<AddCircleActivity>()
+            goToActivity<TestActivity>()
         } else {
             lifecycleScope.launch(Dispatchers.IO) {
                 delay(1000)

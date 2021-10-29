@@ -2,7 +2,9 @@ package com.benyq.guochat.chat.model.rep
 
 import com.benyq.guochat.chat.local.ChatObjectBox
 import com.benyq.guochat.chat.model.bean.ChatResponse
+import com.benyq.guochat.chat.model.bean.ContractBean
 import com.benyq.guochat.chat.model.bean.ContractSectionBean
+import com.benyq.guochat.chat.model.net.ChatApiService
 import com.benyq.module_base.mvvm.BaseRepository
 import com.github.promeg.pinyinhelper.Pinyin
 import javax.inject.Inject
@@ -13,12 +15,12 @@ import javax.inject.Inject
  * @e-mail 1520063035@qq.com
  * @note
  */
-class ContractsRepository @Inject constructor() : BaseRepository() {
+class ContractRepository @Inject constructor(private val apiService: ChatApiService) : BaseRepository() {
 
-    suspend fun getAllContracts(): ChatResponse<List<ContractSectionBean>> {
+    suspend fun getAllContracts(id: String): ChatResponse<List<ContractSectionBean>> {
         return launchIO {
             val charMap = sortedMapOf<String, MutableList<ContractSectionBean>>()
-            val contractEntityList = ChatObjectBox.getAllContracts()
+            val contractEntityList = ChatObjectBox.getAllContracts(id)
             contractEntityList.forEach {
                 val pinyin = Pinyin.toPinyin(it.nick, "").first().toString()
                 charMap[pinyin] = charMap[pinyin]?.apply {
@@ -36,5 +38,14 @@ class ContractsRepository @Inject constructor() : BaseRepository() {
                 }
             })
         }
+    }
+
+    suspend fun searchContract(key: String): ChatResponse<ContractBean> {
+        return apiService.searchContract(key)
+    }
+
+
+    suspend fun applyContract(uid: String): ChatResponse<String> {
+        return apiService.applyContract(uid)
     }
 }

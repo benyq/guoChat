@@ -1,8 +1,11 @@
 package com.benyq.guochat.chat.model.bean
 
 import com.benyq.module_base.ext.Toasts
+import com.benyq.module_base.ext.loge
 import com.benyq.module_base.http.ApiException
 import com.benyq.module_base.http.BenyqResponse
+import com.benyq.module_base.http.HttpSetting
+import com.google.gson.annotations.SerializedName
 
 /**
  * @author benyq
@@ -10,7 +13,11 @@ import com.benyq.module_base.http.BenyqResponse
  * @e-mail 1520063035@qq.com
  * @note
  */
-data class ChatResponse<T>(val code: Int, val msg: String, val data: T?) : BenyqResponse<T> {
+data class ChatResponse<T>(
+    @SerializedName("errorCode")
+    val code: Int,
+    @SerializedName("errorMsg")
+    val msg: String?, val data: T?) : BenyqResponse<T> {
 
     companion object {
         fun <R> success(data: R?): ChatResponse<R> {
@@ -24,13 +31,13 @@ data class ChatResponse<T>(val code: Int, val msg: String, val data: T?) : Benyq
 
     override fun isSuccess() = code == 0
 
-    override fun getMessage() = msg
+    override fun getMessage() = msg ?: ""
 
     override fun getRealData() = data
 
     override fun execute(success: ((T?) -> Unit)?, error: ((Exception) -> Unit)?) {
         if (!this.isSuccess()) {
-            this.getMessage().let { error?.invoke(ApiException(code, msg)) ?: Toasts.show(it) }
+            this.getMessage().let { error?.invoke(ApiException(code, it)) ?: Toasts.show(it) }
             return
         }
         if (data == null) {
@@ -38,5 +45,13 @@ data class ChatResponse<T>(val code: Int, val msg: String, val data: T?) : Benyq
             return
         }
         success?.invoke(this.getRealData()!!)
+    }
+
+    override fun executeRsp(successResponse: ((BenyqResponse<T>) -> Unit)?, error: ((Exception) -> Unit)?) {
+        successResponse?.invoke(ChatResponse(code, getMessage(), data))
+        if (!this.isSuccess()) {
+            this.getMessage().let { error?.invoke(ApiException(code, it)) ?: Toasts.show(it) }
+            return
+        }
     }
 }
