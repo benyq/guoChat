@@ -37,9 +37,9 @@ data class ContractEntity(
     /**
      * 备注
      */
-    var remark: String?,
+    var remark: String? = null,
 
-    var avatarUrl: String?,
+    var avatarUrl: String? = null,
 
     // CHAT_TYPE_CONTRACT == 1
     var chatType: Int = 1

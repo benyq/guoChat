@@ -85,40 +85,8 @@
       "relations": []
     },
     {
-      "id": "3:4781848415072188291",
-      "lastPropertyId": "4:44008574458591295",
-      "name": "ChatFromToEntity",
-      "properties": [
-        {
-          "id": "1:3098732170396412978",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:9080924947024093345",
-          "name": "fromUid",
-          "type": 6,
-          "flags": 4
-        },
-        {
-          "id": "3:360632014280633262",
-          "name": "toUid",
-          "type": 6,
-          "flags": 4
-        },
-        {
-          "id": "4:44008574458591295",
-          "name": "updateTime",
-          "type": 6,
-          "flags": 4
-        }
-      ],
-      "relations": []
-    },
-    {
       "id": "4:6728705956875256297",
-      "lastPropertyId": "12:6914392006897016167",
+      "lastPropertyId": "13:8231693859142211664",
       "name": "ChatRecordEntity",
       "properties": [
         {
@@ -174,18 +142,16 @@
         {
           "id": "10:2312556520627144961",
           "name": "fromUid",
-          "type": 5,
-          "flags": 4
+          "type": 9
         },
         {
           "id": "11:9009732530726133984",
           "name": "toUid",
-          "type": 5,
-          "flags": 4
+          "type": 9
         },
         {
-          "id": "12:6914392006897016167",
-          "name": "fromToId",
+          "id": "13:8231693859142211664",
+          "name": "conversationId",
           "type": 6,
           "flags": 4
         }
@@ -194,7 +160,7 @@
     },
     {
       "id": "5:1977005759769735532",
-      "lastPropertyId": "8:4170615368329090901",
+      "lastPropertyId": "10:2174451326732047401",
       "name": "ContractEntity",
       "properties": [
         {
@@ -211,11 +177,6 @@
         {
           "id": "3:7534167599974112334",
           "name": "ownUserId",
-          "type": 9
-        },
-        {
-          "id": "4:3678252846597077057",
-          "name": "contractName",
           "type": 9
         },
         {
@@ -239,20 +200,69 @@
           "name": "chatType",
           "type": 5,
           "flags": 4
+        },
+        {
+          "id": "9:6644262312580241379",
+          "name": "chatNo",
+          "type": 9
+        },
+        {
+          "id": "10:2174451326732047401",
+          "name": "remark",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:676843767121548968",
+      "lastPropertyId": "4:418009868878528950",
+      "name": "ConversationEntity",
+      "properties": [
+        {
+          "id": "1:5527501712633796936",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8509747348977406884",
+          "name": "fromUid",
+          "type": 9
+        },
+        {
+          "id": "3:3164160854120174414",
+          "name": "toUid",
+          "type": 9
+        },
+        {
+          "id": "4:418009868878528950",
+          "name": "updateTime",
+          "type": 6,
+          "flags": 4
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "5:1977005759769735532",
+  "lastEntityId": "6:676843767121548968",
   "lastIndexId": "2:7095907881387222621",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
+  "retiredEntityUids": [
+    4781848415072188291
+  ],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    3678252846597077057,
+    3098732170396412978,
+    9080924947024093345,
+    360632014280633262,
+    44008574458591295,
+    6914392006897016167
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

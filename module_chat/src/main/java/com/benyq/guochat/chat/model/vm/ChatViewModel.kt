@@ -1,6 +1,7 @@
 package com.benyq.guochat.chat.model.vm
 
 import androidx.lifecycle.MutableLiveData
+import com.benyq.guochat.chat.local.ChatLocalStorage
 import com.benyq.guochat.chat.model.bean.ChatListBean
 import com.benyq.guochat.chat.model.rep.ChatRepository
 import com.benyq.module_base.mvvm.BaseViewModel
@@ -20,7 +21,7 @@ class ChatViewModel @Inject constructor(private val mRepository: ChatRepository)
 
     fun getChatContracts() {
         quickLaunch<List<ChatListBean>> {
-            request { mRepository.getChatContracts() }
+            request { mRepository.getChatContracts(ChatLocalStorage.uid) }
             onSuccess {
                 mChatListData.value = it
             }

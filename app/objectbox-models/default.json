@@ -93,7 +93,7 @@
         },
         {
           "id": "10:5814763182086609045",
-          "name": "fromToId",
+          "name": "conversationId",
           "type": 6,
           "flags": 4
         },

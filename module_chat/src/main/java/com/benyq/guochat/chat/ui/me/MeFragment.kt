@@ -1,13 +1,13 @@
 package com.benyq.guochat.chat.ui.me
 
 import com.benyq.guochat.chat.databinding.FragmentMeBinding
+import com.benyq.guochat.chat.loadAvatar
 import com.benyq.guochat.chat.local.ChatLocalStorage
 import com.benyq.guochat.media.NotificationHelper
 import com.benyq.module_base.ui.base.BaseFragment
 import com.benyq.guochat.chat.ui.contracts.CallingCardActivity
 import com.benyq.guochat.chat.ui.settings.SettingsActivity
 import com.benyq.module_base.ext.goToActivity
-import com.benyq.module_base.ext.loadImage
 import kotlinx.coroutines.*
 
 /**
@@ -60,8 +60,8 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
 
     private fun showUserInfo() {
         ChatLocalStorage.userAccount.run {
-            binding.ivAvatar.loadImage(avatarUrl)
-            binding.tvUserNick.text = nickName
+            binding.ivAvatar.loadAvatar(avatarUrl)
+            binding.tvUserNick.text = nick
             binding.tvChatNo.text = chatNo
         }
     }

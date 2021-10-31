@@ -2,6 +2,7 @@ package com.benyq.module_base.ext
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.text.TextUtils
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.inputmethod.InputMethodManager
@@ -9,6 +10,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import androidx.annotation.StyleRes
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -19,6 +21,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.tabs.TabLayout
 
@@ -164,19 +167,28 @@ fun View?.visibleAlphaAnimation(duration: Long = 500L) {
 
 fun ImageView.loadImage(
     url: String?,
+    @DrawableRes
+    resId: Int = 0,
     round: Int = 10,
     isCircle: Boolean = false,
-    placeHolder: Int = R.drawable.shape_album_loading_bg
+    placeHolder: Int = R.drawable.shape_album_loading_bg,
+    error: Int = R.drawable.shape_album_loading_bg
 ) {
-    Glide.with(context).load(url)
-        .apply {
-            placeholder(placeHolder)
-            if (isCircle) {
-                transform(CircleCrop())
-            } else if (round > 0) {
-                transform(RoundedCorners(context.dip2px(round).toInt()))
-            }
-        }
+    Glide.with(context).load(if (url.isNullOrEmpty()) resId else url)
+        .placeholder(placeHolder)
+        .error(error)
+        .run {
+            when {
+                isCircle -> {
+                    transform(CircleCrop())
+                }
+                round > 0 -> {
+                    transform(RoundedCorners(context.dip2px(round).toInt()))
+                }
+                else -> {
+                    this
+                }
+        }}
         .into(this)
 }
 

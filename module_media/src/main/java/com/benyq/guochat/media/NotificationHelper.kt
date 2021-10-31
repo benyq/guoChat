@@ -41,7 +41,7 @@ object NotificationHelper {
     /**
      * 消息通知
      */
-    fun showMessageNotification(context: Context) {
+    fun showMessageNotification(context: Context, name: String, msg: String) {
         messageNotify++
         val contentIntent = PendingIntent.getActivity(context, messageNotify, Intent(context, NotificationHandleActivity::class.java).apply {
             putExtra("ids", messageNotify)
@@ -60,8 +60,8 @@ object NotificationHelper {
         val notification: Notification = NotificationCompat.Builder(context, MESSAGE_CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher) // the status icon
             .setWhen(System.currentTimeMillis()) // the time stamp
-            .setContentTitle("苏打先生")
-            .setContentText("我就说你这个事情是不可能完成的，你还不相信。相信我说的就是没问题的。不要你觉得，我要我觉得")
+            .setContentTitle(name)
+            .setContentText(msg)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setOngoing(false)
             .setOnlyAlertOnce(true)

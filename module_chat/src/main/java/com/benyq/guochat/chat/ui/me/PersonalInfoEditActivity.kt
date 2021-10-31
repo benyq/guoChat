@@ -29,7 +29,7 @@ class PersonalInfoEditActivity :
         binding.headerView.setToolbarTitle("更改名字")
         binding.headerView.setMenuBtnEnable(false)
 
-        oldValue = ChatLocalStorage.userAccount.nickName
+        oldValue = ChatLocalStorage.userAccount.nick
         binding.etContent.setText(oldValue)
     }
 
@@ -53,7 +53,7 @@ class PersonalInfoEditActivity :
         with(viewModelGet()) {
             editNickLiveData.observe(this@PersonalInfoEditActivity, {
                 ChatLocalStorage.updateUserAccount {
-                    nickName = it
+                    nick = it
                 }
                 finish()
             })

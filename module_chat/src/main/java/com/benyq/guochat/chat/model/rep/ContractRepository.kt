@@ -23,9 +23,10 @@ class ContractRepository @Inject constructor(private val apiService: ChatApiServ
             val contractEntityList = ChatObjectBox.getAllContracts(id)
             contractEntityList.forEach {
                 val pinyin = Pinyin.toPinyin(it.nick, "").first().toString()
+                val conversation = ChatObjectBox.getConversationId(id, it.contractId)
                 charMap[pinyin] = charMap[pinyin]?.apply {
-                    add(ContractSectionBean(it, headText = pinyin))
-                } ?: mutableListOf(ContractSectionBean(it, headText = pinyin))
+                    add(ContractSectionBean(it, conversation, headText = pinyin))
+                } ?: mutableListOf(ContractSectionBean(it, conversation, headText = pinyin))
             }
             charMap.forEach {
                 it.value.sortBy { bean ->
@@ -34,7 +35,7 @@ class ContractRepository @Inject constructor(private val apiService: ChatApiServ
             }
             ChatResponse.success(charMap.flatMap {
                 it.value.apply {
-                    add(0, ContractSectionBean(null, headText = it.key, header = true))
+                    add(0, ContractSectionBean(headText = it.key, header = true))
                 }
             })
         }

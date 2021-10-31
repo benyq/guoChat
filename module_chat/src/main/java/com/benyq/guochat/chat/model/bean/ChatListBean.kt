@@ -20,5 +20,5 @@ data class ChatListBean(
     val latestTime: Long,
     val latestConversation: String,
     val notificationOff: Boolean = false,
-    val fromToId: Long = 0
+    val conversationId: Long = 0
 ) : Parcelable

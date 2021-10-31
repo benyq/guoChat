@@ -7,7 +7,8 @@ package com.benyq.guochat.chat.app
  * @note
  */
 object IntentExtra {
-    const val fromToId = "fromToId"
+
+    const val conversationId = "conversationId"
 
     const val imgPath = "imgPath"
 

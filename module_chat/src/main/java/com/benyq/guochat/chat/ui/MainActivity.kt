@@ -1,6 +1,7 @@
 package com.benyq.guochat.chat.ui
 
 import android.Manifest
+import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
@@ -13,6 +14,7 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
 import com.benyq.guochat.chat.R
 import com.benyq.guochat.chat.databinding.ActivityMainBinding
+import com.benyq.guochat.chat.function.message.MessageService
 import com.benyq.guochat.chat.function.zxing.android.CaptureActivity
 import com.benyq.guochat.chat.local.ChatObjectBox
 import com.benyq.guochat.chat.model.vm.MainViewModel
@@ -47,7 +49,7 @@ class MainActivity : LifecycleActivity<MainViewModel, ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         PlayerController.setContext(this)
-
+        startService(Intent(this, MessageService::class.java))
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             private var tapTime = 0L
             override fun handleOnBackPressed() {

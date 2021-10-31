@@ -95,7 +95,7 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel, ActivityFr
 
         val user = ChatLocalStorage.userAccount
         binding.ivAvatar.loadImage(user.avatarUrl)
-        binding.tvNickName.text = user.nickName
+        binding.tvNickName.text = user.nick
         Glide.with(this)
             .load("https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=11232128,2567744034&fm=26&gp=0.jpg")
             .centerCrop().into(binding.ivBg)
@@ -128,7 +128,7 @@ class FriendCircleActivity : LifecycleActivity<FriendCircleViewModel, ActivityFr
                                     "3",
                                     it,
                                     user.chatId,
-                                    user.nickName,
+                                    user.nick,
                                     "",
                                     "",
                                     ""

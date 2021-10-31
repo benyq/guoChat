@@ -22,8 +22,7 @@ data class UserBean(
     /**
      * 昵称
      */
-    @SerializedName("nick")
-    var nickName: String,
+    var nick: String,
     /**
      * 头像url
      */

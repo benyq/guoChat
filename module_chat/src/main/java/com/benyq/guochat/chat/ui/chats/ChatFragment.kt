@@ -34,7 +34,7 @@ class ChatFragment : LifecycleFragment<ChatViewModel, FragmentChatBinding>() {
         binding.rvChats.adapter = mChatAdapter
         mChatAdapter.setDiffCallback(object : DiffUtil.ItemCallback<ChatListBean>() {
             override fun areItemsTheSame(oldItem: ChatListBean, newItem: ChatListBean): Boolean {
-                return oldItem.fromToId == newItem.fromToId
+                return oldItem.conversationId == newItem.conversationId
             }
 
             override fun areContentsTheSame(oldItem: ChatListBean, newItem: ChatListBean): Boolean {
@@ -43,7 +43,7 @@ class ChatFragment : LifecycleFragment<ChatViewModel, FragmentChatBinding>() {
 
         })
         mChatAdapter.setOnItemClickListener { adapter, view, position ->
-            goToActivity<ChatDetailActivity>(IntentExtra.fromToId to mChatAdapter.data[position])
+            goToActivity<ChatDetailActivity>(IntentExtra.conversationId to mChatAdapter.data[position].conversationId)
         }
 
         mChatAdapter.setOnItemLongClickListener { adapter, view, position ->

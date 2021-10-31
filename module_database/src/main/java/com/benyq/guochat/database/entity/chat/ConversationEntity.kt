@@ -5,14 +5,15 @@ import io.objectbox.annotation.Id
 
 /**
  * @author benyq
- * @time 2020/5/2
+ * @time 2021/10/30
  * @e-mail 1520063035@qq.com
- * @note 保存 聊天对象信息
+ * @note
  */
 @Entity
-data class ChatFromToEntity(
-    @Id var id: Long = 0,
-    var fromUid: Long = 0,
-    var toUid: Long = 0,
+data class ConversationEntity(
+    @Id
+    var id: Long = 0,
+    var fromUid: String,
+    var toUid: String,
     var updateTime: Long = System.currentTimeMillis()
 )

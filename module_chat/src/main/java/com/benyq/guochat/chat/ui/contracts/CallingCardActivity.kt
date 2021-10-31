@@ -31,7 +31,7 @@ class CallingCardActivity : BaseActivity<ActivityCallingCardBinding>() {
             .transform(RoundedCorners(dip2px(10).toInt()))
             .into(binding.ivAvatar)
 
-        binding.tvContractName.text = mUserBean.nickName
+        binding.tvContractName.text = mUserBean.nick
         createCallingCardQr("1234")
 
     }

@@ -22,7 +22,7 @@ class PersonalInfoActivity : BaseActivity<ActivityPersonalInfoBinding>() {
     override fun initView() {
         ChatLocalStorage.userAccount.run {
             binding.ivAvatar.loadImage(avatarUrl)
-            binding.ifNickName.setContent(nickName)
+            binding.ifNickName.setContent(nick)
             binding.ifChatNo.setContent(chatNo)
         }
     }

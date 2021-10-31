@@ -3,6 +3,7 @@ package com.benyq.guochat.chat.model.vm
 import androidx.lifecycle.MutableLiveData
 import com.benyq.guochat.chat.app.baseUrl
 import com.benyq.guochat.chat.local.ChatLocalStorage
+import com.benyq.guochat.chat.local.ChatObjectBox
 import com.benyq.guochat.chat.model.bean.PersonConfig
 import com.benyq.guochat.chat.model.bean.UserBean
 import com.benyq.guochat.chat.model.rep.LoginRepository

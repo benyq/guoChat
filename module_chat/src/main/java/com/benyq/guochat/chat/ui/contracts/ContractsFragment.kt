@@ -31,8 +31,8 @@ class ContractsFragment : LifecycleFragment<ContractViewModel, FragmentContracts
         binding.rvContracts.adapter = mAdapter
         mAdapter.setOnItemClickListener { adapter, view, position ->
             val contractSectionBean = mAdapter.data[position]
-            if (!contractSectionBean.isHeader && contractSectionBean.contractEntity != null) {
-                with(contractSectionBean.contractEntity) {
+            if (!contractSectionBean.isHeader) {
+                with(contractSectionBean.contractEntity!!) {
                     val contractBean = ContractBean(0, ownUserId, contractId, chatNo, nick, remark, gender, avatarUrl)
                     goToActivity<ContractDetailActivity>(IntentExtra.contractData to contractBean)
                 }

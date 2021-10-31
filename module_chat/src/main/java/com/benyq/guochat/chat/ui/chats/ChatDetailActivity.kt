@@ -3,6 +3,7 @@ package com.benyq.guochat.chat.ui.chats
 import android.Manifest
 import android.app.Activity
 import android.graphics.Rect
+import android.text.TextUtils
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.view.isVisible
@@ -15,7 +16,10 @@ import com.benyq.guochat.chat.R
 import com.benyq.guochat.chat.app.IntentExtra
 import com.benyq.guochat.chat.app.SharedViewModel
 import com.benyq.guochat.chat.databinding.ActivityChatDetailBinding
+import com.benyq.guochat.chat.local.ChatLocalStorage
+import com.benyq.guochat.chat.local.ChatObjectBox
 import com.benyq.guochat.chat.model.bean.ChatListBean
+import com.benyq.guochat.chat.model.bean.ContractBean
 import com.benyq.guochat.chat.model.vm.ChatDetailViewModel
 import com.benyq.guochat.chat.model.vm.StateEvent
 import com.benyq.guochat.chat.ui.chats.video.PictureVideoActivity
@@ -52,7 +56,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
     private val TYPE_TEXT = 0
     private val TYPE_VOICE = 1
 
-    private val mAdapter = ChatRecordAdapter(1)
+    private lateinit var mAdapter: ChatRecordAdapter
     private val mEmojiAdapter by lazy { EmojiAdapter() }
     private val mVoiceRecordDialog by lazy {
         VoiceRecordDialog().apply {
@@ -61,10 +65,10 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
                 //发送
                 voiceBean?.run {
                     val chatBean = ChatRecordEntity(
-                        voiceRecordPath = voicePath,
-                        voiceRecordDuration = voiceDuration,
-                        fromUid = 1,
-                        toUid = 2,
+                        filePath = voicePath,
+                        duration = voiceDuration,
+                        fromUid = ChatLocalStorage.uid,
+                        toUid = mContractBean.contractId,
                         chatType = ChatRecordEntity.TYPE_VOICE
                     )
                     addChatData(chatBean)
@@ -75,6 +79,8 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
             }
         }
     }
+
+    private val mAppVideModel: SharedViewModel by lazy { getAppViewModelProvider().get(SharedViewModel::class.java) }
 
     private var mInputType by Delegates.observable(TYPE_TEXT, { prop, old, new ->
         if (new == TYPE_VOICE) {
@@ -103,14 +109,25 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
         }
     })
 
-    lateinit var mChatListBean: ChatListBean
+    private var mConversationId: Long = 0
+
+    private lateinit var mContractBean: ContractBean
 
     override fun initVM(): ChatDetailViewModel = getViewModel()
 
     override fun provideViewBinding() = ActivityChatDetailBinding.inflate(layoutInflater)
 
     override fun initView() {
-        mChatListBean = intent.getParcelableExtra(IntentExtra.fromToId)!!
+        mConversationId = intent.getLongExtra(IntentExtra.conversationId, 0)
+        val tempContractBean = ChatObjectBox.getContractByConversation(mConversationId)
+
+        if (mConversationId == 0L || tempContractBean == null) {
+            Toasts.show("聊天信息出错!!!!")
+            finish()
+            return
+        }
+        mContractBean = tempContractBean
+        mAdapter = ChatRecordAdapter(ChatLocalStorage.userAccount, mContractBean)
         binding.rootLayout.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
             if (oldBottom != -1 && oldBottom > bottom) {
                 if (mAdapter.data.isNotEmpty()) {
@@ -141,7 +158,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
         binding.headerView.setMenuAction {
 
         }
-        binding.headerView.setToolbarTitle(mChatListBean.contractName)
+        binding.headerView.setToolbarTitle(mContractBean.nick)
         mAdapter.notifyDataSetChanged()
     }
 
@@ -187,7 +204,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
             val data = mAdapter.data[position]
             if (data.chatType == ChatRecordEntity.TYPE_VOICE) {
                 mAdapter.setVoiceStop()
-                VoiceRecordController.playVideoRecord(this, data.voiceRecordPath, data.id)
+                VoiceRecordController.playVideoRecord(this, data.filePath, data.id)
                 mAdapter.setVoicePlay(data)
             }
         }
@@ -208,14 +225,14 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
                                 binding.rvChatRecord.getChildAt(realIndex)
                                     ?.findViewById(R.id.ivContent)
                             )
-                            tmpData.add(PreviewPhoto(entity.imgUrl, PreviewTypeEnum.IMAGE))
+                            tmpData.add(PreviewPhoto(entity.filePath, PreviewTypeEnum.IMAGE))
                         }
                         if (entity.chatType == ChatRecordEntity.TYPE_VIDEO) {
                             tmpView.add(
                                 binding.rvChatRecord.getChildAt(realIndex)
                                     ?.findViewById(R.id.ivVideo)
                             )
-                            tmpData.add(PreviewPhoto(entity.videoPath, PreviewTypeEnum.VIDEO))
+                            tmpData.add(PreviewPhoto(entity.filePath, PreviewTypeEnum.VIDEO))
                         }
                         if (index == position) {
                             currentData = tmpData.last()
@@ -240,7 +257,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
     }
 
     override fun initData() {
-        viewModelGet().getChatRecord(mChatListBean.fromToId, 1, 10)
+        viewModelGet().getChatRecord(mConversationId, 1, 10)
     }
 
     override fun dataObserver() {
@@ -318,8 +335,8 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
                 addChatData(
                     ChatRecordEntity(
                         content = content,
-                        fromUid = 1,
-                        toUid = 2
+                        fromUid = ChatLocalStorage.uid,
+                        toUid = mContractBean.contractId
                     )
                 )
                 binding.etContent.setText("")
@@ -341,10 +358,10 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
                             val res = result[0]
                             addChatData(
                                 ChatRecordEntity(
-                                    fromUid = 2,
-                                    toUid = 1,
+                                    fromUid = ChatLocalStorage.uid,
+                                    toUid = mContractBean.contractId,
                                     chatType = ChatRecordEntity.TYPE_IMG,
-                                    imgUrl = res.path
+                                    filePath = res.realPath
                                 )
                             )
                         }
@@ -432,7 +449,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
     }
 
     private fun addChatData(data: ChatRecordEntity) {
-        data.fromToId = mChatListBean.fromToId
+        data.conversationId = mConversationId
         mAdapter.addData(data)
         binding.rvChatRecord.smoothScrollToPosition(mAdapter.data.size - 1)
         runOnUiThread(200) {
@@ -440,8 +457,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
             mLayoutManager.scrollToPositionWithOffset(mAdapter.data.size - 1, 0)
         }
         viewModelGet().sendChatMessage(data)
-
-        getAppViewModelProvider().get(SharedViewModel::class.java).notifyChatChange(true)
+        mAppVideModel.notifyChatChange(true)
     }
 
     private fun gotoCameraCapture() {
@@ -452,20 +468,20 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
                 if (state == StateEvent.STATE_FINISH_VIDEO) {
                     addChatData(
                         ChatRecordEntity(
-                            fromUid = 2,
-                            toUid = 1,
+                            fromUid = ChatLocalStorage.uid,
+                            toUid = mContractBean.contractId,
                             chatType = ChatRecordEntity.TYPE_VIDEO,
-                            videoPath = data.getStringExtra(IntentExtra.videoImgPath)!!,
-                            videoDuration = data.getIntExtra(IntentExtra.videoDuration, 0).toLong()
+                            filePath = data.getStringExtra(IntentExtra.videoImgPath)!!,
+                            duration = data.getIntExtra(IntentExtra.videoDuration, 0).toLong()
                         )
                     )
                 } else {
                     addChatData(
                         ChatRecordEntity(
-                            fromUid = 2,
-                            toUid = 1,
+                            fromUid = ChatLocalStorage.uid,
+                            toUid = mContractBean.contractId,
                             chatType = ChatRecordEntity.TYPE_IMG,
-                            imgUrl = data.getStringExtra(IntentExtra.videoImgPath)!!
+                            filePath = data.getStringExtra(IntentExtra.videoImgPath)!!
                         )
                     )
                 }

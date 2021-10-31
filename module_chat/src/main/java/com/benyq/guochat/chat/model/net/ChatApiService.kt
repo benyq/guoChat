@@ -24,7 +24,6 @@ interface ChatApiService {
     @POST("user/login")
     suspend fun login(@Field("phone") account: String, @Field("pwd") password: String): ChatResponse<UserBean>
 
-
     @POST("user/register")
     suspend fun register(@Body body: RequestBody): ChatResponse<UserBean>
 
@@ -45,7 +44,6 @@ interface ChatApiService {
     @GET("/")
     suspend fun test(): String
 
-
     /**
      * 搜索联系人
      */
@@ -57,7 +55,6 @@ interface ChatApiService {
      */
     @GET("/contract/get-all-contract")
     suspend fun getAllContracts(): ChatResponse<List<ContractBean>>
-
 
     /**
      * @param uid 联系人id
@@ -76,4 +73,14 @@ interface ChatApiService {
     @POST("/contract/refuse-contract")
     @FormUrlEncoded
     suspend fun refuseContract(@Field("contract_id") contractId: String): ChatResponse<String>
+
+
+    @POST("/chat/send-message")
+    @FormUrlEncoded
+    suspend fun sendChatMessage(@Field("to") to: String, @Field("msg") msg: String): ChatResponse<Boolean>
+
+    @POST("/chat/send-chat-file")
+    @Multipart
+    suspend fun sendChatFile(@PartMap map: Map<String, @JvmSuppressWildcards RequestBody>, @Part file: MultipartBody.Part): ChatResponse<Boolean>
+
 }

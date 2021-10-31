@@ -1,7 +1,9 @@
 package com.benyq.guochat.chat.ui.chats
 
+import android.widget.ImageView
 import com.benyq.guochat.chat.R
 import com.benyq.guochat.chat.function.other.DateFormatUtil
+import com.benyq.guochat.chat.loadAvatar
 import com.benyq.guochat.chat.model.bean.ChatListBean
 import com.benyq.module_base.ext.dip2px
 import com.benyq.module_base.ext.loge
@@ -34,14 +36,7 @@ class ChatAdapter : BaseQuickAdapter<ChatListBean, BaseViewHolder>(R.layout.item
                     loge("progress $progress")
                 }
             })
-
-            Glide.with(context).load(avatar)
-                .apply(RequestOptions().apply {
-                    skipMemoryCache(true)
-                    diskCacheStrategy(DiskCacheStrategy.NONE)
-                })
-                .transform(RoundedCorners(context.dip2px(10).toInt()))
-                .into(holder.getView(R.id.ivAvatar))
+            holder.getView<ImageView>(R.id.ivAvatar).loadAvatar(avatar)
         }
     }
 }
