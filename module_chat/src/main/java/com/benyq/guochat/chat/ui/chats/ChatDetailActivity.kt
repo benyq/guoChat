@@ -2,10 +2,11 @@ package com.benyq.guochat.chat.ui.chats
 
 import android.Manifest
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Rect
-import android.text.TextUtils
 import android.view.MotionEvent
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.core.view.postDelayed
 import androidx.core.widget.addTextChangedListener
@@ -18,7 +19,6 @@ import com.benyq.guochat.chat.app.SharedViewModel
 import com.benyq.guochat.chat.databinding.ActivityChatDetailBinding
 import com.benyq.guochat.chat.local.ChatLocalStorage
 import com.benyq.guochat.chat.local.ChatObjectBox
-import com.benyq.guochat.chat.model.bean.ChatListBean
 import com.benyq.guochat.chat.model.bean.ContractBean
 import com.benyq.guochat.chat.model.vm.ChatDetailViewModel
 import com.benyq.guochat.chat.model.vm.StateEvent
@@ -32,6 +32,7 @@ import com.benyq.module_base.SmartJump
 import com.benyq.module_base.ext.*
 import com.benyq.module_base.glide.GlideEngine
 import com.benyq.module_base.ui.base.LifecycleActivity
+import com.benyq.module_base.ui.waterdrop.WaterDropHeader
 import com.gyf.immersionbar.ktx.immersionBar
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.XXPermissions
@@ -80,7 +81,11 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
         }
     }
 
-    private val mAppVideModel: SharedViewModel by lazy { getAppViewModelProvider().get(SharedViewModel::class.java) }
+    private val mAppVideModel: SharedViewModel by lazy {
+        getAppViewModelProvider().get(SharedViewModel::class.java).apply {
+            conversationId = mConversationId
+        }
+    }
 
     private var mInputType by Delegates.observable(TYPE_TEXT, { prop, old, new ->
         if (new == TYPE_VOICE) {
@@ -123,7 +128,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
 
         if (mConversationId == 0L || tempContractBean == null) {
             Toasts.show("聊天信息出错!!!!")
-            finish()
+            onBackPressed()
             return
         }
         mContractBean = tempContractBean
@@ -153,13 +158,44 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
         }
 
         binding.headerView.setBackAction {
-            finish()
+            onBackPressed()
         }
         binding.headerView.setMenuAction {
 
         }
         binding.headerView.setToolbarTitle(mContractBean.nick)
-        mAdapter.notifyDataSetChanged()
+
+        binding.refreshLayout.setRefreshHeader(WaterDropHeader(this))
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                mAppVideModel.reset()
+                finish()
+            }
+        })
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        if (intent == null) {
+            Toasts.show("聊天信息出错!!!!")
+            onBackPressed()
+            return
+        }
+        mConversationId = intent.getLongExtra(IntentExtra.conversationId, 0)
+        mAppVideModel.conversationId = mConversationId
+        val tempContractBean = ChatObjectBox.getContractByConversation(mConversationId)
+
+        if (mConversationId == 0L || tempContractBean == null) {
+            Toasts.show("聊天信息出错!!!!")
+            onBackPressed()
+            return
+        }
+        mContractBean = tempContractBean
+        mAdapter.setNewInstance(null)
+        mAdapter.setContract(mContractBean)
+        binding.headerView.setToolbarTitle(mContractBean.nick)
+        initData()
     }
 
     override fun initImmersionBar() {
@@ -199,6 +235,10 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
         binding.llAlbum.setOnClickListener(this)
         binding.llCapture.setOnClickListener(this)
         binding.llContracts.setOnClickListener(this)
+
+        binding.refreshLayout.setOnRefreshListener {
+            viewModelGet().requestMoreRecord(mConversationId, mAdapter.data.first().sendTime)
+        }
 
         mAdapter.setOnItemClickListener { adapter, view, position ->
             val data = mAdapter.data[position]
@@ -257,28 +297,44 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
     }
 
     override fun initData() {
-        viewModelGet().getChatRecord(mConversationId, 1, 10)
+        viewModelGet().getChatRecord(mConversationId)
     }
 
     override fun dataObserver() {
         with(viewModelGet()) {
-            mChatRecordData.observe(this@ChatDetailActivity, Observer {
-                if (mAdapter.data.size > 0) {
-                    mAdapter.addData(it)
-                } else {
-                    binding.rvChatRecord.alpha = 0f
-                    //根据item总高度显示区分 stackFromEnd 会出现问题，所以目前先靠估算吧
-                    val layoutManager = binding.rvChatRecord.layoutManager as LinearLayoutManager
-                    mAdapter.setNewInstance(it.toMutableList())
-                    binding.rvChatRecord.postDelayed(50) {
-                        layoutManager.stackFromEnd = isFullScreen(layoutManager)
-                        binding.rvChatRecord.alpha = 1f
-                    }
+            mChatRecordData.observe(this@ChatDetailActivity){
+                binding.rvChatRecord.alpha = 0f
+                //根据item总高度显示区分 stackFromEnd 会出现问题，所以目前先靠估算吧
+                val layoutManager = binding.rvChatRecord.layoutManager as LinearLayoutManager
+                mAdapter.setNewInstance(it.toMutableList())
+                binding.rvChatRecord.postDelayed(50) {
+                    layoutManager.stackFromEnd = isFullScreen(layoutManager)
+                    binding.rvChatRecord.alpha = 1f
                 }
-            })
-            mSendMessageData.observe(this@ChatDetailActivity, Observer {
+            }
+            mSendMessageData.observe(this@ChatDetailActivity) {
 
-            })
+            }
+            mChatLatestRecordData.observe(this@ChatDetailActivity) {
+                mAdapter.addData(it)
+                binding.rvChatRecord.scrollToPosition(mAdapter.data.size - 1)
+            }
+            mChatMoreRecordData.observe(this@ChatDetailActivity) {
+                mAdapter.addData(0, it)
+                if (it.isEmpty()) {
+                    binding.refreshLayout.setEnableRefresh(false)
+                }
+            }
+            loadingType.observe(this@ChatDetailActivity) {
+                if (!it.isLoading) {
+                    binding.refreshLayout.finishRefresh()
+                }
+            }
+        }
+        mAppVideModel.chatChange.observe(this) {
+            if (it == mConversationId && mAdapter.data.isNotEmpty()) {
+                viewModelGet().requestLatestRecord(mConversationId, mAdapter.data.last().sendTime)
+            }
         }
     }
 
@@ -457,7 +513,6 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
             mLayoutManager.scrollToPositionWithOffset(mAdapter.data.size - 1, 0)
         }
         viewModelGet().sendChatMessage(data)
-        mAppVideModel.notifyChatChange(true)
     }
 
     private fun gotoCameraCapture() {

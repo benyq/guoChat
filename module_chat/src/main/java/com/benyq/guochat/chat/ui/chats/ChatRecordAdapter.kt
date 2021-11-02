@@ -32,7 +32,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
  * @note
  */
 //uid 是当前帐号id
-class ChatRecordAdapter(private val userBean: UserBean, private val contract: ContractBean) :
+class ChatRecordAdapter(private val userBean: UserBean, private var contract: ContractBean) :
     BaseDelegateMultiAdapter<ChatRecordEntity, BaseViewHolder>() {
 
     /**
@@ -133,6 +133,9 @@ class ChatRecordAdapter(private val userBean: UserBean, private val contract: Co
         }
     }
 
+    fun setContract(contract: ContractBean) {
+        this.contract = contract
+    }
 
     fun setVoiceStop(recordId: Long = mPlayingRecord?.id ?: 0) {
         data.forEachIndexed { index, chatRecordEntity ->

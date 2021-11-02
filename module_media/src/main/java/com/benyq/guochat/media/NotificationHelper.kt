@@ -41,11 +41,9 @@ object NotificationHelper {
     /**
      * 消息通知
      */
-    fun showMessageNotification(context: Context, name: String, msg: String) {
+    fun showMessageNotification(context: Context, name: String, msg: String, intent: Intent) {
         messageNotify++
-        val contentIntent = PendingIntent.getActivity(context, messageNotify, Intent(context, NotificationHandleActivity::class.java).apply {
-            putExtra("ids", messageNotify)
-        }, PendingIntent.FLAG_CANCEL_CURRENT)
+        val contentIntent = PendingIntent.getActivity(context, messageNotify, intent, PendingIntent.FLAG_CANCEL_CURRENT)
         if (fromO()) {
             val notificationChannel =
                 NotificationChannel(

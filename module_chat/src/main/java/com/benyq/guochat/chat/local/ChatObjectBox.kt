@@ -8,7 +8,9 @@ import com.benyq.guochat.database.entity.chat.*
 import io.objectbox.Box
 import io.objectbox.BoxStore
 import io.objectbox.kotlin.boxFor
+import io.objectbox.kotlin.equal
 import io.objectbox.kotlin.query
+import io.objectbox.query.QueryBuilder.StringOrder
 
 
 /**
@@ -32,8 +34,9 @@ object ChatObjectBox {
     fun getConversationId(from: String, to: String): ConversationEntity {
         val chatBox: Box<ConversationEntity> = boxStore.boxFor()
         var conversation = chatBox.query {
-            equal(ConversationEntity_.fromUid, from)
-            equal(ConversationEntity_.toUid, to)
+            equal(ConversationEntity_.fromUid, from, StringOrder.CASE_INSENSITIVE)
+            equal(ConversationEntity_.toUid, to, StringOrder.CASE_INSENSITIVE)
+
         }.findFirst()
         if (conversation == null) {
             conversation = ConversationEntity(fromUid = from, toUid = to)
@@ -73,7 +76,7 @@ object ChatObjectBox {
 
         val chatRecordBox: Box<ChatRecordEntity> = boxStore.boxFor()
         val conversations = chatBox.query {
-            equal(ConversationEntity_.fromUid, uid)
+            equal(ConversationEntity_.fromUid, uid, StringOrder.CASE_INSENSITIVE)
             orderDesc(ConversationEntity_.updateTime)
         }.find()
         val chatListBeans = mutableListOf<ChatListBean>()
@@ -83,7 +86,7 @@ object ChatObjectBox {
                 .orderDesc(ChatRecordEntity_.id)
                 .build().findFirst()
 
-            val contractEntity = contractBox.query().equal(ContractEntity_.contractId, it.toUid)
+            val contractEntity = contractBox.query().equal(ContractEntity_.contractId, it.toUid, StringOrder.CASE_INSENSITIVE)
                 .build().findFirst()
 
             val lastConversion: String = chatRecord?.let { record ->
@@ -131,7 +134,7 @@ object ChatObjectBox {
     fun getAllContracts(uid: String): List<ContractEntity> {
         val contractStore: Box<ContractEntity> = boxStore.boxFor()
         return contractStore.query{
-            equal(ContractEntity_.ownUserId, uid)
+            equal(ContractEntity_.ownUserId, uid, StringOrder.CASE_INSENSITIVE)
         }.find()
     }
 
@@ -157,7 +160,7 @@ object ChatObjectBox {
             equal(ConversationEntity_.id, conversationId)
         }.findUnique() ?: return null
         val contractEntity = contractBox.query {
-            equal(ContractEntity_.contractId, conversationEntity.toUid)
+            equal(ContractEntity_.contractId, conversationEntity.toUid, StringOrder.CASE_INSENSITIVE)
         }.findUnique()
         return if (contractEntity == null) {
             null

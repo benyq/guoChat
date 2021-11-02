@@ -83,7 +83,7 @@ dependencies {
     api 'com.squareup.retrofit2:converter-gson:2.9.0'
     api 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 
-    api 'com.google.code.gson:gson:2.8.6'
+    api 'com.google.code.gson:gson:2.8.8'
 
     //viewmodel
     api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
@@ -110,7 +110,12 @@ dependencies {
 
     //https://github.com/youth5201314/banner
     api 'io.github.youth5201314:banner:2.2.2'
-    api 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer:v8.1.5-jitpack'
+    //https://github.com/CarGuo/GSYVideoPlayer
+    api 'com.github.carguo.GSYvideoplayer:gsyVideoPlayer-java:v8.1.6-jitpack'
+    api 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-arm64:v8.1.6-jitpack'
+    api 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-armv7a:v8.1.6-jitpack'
+    api 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-x86:v8.1.6-jitpack'
+    api 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-x64:v8.1.6-jitpack'
 
     //下拉刷新 https://github.com/scwang90/SmartRefreshLayout
     api 'com.scwang.smart:refresh-layout-kernel:2.0.3'

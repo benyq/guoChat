@@ -5,9 +5,14 @@ import com.benyq.guochat.chat.local.ChatObjectBox
 import com.benyq.guochat.chat.model.bean.ChatResponse
 import com.benyq.guochat.chat.model.net.ChatApiService
 import com.benyq.guochat.database.entity.chat.ChatRecordEntity
+import com.benyq.guochat.database.entity.chat.ChatRecordEntity_
+import com.benyq.module_base.ext.loge
 import com.benyq.module_base.http.STREAM
 import com.benyq.module_base.http.TEXT
 import com.benyq.module_base.mvvm.BaseRepository
+import io.objectbox.Box
+import io.objectbox.kotlin.boxFor
+import io.objectbox.kotlin.query
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -25,11 +30,39 @@ import javax.inject.Inject
  */
 class ChatDetailRepository @Inject constructor(private val apiService: ChatApiService) : BaseRepository(){
 
-    suspend fun getChatRecord(chatId: Long, page: Int, size: Int): ChatResponse<List<ChatRecordEntity>> {
+    suspend fun getChatRecord(chatId: Long, page: Long, size: Long): ChatResponse<List<ChatRecordEntity>> {
         return launchIO {
-            ChatResponse.success(ChatObjectBox.getChatRecord(chatId, page.toLong(), size.toLong()))
+            ChatResponse.success(ChatObjectBox.getChatRecord(chatId, page, size))
         }
     }
+
+    suspend fun requestLatestRecord(chatId: Long, currentRecordTime: Long): ChatResponse<List<ChatRecordEntity>>  {
+        return launchIO {
+            val recordBox: Box<ChatRecordEntity> = ChatObjectBox.boxStore.boxFor()
+            val data =  recordBox.query {
+                equal(ChatRecordEntity_.conversationId, chatId)
+                greater(ChatRecordEntity_.sendTime, currentRecordTime)
+            }.find()
+            data.reverse()
+            ChatResponse.success(data)
+        }
+    }
+
+    suspend fun requestMoreRecord(chatId: Long, firstRecordTime: Long, page: Long, size: Long): ChatResponse<List<ChatRecordEntity>> {
+        return launchIO {
+            val recordBox: Box<ChatRecordEntity> = ChatObjectBox.boxStore.boxFor()
+            val data =  recordBox.query {
+                equal(ChatRecordEntity_.conversationId, chatId)
+                less(ChatRecordEntity_.sendTime, firstRecordTime)
+                orderDesc(ChatRecordEntity_.sendTime)
+            }.find(0, size)
+            data.reverse()
+            loge("requestMoreRecord  firstRecordTime: $firstRecordTime  page: $page data : ${data.size}")
+
+            ChatResponse.success(data)
+        }
+    }
+
 
     suspend fun sendChatMessage(data: ChatRecordEntity) : ChatResponse<Boolean> {
         val response: ChatResponse<Boolean>
