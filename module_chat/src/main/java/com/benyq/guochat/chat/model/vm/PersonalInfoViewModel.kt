@@ -22,8 +22,10 @@ class PersonalInfoViewModel @Inject constructor(private val mRepository: UserInf
 
     fun editUserNick(nick: String) {
         quickLaunch<String> {
-            onSuccess { editNickLiveData.value = it }
+            onStart { showLoading("") }
+            onSuccess { editNickLiveData.value = nick }
             request { mRepository.editUserNick(nick) }
+            onFinal { hideLoading() }
         }
     }
 

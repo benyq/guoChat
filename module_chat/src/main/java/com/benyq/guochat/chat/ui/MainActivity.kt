@@ -1,6 +1,7 @@
 package com.benyq.guochat.chat.ui
 
 import android.Manifest
+import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
@@ -13,8 +14,8 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
 import com.benyq.guochat.chat.R
 import com.benyq.guochat.chat.databinding.ActivityMainBinding
-import com.benyq.guochat.chat.function.zxing.android.CaptureActivity
-import com.benyq.guochat.chat.local.ChatObjectBox
+import com.benyq.guochat.chat.ui.scan.BarcodeScanningActivity
+import com.benyq.guochat.chat.function.message.MessageService
 import com.benyq.guochat.chat.model.vm.MainViewModel
 import com.benyq.module_base.ui.base.LifecycleActivity
 import com.benyq.guochat.chat.ui.chats.ChatFragment
@@ -46,9 +47,8 @@ class MainActivity : LifecycleActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ChatObjectBox.testAddChatFromTo()
         PlayerController.setContext(this)
-
+        startService(Intent(this, MessageService::class.java))
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             private var tapTime = 0L
             override fun handleOnBackPressed() {
@@ -113,6 +113,17 @@ class MainActivity : LifecycleActivity<MainViewModel, ActivityMainBinding>() {
 
 
     override fun initData() {
+        viewModelGet().refreshData()
+    }
+
+    override fun dataObserver() {
+        viewModelGet().loadingType.observe(this) {
+            if (it.isLoading) {
+                showLoading(it.isSuccess)
+            } else {
+                hideLoading()
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -194,7 +205,7 @@ class MainActivity : LifecycleActivity<MainViewModel, ActivityMainBinding>() {
                     .permission(Manifest.permission.CAMERA)
                     .request(object : OnPermissionCallback {
                         override fun onGranted(permissions: MutableList<String>?, all: Boolean) {
-                            goToActivity<CaptureActivity>()
+                            goToActivity<BarcodeScanningActivity>()
                         }
 
                         override fun onDenied(permissions: MutableList<String>?, never: Boolean) {
@@ -214,6 +225,5 @@ class MainActivity : LifecycleActivity<MainViewModel, ActivityMainBinding>() {
         return popWindow
     }
 
-    override fun dataObserver() {
-    }
+
 }

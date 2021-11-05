@@ -9,17 +9,14 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import androidx.annotation.StyleRes
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.benyq.module_base.R
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.google.android.material.tabs.TabLayout
 
 /**
@@ -67,8 +64,11 @@ fun View.setDoubleClickListener(block: () -> Unit) {
     this.setOnClickListener { ClickUtil.interval(block) }
 }
 
-inline fun View.setThrottleClickListener(throttle: Long = 500, crossinline onClick: (v: View) ->Unit) {
-    setOnClickListener(object: View.OnClickListener{
+inline fun View.setThrottleClickListener(
+    throttle: Long = 500,
+    crossinline onClick: (v: View) -> Unit
+) {
+    setOnClickListener(object : View.OnClickListener {
         private var prevClickTime = 0L
         override fun onClick(v: View?) {
             val t = System.currentTimeMillis()
@@ -92,10 +92,10 @@ fun View.gone() {
     this.visibility = View.GONE
 }
 
-fun TextView.setTextAppearanceCustomer(context: Context, @StyleRes resId:Int ){
-    if (fromM()){
+fun TextView.setTextAppearanceCustomer(context: Context, @StyleRes resId: Int) {
+    if (fromM()) {
         this.setTextAppearance(resId)
-    }else {
+    } else {
         this.setTextAppearance(context, resId)
     }
 }
@@ -109,10 +109,20 @@ fun TextView.setTextAppearanceCustomer(context: Context, @StyleRes resId:Int ){
  * @param iconHeight   图标高dp：默认自动根据图标大小
  * @param direction    图标方向，0左 1上 2右 3下 默认图标位于左侧0
  */
-fun TextView.setDrawable(drawable: Drawable?, iconWidth: Float? = null, iconHeight: Float? = null, direction: Int = 0) {
+fun TextView.setDrawable(
+    drawable: Drawable?,
+    iconWidth: Float? = null,
+    iconHeight: Float? = null,
+    direction: Int = 0
+) {
     if (iconWidth != null && iconHeight != null) {
         //第一个0是距左边距离，第二个0是距上边距离，iconWidth、iconHeight 分别是长宽
-        drawable?.setBounds(0, 0, context.dip2px(iconWidth).toInt(), context.dip2px(iconHeight).toInt())
+        drawable?.setBounds(
+            0,
+            0,
+            context.dip2px(iconWidth).toInt(),
+            context.dip2px(iconHeight).toInt()
+        )
     }
     when (direction) {
         0 -> setCompoundDrawables(drawable, null, null, null)
@@ -163,18 +173,26 @@ fun View?.visibleAlphaAnimation(duration: Long = 500L) {
 }
 
 fun ImageView.loadImage(
-    url: String,
+    url: String?,
     round: Int = 10,
     isCircle: Boolean = false,
-    placeHolder: Int = R.drawable.shape_album_loading_bg
+    placeHolder: Int = R.drawable.shape_album_loading_bg,
+    error: Int = R.drawable.shape_album_loading_bg
 ) {
     Glide.with(context).load(url)
-        .apply {
-            placeholder(placeHolder)
-            if (isCircle) {
-                transform(CircleCrop())
-            } else if (round > 0) {
-                transform(RoundedCorners(context.dip2px(round).toInt()))
+        .placeholder(placeHolder)
+        .error(error)
+        .run {
+            when {
+                isCircle -> {
+                    transform(CircleCrop())
+                }
+                round > 0 -> {
+                    transform(RoundedCorners(context.dip2px(round).toInt()))
+                }
+                else -> {
+                    this
+                }
             }
         }
         .into(this)

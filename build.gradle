@@ -2,7 +2,7 @@
 
 buildscript {
     ext.kotlin_version = '1.5.10'
-    ext.objectboxVersion = '2.9.1'
+    ext.objectboxVersion = '3.0.1'
     ext.hilt_version = '2.37'
     ext.hilt_lifecircle_version = '1.0.0-alpha03'
     ext.arouterCompiler = '1.5.2'
@@ -13,7 +13,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31"
         classpath "io.objectbox:objectbox-gradle-plugin:$objectboxVersion"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
     }
@@ -21,7 +21,8 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url 'https://maven.aliyun.com/repository/public' }
+        mavenCentral()
+        jcenter()
         google()
         maven { url "https://jitpack.io" }
     }

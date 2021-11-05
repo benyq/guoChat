@@ -2,6 +2,7 @@ package com.benyq.guochat.chat.ui.contracts
 
 import android.widget.ImageView
 import com.benyq.guochat.chat.R
+import com.benyq.guochat.chat.loadAvatar
 import com.benyq.guochat.chat.model.bean.ContractSectionBean
 import com.benyq.module_base.ext.dip2px
 import com.bumptech.glide.Glide
@@ -26,15 +27,7 @@ class ContractsSectionAdapter :
     override fun convert(holder: BaseViewHolder, item: ContractSectionBean) {
         holder.setText(R.id.tvContractName, item.contractEntity?.nick)
         val ivAvatar: ImageView = holder.getView(R.id.ivAvatar)
-        Glide.with(context).load(item.contractEntity?.avatarUrl)
-            .apply(
-                RequestOptions.bitmapTransform(
-                    RoundedCorners(
-                        context.dip2px(5).toInt()
-                    )
-                )
-            )
-            .into(ivAvatar)
+        ivAvatar.loadAvatar(item.contractEntity?.avatarUrl, round = 5)
     }
 
     override fun convertHeader(helper: BaseViewHolder, item: ContractSectionBean) {

@@ -5,6 +5,7 @@
     <string name="add_group_chat">发起群聊</string>
     <string name="scan">扫一扫</string>
     <string name="add_contract">添加朋友</string>
+    <string name="new_contract">新的朋友</string>
     <string name="contract_id_card">朋友名片</string>
     <string name="press_voice">按住说话</string>
     <string name="send_text">发送</string>
@@ -65,5 +66,12 @@
     <string name="viewfinderview_status_text2">即可自动扫描</string>
 
     <string name="edit">编辑</string>
+    <string name="search_colon">搜索:</string>
+    <string name="contract_not_found">该用户不存在</string>
+    <string name="add_to_contract">添加到通讯录</string>
+    <string name="apply_contract_record">申请记录</string>
+
+    <string name="apply_contract_agree">同意</string>
+    <string name="apply_contract_refuse">拒绝</string>
 
 </resources>

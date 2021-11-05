@@ -1,6 +1,7 @@
 package com.benyq.guochat.chat.model.net
 
 import com.benyq.guochat.chat.model.bean.ChatResponse
+import com.benyq.guochat.chat.model.bean.ContractBean
 import com.benyq.guochat.chat.model.bean.UserBean
 import com.benyq.module_base.annotation.BaseUrl
 import okhttp3.MultipartBody
@@ -13,35 +14,81 @@ import retrofit2.http.*
  * @e-mail 1520063035@qq.com
  * @note
  */
-@BaseUrl("https://www.baidu.com")
+@BaseUrl("http://81.69.26.237:8080/")
 interface ChatApiService {
 
     /**
      * 登录
      */
-    @Headers("Content-type:application/json;charset=UTF-8")
+    @FormUrlEncoded
     @POST("user/login")
-    suspend fun login(@Field("userName") account: String, @Field("passWord") password: String): ChatResponse<UserBean>
+    suspend fun login(@Field("phone") account: String, @Field("pwd") password: String): ChatResponse<UserBean>
 
-
-    @Headers("Content-type:application/json;charset=UTF-8")
     @POST("user/register")
-    suspend fun register(@Body body: RequestBody): ChatResponse<String>
+    suspend fun register(@Body body: RequestBody): ChatResponse<UserBean>
 
     /**
      * 上传头像
      */
-    @POST("")
+    @POST("user/upload-avatar")
     @Multipart
     suspend fun uploadAvatar(@PartMap map: Map<String, @JvmSuppressWildcards RequestBody>, @Part file: MultipartBody.Part): ChatResponse<String>
 
     /**
      * 修改自己的昵称
      */
-    @POST("")
+    @POST("user/edit-nick")
     @FormUrlEncoded
-    suspend fun editUserNick(@Field("uid") uid: String, @Field("nick") nick: String): ChatResponse<String>
+    suspend fun editUserNick(@Field("nick") nick: String): ChatResponse<String>
 
     @GET("/")
     suspend fun test(): String
+
+    /**
+     * 搜索联系人
+     */
+    @GET("/contract/search-contract")
+    suspend fun searchContract(@Query("key") key: String): ChatResponse<ContractBean>
+
+    /**
+     * 获取所有联系人
+     */
+    @GET("/contract/get-all-contract")
+    suspend fun getAllContracts(): ChatResponse<List<ContractBean>>
+
+    /**
+     * @param uid 联系人id
+     */
+    @POST("/contract/apply-contract")
+    @FormUrlEncoded
+    suspend fun applyContract(@Field("apply_id") uid: String): ChatResponse<String>
+
+    /**
+     * @param contractId 联系人申请id
+     */
+    @POST("/contract/agree-contract")
+    @FormUrlEncoded
+    suspend fun agreeContract(@Field("contract_id") contractId: String): ChatResponse<String>
+
+    @POST("/contract/refuse-contract")
+    @FormUrlEncoded
+    suspend fun refuseContract(@Field("contract_id") contractId: String): ChatResponse<String>
+
+
+    @POST("/chat/send-message")
+    @FormUrlEncoded
+    suspend fun sendChatMessage(@Field("to") to: String, @Field("msg") msg: String): ChatResponse<Boolean>
+
+    @POST("/chat/send-chat-file")
+    @Multipart
+    suspend fun sendChatFile(@PartMap map: Map<String, @JvmSuppressWildcards RequestBody>, @Part file: MultipartBody.Part): ChatResponse<Boolean>
+
+    /**
+     * 根据二维码结果，搜索联系人
+     */
+    @GET("/contract/code-contract")
+    suspend fun searchContractByCode(@Query("chat-id") key: String): ChatResponse<ContractBean>
+
+    @GET("/contract/app-contract-record")
+    suspend fun getApplyContractRecord(): ChatResponse<List<ContractBean>>
 }

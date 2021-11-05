@@ -1,14 +1,15 @@
 package com.benyq.guochat.chat.local
 
-import android.content.Context
 import com.benyq.guochat.chat.app.CHAT_TYPE_CONTRACT
 import com.benyq.guochat.chat.model.bean.ChatListBean
+import com.benyq.guochat.chat.model.bean.ContractBean
 import com.benyq.guochat.database.DataObjectBox
 import com.benyq.guochat.database.entity.chat.*
 import io.objectbox.Box
 import io.objectbox.BoxStore
 import io.objectbox.kotlin.boxFor
 import io.objectbox.kotlin.query
+import io.objectbox.query.QueryBuilder.StringOrder
 
 
 /**
@@ -26,79 +27,22 @@ object ChatObjectBox {
         boxStore = DataObjectBox.boxStore
     }
 
-    fun testAddChatFromTo() {
-        val chatBox: Box<ChatFromToEntity> = boxStore.boxFor()
-        val contractBox: Box<ContractEntity> = boxStore.boxFor()
-        if (chatBox.query().build().count() <= 0) {
-            chatBox.put(
-                ChatFromToEntity(
-                    0,
-                    0L,
-                    1L,
-                    System.currentTimeMillis()
-                ),
-                ChatFromToEntity(
-                    0,
-                    0L,
-                    2L,
-                    System.currentTimeMillis()
-                ),
-                ChatFromToEntity(
-                    0,
-                    0L,
-                    3L,
-                    System.currentTimeMillis()
-                ),
-                ChatFromToEntity(
-                    0,
-                    0L,
-                    4L,
-                    System.currentTimeMillis()
-                )
-            )
-        }
-        if (contractBox.query().build().count() <= 0) {
-            contractBox.put(
-                ContractEntity(
-                    0, "2", "klfjjasjasjda", "哪吒", 1, "哪吒",
-                    "https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1305353222,2352820043&fm=26&gp=0.jpg",
-                    CHAT_TYPE_CONTRACT
-                ),
-                ContractEntity(
-                    0, "2", "klfjjasjasjda", "三公主", 0, "三公主",
-                    "https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=909846316,603824306&fm=111&gp=0.jpg",
-                    CHAT_TYPE_CONTRACT
-                ),
-                ContractEntity(
-                    0, "2", "klfjjasjasjda", "招新", 2, "招新",
-                    "https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1361981880,3052617388&fm=111&gp=0.jpg",
-                    CHAT_TYPE_CONTRACT
-                ),
-                ContractEntity(
-                    0, "2", "klfjjasjasjda", "凯南", 1, "凯南",
-                    "https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3321238736,733069773&fm=26&gp=0.jpg",
-                    CHAT_TYPE_CONTRACT
-                )
-            )
-        }
-    }
-
     /**
      * 获取ChatFromToEntity，如果不存在则新建
      */
-    fun getChatFromTo(from: Long, to: Long): ChatFromToEntity {
-        val chatBox: Box<ChatFromToEntity> = boxStore.boxFor()
-        var chatFromTo = chatBox.query {
-            equal(ChatFromToEntity_.fromUid, from)
-            equal(ChatFromToEntity_.toUid, to)
-        }.findFirst()
-        if (chatFromTo == null) {
-            chatFromTo = ChatFromToEntity(fromUid = from, toUid = to)
-            chatFromTo.id = chatBox.put(chatFromTo)
-        }
-        return chatFromTo
-    }
+    fun getConversationId(from: String, to: String): ConversationEntity {
+        val chatBox: Box<ConversationEntity> = boxStore.boxFor()
+        var conversation = chatBox.query {
+            equal(ConversationEntity_.fromUid, from, StringOrder.CASE_INSENSITIVE)
+            equal(ConversationEntity_.toUid, to, StringOrder.CASE_INSENSITIVE)
 
+        }.findFirst()
+        if (conversation == null) {
+            conversation = ConversationEntity(fromUid = from, toUid = to)
+            conversation.id = chatBox.put(conversation)
+        }
+        return conversation
+    }
 
     /**
      * 具体和聊天对象的聊天记录
@@ -106,18 +50,18 @@ object ChatObjectBox {
     fun getChatRecord(chatId: Long, page: Long, size: Long): List<ChatRecordEntity> {
         val chatRecordBox: Box<ChatRecordEntity> = boxStore.boxFor()
         val data =  chatRecordBox.query {
-            equal(ChatRecordEntity_.fromToId, chatId)
+            equal(ChatRecordEntity_.conversationId, chatId)
             orderDesc(ChatRecordEntity_.sendTime)
         }.find((page - 1) * size, size)
         data.reverse()
         return data
     }
 
-    fun updateChatRecord(chatId: Long) {
-        val chatBox: Box<ChatFromToEntity> = boxStore.boxFor()
-        val chatRecord: ChatFromToEntity? = chatBox.get(chatId)
+    fun updateChatRecord(conversationId: Long, updateTime: Long = System.currentTimeMillis()) {
+        val chatBox: Box<ConversationEntity> = boxStore.boxFor()
+        val chatRecord: ConversationEntity? = chatBox.get(conversationId)
         chatRecord?.let {
-            it.updateTime = System.currentTimeMillis()
+            it.updateTime = updateTime
             chatBox.put(it)
         }
     }
@@ -125,51 +69,57 @@ object ChatObjectBox {
     /**
      * 首页的聊天记录
      */
-    fun getChatContracts(): List<ChatListBean> {
-        val chatBox: Box<ChatFromToEntity> = boxStore.boxFor()
+    fun getChatContracts(uid: String): List<ChatListBean> {
+        val chatBox: Box<ConversationEntity> = boxStore.boxFor()
         val contractBox: Box<ContractEntity> = boxStore.boxFor()
 
         val chatRecordBox: Box<ChatRecordEntity> = boxStore.boxFor()
-        val chatFromTos = chatBox.query {
-            orderDesc(ChatFromToEntity_.updateTime)
+        val conversations = chatBox.query {
+            equal(ConversationEntity_.fromUid, uid, StringOrder.CASE_INSENSITIVE)
+            orderDesc(ConversationEntity_.updateTime)
         }.find()
         val chatListBeans = mutableListOf<ChatListBean>()
-        chatFromTos.forEach {
+        conversations.forEach {
             val chatRecord = chatRecordBox.query()
-                .equal(ChatRecordEntity_.fromToId, it.id)
+                .equal(ChatRecordEntity_.conversationId, it.id)
                 .orderDesc(ChatRecordEntity_.id)
                 .build().findFirst()
 
-            val contractEntity = contractBox.query().equal(ContractEntity_.id, it.toUid)
+            val contractEntity = contractBox.query().equal(ContractEntity_.contractId, it.toUid, StringOrder.CASE_INSENSITIVE)
                 .build().findFirst()
 
             val lastConversion: String = chatRecord?.let { record ->
-                when {
-                    record.content.isNotEmpty() -> {
-                        record.content
+                when(record.chatType) {
+                    ChatRecordEntity.TYPE_FILE -> {
+                        "[文件]"
                     }
-                    record.voiceRecordPath.isNotEmpty() -> {
+                    ChatRecordEntity.TYPE_VOICE -> {
                         "[语音]"
                     }
-                    record.videoPath.isNotEmpty() -> {
+                    ChatRecordEntity.TYPE_VIDEO -> {
                         "[视频]"
                     }
-                    else -> {
+                    ChatRecordEntity.TYPE_IMG -> {
                         "[图片]"
+                    }
+                    else -> {
+                        record.content
                     }
                 }
             } ?: ""
-            chatListBeans.add(
-                ChatListBean(
-                    contractEntity?.avatarUrl ?: "",
-                    contractEntity?.nick ?: "",
-                    contractEntity?.chatType ?: CHAT_TYPE_CONTRACT,
-                    it.updateTime,
-                    lastConversion,
-                    true,
-                    fromToId = it.id
+            if (lastConversion.isNotEmpty()) {
+                chatListBeans.add(
+                    ChatListBean(
+                        contractEntity?.avatarUrl ?: "",
+                        contractEntity?.nick ?: "",
+                        contractEntity?.chatType ?: CHAT_TYPE_CONTRACT,
+                        it.updateTime,
+                        lastConversion,
+                        true,
+                        conversationId = it.id
+                    )
                 )
-            )
+            }
         }
         return chatListBeans
     }
@@ -179,28 +129,53 @@ object ChatObjectBox {
         return messageBox.put(data)
     }
 
-    fun getAllContracts(): List<ContractEntity> {
+    /**
+     * uid,当前用户id
+     */
+    fun getAllContracts(uid: String): List<ContractEntity> {
         val contractStore: Box<ContractEntity> = boxStore.boxFor()
-        return contractStore.query().build().find()
+        return contractStore.query{
+            equal(ContractEntity_.ownUserId, uid, StringOrder.CASE_INSENSITIVE)
+        }.find()
     }
 
+
     /**
-     * @param fromUid 服务器中的uid
-     * @param toUid 本地数据库中的联系人uid
+     * @param id 本地数据库中的联系人id
      */
-    fun findFromToByIds(fromUid: String, toUid: Long): ChatListBean {
-        val contractBox: Box<ContractEntity> = boxStore.boxFor()
-        val contractEntity = contractBox.query().equal(ContractEntity_.id, toUid)
-            .equal(ContractEntity_.ownUserId, fromUid)
-            .build().findFirst()
-        return ChatListBean(
-            contractEntity?.avatarUrl ?: "",
-            contractEntity?.nick ?: "",
-            contractEntity?.chatType ?: CHAT_TYPE_CONTRACT,
-            0L,
-            "",
-            true,
-            toUid
-        )
+    fun deleteChatRecordByContractId(id: Long) {
+        val chatRecordBox: Box<ChatRecordEntity> = boxStore.boxFor()
+        chatRecordBox.query {
+            equal(ChatRecordEntity_.fromUid, id)
+        }.remove()
+        chatRecordBox.query {
+            equal(ChatRecordEntity_.toUid, id)
+        }.remove()
     }
+
+    fun getContractByConversation(conversationId: Long) : ContractBean? {
+        val contractBox: Box<ContractEntity> = boxStore.boxFor()
+        val conversationBox: Box<ConversationEntity> = boxStore.boxFor()
+
+        val conversationEntity = conversationBox.query {
+            equal(ConversationEntity_.id, conversationId)
+        }.findUnique() ?: return null
+        val contractEntity = contractBox.query {
+            equal(ContractEntity_.contractId, conversationEntity.toUid, StringOrder.CASE_INSENSITIVE)
+        }.findUnique()
+        return if (contractEntity == null) {
+            null
+        }else {
+            ContractBean(0, null, contractEntity.contractId, contractEntity.chatNo, contractEntity.nick, contractEntity.remark, contractEntity.gender, contractEntity.avatarUrl)
+        }
+    }
+
+    fun searchContractById(uid: String, contractId: String): ContractEntity? {
+        val contractBox: Box<ContractEntity> = boxStore.boxFor()
+        return contractBox.query()
+            .equal(ContractEntity_.ownUserId, uid, StringOrder.CASE_INSENSITIVE)
+            .equal(ContractEntity_.contractId, contractId, StringOrder.CASE_INSENSITIVE)
+            .build().findUnique()
+    }
+
 }

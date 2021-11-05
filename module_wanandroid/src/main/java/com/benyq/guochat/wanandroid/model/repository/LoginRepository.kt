@@ -1,7 +1,7 @@
 package com.benyq.guochat.wanandroid.model.repository
 
 import com.benyq.guochat.wanandroid.model.LoginData
-import com.benyq.guochat.wanandroid.model.WanResult
+import com.benyq.guochat.wanandroid.model.http.WanResult
 import com.benyq.guochat.wanandroid.model.http.WanAndroidApi
 import com.benyq.module_base.mvvm.BaseRepository
 import javax.inject.Inject

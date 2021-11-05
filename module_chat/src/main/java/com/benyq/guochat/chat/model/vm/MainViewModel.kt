@@ -1,9 +1,11 @@
 package com.benyq.guochat.chat.model.vm
 
 import androidx.lifecycle.SavedStateHandle
+import com.benyq.guochat.chat.local.ChatLocalStorage
 import com.benyq.guochat.chat.model.rep.MainRepository
+import com.benyq.module_base.ext.logd
+import com.benyq.module_base.ext.loge
 import com.benyq.module_base.mvvm.BaseViewModel
-import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -24,16 +26,22 @@ class MainViewModel @Inject constructor(
      */
     var mCurrentIndex: Int
         set(value) {
-            handle.set("ds", value)
+            handle.set("currentIndex", value)
         }
         get() {
-            return handle.get<Int>("ds") ?: 0
+            return handle.get<Int>("currentIndex") ?: 0
         }
 
-    init {
-        if (!handle.contains("ds")) {
-            handle.set("ds", 0)
+    fun refreshData() {
+
+        quickLaunch<Boolean> {
+            onStart { showLoading("") }
+            onSuccess {
+                logd("refreshData success")
+            }
+            onError { loge("refreshData error: ${it.message}") }
+            onFinal { hideLoading() }
+            request { mRepository.refreshUserData(ChatLocalStorage.uid) }
         }
     }
-
 }

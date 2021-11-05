@@ -8,6 +8,7 @@ import com.benyq.guochat.comic.model.http.ComicResponse
 import com.benyq.guochat.database.entity.comic.BookShelfTable
 import com.benyq.guochat.database.entity.comic.BookShelfTable_
 import com.benyq.module_base.mvvm.BaseRepository
+import io.objectbox.query.QueryBuilder
 import javax.inject.Inject
 
 /**
@@ -27,7 +28,7 @@ class BookDetailRepository @Inject constructor(private val apiService: ComicApiS
     suspend fun searchBookShelf(comicId: String): ComicResponse<BookShelfTable> {
         return launchIO {
             ComicObjectBox.bookShelfBox.run {
-                val shelfBook: BookShelfTable? = query().equal(BookShelfTable_.comicId, comicId).build().findUnique()
+                val shelfBook: BookShelfTable? = query().equal(BookShelfTable_.comicId, comicId, QueryBuilder.StringOrder.CASE_INSENSITIVE).build().findUnique()
                 if (shelfBook != null) {
                     ComicResponse.success(shelfBook)
                 }else {
@@ -40,7 +41,7 @@ class BookDetailRepository @Inject constructor(private val apiService: ComicApiS
     suspend fun addBookToShelf(comicId: String, comicName: String, coverUrl: String, chapterSize: Int) : ComicResponse<BookShelfTable>{
         return launchIO {
             ComicObjectBox.bookShelfBox.run {
-                var comicBook = query().equal(BookShelfTable_.comicId, comicId).build().findUnique()
+                var comicBook = query().equal(BookShelfTable_.comicId, comicId, QueryBuilder.StringOrder.CASE_INSENSITIVE).build().findUnique()
                 if (comicBook == null) {
                     comicBook = BookShelfTable(comicId, comicName, coverUrl, 0, chapterSize, System.currentTimeMillis())
                     val id = put(comicBook)
@@ -54,7 +55,7 @@ class BookDetailRepository @Inject constructor(private val apiService: ComicApiS
     suspend fun removeBookFromShelf(comicId: String) : ComicResponse<Boolean>{
         return launchIO {
             ComicObjectBox.bookShelfBox.run {
-                query().equal(BookShelfTable_.comicId, comicId).build().findUnique()?.let {
+                query().equal(BookShelfTable_.comicId, comicId, QueryBuilder.StringOrder.CASE_INSENSITIVE).build().findUnique()?.let {
                     remove(it)
                 }
                 ComicResponse.success(true)
@@ -66,7 +67,7 @@ class BookDetailRepository @Inject constructor(private val apiService: ComicApiS
     suspend fun updateBookShelf(comicId: String, position: Int, chapterSize: Int): ComicResponse<Boolean>{
         return launchIO {
             ComicObjectBox.bookShelfBox.run {
-                val comicBook = query().equal(BookShelfTable_.comicId, comicId).build().findUnique()
+                val comicBook = query().equal(BookShelfTable_.comicId, comicId, QueryBuilder.StringOrder.CASE_INSENSITIVE).build().findUnique()
                 if (comicBook == null) {
                     ComicResponse.error("记录未找到")
                 }else {

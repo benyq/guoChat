@@ -22,25 +22,13 @@ data class ChatRecordEntity(
      */
     var sendTime: Long = System.currentTimeMillis(),
     /**
-     * 图片地址
+     * 文件地址, 包括 图片、视频、普通文件
      */
-    var imgUrl: String = "",
+    var filePath: String = "",
     /**
-     * 语音地址
+     * 视频或者音频时长
      */
-    var voiceRecordPath: String = "",
-    /**
-     * 语音时长
-     */
-    var voiceRecordDuration: Long = 0L,
-    /**
-     * 视频地址
-     */
-    var videoPath: String = "",
-    /**
-     * 视频时长
-     */
-    var videoDuration: Long = 0L,
+    var duration: Long = 0L,
     /**
      * 类型
      */
@@ -48,21 +36,23 @@ data class ChatRecordEntity(
     /**
      * 发送者id
      */
-    var fromUid: Int = 0,
+    var fromUid: String,
     /**
      * 接收者id
      */
-    var toUid: Int = 0,
-
-    var fromToId: Long = 0
-
+    var toUid: String,
+    /**
+     * 会话Id
+     */
+    var conversationId: Long = 0
 ) {
 
     companion object {
         const val TYPE_TEXT = 1
-        const val TYPE_IMG = 2
-        const val TYPE_VOICE = 3
+        const val TYPE_FILE  = 2
+        const val TYPE_IMG  = 3
         const val TYPE_VIDEO = 4
+        const val TYPE_VOICE = 5
     }
 
 

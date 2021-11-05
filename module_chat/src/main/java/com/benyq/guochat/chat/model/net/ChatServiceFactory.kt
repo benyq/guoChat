@@ -1,5 +1,6 @@
 package com.benyq.guochat.chat.model.net
 
+import com.benyq.guochat.chat.local.ChatLocalStorage
 import com.benyq.module_base.ext.isJson
 import com.benyq.module_base.ext.logi
 import com.benyq.module_base.http.RetrofitFactory
@@ -8,6 +9,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Singleton
 
@@ -31,7 +33,14 @@ object ChatServiceFactory {
         }
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
+        val paramsInterceptor = Interceptor {
+            val request = it.request().newBuilder()
+            request.addHeader("token", ChatLocalStorage.token)
+            it.proceed(request.build())
+        }
+
         RetrofitFactory.init {
+            addInterceptor(paramsInterceptor)
             addInterceptor(loggingInterceptor)
         }
     }

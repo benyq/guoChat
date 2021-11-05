@@ -1,11 +1,12 @@
 package com.benyq.guochat.wanandroid.model.repository
 
-import com.benyq.guochat.wanandroid.model.PageData
-import com.benyq.guochat.wanandroid.model.WanResult
+import com.benyq.guochat.wanandroid.model.ArticleData
+import com.benyq.guochat.wanandroid.model.BannerData
+import com.benyq.guochat.wanandroid.model.http.PageData
+import com.benyq.guochat.wanandroid.model.http.WanResult
 import com.benyq.guochat.wanandroid.model.http.WanAndroidApi
-import com.benyq.guowanandroid.model.ArticleData
-import com.benyq.guowanandroid.model.BannerData
 import com.benyq.module_base.mvvm.BaseRepository
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 /**
@@ -17,7 +18,11 @@ import javax.inject.Inject
 class MainRepository @Inject constructor(private val apiService: WanAndroidApi) : BaseRepository() {
 
     suspend fun articleList(page: Int): WanResult<PageData<ArticleData>> {
-        return apiService.articleList(page)
+        return try {
+            apiService.articleList(page)
+        }catch (t: Throwable) {
+            WanResult.error(t.message ?: t.cause?.message ?: "未知错误")
+        }
     }
 
     suspend fun banner(): WanResult<List<BannerData>> {

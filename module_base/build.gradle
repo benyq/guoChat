@@ -83,6 +83,8 @@ dependencies {
     api 'com.squareup.retrofit2:converter-gson:2.9.0'
     api 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 
+    api 'com.google.code.gson:gson:2.8.8'
+
     //viewmodel
     api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
@@ -92,8 +94,8 @@ dependencies {
     api 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     api 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
 
-    kapt 'com.github.bumptech.glide:glide:4.11.0'
-    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+    kapt 'com.github.bumptech.glide:glide:4.12.0'
+    kapt 'com.github.bumptech.glide:compiler:4.12.0'
     api "com.github.bumptech.glide:okhttp3-integration:4.11.0"
 
     //内存泄漏检测
@@ -108,7 +110,12 @@ dependencies {
 
     //https://github.com/youth5201314/banner
     api 'io.github.youth5201314:banner:2.2.2'
-    api 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer:v8.1.5-jitpack'
+    //https://github.com/CarGuo/GSYVideoPlayer
+    api 'com.github.carguo.GSYvideoplayer:gsyVideoPlayer-java:v8.1.6-jitpack'
+    api 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-arm64:v8.1.6-jitpack'
+    api 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-armv7a:v8.1.6-jitpack'
+    api 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-x86:v8.1.6-jitpack'
+    api 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-x64:v8.1.6-jitpack'
 
     //下拉刷新 https://github.com/scwang90/SmartRefreshLayout
     api 'com.scwang.smart:refresh-layout-kernel:2.0.3'
@@ -122,11 +129,21 @@ dependencies {
     api 'com.alibaba:arouter-api:1.5.2'
     kapt "com.alibaba:arouter-compiler:$arouterCompiler"
 
-    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.3'
+    api 'io.github.lucksiege:pictureselector:v2.7.3-rc08'
+    api "androidx.camera:camera-camera2:1.1.0-alpha08"
 
     api 'com.github.chrisbanes:PhotoView:2.3.0'
 
     //jetpack navigation
-    api "android.arch.navigation:navigation-fragment:1.0.0"
-    api "android.arch.navigation:navigation-ui:1.0.0"
+    api "androidx.navigation:navigation-fragment-ktx:2.3.5"
+    api "androidx.navigation:navigation-ui-ktx:2.3.5"
+
+
+    debugApi "com.bytedance.tools.codelocator:codelocator-core:1.0.0"
+    debugApi "com.bytedance.tools.codelocator:codelocator-lancet-xml:1.0.0"
+    debugApi "com.bytedance.tools.codelocator:codelocator-lancet-activity:1.0.0"
+    debugApi "com.bytedance.tools.codelocator:codelocator-lancet-view:1.0.0"
+    debugApi "com.bytedance.tools.codelocator:codelocator-lancet-toast:1.0.0"
+    debugApi "com.bytedance.tools.codelocator:codelocator-lancet-dialog:1.0.0"
+    debugApi "com.bytedance.tools.codelocator:codelocator-lancet-popup:1.0.0"
 }

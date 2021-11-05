@@ -14,9 +14,9 @@ import javax.inject.Inject
  */
 class ChatRepository @Inject constructor() : BaseRepository(){
 
-    suspend fun getChatContracts(): ChatResponse<List<ChatListBean>> {
+    suspend fun getChatContracts(uid: String): ChatResponse<List<ChatListBean>> {
         return launchIO {
-            ChatResponse.success(ChatObjectBox.getChatContracts())
+            ChatResponse.success(ChatObjectBox.getChatContracts(uid))
         }
     }
 }

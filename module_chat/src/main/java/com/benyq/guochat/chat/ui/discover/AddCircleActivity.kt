@@ -87,7 +87,7 @@ class AddCircleActivity : LifecycleActivity<AddCircleViewModel, ActivityAddCircl
     private fun takePicture() {
         PictureSelector.create(this@AddCircleActivity)
             .openCamera(PictureMimeType.ofImage())
-            .loadImageEngine(GlideEngine)
+            .imageEngine(GlideEngine)
             .forResult(object : OnResultCallbackListener<LocalMedia> {
                 override fun onResult(result: List<LocalMedia>) {
                     viewModelGet().addCirclePhotoUrl(result.map { it.path })
@@ -102,10 +102,10 @@ class AddCircleActivity : LifecycleActivity<AddCircleViewModel, ActivityAddCircl
     private fun selectPhoto() {
         PictureSelector.create(this@AddCircleActivity)
             .openGallery(PictureMimeType.ofAll())
-            .loadImageEngine(GlideEngine)
+            .imageEngine(GlideEngine)
             .forResult(object : OnResultCallbackListener<LocalMedia> {
                 override fun onResult(result: List<LocalMedia>) {
-                    viewModelGet().addCirclePhotoUrl(result.map { it.path })
+                    viewModelGet().addCirclePhotoUrl(result.map { if (it.realPath.isNullOrEmpty()) it.androidQToPath else it.realPath })
                 }
 
                 override fun onCancel() {

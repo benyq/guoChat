@@ -1,6 +1,8 @@
 package com.benyq.guochat.chat.ui.chats
 
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.guochat.chat.app.IntentExtra
@@ -10,6 +12,7 @@ import com.benyq.guochat.chat.model.bean.ChatListBean
 import com.benyq.guochat.chat.model.vm.ChatViewModel
 import com.benyq.module_base.ext.getViewModel
 import com.benyq.module_base.ext.goToActivity
+import com.benyq.module_base.ext.loge
 import com.benyq.module_base.ui.base.LifecycleFragment
 import com.benyq.module_base.ui.waterdrop.WaterDropHeader
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,7 +27,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class ChatFragment : LifecycleFragment<ChatViewModel, FragmentChatBinding>() {
 
     private val mChatAdapter = ChatAdapter()
-
+    private val mAppVideModel: SharedViewModel by lazy {
+        getAppViewModelProvider().get(SharedViewModel::class.java)
+    }
     override fun initVM(): ChatViewModel = getViewModel()
 
     override fun provideViewBinding() = FragmentChatBinding.inflate(layoutInflater)
@@ -32,9 +37,10 @@ class ChatFragment : LifecycleFragment<ChatViewModel, FragmentChatBinding>() {
     override fun initView() {
         binding.rvChats.layoutManager = LinearLayoutManager(mContext)
         binding.rvChats.adapter = mChatAdapter
+        (binding.rvChats.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
         mChatAdapter.setDiffCallback(object : DiffUtil.ItemCallback<ChatListBean>() {
             override fun areItemsTheSame(oldItem: ChatListBean, newItem: ChatListBean): Boolean {
-                return oldItem.fromToId == newItem.fromToId
+                return oldItem.conversationId == newItem.conversationId
             }
 
             override fun areContentsTheSame(oldItem: ChatListBean, newItem: ChatListBean): Boolean {
@@ -43,7 +49,7 @@ class ChatFragment : LifecycleFragment<ChatViewModel, FragmentChatBinding>() {
 
         })
         mChatAdapter.setOnItemClickListener { adapter, view, position ->
-            goToActivity<ChatDetailActivity>(IntentExtra.fromToId to mChatAdapter.data[position])
+            goToActivity<ChatDetailActivity>(IntentExtra.conversationId to mChatAdapter.data[position].conversationId)
         }
 
         mChatAdapter.setOnItemLongClickListener { adapter, view, position ->
@@ -51,19 +57,17 @@ class ChatFragment : LifecycleFragment<ChatViewModel, FragmentChatBinding>() {
             true
         }
         binding.refreshLayout.setRefreshHeader(WaterDropHeader(mContext))
-
-        getAppViewModelProvider().get(SharedViewModel::class.java).chatChange.observe(
-            viewLifecycleOwner
-        ) {
-            initData()
-        }
     }
 
     override fun initListener() {
         binding.refreshLayout.setOnRefreshListener {
             initData()
-            binding.refreshLayout.finishRefresh(2000)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initData()
     }
 
     override fun initData() {
@@ -72,9 +76,13 @@ class ChatFragment : LifecycleFragment<ChatViewModel, FragmentChatBinding>() {
 
     override fun dataObserver() {
         with(mViewModel) {
-            mChatListData.observe(viewLifecycleOwner, Observer {
+            mChatListData.observe(viewLifecycleOwner) {
                 mChatAdapter.setDiffNewData(it.toMutableList())
-            })
+                binding.refreshLayout.finishRefresh()
+            }
+        }
+        mAppVideModel.chatChange.observe(viewLifecycleOwner) {
+            initData()
         }
     }
 }

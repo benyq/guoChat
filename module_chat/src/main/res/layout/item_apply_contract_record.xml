@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            tools:background="@color/black" />
+
+        <TextView
+            android:id="@+id/tvContractName"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:ellipsize="end"
+            tools:text="苏打先生"
+            android:textSize="14sp"
+            android:textColor="@color/color_2a2a2a"/>
+
+        <Button
+            android:id="@+id/btnAgree"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:textSize="12sp"
+            android:text="@string/apply_contract_agree"/>
+
+        <Button
+            android:id="@+id/btnRefuse"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
+            android:textSize="12sp"
+            android:text="@string/apply_contract_refuse"/>
+
+    </LinearLayout>
+
+    <View
+        style="@style/thin_horizontal_divider"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="10dp"/>
+
+</LinearLayout>

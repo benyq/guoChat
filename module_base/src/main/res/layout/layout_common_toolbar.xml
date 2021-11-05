@@ -31,10 +31,10 @@
         android:layout_width="35dp"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
-        android:paddingEnd="5dp"
         android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_three_dots"/>
+        android:src="@drawable/ic_three_dots" />
 
     <TextView
         android:visibility="gone"

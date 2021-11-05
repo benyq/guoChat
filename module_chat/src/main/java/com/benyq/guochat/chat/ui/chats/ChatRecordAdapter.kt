@@ -9,13 +9,15 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import com.benyq.guochat.chat.R
 import com.benyq.guochat.chat.function.other.DateFormatUtil
+import com.benyq.guochat.chat.loadAvatar
+import com.benyq.guochat.chat.model.bean.ContractBean
+import com.benyq.guochat.chat.model.bean.UserBean
 import com.benyq.guochat.database.entity.chat.ChatRecordEntity
 import com.benyq.module_base.ext.calculateTime
 import com.benyq.module_base.ext.dip2px
 import com.benyq.module_base.ext.getDrawableRef
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.chad.library.adapter.base.BaseDelegateMultiAdapter
@@ -30,13 +32,8 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
  * @note
  */
 //uid 是当前帐号id
-class ChatRecordAdapter(private val uid: Int) :
+class ChatRecordAdapter(private val userBean: UserBean, private var contract: ContractBean) :
     BaseDelegateMultiAdapter<ChatRecordEntity, BaseViewHolder>() {
-
-    private var contractAvatar =
-        "http://i2.hdslb.com/bfs/face/d79637d472c90f45b2476871a3e63898240a47e3.jpg"
-    private var ownAvatar =
-        "http://i2.hdslb.com/bfs/face/d79637d472c90f45b2476871a3e63898240a47e3.jpg"
 
     /**
      * 正在播放语音
@@ -48,7 +45,7 @@ class ChatRecordAdapter(private val uid: Int) :
         // 第一步，设置代理
         setMultiTypeDelegate(object : BaseMultiTypeDelegate<ChatRecordEntity>() {
             override fun getItemType(data: List<ChatRecordEntity>, position: Int): Int {
-                return if (data[position].fromUid == uid) {
+                return if (data[position].fromUid == userBean.chatId) {
                     0
                 } else {
                     1
@@ -68,26 +65,10 @@ class ChatRecordAdapter(private val uid: Int) :
 
         when (helper.itemViewType) {
             0 -> {
-                Glide.with(context).load(ownAvatar)
-                    .apply(
-                        RequestOptions.bitmapTransform(
-                            RoundedCorners(
-                                context.dip2px(5).toInt()
-                            )
-                        )
-                    )
-                    .into(ivAvatar)
+                ivAvatar.loadAvatar(userBean.avatarUrl, round = 5)
             }
             1 -> {
-                Glide.with(context).load(contractAvatar)
-                    .apply(
-                        RequestOptions.bitmapTransform(
-                            RoundedCorners(
-                                context.dip2px(5).toInt()
-                            )
-                        )
-                    )
-                    .into(ivAvatar)
+                ivAvatar.loadAvatar(contract.avatar, round = 5)
             }
         }
 
@@ -104,14 +85,14 @@ class ChatRecordAdapter(private val uid: Int) :
                     //水平的图片有固定的宽度，高度计算
                     //默认 100px
                     val ivContent = helper.getView<ImageView>(R.id.ivContent)
-                    loadThumbImg(ivContent, imgUrl)
+                    loadThumbImg(ivContent, filePath)
                 }
                 ChatRecordEntity.TYPE_VOICE -> {
                     helper.setGone(R.id.llVoice, false)
                         .setGone(R.id.ivContent, true)
                         .setGone(R.id.tvContent, true)
                         .setGone(R.id.flVideo, true)
-                        .setText(R.id.tvVoiceDuration, "${voiceRecordDuration / 1000}\" ")
+                        .setText(R.id.tvVoiceDuration, "${duration / 1000}\" ")
                     val pb = helper.getView<ProgressBar>(R.id.pbVoice)
                     val drawable: Drawable? = if (item.id == mPlayingRecord?.id ?: 0) {
                         context.getDrawableRef(R.drawable.anim_voice_play)
@@ -132,11 +113,11 @@ class ChatRecordAdapter(private val uid: Int) :
                         .setGone(R.id.tvContent, true)
                         .setGone(R.id.ivContent, true)
                         .setGone(R.id.llVoice, true)
-                        .setText(R.id.tvVideoDuration, calculateTime(videoDuration.toInt()))
+                        .setText(R.id.tvVideoDuration, calculateTime(duration.toInt()))
 
                     val ivVideo = helper.getView<ImageView>(R.id.ivVideo)
                     val flVideo = helper.getView<FrameLayout>(R.id.flVideo)
-                    loadThumbImg(ivVideo, videoPath, flVideo)
+                    loadThumbImg(ivVideo, filePath, flVideo)
                 }
                 //ChatRecordBean.TYPE_TEXT
                 else -> {
@@ -152,6 +133,9 @@ class ChatRecordAdapter(private val uid: Int) :
         }
     }
 
+    fun setContract(contract: ContractBean) {
+        this.contract = contract
+    }
 
     fun setVoiceStop(recordId: Long = mPlayingRecord?.id ?: 0) {
         data.forEachIndexed { index, chatRecordEntity ->

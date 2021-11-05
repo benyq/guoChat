@@ -1,4 +1,4 @@
-package com.benyq.guochat.wanandroid.model
+package com.benyq.guochat.wanandroid.model.http
 
 import com.benyq.module_base.ext.Toasts
 import com.benyq.module_base.http.ApiException
@@ -12,8 +12,8 @@ import com.google.gson.annotations.SerializedName
  */
 data class WanResult<T>(val errorCode: Int, val errorMsg: String, val data: T?): BenyqResponse<T> {
     companion object {
-        fun error(msg: String): WanResult<Any> {
-            return WanResult(-1, msg, Any())
+        inline fun <reified T> error(msg: String): WanResult<T> {
+            return WanResult(-1, msg, null)
         }
     }
 

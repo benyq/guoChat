@@ -4,6 +4,8 @@ import android.os.Environment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.benyq.guochat.chat.R
+import com.benyq.guochat.chat.app.SharedViewModel
+import com.benyq.guochat.chat.app.baseUrl
 import com.benyq.guochat.chat.databinding.ActivityAvatarBinding
 import com.benyq.guochat.chat.local.ChatLocalStorage
 import com.benyq.guochat.chat.model.vm.PersonalInfoViewModel
@@ -38,6 +40,10 @@ class AvatarActivity : LifecycleActivity<PersonalInfoViewModel, ActivityAvatarBi
 
     override fun initVM(): PersonalInfoViewModel = getViewModel()
 
+    private val mAppVideModel: SharedViewModel by lazy {
+        getAppViewModelProvider().get(SharedViewModel::class.java)
+    }
+
     private var mBottomDialog: CommonBottomDialog? = null
 
     override fun initWidows() {
@@ -67,12 +73,13 @@ class AvatarActivity : LifecycleActivity<PersonalInfoViewModel, ActivityAvatarBi
     }
 
     override fun dataObserver() {
-        viewModelGet().uploadAvatarLiveData.observe(this, Observer {
+        viewModelGet().uploadAvatarLiveData.observe(this){
             ChatLocalStorage.updateUserAccount {
-                avatarUrl = it
+                avatarUrl = baseUrl + it
             }
+            mAppVideModel.notifyPersonInfoChange()
             initView()
-        })
+        }
     }
 
     override fun finish() {
@@ -93,11 +100,12 @@ class AvatarActivity : LifecycleActivity<PersonalInfoViewModel, ActivityAvatarBi
                             0 -> {
                                 PictureSelector.create(this@AvatarActivity)
                                     .openGallery(PictureMimeType.ofAll())
-                                    .loadImageEngine(GlideEngine)
+                                    .imageEngine(GlideEngine)
+                                    .isSingleDirectReturn(true)
                                     .forResult(object : OnResultCallbackListener<LocalMedia> {
                                         override fun onResult(result: List<LocalMedia>) {
                                             val res = result[0]
-                                            uploadAvatar(res.path)
+                                            uploadAvatar(res.realPath)
                                         }
 
                                         override fun onCancel() {
@@ -123,18 +131,19 @@ class AvatarActivity : LifecycleActivity<PersonalInfoViewModel, ActivityAvatarBi
         val parentPath = getExternalFilesDir("avatar")!!.absolutePath + "/"
         val parentPath2 = Environment.getExternalStoragePublicDirectory("avatar").absolutePath + "/"
         val imgName = "avatar-${System.currentTimeMillis()}.png"
-        val result = withContext(Dispatchers.IO) {
+        withContext(Dispatchers.IO) {
             val futureTarget = Glide.with(this@AvatarActivity)
                 .asFile()
                 .load(ChatLocalStorage.userAccount.avatarUrl)
                 .submit()
             val file = futureTarget.get()
-            saveImg(this@AvatarActivity, file, parentPath2, imgName)
-        }
-        if (result) {
-            Toasts.show("保存成功, 路径 $parentPath2$imgName")
-        } else {
-            Toasts.show("保存失败")
+            val result = saveImg(this@AvatarActivity, file, parentPath2, imgName)
+            loge("savePhoto $result")
+            if (result) {
+                Toasts.show("保存成功, 路径 $parentPath2$imgName")
+            } else {
+                Toasts.show("保存失败")
+            }
         }
     }
 

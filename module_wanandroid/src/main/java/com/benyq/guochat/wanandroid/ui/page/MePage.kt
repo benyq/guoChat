@@ -43,15 +43,13 @@ data class MineClickAction(
 @Composable
 fun MePage(userLiveData: MutableLiveData<UserData>, clickAction: MineClickAction) {
 
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setStatusBarColor(Color(0xFF36C1BC))
     val userData by userLiveData.observeAsState()
 
     Column(modifier = Modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(170.dp)
                 .background(Color(0xFF36C1BC))
                 .padding(top = 10.dp, start = 10.dp, bottom = 10.dp)
         ) {

@@ -1,5 +1,6 @@
 package com.benyq.guochat.wanandroid.ui.page
 
+import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.annotation.ExperimentalCoilApi
 import com.benyq.guochat.wanandroid.model.UserData
 import com.benyq.guochat.wanandroid.model.vm.HomeViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -32,6 +34,9 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 import com.benyq.guochat.wanandroid.R
+import com.benyq.guochat.wanandroid.ui.theme.GrayApp
+import com.benyq.module_base.ext.loge
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 /**
  * @author benyq
@@ -40,10 +45,25 @@ import com.benyq.guochat.wanandroid.R
  * @note
  */
 
+@ExperimentalCoilApi
 @ExperimentalAnimationApi
 @ExperimentalPagerApi
 @Composable
 fun HomePage(viewModel: HomeViewModel = viewModel()) {
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setStatusBarColor(GrayApp)
+    when (viewModel.currentPosition) {
+        0, 1, 2 -> {
+            systemUiController.setStatusBarColor(GrayApp)
+        }
+        3 -> {
+            systemUiController.setStatusBarColor(Color.White)
+        }
+        4 -> {
+            systemUiController.setStatusBarColor(Color(0xFF36C1BC))
+        }
+    }
+
     Column(modifier = Modifier.fillMaxSize()) {
         val scope = rememberCoroutineScope()
         val pagerState = rememberPagerState(pageCount = 5)
@@ -54,13 +74,18 @@ fun HomePage(viewModel: HomeViewModel = viewModel()) {
                 .weight(1f), dragEnabled = false
         ) { page ->
             when (page) {
-                0 -> MainPage()
-                1 -> {
-                    val test = MutableLiveData<UserData>()
-                    MePage(userLiveData = test, clickAction = MineClickAction())
+                0 -> {
+                    MainPage()
                 }
-                2 -> LoginPage({})
-                3 -> ArticlePage("https://www.wanandroid.com/blog/show/3039")
+                1 -> {
+                    ProjectPage()
+                }
+                2 -> {
+                    LoginPage({})
+                }
+                3 -> {
+                    WechatPage()
+                }
                 4 -> {
                     val test = MutableLiveData<UserData>()
                     MePage(userLiveData = test, clickAction = MineClickAction())

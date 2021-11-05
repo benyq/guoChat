@@ -27,15 +27,22 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvChatRecord"
+            <com.scwang.smart.refresh.layout.SmartRefreshLayout
+                android:id="@+id/refreshLayout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                android:overScrollMode="never" />
+                android:layout_weight="1">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvChatRecord"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:overScrollMode="never" />
+
+            </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
             <View style="@style/thin_horizontal_divider" />
 

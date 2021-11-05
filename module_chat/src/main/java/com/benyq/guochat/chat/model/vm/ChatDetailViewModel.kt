@@ -20,15 +20,46 @@ class ChatDetailViewModel @Inject constructor(private val mRepository: ChatDetai
     val mChatRecordData = MutableLiveData<List<ChatRecordEntity>>()
     val mSendMessageData = MutableLiveData<Boolean>()
 
-    fun getChatRecord(chatId: Long, page: Int, size: Int) {
+    val mChatMoreRecordData = MutableLiveData<List<ChatRecordEntity>>()
+    val mChatLatestRecordData = MutableLiveData<List<ChatRecordEntity>>()
+
+    var requestPage = 1L
+    val pageSize = 20L
+
+    fun getChatRecord(chatId: Long) {
+        requestPage = 1L
         quickLaunch<List<ChatRecordEntity>> {
             onSuccess {
                 mChatRecordData.value = it
             }
-            request { mRepository.getChatRecord(chatId, page, size) }
+            request { mRepository.getChatRecord(chatId, requestPage, pageSize) }
         }
     }
 
+
+    fun requestMoreRecord(chatId: Long, firstRecordTime: Long) {
+        requestPage++
+        quickLaunch<List<ChatRecordEntity>> {
+
+            onStart { showLoading("") }
+            onFinal { hideLoading() }
+
+            onSuccess {
+                mChatMoreRecordData.value = it
+            }
+            request { mRepository.requestMoreRecord(chatId, firstRecordTime, requestPage, pageSize) }
+        }
+    }
+
+    //ui中最后一条记录的id
+    fun requestLatestRecord(chatId: Long, currentRecordTime: Long) {
+        quickLaunch<List<ChatRecordEntity>> {
+            onSuccess {
+                mChatLatestRecordData.value = it
+            }
+            request { mRepository.requestLatestRecord(chatId, currentRecordTime) }
+        }
+    }
 
     fun sendChatMessage(data: ChatRecordEntity) {
         quickLaunch<Boolean> {

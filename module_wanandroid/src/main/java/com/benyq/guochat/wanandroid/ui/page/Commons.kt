@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -25,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.benyq.guochat.wanandroid.R
-import com.benyq.guowanandroid.model.BannerData
+import com.benyq.guochat.wanandroid.model.BannerData
 import com.google.accompanist.pager.*
 import com.google.android.material.math.MathUtils
 import kotlinx.coroutines.launch
@@ -34,9 +35,10 @@ import kotlin.math.absoluteValue
 @Composable
 fun AppTopBar(
     title: String,
-    onBack: (() -> Unit)? = null,
-    @DrawableRes functionIcon: Int? = null,
-    onFunction: (() -> Unit)? = null
+    onLeft: (() -> Unit)? = null,
+    @DrawableRes leftIcon: Int? = null,
+    onRight: (() -> Unit)? = null,
+    @DrawableRes rightIcon: Int? = null
 ) {
     Row(
         modifier = Modifier
@@ -45,12 +47,12 @@ fun AppTopBar(
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        onBack?.run {
+        onLeft?.run {
             Icon(
-                painter = painterResource(R.drawable.ic_back), contentDescription = null,
+                painter = painterResource(leftIcon ?: R.drawable.ic_back), contentDescription = null,
                 modifier = Modifier
                     .size(36.dp)
-                    .clickable(onClick = onBack)
+                    .clickable(onClick = onLeft)
                     .padding(6.dp)
             )
         }
@@ -58,13 +60,13 @@ fun AppTopBar(
             text = title, modifier = Modifier
                 .weight(1f), fontSize = 18.sp, textAlign = TextAlign.Center
         )
-        if (functionIcon != null) {
+        if (rightIcon != null) {
             Icon(
-                painter = painterResource(functionIcon), contentDescription = null,
+                painter = painterResource(rightIcon), contentDescription = null,
                 modifier = Modifier
                     .size(36.dp)
                     .clickable(onClick = {
-                        onFunction?.invoke()
+                        onRight?.invoke()
                     })
                     .padding(5.dp)
             )
@@ -75,9 +77,9 @@ fun AppTopBar(
 @Preview
 @Composable
 fun ShowAppToBar() {
-    AppTopBar("hello", functionIcon = R.drawable.ic_search, onBack = {
+    AppTopBar("hello", rightIcon = R.drawable.ic_search, onLeft = {
 
-    }, onFunction = {
+    }, onRight = {
 
     })
 }
@@ -159,3 +161,55 @@ fun Banner(
     }
 
 }
+
+
+@Composable
+fun DataLoading() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier
+                .padding(end = 20.dp)
+                .size(30.dp)
+        )
+        Text(
+            text = "正在加载。。。",
+            color = Color.Black,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Composable
+@Preview
+fun ShowDataLoading() {
+    DataLoading()
+}
+
+@Composable
+fun DataLoadError(errorAction: ()->Unit) {
+    Text(
+        modifier = Modifier.padding(15.dp)
+            .fillMaxWidth()
+            .clickable { errorAction() },
+        text = "加载失败, 点击重试",
+        color = Color.Black,
+        textAlign = TextAlign.Center
+    )
+}
+
+@Composable
+@Preview
+fun ShowDataLoadError() {
+    DataLoadError{
+
+    }
+}
+
+
+

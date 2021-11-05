@@ -1,10 +1,14 @@
-package com.benyq.guowanandroid.ui.theme
+package com.benyq.guochat.wanandroid.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import com.benyq.guochat.wanandroid.ui.theme.Purple200
+import com.benyq.guochat.wanandroid.ui.theme.Purple500
+import com.benyq.guochat.wanandroid.ui.theme.Purple700
+import com.benyq.guochat.wanandroid.ui.theme.Teal200
 
 private val DarkColorPalette = darkColors(
     primary = Purple200,

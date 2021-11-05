@@ -18,7 +18,7 @@ class MessageService : Service(){
 
     override fun onCreate() {
         super.onCreate()
-        WebSocketManager.connectWs()
+        WebSocketManager.connectWs(this)
         doConnect = true
     }
 

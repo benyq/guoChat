@@ -1,4 +1,4 @@
-package com.benyq.guowanandroid.model
+package com.benyq.guochat.wanandroid.model
 
 /**
  * @author benyq
@@ -13,7 +13,7 @@ data class ArticleData(
     val canEdit: Boolean,
     val chapterId: Int,
     val chapterName: String,
-    val collect: Boolean,
+    var collect: Boolean,
     val courseId: Int,
     val desc: String,
     val descMd: String,

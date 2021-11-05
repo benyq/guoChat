@@ -1,4 +1,4 @@
-package com.benyq.guowanandroid.ui.theme
+package com.benyq.guochat.wanandroid.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

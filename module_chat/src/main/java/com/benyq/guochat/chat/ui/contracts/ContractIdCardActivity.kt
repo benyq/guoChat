@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.benyq.guochat.chat.databinding.ActivityCOntractIdCardBinding
-import com.benyq.guochat.chat.model.vm.ContractsViewModel
+import com.benyq.guochat.chat.model.vm.ContractViewModel
 import com.benyq.module_base.ext.getViewModel
 import com.benyq.module_base.ui.base.LifecycleActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,13 +17,13 @@ import dagger.hilt.android.AndroidEntryPoint
  * @note  这是为了尝试SnapHelper写的类
  */
 @AndroidEntryPoint
-class ContractIdCardActivity : LifecycleActivity<ContractsViewModel, ActivityCOntractIdCardBinding>() {
+class ContractIdCardActivity : LifecycleActivity<ContractViewModel, ActivityCOntractIdCardBinding>() {
 
     private val mAdapter = ContractIdCardAdapter()
 
     override fun provideViewBinding() = ActivityCOntractIdCardBinding.inflate(layoutInflater)
 
-    override fun initVM(): ContractsViewModel = getViewModel()
+    override fun initVM(): ContractViewModel = getViewModel()
 
     override fun initView() {
         super.initView()

@@ -25,7 +25,7 @@ class UserInfoRepository @Inject constructor(private val apiService: ChatApiServ
     suspend fun uploadAvatar(file: File): ChatResponse<String> {
         return launchIO {
             val requestFile = file.asRequestBody(STREAM)
-            val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+            val body = MultipartBody.Part.createFormData("avatar", file.name, requestFile)
 
             val userBody = ChatLocalStorage.uid.toRequestBody(TEXT)
             val map = mutableMapOf<String, RequestBody>()
@@ -38,7 +38,7 @@ class UserInfoRepository @Inject constructor(private val apiService: ChatApiServ
     suspend fun editUserNick(nickName: String): ChatResponse<String>{
         return launchIO {
             loge("UserInfoRepository apiService $apiService")
-            apiService.editUserNick(ChatLocalStorage.uid, nickName)
+            apiService.editUserNick(nickName)
         }
     }
 

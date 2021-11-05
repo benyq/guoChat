@@ -1,5 +1,6 @@
 package com.benyq.module_base.mvvm
 
+import com.benyq.module_base.ext.tryCatch
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

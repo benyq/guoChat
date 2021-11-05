@@ -8,16 +8,20 @@ import com.benyq.guochat.chat.app.GENDER_FEMALE
 import com.benyq.guochat.chat.app.GENDER_MALE
 import com.benyq.guochat.chat.app.IntentExtra
 import com.benyq.guochat.chat.databinding.ActivityContractDetailBinding
+import com.benyq.guochat.chat.loadAvatar
 import com.benyq.guochat.chat.local.ChatLocalStorage
 import com.benyq.guochat.chat.local.ChatObjectBox
-import com.benyq.module_base.ui.base.BaseActivity
+import com.benyq.guochat.chat.model.bean.ContractBean
+import com.benyq.guochat.chat.model.vm.ContractViewModel
 import com.benyq.guochat.chat.ui.chats.ChatDetailActivity
 import com.benyq.guochat.chat.ui.common.CommonBottomDialog
-import com.benyq.guochat.database.entity.chat.ContractEntity
 import com.benyq.module_base.SmartJump
 import com.benyq.module_base.ext.Toasts
+import com.benyq.module_base.ext.getViewModel
 import com.benyq.module_base.ext.goToActivity
-import com.benyq.module_base.ext.loadImage
+import com.benyq.module_base.ui.base.BaseActivity
+import com.benyq.module_base.ui.base.LifecycleActivity
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * @author benyq
@@ -25,23 +29,25 @@ import com.benyq.module_base.ext.loadImage
  * @e-mail 1520063035@qq.com
  * @note 联系人详情
  */
-class ContractDetailActivity : BaseActivity<ActivityContractDetailBinding>() {
+@AndroidEntryPoint
+class ContractDetailActivity : LifecycleActivity<ContractViewModel, ActivityContractDetailBinding>() {
 
     override fun provideViewBinding() = ActivityContractDetailBinding.inflate(layoutInflater)
+    override fun initVM(): ContractViewModel = getViewModel()
 
     private var mBottomDialog: CommonBottomDialog? = null
-    private lateinit var mContractEntity: ContractEntity
+    private lateinit var mContractBean: ContractBean
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
         //根据传过来的联系人信息初始化页面
-        mContractEntity = intent.getParcelableExtra(IntentExtra.contractData)!!
-        binding.ivAvatar.loadImage(mContractEntity.avatarUrl)
-        binding.tvNickName.text = mContractEntity.nick
-        binding.tvChatNo.text = "果聊号: ${mContractEntity.contractId}"
-        if (mContractEntity.gender == GENDER_FEMALE) {
+        mContractBean = intent.getParcelableExtra(IntentExtra.contractData)!!
+        binding.ivAvatar.loadAvatar(mContractBean.avatar)
+        binding.tvNickName.text = mContractBean.nick
+        binding.tvChatNo.text = "果聊号: ${mContractBean.chatNo}"
+        if (mContractBean.gender == GENDER_FEMALE) {
             binding.ivGender.setImageResource(R.drawable.ic_gender_female)
-        }else if (mContractEntity.gender == GENDER_MALE) {
+        } else if (mContractBean.gender == GENDER_MALE) {
             binding.ivGender.setImageResource(R.drawable.ic_gender_male)
         }
     }
@@ -59,9 +65,11 @@ class ContractDetailActivity : BaseActivity<ActivityContractDetailBinding>() {
 
         }
         binding.llSendMessage.setOnClickListener {
-            val user = ChatLocalStorage.userAccount
-            val bean = ChatObjectBox.findFromToByIds(user.chatId, mContractEntity.id)
-            goToActivity<ChatDetailActivity>(IntentExtra.fromToId to bean)
+            val conversation =
+                ChatObjectBox.getConversationId(ChatLocalStorage.uid, mContractBean.contractId)
+            goToActivity<ChatDetailActivity>(
+                IntentExtra.conversationId to conversation.id
+            )
         }
     }
 
@@ -86,14 +94,21 @@ class ContractDetailActivity : BaseActivity<ActivityContractDetailBinding>() {
         mBottomDialog?.show(supportFragmentManager)
     }
 
-    private fun editContractRemarks(){
-        SmartJump.from(this@ContractDetailActivity).startForResult(Intent(this@ContractDetailActivity, ContractNickActivity::class.java).apply {
-            putExtra(IntentExtra.contractData, mContractEntity)
-        }, { code, data->
-            if (code == Activity.RESULT_OK && data != null) {
+    private fun editContractRemarks() {
+        SmartJump.from(this@ContractDetailActivity).startForResult(
+            Intent(
+                this@ContractDetailActivity,
+                ContractNickActivity::class.java
+            ).apply {
+                putExtra(IntentExtra.contractData, mContractBean)
+            }, { code, data ->
+                if (code == Activity.RESULT_OK && data != null) {
 
-            }
-        })
+                }
+            })
+    }
+
+    override fun dataObserver() {
     }
 
 }

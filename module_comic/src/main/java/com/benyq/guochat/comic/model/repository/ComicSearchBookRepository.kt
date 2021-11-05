@@ -8,6 +8,7 @@ import com.benyq.guochat.comic.model.http.ComicResponse
 import com.benyq.guochat.database.entity.comic.SearchHistoryRecord
 import com.benyq.guochat.database.entity.comic.SearchHistoryRecord_
 import com.benyq.module_base.mvvm.BaseRepository
+import io.objectbox.query.QueryBuilder
 import javax.inject.Inject
 
 /**
@@ -26,7 +27,7 @@ class ComicSearchBookRepository @Inject constructor(private val apiService: Comi
     suspend fun addSearchHistory(comicId: String, name: String): ComicResponse<Boolean>{
         return launchIO {
             ComicObjectBox.searchHistoryBox.run {
-                var searchRecord = query().equal(SearchHistoryRecord_.comicId, comicId).build().findUnique()
+                var searchRecord = query().equal(SearchHistoryRecord_.comicId, comicId, QueryBuilder.StringOrder.CASE_INSENSITIVE).build().findUnique()
                 if (searchRecord == null) {
                     searchRecord = SearchHistoryRecord(comicId, name, System.currentTimeMillis())
                 }else {
