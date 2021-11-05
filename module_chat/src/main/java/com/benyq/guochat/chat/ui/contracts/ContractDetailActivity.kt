@@ -12,12 +12,16 @@ import com.benyq.guochat.chat.loadAvatar
 import com.benyq.guochat.chat.local.ChatLocalStorage
 import com.benyq.guochat.chat.local.ChatObjectBox
 import com.benyq.guochat.chat.model.bean.ContractBean
+import com.benyq.guochat.chat.model.vm.ContractViewModel
 import com.benyq.guochat.chat.ui.chats.ChatDetailActivity
 import com.benyq.guochat.chat.ui.common.CommonBottomDialog
 import com.benyq.module_base.SmartJump
 import com.benyq.module_base.ext.Toasts
+import com.benyq.module_base.ext.getViewModel
 import com.benyq.module_base.ext.goToActivity
 import com.benyq.module_base.ui.base.BaseActivity
+import com.benyq.module_base.ui.base.LifecycleActivity
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * @author benyq
@@ -25,9 +29,11 @@ import com.benyq.module_base.ui.base.BaseActivity
  * @e-mail 1520063035@qq.com
  * @note 联系人详情
  */
-class ContractDetailActivity : BaseActivity<ActivityContractDetailBinding>() {
+@AndroidEntryPoint
+class ContractDetailActivity : LifecycleActivity<ContractViewModel, ActivityContractDetailBinding>() {
 
     override fun provideViewBinding() = ActivityContractDetailBinding.inflate(layoutInflater)
+    override fun initVM(): ContractViewModel = getViewModel()
 
     private var mBottomDialog: CommonBottomDialog? = null
     private lateinit var mContractBean: ContractBean
@@ -100,6 +106,9 @@ class ContractDetailActivity : BaseActivity<ActivityContractDetailBinding>() {
 
                 }
             })
+    }
+
+    override fun dataObserver() {
     }
 
 }

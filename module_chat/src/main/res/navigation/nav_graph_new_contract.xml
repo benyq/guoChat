@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_add_contract"
+    app:startDestination="@id/fragment_nav_new_contract">
+
+    <fragment
+        android:id="@+id/fragment_nav_new_contract"
+        android:name="com.benyq.guochat.chat.ui.contracts.NewContractFragment"
+        tools:layout="@layout/fragment_new_contract">
+        <action
+            android:id="@+id/action_search_contract"
+            app:destination="@id/fragment_nav_search_contract" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_nav_search_contract"
+        android:name="com.benyq.guochat.chat.ui.contracts.SearchContractFragment"
+        tools:layout="@layout/fragment_search_contract">
+        <action
+            android:id="@+id/action_add_contract"
+            app:destination="@id/fragment_nav_new_contract" />
+    </fragment>
+
+
+</navigation>

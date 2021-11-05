@@ -3,7 +3,7 @@ package com.benyq.guochat.chat.ui.discover
 import android.Manifest
 import com.alibaba.android.arouter.launcher.ARouter
 import com.benyq.guochat.chat.databinding.FragmentDiscoverBinding
-import com.benyq.guochat.chat.function.zxing.android.CaptureActivity
+import com.benyq.guochat.chat.ui.scan.BarcodeScanningActivity
 import com.benyq.module_base.RouterPath
 import com.benyq.module_base.ui.base.BaseFragment
 import com.benyq.module_base.ext.Toasts
@@ -34,7 +34,7 @@ class DiscoverFragment : BaseFragment<FragmentDiscoverBinding>() {
                 .permission(Manifest.permission.CAMERA)
                 .request(object : OnPermissionCallback {
                     override fun onGranted(permissions: MutableList<String>?, all: Boolean) {
-                        goToActivity<CaptureActivity>()
+                        goToActivity<BarcodeScanningActivity>()
                     }
 
                     override fun onDenied(permissions: MutableList<String>?, never: Boolean) {

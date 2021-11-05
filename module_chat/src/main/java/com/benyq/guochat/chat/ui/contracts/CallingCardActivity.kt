@@ -1,13 +1,18 @@
 package com.benyq.guochat.chat.ui.contracts
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import com.benyq.guochat.chat.databinding.ActivityCallingCardBinding
-import com.benyq.guochat.chat.function.zxing.encode.CodeEncodingCreator
+import com.benyq.guochat.chat.function.barcode.CodeEncodingCreator
 import com.benyq.guochat.chat.local.ChatLocalStorage
 import com.benyq.guochat.chat.model.bean.UserBean
 import com.benyq.module_base.ext.dip2px
+import com.benyq.module_base.ext.loge
 import com.benyq.module_base.ui.base.BaseActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import kotlinx.coroutines.*
 
 /**
@@ -32,7 +37,7 @@ class CallingCardActivity : BaseActivity<ActivityCallingCardBinding>() {
             .into(binding.ivAvatar)
 
         binding.tvContractName.text = mUserBean.nick
-        createCallingCardQr("1234")
+        createCallingCardQr(ChatLocalStorage.uid)
 
     }
 
@@ -40,20 +45,29 @@ class CallingCardActivity : BaseActivity<ActivityCallingCardBinding>() {
         binding.headerView.setBackAction { finish() }
     }
 
-    private fun createCallingCardQr(chatNo: String) {
+    private fun createCallingCardQr(chatId: String) {
         val launcher = CoroutineScope(mLoadIconJob)
-        val content = "chatNo:$chatNo"
+        val content = "chat-$chatId"
         launcher.launch(Dispatchers.Main) {
-            val bitmap = withContext(Dispatchers.IO) {
-                Glide.with(this@CallingCardActivity)
-                    .asBitmap() //必须
-                    .load(mUserBean.avatarUrl)
-                    .centerCrop()
-                    .transform(RoundedCorners(dip2px(5).toInt()))
-                    .submit(150, 150)
-                    .get()
-            }
-            binding.ivCallingQr.setImageBitmap(CodeEncodingCreator.createQRCode(content, 300, 300, bitmap))
+            Glide.with(this@CallingCardActivity)
+                .asBitmap()
+                .load(mUserBean.avatarUrl)
+                .into(object: CustomTarget<Bitmap>() {
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: Transition<in Bitmap>?
+                    ) {
+                        loge("Glide onResourceReady")
+                        binding.ivCallingQr.setImageBitmap(CodeEncodingCreator.createQRCode(content, 300, 300, resource))
+                    }
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                    }
+
+                    override fun onLoadFailed(errorDrawable: Drawable?) {
+                        super.onLoadFailed(errorDrawable)
+                        binding.ivCallingQr.setImageBitmap(CodeEncodingCreator.createQRCode(content, 300, 300, null))
+                    }
+                })
         }
 
     }

@@ -129,7 +129,8 @@ dependencies {
     api 'com.alibaba:arouter-api:1.5.2'
     kapt "com.alibaba:arouter-compiler:$arouterCompiler"
 
-    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.3'
+    api 'io.github.lucksiege:pictureselector:v2.7.3-rc08'
+    api "androidx.camera:camera-camera2:1.1.0-alpha08"
 
     api 'com.github.chrisbanes:PhotoView:2.3.0'
 

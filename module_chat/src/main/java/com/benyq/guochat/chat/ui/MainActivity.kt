@@ -14,9 +14,8 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
 import com.benyq.guochat.chat.R
 import com.benyq.guochat.chat.databinding.ActivityMainBinding
+import com.benyq.guochat.chat.ui.scan.BarcodeScanningActivity
 import com.benyq.guochat.chat.function.message.MessageService
-import com.benyq.guochat.chat.function.zxing.android.CaptureActivity
-import com.benyq.guochat.chat.local.ChatObjectBox
 import com.benyq.guochat.chat.model.vm.MainViewModel
 import com.benyq.module_base.ui.base.LifecycleActivity
 import com.benyq.guochat.chat.ui.chats.ChatFragment
@@ -206,7 +205,7 @@ class MainActivity : LifecycleActivity<MainViewModel, ActivityMainBinding>() {
                     .permission(Manifest.permission.CAMERA)
                     .request(object : OnPermissionCallback {
                         override fun onGranted(permissions: MutableList<String>?, all: Boolean) {
-                            goToActivity<CaptureActivity>()
+                            goToActivity<BarcodeScanningActivity>()
                         }
 
                         override fun onDenied(permissions: MutableList<String>?, never: Boolean) {

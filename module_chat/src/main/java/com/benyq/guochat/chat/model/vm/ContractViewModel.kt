@@ -27,6 +27,8 @@ class ContractViewModel @Inject constructor(private val mRepository: ContractRep
     val mContractsData = MutableLiveData<List<ContractSectionBean>>()
     val searchContractData = MutableLiveData<ContractBean?>()
     val applyContractData = MutableLiveData<Boolean>()
+    val applyContractRecord = MutableLiveData<List<ContractBean>>()
+    val refreshContract = MutableLiveData<String>()
 
     fun getAllContracts() {
         quickLaunch<List<ContractSectionBean>> {
@@ -73,6 +75,42 @@ class ContractViewModel @Inject constructor(private val mRepository: ContractRep
             onFinal { hideLoading() }
             onError { loge("applyContract error ${it.message}") }
             request { mRepository.applyContract(uid) }
+        }
+    }
+
+    fun searchContractByCode(uid: String, code: String) {
+        quickLaunch<ContractBean> {
+            onStart { showLoading("") }
+            onSuccess { searchContractData.value = it }
+            onError { loadingType.value = UiState(isError = it) }
+            onFinal { hideLoading() }
+            request { mRepository.searchContractByCode(uid, code) }
+        }
+    }
+
+    fun getApplyContractRecord() {
+        quickLaunch<List<ContractBean>> {
+            onStart { showLoading("") }
+            onSuccess { applyContractRecord.value = it ?: listOf() }
+            onError { loge("getApplyContractRecord error: ${it.message}") }
+            onFinal { hideLoading() }
+            request { mRepository.getApplyContractRecord() }
+        }
+    }
+
+    fun agreeContract(id: String, applyId: String, uid: String){
+        quickLaunch<String> {
+            onSuccess { refreshContract.value = it }
+            onError { loge("agreeContract error: ${it.message}") }
+            request { mRepository.agreeContract(id, applyId, uid) }
+        }
+    }
+
+    fun refuseContract(id: String){
+        quickLaunch<String> {
+            onSuccess { refreshContract.value = it }
+            onError { loge("agreeContract error: ${it.message}") }
+            request { mRepository.refuseContract(id) }
         }
     }
 }

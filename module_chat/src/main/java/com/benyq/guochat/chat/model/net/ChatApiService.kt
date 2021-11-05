@@ -83,4 +83,12 @@ interface ChatApiService {
     @Multipart
     suspend fun sendChatFile(@PartMap map: Map<String, @JvmSuppressWildcards RequestBody>, @Part file: MultipartBody.Part): ChatResponse<Boolean>
 
+    /**
+     * 根据二维码结果，搜索联系人
+     */
+    @GET("/contract/code-contract")
+    suspend fun searchContractByCode(@Query("chat-id") key: String): ChatResponse<ContractBean>
+
+    @GET("/contract/app-contract-record")
+    suspend fun getApplyContractRecord(): ChatResponse<List<ContractBean>>
 }

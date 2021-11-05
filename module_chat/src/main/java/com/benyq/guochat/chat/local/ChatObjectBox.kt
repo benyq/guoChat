@@ -8,7 +8,6 @@ import com.benyq.guochat.database.entity.chat.*
 import io.objectbox.Box
 import io.objectbox.BoxStore
 import io.objectbox.kotlin.boxFor
-import io.objectbox.kotlin.equal
 import io.objectbox.kotlin.query
 import io.objectbox.query.QueryBuilder.StringOrder
 
@@ -108,17 +107,19 @@ object ChatObjectBox {
                     }
                 }
             } ?: ""
-            chatListBeans.add(
-                ChatListBean(
-                    contractEntity?.avatarUrl ?: "",
-                    contractEntity?.nick ?: "",
-                    contractEntity?.chatType ?: CHAT_TYPE_CONTRACT,
-                    it.updateTime,
-                    lastConversion,
-                    true,
-                    conversationId = it.id
+            if (lastConversion.isNotEmpty()) {
+                chatListBeans.add(
+                    ChatListBean(
+                        contractEntity?.avatarUrl ?: "",
+                        contractEntity?.nick ?: "",
+                        contractEntity?.chatType ?: CHAT_TYPE_CONTRACT,
+                        it.updateTime,
+                        lastConversion,
+                        true,
+                        conversationId = it.id
+                    )
                 )
-            )
+            }
         }
         return chatListBeans
     }
@@ -167,6 +168,14 @@ object ChatObjectBox {
         }else {
             ContractBean(0, null, contractEntity.contractId, contractEntity.chatNo, contractEntity.nick, contractEntity.remark, contractEntity.gender, contractEntity.avatarUrl)
         }
+    }
+
+    fun searchContractById(uid: String, contractId: String): ContractEntity? {
+        val contractBox: Box<ContractEntity> = boxStore.boxFor()
+        return contractBox.query()
+            .equal(ContractEntity_.ownUserId, uid, StringOrder.CASE_INSENSITIVE)
+            .equal(ContractEntity_.contractId, contractId, StringOrder.CASE_INSENSITIVE)
+            .build().findUnique()
     }
 
 }

@@ -124,6 +124,7 @@ object WebSocketManager {
         mHandler.removeCallbacks(wsReConnectRunnable)
         mHandler.removeCallbacks(heartRunnable)
         mWebSocketClient?.close()
+        mWebSocketClient = null
     }
 
     private fun sendMessage(msg: String) {

@@ -1,4 +1,4 @@
-package com.benyq.guochat.chat.function.zxing.encode;
+package com.benyq.guochat.chat.function.barcode;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

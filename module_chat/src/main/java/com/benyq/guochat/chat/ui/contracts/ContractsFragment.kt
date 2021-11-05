@@ -43,20 +43,21 @@ class ContractsFragment : LifecycleFragment<ContractViewModel, FragmentContracts
 
     override fun initListener() {
         binding.iconAddContract.setOnClickListener {
-            goToActivity<AddContractActivity>()
+            goToActivity<NewContractActivity>()
         }
         binding.iconContractCard.setOnClickListener {
-            goToActivity<ContractIdCardActivity>()
+//            goToActivity<ContractIdCardActivity>()
         }
-    }
-
-    override fun initData() {
-        mViewModel.getAllContracts()
     }
 
     override fun dataObserver() {
-        mViewModel.mContractsData.observe(viewLifecycleOwner, Observer {
+        mViewModel.mContractsData.observe(viewLifecycleOwner){
             mAdapter.setNewInstance(it.toMutableList())
-        })
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mViewModel.getAllContracts()
     }
 }

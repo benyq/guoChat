@@ -3,6 +3,7 @@ package com.benyq.guochat.chat.ui.contracts
 import android.annotation.SuppressLint
 import com.benyq.guochat.chat.app.IntentExtra
 import com.benyq.guochat.chat.databinding.ActivityApplyContractBinding
+import com.benyq.guochat.chat.loadAvatar
 import com.benyq.guochat.chat.model.bean.ContractBean
 import com.benyq.guochat.chat.model.vm.ContractViewModel
 import com.benyq.module_base.ext.Toasts
@@ -31,7 +32,7 @@ class ApplyContractActivity : LifecycleActivity<ContractViewModel, ActivityApply
     override fun initView() {
         //根据传过来的联系人信息初始化页面
         mContractEntity = intent.getParcelableExtra(IntentExtra.contractData)!!
-        binding.ivAvatar.loadImage(mContractEntity.avatar)
+        binding.ivAvatar.loadAvatar(mContractEntity.avatar, round = 20)
         binding.tvNickName.text = mContractEntity.nick
     }
 

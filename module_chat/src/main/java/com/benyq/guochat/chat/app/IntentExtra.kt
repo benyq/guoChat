@@ -22,6 +22,8 @@ object IntentExtra {
 
     const val contractData = "contractData"
 
+    const val contractId = "contractId"
+
     const val circlePhotos = "circlePhotos"
 
     const val circlePhotosIndex = "circlePhotosIndex"

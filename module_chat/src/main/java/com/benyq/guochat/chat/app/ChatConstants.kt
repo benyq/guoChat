@@ -43,3 +43,5 @@ fun Context.chatVideoPath(): String {
 
 
 const val baseUrl = "http://81.69.26.237/"
+
+const val chatIdPrefix = "chat-"

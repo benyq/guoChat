@@ -3,7 +3,7 @@ package com.benyq.guochat.chat.ui.contracts
 import androidx.navigation.fragment.NavHostFragment
 import com.benyq.guochat.chat.R
 import com.benyq.guochat.chat.databinding.FragmentAddContractBinding
-import com.benyq.guochat.chat.function.zxing.android.CaptureActivity
+import com.benyq.guochat.chat.ui.scan.BarcodeScanningActivity
 import com.benyq.guochat.chat.local.ChatLocalStorage
 import com.benyq.module_base.ext.goToActivity
 import com.benyq.module_base.ui.base.BaseFragment
@@ -29,7 +29,7 @@ class AddContractFragment : BaseFragment<FragmentAddContractBinding>(){
             goToActivity<CallingCardActivity>()
         }
         binding.ilScanCode.setOnClickListener {
-            goToActivity<CaptureActivity>()
+            goToActivity<BarcodeScanningActivity>()
         }
 
         binding.headerView.setBackAction {

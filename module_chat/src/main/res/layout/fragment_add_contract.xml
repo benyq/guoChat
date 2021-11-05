@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkgrey"
-    tools:context=".ui.contracts.AddContractActivity">
+    android:background="@color/darkgrey">
 
     <com.benyq.module_base.ui.widget.HeaderView
         android:id="@+id/headerView"

@@ -10,10 +10,13 @@ import android.provider.MediaStore
 import android.widget.ImageView
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.benyq.module_base.http.JSON
+import com.benyq.module_base.ext.dip2px
 import com.benyq.module_base.ext.fromQ
-import com.benyq.module_base.ext.loadImage
 import com.benyq.module_base.ext.loge
+import com.benyq.module_base.http.JSON
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.gson.Gson
 import kotlinx.coroutines.*
 import okhttp3.RequestBody
@@ -97,19 +100,21 @@ fun <K, V> mapOfToBodyJson(vararg pairs: Pair<K, V>): RequestBody {
     return json.toRequestBody(JSON)
 }
 
-fun <K,V> Map<K,V>.mapToJson(): String {
+fun <K, V> Map<K, V>.mapToJson(): String {
     return Gson().toJson(this)
 }
 
 
-fun ImageView.loadAvatar(url: String?,
-                         round: Int = 10,
-                         isCircle: Boolean = false) {
-    if (!url.isNullOrEmpty() && url.contains("null")) {
-        loadImage(null, R.drawable.ic_default_avatar, round, isCircle)
-    }else {
-        loadImage(url, R.drawable.ic_default_avatar, round, isCircle)
-    }
+fun ImageView.loadAvatar(
+    url: String?,
+    round: Int = 5
+) {
+    Glide.with(context)
+        .load(if (!url.isNullOrEmpty() && url.contains("null")) R.drawable.ic_default_avatar else url)
+        .placeholder(R.drawable.shape_album_loading_bg)
+        .error(R.drawable.ic_default_avatar)
+        .transform(CenterCrop(), RoundedCorners(context.dip2px(round).toInt()))
+        .into(this)
 }
 
 

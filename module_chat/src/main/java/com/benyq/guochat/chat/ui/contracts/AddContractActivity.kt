@@ -1,10 +1,6 @@
 package com.benyq.guochat.chat.ui.contracts
 
-import com.benyq.guochat.chat.R
 import com.benyq.guochat.chat.databinding.ActivityAddContractBinding
-import com.benyq.guochat.chat.function.zxing.android.CaptureActivity
-import com.benyq.guochat.chat.local.ChatLocalStorage
-import com.benyq.module_base.ext.goToActivity
 import com.benyq.module_base.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
