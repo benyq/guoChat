@@ -42,7 +42,11 @@ class SharedViewModel(private val app: Application) : AndroidViewModel(app){
         conversationId = -1L
     }
 
-    fun go() {
-        _chatChange.value = 222
+
+
+    val personInfoChange = MutableLiveData<Boolean>()
+
+    fun notifyPersonInfoChange() {
+        personInfoChange.value = true
     }
 }

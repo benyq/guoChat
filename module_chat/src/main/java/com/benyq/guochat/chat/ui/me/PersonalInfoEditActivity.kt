@@ -1,6 +1,7 @@
 package com.benyq.guochat.chat.ui.me
 
 import androidx.core.widget.addTextChangedListener
+import com.benyq.guochat.chat.app.SharedViewModel
 import com.benyq.guochat.chat.databinding.ActivityPersonalInfoEditBinding
 import com.benyq.guochat.chat.local.ChatLocalStorage
 import com.benyq.guochat.chat.model.vm.PersonalInfoViewModel
@@ -21,9 +22,13 @@ class PersonalInfoEditActivity :
 
     override fun initVM(): PersonalInfoViewModel = getViewModel()
 
-    private var oldValue = ""
-
     override fun provideViewBinding() = ActivityPersonalInfoEditBinding.inflate(layoutInflater)
+
+    private val mAppVideModel: SharedViewModel by lazy {
+        getAppViewModelProvider().get(SharedViewModel::class.java)
+    }
+
+    private var oldValue = ""
 
     override fun initView() {
         binding.headerView.setToolbarTitle("更改名字")
@@ -55,6 +60,7 @@ class PersonalInfoEditActivity :
                 ChatLocalStorage.updateUserAccount {
                     nick = it
                 }
+                mAppVideModel.notifyPersonInfoChange()
                 finish()
             })
             loadingType.observe(this@PersonalInfoEditActivity) {

@@ -174,14 +174,12 @@ fun View?.visibleAlphaAnimation(duration: Long = 500L) {
 
 fun ImageView.loadImage(
     url: String?,
-    @DrawableRes
-    resId: Int = 0,
     round: Int = 10,
     isCircle: Boolean = false,
     placeHolder: Int = R.drawable.shape_album_loading_bg,
     error: Int = R.drawable.shape_album_loading_bg
 ) {
-    Glide.with(context).load(if (url.isNullOrEmpty()) resId else url)
+    Glide.with(context).load(url)
         .placeholder(placeHolder)
         .error(error)
         .run {

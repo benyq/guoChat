@@ -407,7 +407,7 @@ class ChatDetailActivity : LifecycleActivity<ChatDetailViewModel, ActivityChatDe
             R.id.llAlbum -> {
                 PictureSelector.create(this)
                     .openGallery(PictureMimeType.ofAll())
-                    .loadImageEngine(GlideEngine)
+                    .imageEngine(GlideEngine)
                     .forResult(object : OnResultCallbackListener<LocalMedia> {
                         override fun onResult(result: List<LocalMedia>) {
                             hideFunctionMenu()
