@@ -30,17 +30,18 @@ import javax.inject.Inject
  */
 class ChatDetailRepository @Inject constructor(private val apiService: ChatApiService) : BaseRepository(){
 
-    suspend fun getChatRecord(chatId: Long, page: Long, size: Long): ChatResponse<List<ChatRecordEntity>> {
+    suspend fun getChatRecord(conversationId: Long, page: Long, size: Long): ChatResponse<List<ChatRecordEntity>> {
         return launchIO {
-            ChatResponse.success(ChatObjectBox.getChatRecord(chatId, page, size))
+            ChatObjectBox.chatRecordHaveRead(conversationId)
+            ChatResponse.success(ChatObjectBox.getChatRecord(conversationId, page, size))
         }
     }
 
-    suspend fun requestLatestRecord(chatId: Long, currentRecordTime: Long): ChatResponse<List<ChatRecordEntity>>  {
+    suspend fun requestLatestRecord(conversationId: Long, currentRecordTime: Long): ChatResponse<List<ChatRecordEntity>>  {
         return launchIO {
             val recordBox: Box<ChatRecordEntity> = ChatObjectBox.boxStore.boxFor()
             val data =  recordBox.query {
-                equal(ChatRecordEntity_.conversationId, chatId)
+                equal(ChatRecordEntity_.conversationId, conversationId)
                 greater(ChatRecordEntity_.sendTime, currentRecordTime)
             }.find()
             data.reverse()
@@ -48,11 +49,11 @@ class ChatDetailRepository @Inject constructor(private val apiService: ChatApiSe
         }
     }
 
-    suspend fun requestMoreRecord(chatId: Long, firstRecordTime: Long, page: Long, size: Long): ChatResponse<List<ChatRecordEntity>> {
+    suspend fun requestMoreRecord(conversationId: Long, firstRecordTime: Long, page: Long, size: Long): ChatResponse<List<ChatRecordEntity>> {
         return launchIO {
             val recordBox: Box<ChatRecordEntity> = ChatObjectBox.boxStore.boxFor()
             val data =  recordBox.query {
-                equal(ChatRecordEntity_.conversationId, chatId)
+                equal(ChatRecordEntity_.conversationId, conversationId)
                 less(ChatRecordEntity_.sendTime, firstRecordTime)
                 orderDesc(ChatRecordEntity_.sendTime)
             }.find(0, size)

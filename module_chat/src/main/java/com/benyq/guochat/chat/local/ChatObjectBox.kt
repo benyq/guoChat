@@ -67,6 +67,20 @@ object ChatObjectBox {
     }
 
     /**
+     * 聊天记录已阅读
+     */
+    fun chatRecordHaveRead(conversationId: Long) {
+        val chatBox: Box<ChatRecordEntity> = boxStore.boxFor()
+        val data = chatBox.query().equal(ChatRecordEntity_.conversationId, conversationId)
+            .equal(ChatRecordEntity_.isRead, false)
+            .build().find()
+        data.forEach {
+            it.isRead = true
+        }
+        chatBox.put(data)
+    }
+
+    /**
      * 首页的聊天记录
      */
     fun getChatContracts(uid: String): List<ChatListBean> {
@@ -107,6 +121,10 @@ object ChatObjectBox {
                     }
                 }
             } ?: ""
+            val unreadRecord = chatRecordBox.query()
+                .equal(ChatRecordEntity_.conversationId, it.id)
+                .equal(ChatRecordEntity_.isRead, false)
+                .build().count()
             if (lastConversion.isNotEmpty()) {
                 chatListBeans.add(
                     ChatListBean(
@@ -116,7 +134,8 @@ object ChatObjectBox {
                         it.updateTime,
                         lastConversion,
                         true,
-                        conversationId = it.id
+                        conversationId = it.id,
+                        unreadRecord
                     )
                 )
             }

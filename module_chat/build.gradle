@@ -1,8 +1,4 @@
-if (module_chat.toBoolean()) {
-    apply plugin: 'com.android.application'
-}else {
-    apply plugin: 'com.android.library'
-}
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'dagger.hilt.android.plugin'
@@ -14,9 +10,6 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        if (module_chat.toBoolean()) {
-            applicationId "com.benyq.guochat.chat"
-        }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -44,15 +37,6 @@ android {
     }
 
     viewBinding.enabled = true
-    sourceSets {
-        main {
-            if (module_chat.toBoolean()) {
-                manifest.srcFile 'src/main/moduleManifest/AndroidManifest.xml'
-            }else {
-                manifest.srcFile 'src/main/AndroidManifest.xml'
-            }
-        }
-    }
 }
 
 dependencies {

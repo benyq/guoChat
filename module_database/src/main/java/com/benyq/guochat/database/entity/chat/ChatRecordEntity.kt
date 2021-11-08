@@ -44,7 +44,8 @@ data class ChatRecordEntity(
     /**
      * 会话Id
      */
-    var conversationId: Long = 0
+    var conversationId: Long = 0,
+    var isRead: Boolean = false
 ) {
 
     companion object {

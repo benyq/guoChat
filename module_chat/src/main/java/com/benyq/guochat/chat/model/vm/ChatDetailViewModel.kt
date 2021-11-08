@@ -26,18 +26,18 @@ class ChatDetailViewModel @Inject constructor(private val mRepository: ChatDetai
     var requestPage = 1L
     val pageSize = 20L
 
-    fun getChatRecord(chatId: Long) {
+    fun getChatRecord(conversationId: Long) {
         requestPage = 1L
         quickLaunch<List<ChatRecordEntity>> {
             onSuccess {
                 mChatRecordData.value = it
             }
-            request { mRepository.getChatRecord(chatId, requestPage, pageSize) }
+            request { mRepository.getChatRecord(conversationId, requestPage, pageSize) }
         }
     }
 
 
-    fun requestMoreRecord(chatId: Long, firstRecordTime: Long) {
+    fun requestMoreRecord(conversationId: Long, firstRecordTime: Long) {
         requestPage++
         quickLaunch<List<ChatRecordEntity>> {
 
@@ -47,21 +47,22 @@ class ChatDetailViewModel @Inject constructor(private val mRepository: ChatDetai
             onSuccess {
                 mChatMoreRecordData.value = it
             }
-            request { mRepository.requestMoreRecord(chatId, firstRecordTime, requestPage, pageSize) }
+            request { mRepository.requestMoreRecord(conversationId, firstRecordTime, requestPage, pageSize) }
         }
     }
 
     //ui中最后一条记录的id
-    fun requestLatestRecord(chatId: Long, currentRecordTime: Long) {
+    fun requestLatestRecord(conversationId: Long, currentRecordTime: Long) {
         quickLaunch<List<ChatRecordEntity>> {
             onSuccess {
                 mChatLatestRecordData.value = it
             }
-            request { mRepository.requestLatestRecord(chatId, currentRecordTime) }
+            request { mRepository.requestLatestRecord(conversationId, currentRecordTime) }
         }
     }
 
     fun sendChatMessage(data: ChatRecordEntity) {
+        data.isRead = true
         quickLaunch<Boolean> {
             request { mRepository.sendChatMessage(data) }
             onSuccess {

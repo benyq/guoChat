@@ -3,43 +3,46 @@ package com.benyq.guochat
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.launcher.ARouter
-import com.benyq.guochat.test.TestActivity
+import com.benyq.guochat.chat.local.ChatLocalStorage
+import com.benyq.guochat.chat.ui.MainActivity
 import com.benyq.module_base.RouterPath
+import com.benyq.module_base.ext.getViewModel
 import com.benyq.module_base.ext.goToActivity
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ktx.immersionBar
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
 
-    private val isDebug : Boolean = false
+    private val viewModel: SplashViewModel by lazy { getViewModel() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         immersionBar {
             hideBar(BarHide.FLAG_HIDE_BAR)
         }
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_splash)
         if (avoidLaunchHereAgain()) {
             return
         }
 
-        if (isDebug) {
-            goToActivity<TestActivity>()
+        if (ChatLocalStorage.existUser()) {
+            //判断是否之前登录过
+            viewModel.checkToken()
         } else {
-            lifecycleScope.launch(Dispatchers.IO) {
-                delay(1000)
-                withContext(Dispatchers.Main) {
-                    //这边要判断，是否开启指纹登录
-                    ARouter.getInstance().build(RouterPath.CHAT_LOGIN_PWD).navigation()
-                    finish()
-                }
+            ARouter.getInstance().build(RouterPath.CHAT_LOGIN_PWD).navigation()
+            finish()
+        }
+
+        viewModel.checkResult.observe(this) {
+            if (it) {
+                goToActivity<MainActivity>()
+                finish()
+            } else {
+                ARouter.getInstance().build(RouterPath.CHAT_LOGIN_PWD).navigation()
+                finish()
             }
         }
     }

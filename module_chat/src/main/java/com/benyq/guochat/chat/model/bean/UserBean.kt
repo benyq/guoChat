@@ -31,4 +31,11 @@ data class UserBean(
     var token: String,
     var phone: String,
     var gender: Int = 2,
-) : Serializable
+) : Serializable {
+
+    companion object {
+        fun empty(): UserBean {
+            return UserBean("", "", "", "", "", "")
+        }
+    }
+}

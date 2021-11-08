@@ -22,6 +22,11 @@ class MainRepository @Inject constructor(private val apiService: ChatApiService)
     BaseRepository() {
 
 
+    suspend fun checkToken(): ChatResponse<Boolean> {
+        return apiService.checkToken()
+    }
+
+
     //刷新用户本地信息
     //目前是 联系人
     suspend fun refreshUserData(uid: String): ChatResponse<Boolean> {

@@ -31,17 +31,4 @@ class MainViewModel @Inject constructor(
         get() {
             return handle.get<Int>("currentIndex") ?: 0
         }
-
-    fun refreshData() {
-
-        quickLaunch<Boolean> {
-            onStart { showLoading("") }
-            onSuccess {
-                logd("refreshData success")
-            }
-            onError { loge("refreshData error: ${it.message}") }
-            onFinal { hideLoading() }
-            request { mRepository.refreshUserData(ChatLocalStorage.uid) }
-        }
-    }
 }

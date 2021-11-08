@@ -54,15 +54,13 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':module_base')
     implementation project(':module_media')
+    implementation project(':module_chat')
 
     if (!module_comic.toBoolean()) {
         implementation project(':module_comic')
     }
     if (!module_openeye.toBoolean()) {
         implementation project(':module_openeye')
-    }
-    if (!module_chat.toBoolean()) {
-        implementation project(':module_chat')
     }
     if (!module_wanandroid.toBoolean()) {
         implementation project(':module_wanandroid')

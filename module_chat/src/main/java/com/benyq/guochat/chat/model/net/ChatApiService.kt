@@ -41,8 +41,8 @@ interface ChatApiService {
     @FormUrlEncoded
     suspend fun editUserNick(@Field("nick") nick: String): ChatResponse<String>
 
-    @GET("/")
-    suspend fun test(): String
+    @GET("user/check-token")
+    suspend fun checkToken(): ChatResponse<Boolean>
 
     /**
      * 搜索联系人

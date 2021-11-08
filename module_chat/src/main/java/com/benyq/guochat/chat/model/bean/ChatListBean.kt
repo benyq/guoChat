@@ -20,5 +20,6 @@ data class ChatListBean(
     val latestTime: Long,
     val latestConversation: String,
     val notificationOff: Boolean = false,
-    val conversationId: Long = 0
+    val conversationId: Long = 0,
+    var unreadRecord: Long = 0
 ) : Parcelable

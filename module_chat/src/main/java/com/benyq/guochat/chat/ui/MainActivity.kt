@@ -111,19 +111,8 @@ class MainActivity : LifecycleActivity<MainViewModel, ActivityMainBinding>() {
 
     }
 
-
-    override fun initData() {
-        viewModelGet().refreshData()
-    }
-
     override fun dataObserver() {
-        viewModelGet().loadingType.observe(this) {
-            if (it.isLoading) {
-                showLoading(it.isSuccess)
-            } else {
-                hideLoading()
-            }
-        }
+
     }
 
     override fun onDestroy() {

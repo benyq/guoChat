@@ -44,7 +44,7 @@ class ChatFragment : LifecycleFragment<ChatViewModel, FragmentChatBinding>() {
             }
 
             override fun areContentsTheSame(oldItem: ChatListBean, newItem: ChatListBean): Boolean {
-                return oldItem.latestTime == newItem.latestTime
+                return oldItem.latestTime == newItem.latestTime && oldItem.unreadRecord == newItem.unreadRecord
             }
 
         })
